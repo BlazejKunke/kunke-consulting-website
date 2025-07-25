@@ -1,0 +1,284 @@
+:root {
+  /* Define your brand colors as CSS variables */
+  --color-primary: #0a4731; /* Deep Forest Green */
+  --color-secondary: #2a8c6a; /* Brighter Green/Teal */
+  --color-accent-blue: #4a90e2; /* Muted Professional Blue */
+  --color-dark-text: #333333;
+  --color-light-bg: #f8f8f8;
+  --color-white: #ffffff;
+  --color-light-grey: #eaf2f8; /* Light blue from about section, or a very subtle grey */
+  --color-border: #dddddd;
+}
+
+body {
+  font-family: 'Inter', sans-serif; /* Applied Inter for body font */
+  margin: 0;
+  line-height: 1.6;
+  color: var(--color-dark-text);
+  background-color: var(--color-light-bg);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif; /* Applied Inter for heading font */
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: 2.8em;
+  margin-bottom: 0.5em;
+}
+h2 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+/* Header & Navigation */
+header {
+  background-color: var(--color-primary); /* Dark green header */
+  color: var(--color-white);
+  padding: 1rem 0;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+}
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+nav a {
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white on hover */
+}
+
+/* Sections */
+section {
+  padding: 60px 20px; /* Increased padding for more breathing room */
+  margin: 0 auto;
+  max-width: 900px;
+}
+#hero {
+  background-color: var(--color-light-bg);
+  text-align: center;
+  padding: 100px 20px 80px; /* More padding at top */
+}
+#hero p {
+  font-size: 1.2em;
+  color: var(--color-dark-text);
+  max-width: 700px; /* Limit paragraph width for readability */
+  margin: 1em auto;
+}
+.text-gradient {
+    /* Adjusted gradient to fit brand colors better */
+    background-image: linear-gradient(45deg, var(--color-secondary), var(--color-accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#about {
+  background-color: var(--color-light-grey); /* Using the light grey/blue variable */
+}
+#services {
+  background-color: var(--color-white);
+}
+#contact {
+  background-color: var(--color-light-bg);
+}
+
+/* Service Items */
+.service-item {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  padding: 25px; /* Slightly more padding */
+  margin-bottom: 25px; /* More margin */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Subtle shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.service-item:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+.service-item h3 {
+  color: var(--color-primary); /* Service titles in primary color */
+  margin-bottom: 10px;
+}
+
+/* Contact Section */
+.contact-info a {
+  color: var(--color-primary); /* Link color matches primary */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.contact-info a:hover {
+  color: var(--color-secondary); /* Hover color matches secondary */
+}
+.contact-form {
+  max-width: 600px; /* Constrain form width */
+  margin: 0 auto;
+  padding: 30px;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.contact-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--color-dark-text);
+}
+.contact-form input,
+.contact-form textarea {
+  width: calc(100% - 20px); /* Adjust width for padding */
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif; /* Ensure form fields use body font */
+  font-size: 1em;
+}
+.contact-form button {
+  background-color: var(--color-primary); /* Button matches primary color */
+  color: var(--color-white);
+  padding: 12px 25px; /* Slightly more padding */
+  border: none;
+  border-radius: 5px; /* Slightly more rounded */
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.contact-form button:hover {
+  background-color: var(--color-secondary); /* Button hover matches secondary color */
+}
+/* "Get in Touch" button in Hero section */
+#hero a {
+    background-color: var(--color-accent-blue) !important; /* Use accent blue for primary CTA */
+    color: white;
+    padding: 15px 30px; /* Larger button */
+    text-decoration: none;
+    border-radius: 8px; /* More rounded */
+    margin-top: 30px; /* More space */
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+#hero a:hover {
+    background-color: #3a7bd5 !important; /* Slightly darker blue on hover */
+}
+/* Footer */
+footer {
+  background-color: var(--color-white); /* Ensures the entire footer area, including the edges, is white */
+  color: var(--color-dark-text); /* Default text color for the light footer section */
+  padding: 0; /* Remove padding from main footer, controlled by inner elements */
+  margin-top: 60px; /* Space above the footer */
+  font-size: 0.9em;
+}
+
+.footer-wrapper {
+  background-color: var(--color-white); /* Explicitly white background for the content area */
+  padding: 40px 20px 30px; /* Adjust padding for spacing (top, sides, bottom) */
+  border-top: 2px solid var(--color-primary); /* The nice thin green line! */
+  box-sizing: border-box; /* Include padding in element's total width/height */
+  /* max-width and margin: 0 auto; will be on .footer-content */
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Space out columns evenly */
+  max-width: 900px; /* Limit content width */
+  margin: 0 auto; /* Center the content within the full-width white wrapper */
+  margin-bottom: 40px; /* More space between sections and copyright */
+}
+
+.footer-section {
+  flex: 1; /* Each section takes equal width */
+  min-width: 180px; /* Slightly adjusted min-width before wrapping */
+  padding: 0 15px; /* Padding for individual sections */
+  margin-bottom: 25px; /* More space between sections on wrap */
+}
+
+.footer-section h3 {
+  color: var(--color-primary); /* Headings in primary color for contrast */
+  margin-bottom: 18px; /* More space below heading */
+  font-size: 1.3em; /* Slightly larger headings */
+  text-align: left; /* Ensure headings align left */
+}
+
+.footer-section p,
+.footer-section ul {
+  margin: 0;
+  padding: 0;
+  list-style: none; /* Remove bullet points for social links */
+}
+
+.footer-section a {
+  color: var(--color-dark-text); /* Dark links on white background */
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: block; /* Make links block for easier clicking */
+  margin-bottom: 10px; /* More space between links */
+}
+
+.footer-section a:hover {
+  color: var(--color-secondary); /* Secondary green on hover */
+  text-decoration: underline;
+}
+
+.footer-section.social-media ul {
+    display: flex;
+    flex-direction: column; /* Stack social links */
+}
+.footer-section.social-media li {
+    margin-bottom: 10px; /* Adjust for more consistent spacing */
+}
+
+.footer-bottom {
+  background-color: var(--color-white); /* CHANGE THIS: Copyright section is now white */
+  color: var(--color-dark-text); /* Change text color to dark for better contrast on white */
+  text-align: center;
+  padding: 20px 20px;
+  font-size: 0.8em;
+  margin-top: 40px; /* Keep this margin to separate it from the content above */
+  width: 100%;
+  box-sizing: border-box;
+  /* If you want a subtle border-top on this copyright section, you could add: */
+  /* border-top: 1px solid var(--color-light-grey); */
+}
+
+/* Basic responsiveness for smaller screens */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column; /* Stack sections vertically on small screens */
+    align-items: center; /* Center items when stacked */
+    text-align: center;
+  }
+  .footer-section {
+    min-width: auto;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 30px; /* More space between stacked sections */
+  }
+  .footer-section h3,
+  .footer-section p,
+  .footer-section ul {
+    text-align: center;
+  }
+  .footer-section a {
+    display: inline-block; /* Make links inline again for centered text */
+    margin: 0 8px 10px 8px; /* Adjust spacing for inline links */
+  }
+}
