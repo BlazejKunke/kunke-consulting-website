@@ -1,0 +1,103 @@
+
+:root {
+  /* Define your brand colors as CSS variables */
+  --color-primary: #0a4731; /* Deep Forest Green */
+  --color-secondary: #2a8c6a; /* Brighter Green/Teal */
+  --color-accent-blue: #4a90e2; /* Muted Professional Blue */
+  --color-dark-text: #333333;
+  --color-light-bg: #f8f8f8;
+  --color-white: #ffffff;
+  --color-light-grey: #eaf2f8; /* Light blue from about section, or a very subtle grey */
+  --color-border: #dddddd;
+}
+
+body {
+  font-family: 'Inter', sans-serif; /* Applied Inter for body font */
+  margin: 0;
+  line-height: 1.6;
+  color: var(--color-dark-text);
+  background-color: var(--color-light-bg);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif; /* Applied Inter for heading font */
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: 2.8em;
+  margin-bottom: 0.5em;
+}
+h2 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+/* Header & Navigation */
+header {
+  background-color: var(--color-primary); /* Dark green header */
+  color: var(--color-white);
+  padding: 1rem 0;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+}
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+nav a {
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white on hover */
+}
+
+/* Sections */
+section {
+  padding: 60px 20px; /* Increased padding for more breathing room */
+  margin: 0 auto;
+  max-width: 900px;
+}
+#hero {
+  background-color: var(--color-light-bg);
+  text-align: center;
+  padding: 100px 20px 80px; /* More padding at top */
+}
+#hero p {
+  font-size: 1.2em;
+  color: var(--color-dark-text);
+  max-width: 700px; /* Limit paragraph width for readability */
+  margin: 1em auto;
+}
+.text-gradient {
+    /* Adjusted gradient to fit brand colors better */
+    background-image: linear-gradient(45deg, var(--color-secondary), var(--color-accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#about {
+  background-color: var(--color-light-grey); /* Using the light grey/blue variable */
+}
+#services {
+  background-color: var(--color-white);
+}
+#contact {
+  background-color: var(--color-light-bg);
+}
+
+/* Service Items */
+.service-item {
+/* ...rest of your CSS... */
+}
