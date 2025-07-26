@@ -38,12 +38,13 @@ h2 {
 
 /* Header & Navigation */
 header {
-  background-color: var(--color-primary); /* Dark green header */
-  color: var(--color-white);
+  background-color: var(--color-white);   /* now white */
+  color: var(--color-primary);            /* keep text/links green */
   padding: 1rem 0;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
+
 nav ul {
   list-style: none;
   padding: 0;
@@ -53,7 +54,7 @@ nav ul {
   gap: 20px;
 }
 nav a {
-  color: var(--color-white);
+  color: var(--color-primary);
   text-decoration: none;
   font-weight: bold;
   padding: 0.5rem 1rem;
