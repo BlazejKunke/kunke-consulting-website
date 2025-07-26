@@ -1,0 +1,123 @@
+---
+/*  ContactForm.astro
+    A simple, accessible lead‑capture form wired to Formspree.
+    Place this component in your /src/components folder and import
+    it where you want the form to appear:
+
+    ---
+    ---
+    import ContactForm from "@/components/ContactForm.astro";
+    ---
+    <ContactForm />
+*/
+---
+<form
+  class="contact-form"
+  action="https://formspree.io/f/xldlbvep"
+  method="POST"
+>
+  <label for="name">Name<span aria-hidden="true">*</span></label>
+  <input
+    id="name"
+    name="name"
+    type="text"
+    placeholder="Your full name"
+    required
+  />
+
+  <label for="email">Work Email<span aria-hidden="true">*</span></label>
+  <input
+    id="email"
+    name="email"
+    type="email"
+    placeholder="you@company.com"
+    required
+  />
+
+  <label for="type">Type<span aria-hidden="true">*</span></label>
+  <select id="type" name="type" required>
+    <option value="Consulting">Consulting</option>
+    <option value="Training">Training</option>
+    <option value="Other">Other</option>
+  </select>
+
+  <label for="message">Short message</label>
+  <textarea
+    id="message"
+    name="message"
+    placeholder="How can I help?"
+    rows="5"
+  ></textarea>
+
+  <!-- Extra metadata for clearer emails -->
+  <input
+    type="hidden"
+    name="_subject"
+    value="New lead from Kunke Consulting website"
+  />
+  <input type="hidden" name="_template" value="table" />
+
+  <button type="submit">Send Message</button>
+</form>
+
+<style>
+/********************  Contact Form Styles  ********************/
+.contact-form {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  display: grid;
+  gap: 1.25rem; /* space between fields */
+}
+
+.contact-form label {
+  font-weight: 600;
+  color: var(--color-dark-text);
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font: 1rem/1.4 "Inter", sans-serif;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color: var(--color-primary); /* #0a4731 */
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 40%, transparent);
+  outline: none;
+}
+
+.contact-form button[type="submit"] {
+  justify-self: start; /* left‑align button */
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact-form button[type="submit"]:hover {
+  background: #083a29; /* slightly darker */
+}
+
+@media (max-width: 480px) {
+  .contact-form {
+    padding: 1.5rem 1rem;
+  }
+}
+</style>

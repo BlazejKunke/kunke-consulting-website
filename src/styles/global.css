@@ -124,45 +124,89 @@ section {
 .contact-info a:hover {
   color: var(--color-secondary); /* Hover color matches secondary */
 }
+
+/* --- Contact Form Styles --- */
+
+/* Basic styling for the contact form container */
 .contact-form {
-  max-width: 600px; /* Constrain form width */
-  margin: 0 auto;
-  padding: 30px;
-  background-color: var(--color-white);
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    max-width: 600px; /* Limit the width of the form for better readability */
+    margin: 40px auto; /* Center the form horizontally and add vertical space */
+    padding: 30px;
+    background-color: #ffffff; /* A light background for the form itself */
+    border-radius: 8px; /* Slightly rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    gap: 15px; /* Space between form elements */
 }
+
+/* Style for labels */
 .contact-form label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: var(--color-dark-text);
+    display: block; /* Make labels take full width */
+    margin-bottom: 5px; /* Space below the label */
+    font-weight: bold;
+    color: #333; /* Darker text for labels */
 }
-.contact-form input,
+
+/* Style for all text inputs and textareas */
+.contact-form input[type="text"],
+.contact-form input[type="email"],
 .contact-form textarea {
-  width: calc(100% - 20px); /* Adjust width for padding */
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-family: 'Open Sans', sans-serif; /* Ensure form fields use body font */
-  font-size: 1em;
+    width: 100%; /* Make inputs take full width of their container */
+    padding: 12px;
+    border: 1px solid #ddd; /* Light grey border */
+    border-radius: 5px; /* Slightly rounded corners for inputs */
+    font-size: 1em;
+    font-family: 'Inter', sans-serif; /* Consistent font */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
-.contact-form button {
-  background-color: var(--color-primary); /* Button matches primary color */
-  color: var(--color-white);
-  padding: 12px 25px; /* Slightly more padding */
-  border: none;
-  border-radius: 5px; /* Slightly more rounded */
-  cursor: pointer;
-  font-size: 1.1em;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+
+/* Style for the message textarea */
+.contact-form textarea {
+    resize: vertical; /* Allow vertical resizing only */
+    min-height: 120px; /* Give it a decent initial height */
 }
-.contact-form button:hover {
-  background-color: var(--color-secondary); /* Button hover matches secondary color */
+
+/* Style for the submit button */
+.contact-form button[type="submit"] {
+    display: inline-block; /* Allows padding and margin control */
+    background-color: #5D3FD3; /* Your brand color */
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none; /* Remove underline if it's styled like a link */
+    border: none; /* Remove default button border */
+    border-radius: 5px;
+    margin-top: 15px; /* Space above the button */
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer; /* Indicate it's clickable */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+    align-self: center; /* Center the button within the flex container */
 }
+
+.contact-form button[type="submit"]:hover {
+    background-color: #462fa1; /* Slightly darker shade on hover */
+}
+
+/* Hide the placeholder note since the form is now working! */
+#contact p:last-child { /* Targets the last paragraph in the contact section */
+    display: none;
+}
+
+/* Small adjustment for the contact info text alignment to improve visual flow */
+#contact .contact-info {
+    text-align: center;
+    margin-bottom: 30px;
+    line-height: 1.6; /* Improve line spacing */
+    color: #555;
+}
+
+#contact .contact-info p strong {
+    color: #333;
+}
+
+
+
 /* "Get in Touch" button in Hero section */
 #hero a {
     background-color: var(--color-accent-blue) !important; /* Use accent blue for primary CTA */

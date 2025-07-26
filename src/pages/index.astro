@@ -1,3 +1,8 @@
+---
+import ContactForm from '../components/ContactForm.astro';
+---
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -68,24 +73,10 @@
       <p style="text-align: center; margin-bottom: 20px;">Ready to discuss your business needs? Feel free to reach out via the form below or directly.</p>
       <div class="contact-info" style="text-align: center; margin-bottom: 30px;">
         <p><strong>Email:</strong> <a href="mailto:info@kunkeconsulting.com" style="color: #2c3e50; text-decoration: none;">info@kunkeconsulting.com</a></p>
-        <p><strong>Phone:</strong> +48 123 456 789 (Poland)</p>
-        <p><strong>Locations:</strong> Poznań, Warsaw, Berlin, Prague, Stockholm</p>
-      </div>
-      <form class="contact-form">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+              </div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-
-        <button type="submit">Send Message</button>
-      </form>
-      <p style="text-align: center; margin-top: 20px; font-size: 0.9em; color: #777;">
-        (Note: This is a placeholder form and does not send emails yet. We will discuss real contact forms later.)
-      </p>
+      <!-- New Contact Form -->
+      <ContactForm />
     </section>
 
 <footer>
