@@ -10,6 +10,11 @@
   --color-light-grey: #eaf2f8; /* Light blue from about section, or a very subtle grey */
   --color-border: #dddddd;
 }
+/* Smooth scrolling for in-page anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
 
 body {
   font-family: 'Inter', sans-serif; /* Applied Inter for body font */
