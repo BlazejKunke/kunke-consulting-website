@@ -5,7 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-	<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles/global.css" />
@@ -89,35 +89,80 @@
     </section>
 
 <footer>
-  <div class="footer-wrapper">
-    <div class="footer-content">
-      <div class="footer-section contact-info-footer">
-        <h3>Contact</h3>
-        <p>Błażej Kunke Consulting</p>
-        <p>
-          <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
-        </p>
-        <p>
-          <a href="tel:+48722156925">m. +48 722 156 925</a>
-        </p>
-      </div>
-      <div class="footer-section legal-info">
-        <h3>Legal</h3>
-        <p><a href="/privacy-policy">Privacy Policy</a></p>
-      </div>
-      <div class="footer-section social-media">
-        <h3>Follow</h3>
-        <ul>
-          <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-          <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-          <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
-        </ul>
+  <style>
+    footer {
+      background: #f8f8fa;
+      padding: 40px 0 0 0;
+      text-align: center;
+      width: 100%;
+    }
+    .footer-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .footer-section {
+      min-width: 200px;
+      text-align: center;
+    }
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-section ul li {
+      margin: 0 0 8px 0;
+    }
+    .footer-bottom {
+      margin-top: 30px;
+      padding: 15px 0;
+      background: #ececf2;
+      font-size: 0.95em;
+      color: #555;
+      width: 100%;
+      text-align: center;
+    }
+  </style>
+  <footer>
+    <div class="footer-wrapper">
+      <div class="footer-content">
+        <div class="footer-section contact-info-footer">
+          <h3>Contact</h3>
+          <p>Błażej Kunke Consulting</p>
+          <p>
+            <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+          </p>
+          <p>
+            <a href="tel:+48722156925">m. +48 722 156 925</a>
+          </p>
+        </div>
+        <div class="footer-section legal-info">
+          <h3>Legal</h3>
+          <p><a href="/privacy-policy">Privacy Policy</a></p>
+        </div>
+        <div class="footer-section social-media">
+          <h3>Follow</h3>
+          <ul>
+            <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2025 Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
-  </div>
-</footer>
+    <div class="footer-bottom">
+      <p>© 2025 Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
+    </div>
+  </footer>
   </body>
 </html>
