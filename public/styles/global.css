@@ -102,3 +102,20 @@ section {
 .service-item {
 /* ...rest of your CSS... */
 }
+/* === Hero “Get in Touch” button ================================ */
+.cta-btn {
+  display: inline-block;
+  background-image: linear-gradient(45deg, #0a4731 0%, #187650 100%); /* subtle green gradient */
+  color: var(--color-white);
+  padding: 18px 36px;        /* bigger */
+  font-size: 1.15rem;        /* bigger text */
+  font-weight: 700;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.4s ease, transform 0.2s ease;
+}
+
+.cta-btn:hover {
+  background-image: linear-gradient(45deg, #d4af37 0%, #b8922d 100%); /* warm gold */
+  transform: translateY(-3px);  /* nice lift effect */
+}

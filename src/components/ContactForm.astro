@@ -1,15 +1,7 @@
 ---
 /*  ContactForm.astro
-    A simple, accessible lead‑capture form wired to Formspree.
-    Place this component in your /src/components folder and import
-    it where you want the form to appear:
-
-    ---
-    ---
-    import ContactForm from "@/components/ContactForm.astro";
-    ---
-    <ContactForm />
-*/
+    Lead-capture form wired to Formspree
+---------------------------------------------------------------- */
 ---
 <form
   class="contact-form"
@@ -25,7 +17,7 @@
     required
   />
 
-  <label for="email">Work Email<span aria-hidden="true">*</span></label>
+  <label for="email">Work Email<span aria-hidden="true">*</span></label>
   <input
     id="email"
     name="email"
@@ -41,7 +33,7 @@
     <option value="Other">Other</option>
   </select>
 
-  <label for="message">Short message</label>
+  <label for="message">Short message</label>
   <textarea
     id="message"
     name="message"
@@ -57,7 +49,8 @@
   />
   <input type="hidden" name="_template" value="table" />
 
-  <button type="submit">Send Message</button>
+  <!--  🎉 NEW: matches hero CTA  -->
+  <button type="submit" class="cta-btn">Send Message</button>
 </form>
 
 <style>
@@ -71,7 +64,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
   display: grid;
-  gap: 1.25rem; /* space between fields */
+  gap: 1.25rem;   /* space between fields */
 }
 
 .contact-form label {
@@ -99,20 +92,9 @@
   outline: none;
 }
 
-.contact-form button[type="submit"] {
-  justify-self: start; /* left‑align button */
-  background: var(--color-primary);
-  color: var(--color-white);
-  border: none;
-  padding: 0.9rem 2rem;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.contact-form button[type="submit"]:hover {
-  background: #083a29; /* slightly darker */
+/* Centre the CTA inside the grid */
+.contact-form .cta-btn {
+  justify-self: center;
 }
 
 @media (max-width: 480px) {
