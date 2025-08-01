@@ -8,36 +8,36 @@
   action="https://formspree.io/f/xldlbvep"
   method="POST"
 >
-  <label for="name">Name<span aria-hidden="true">*</span></label>
+  <label for="name">Imię i nazwisko<span aria-hidden="true">*</span></label>
   <input
     id="name"
     name="name"
     type="text"
-    placeholder="Your full name"
+    placeholder="Twoje imię i nazwisko"
     required
   />
 
-  <label for="email">Work Email<span aria-hidden="true">*</span></label>
+  <label for="email">Adres e-mail służbowy<span aria-hidden="true">*</span></label>
   <input
     id="email"
     name="email"
     type="email"
-    placeholder="you@company.com"
+    placeholder="ty@firma.com"
     required
   />
 
-  <label for="type">Type<span aria-hidden="true">*</span></label>
+  <label for="type">Typ zapytania<span aria-hidden="true">*</span></label>
   <select id="type" name="type" required>
-    <option value="Consulting">Consulting</option>
-    <option value="Training">Training</option>
-    <option value="Other">Other</option>
+    <option value="Consulting">Doradztwo</option>
+    <option value="Training">Szkolenie</option>
+    <option value="Other">Inne</option>
   </select>
 
-  <label for="message">Short message</label>
+  <label for="message">Wiadomość</label>
   <textarea
     id="message"
     name="message"
-    placeholder="How can I help?"
+    placeholder="W czym mogę pomóc?"
     rows="5"
   ></textarea>
 
@@ -45,12 +45,12 @@
   <input
     type="hidden"
     name="_subject"
-    value="New lead from Kunke Consulting website"
+    value="Nowe zapytanie ze strony Kunke Consulting"
   />
   <input type="hidden" name="_template" value="table" />
 
   <!--  🎉 NEW: matches hero CTA  -->
-  <button type="submit" class="cta-btn">Send Message</button>
+  <button type="submit" class="cta-btn">Wyślij wiadomość</button>
 </form>
 
 <style>
