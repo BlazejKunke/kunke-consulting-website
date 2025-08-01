@@ -1,0 +1,109 @@
+---
+// props could be used later for localisation; hard-coded for now
+const packages = [
+  {
+    id: 'plant',
+    title: 'AI Plant',
+    tagline: 'Szybki start dla soloprzedsiębiorców',
+    price: 'Promocja 1 000 PLN + VAT',
+    badge: 'Nowość',
+    bullets: [
+      '20-min discovery online',
+      '3 h warsztat 1-on-1 (online)',
+      'Lista najlepszych darmowych narzędzi',
+      'PDF + nagranie po spotkaniu'
+    ],
+    calendly: 'https://calendly.com/your-link-plant'
+  },
+  {
+    id: 'grow',
+    title: 'AI Grow',
+    tagline: '4 piloty w 4 tygodnie – bestseller',
+    price: '3 999 PLN + VAT <span class="old-price">5 400 PLN</span>',
+    badge: 'Najczęstszy wybór',
+    bullets: [
+      '4 h warsztat on-site',
+      'Do 4 pilotów',
+      '30-min call z każdym pilot-lead',
+      'Monitorowanie postępów + Slack wsparcie',
+      '2 h podsumowanie i zalecenia'
+    ],
+    calendly: 'https://calendly.com/your-link-grow'
+  },
+  {
+    id: 'flourish',
+    title: 'AI Flourish',
+    tagline: 'Program enterprise, 7+ pilotów',
+    price: 'Cena po rozmowie',
+    badge: null,
+    bullets: [
+      'Kick-off z kluczowymi interesariuszami',
+      'Dedykowany całodniowy workshop',
+      'Legal & IT assessment',
+      'Dashboard pilotów + support 60 dni',
+      'Plan skalowania na całą organizację'
+    ],
+    calendly: null // we’ll show a “Contact Sales” button instead
+  }
+];
+---
+<section id="ai-packages">
+  <h2>Wybierz etap wzrostu AI dla Twojego biznesu</h2>
+
+  <div class="package-grid">
+    {packages.map(pkg => (
+      <article class="card {pkg.id}">
+        {pkg.badge && <span class="badge">{pkg.badge}</span>}
+        <img src={`/images/${pkg.id}.png`} width="80" height="80" alt="" class="icon"/>
+
+        <h3>{pkg.title}</h3>
+        <p class="tagline">{pkg.tagline}</p>
+
+        <ul>
+          {pkg.bullets.map(b => <li>{b}</li>)}
+        </ul>
+
+        <p class="price" set:html={pkg.price} />
+
+        {pkg.calendly
+          ? <a href={pkg.calendly} class="cta">Zarezerwuj termin</a>
+          : <a href="#contact" class="cta secondary">Skontaktuj się</a>}
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* ----- layout ----- */
+  #ai-packages { padding: 60px 20px; background:#fff; text-align:center; }
+  .package-grid {
+    display:flex; gap:24px; flex-wrap:wrap; justify-content:center;
+  }
+  .card {
+    flex:1 1 280px; max-width:320px;
+    background:#f8f8fa; border-radius:12px; padding:32px 24px;
+    position:relative; box-shadow:0 4px 12px rgba(0,0,0,.06);
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .icon { width:64px; height:64px; margin-bottom:16px; }
+  h3 { margin:8px 0 4px; }
+  .tagline { font-size:.95rem; color:#555; margin-bottom:16px; }
+  ul { text-align:left; padding-left:18px; margin:0 0 24px; }
+  li { margin-bottom:6px; }
+  .price { font-weight:700; margin-bottom:24px; }
+  .price .old-price { text-decoration:line-through; color:#888; font-weight:400; }
+  .cta {
+    background:var(--color-primary); color:#fff; padding:12px 24px;
+    border-radius:6px; text-decoration:none; font-weight:600;
+    transition:background .3s ease;
+  }
+  .cta:hover { background:var(--color-secondary); }
+  .cta.secondary { background:#ccc; }
+  .badge {
+    position:absolute; top:12px; right:12px;
+    background:var(--color-accent-blue); color:#fff; font-size:.75rem;
+    padding:4px 8px; border-radius:4px;
+  }
+  /* mobile stack */
+  @media(max-width:700px){ .package-grid{flex-direction:column;} }
+</style>
