@@ -6,14 +6,14 @@ const packages = [
   {
     id: 'hello',                         // <img src="/images/hello.png">
     title: 'Hello',
-    tagline: 'Solid Excel fundamentals',
+    tagline: 'Solidne podstawy Excela',
     price: '2 955 zł + VAT',
     badge: null,
     bullets: [
-      'Excel basics',
-      'Naming & functions',
-      'Shortcuts',
-      'Up to 8 people'
+      'Podstawy Excela',
+      'Nazewnictwo i funkcje',
+      'Skróty klawiaturowe',
+      'Do 8 osób'
     ],
     calendly: 'https://calendly.com/your-link-hello'
   },
@@ -21,19 +21,19 @@ const packages = [
   {
     id: 'level-up',                      // <img src="/images/level-up.png">
     title: 'Level Up',
-    tagline: 'Intermediate – get faster & smarter',
-    price: '4 995 zł + VAT',
+    tagline: 'Średniozaawansowany – szybciej i sprawniej',
+    price: '4 999 zł + VAT',
     badge: 'Najpopularniejsze',
     bullets: [
-      'Data work',
-      'Speed-up methods',
-      'Advanced visualisation',
-      'Full-day workshop (or 2 × 4 h)',
-      'Progress validation',
-      'Email support',
-      'Custom GPT-4 Excel Q&A',
-      'Team work',
-      'Up to 12 people'
+      'Praca z danymi',
+      'Metody przyspieszające pracę',
+      'Zaawansowana wizualizacja',
+      'Całodniowe szkolenie (lub 2 × 4 h)',
+      'Weryfikacja postępów',
+      'Wsparcie mailowe',
+      'Dedykowane GPT-4 Excel Q&A',
+      'Praca zespołowa',
+      'Do 12 osób'
     ],
     calendly: 'https://calendly.com/your-link-levelup'
   },
@@ -41,13 +41,13 @@ const packages = [
   {
     id: 'automate',                      // <img src="/images/automate.png">
     title: 'Automate',
-    tagline: 'Tailored automation solutions',
+    tagline: 'Dedykowane rozwiązania automatyzujące',
     price: 'Cena po rozmowie',
     badge: null,
     bullets: [
-      'Deduplicate',
-      'Analyse',
-      'Custom automation solutions'
+      'Automatyzacje',
+      'Zaawansowana analiza i projekty',
+      'Indywidualne rozwiązania automatyzujące'
     ],
     calendly: null                       // shows “Contact Sales”
   }
@@ -61,8 +61,7 @@ const packages = [
     {packages.map(pkg => (
       <article class={`card ${pkg.id}`}>
         {pkg.badge && <span class="badge">{pkg.badge}</span>}
-        <img src={`/images/${pkg.id}.png`} width="80" height="80" alt="" class="icon"/>
-
+        <img src={pkg.id === 'hello' ? '/images/Hello.png' : pkg.id === 'level-up' ? '/images/LevelUp.png' : `/images/${pkg.id}.png`} width="80" height="80" alt="" class="icon"/>
         <h3>{pkg.title}</h3>
         <p class="tagline">{pkg.tagline}</p>
 

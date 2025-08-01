@@ -65,6 +65,8 @@
 
   display: grid;
   gap: 1.25rem;   /* space between fields */
+  /* ADD: desktop content width cap  ───────────────────────────── */
+  --page-max: 72rem;      /* 72 × 16 px  = 1152 px */
 }
 
 .contact-form label {
@@ -100,6 +102,12 @@
 @media (max-width: 480px) {
   .contact-form {
     padding: 1.5rem 1rem;
+  }
+}
+/* Ultra-wide screens: give 4K monitors a wider cap */
+@media (min-width: 2000px) {
+  :root {
+    --page-max: 96rem; /* 96 × 16px = 1536px */
   }
 }
 </style>
