@@ -1,0 +1,125 @@
+---
+/**
+ * Mirrored variant of ExperienceSection – shows image first, then text.
+ * Use for highlighting hands‑on workshops & trainings.
+ * Pass your illustration/portrait via the `imageSrc` prop.
+ */
+const {
+  imageSrc = "/images/Workshop2025.JPG",
+} = Astro.props;
+---
+<section class="workshops">
+  <div class="image-wrapper">
+    <img src={imageSrc} alt="Workshop training" />
+  </div>
+
+  <div class="copy">
+    <span class="star">*</span>
+    <h2>
+      Praktyczne szkolenia, które zamieniają ciekawość w <strong>realne zmiany pracy</strong>
+    </h2>
+
+    <p>
+      Moje sesje prowadzę łącząc teorię z ćwiczeniami na żywo,
+      dzięki czemu Twój zespół zdobywa praktyczne umiejętności, które może wykorzystać już następnego dnia.
+    </p>
+
+    <ul class="topics">
+      <li>Excela z wykorzystaniem AI</li>
+      <li>Praktyczna Sztuczna Inteligencja</li>
+      <li>Projekty doradcze</li>
+    </ul>
+  </div>
+</section>
+
+<style>
+:root {
+  /* Re‑use vars from your design system */
+  --accent: #004b40;
+  --radius-xl: 1rem;
+}
+
+.workshops {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 1.5rem;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+/* Image first on desktop, auto on mobile */
+.image-wrapper {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  max-width: 420px;
+  justify-self: center;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Text block */
+.copy .star {
+  display: inline-block;
+  color: var(--accent);
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.copy h2 {
+  font-size: 1.65rem;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+.copy strong {
+  font-weight: 700;
+}
+
+.copy p {
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.topics {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.topics li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.topics li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+  .workshops {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  /* Put text first on mobile for readability */
+  .copy {
+    order: -1;
+  }
+  .image-wrapper {
+    margin-top: 2rem;
+  }
+  .copy h2 {
+    font-size: 1.45rem;
+  }
+}
+</style>
