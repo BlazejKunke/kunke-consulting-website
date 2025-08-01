@@ -1,6 +1,7 @@
 ---
 import ContactForm from '../components/ContactForm.astro';
 import AiPackages from '../components/AiPackages.astro';
+import Excel from '../components/Excel.astro';
 ---
 
 
@@ -15,7 +16,7 @@ import AiPackages from '../components/AiPackages.astro';
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles/global.css" />
-    <title>Kunke Consulting - Your Partner in Business Excellence</title>
+    <title>Kunke Consulting - Szkolenia i doradztwo z AI i Excela dla firm</title>
 
   </head>
   <body>
@@ -33,13 +34,19 @@ import AiPackages from '../components/AiPackages.astro';
     <section id="hero">
       <h1><span class="text-gradient">Kunke Consulting</span></h1>
       <p>Nowoczesne rozwiązania AI, Excel dla małych i średnich firm.</p>
-      <a href="#contact" class="cta-btn">Get in Touch</a>
+      <a href="#ai-packages" class="cta-btn">Get in Touch</a>
 
     </section>
 
     <!-- AI Packages Section -->
-    <AiPackages />
+    <section id="ai-packages">
+      <AiPackages />
+    </section>
     
+    <!-- Excel Packages Section -->
+    <section id="excel-packages">
+      <Excel />   
+    </section>
 
     <section id="about">
       <h2>About Me: Blazej Kunke</h2>

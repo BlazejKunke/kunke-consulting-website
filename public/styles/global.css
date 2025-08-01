@@ -9,6 +9,9 @@
   --color-white: #ffffff;
   --color-light-grey: #eaf2f8; /* Light blue from about section, or a very subtle grey */
   --color-border: #dddddd;
+
+  /* ADD: desktop content width cap  ───────────────────────────── */
+  --page-max: 72rem;      /* 72 × 16 px  = 1152 px */
 }
 /* Smooth scrolling for in-page anchor links */
 html {
@@ -72,9 +75,11 @@ nav a:hover {
 
 /* Sections */
 section {
-  padding: 60px 20px; /* Increased padding for more breathing room */
-  margin: 0 auto;
-  max-width: 900px;
+  padding: 60px 20px;
+  margin-inline: auto;
+
+  /* NEW: fluid until 90 % viewport, then stop at var(--page-max) */
+  width: min(90%, var(--page-max));
 }
 #hero {
   background-color: var(--color-light-bg);
@@ -123,4 +128,8 @@ section {
 .cta-btn:hover {
   background-image: linear-gradient(45deg, #d4af37 0%, #b8922d 100%); /* warm gold */
   transform: translateY(-3px);  /* nice lift effect */
+}
+
+@media (min-width: 1536px) {     /* 1536 px = Tailwind’s 2xl */
+  :root { --page-max: 87.5rem; } /* 87.5 × 16 px = 1400 px */
 }

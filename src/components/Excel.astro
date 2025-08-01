@@ -1,0 +1,116 @@
+---
+/* Excel.astro  – training-packages component                     */
+/* props left in place for future i18n                             */
+
+const packages = [
+  {
+    id: 'hello',                         // <img src="/images/hello.png">
+    title: 'Hello',
+    tagline: 'Solid Excel fundamentals',
+    price: '2 955 zł + VAT',
+    badge: null,
+    bullets: [
+      'Excel basics',
+      'Naming & functions',
+      'Shortcuts',
+      'Up to 8 people'
+    ],
+    calendly: 'https://calendly.com/your-link-hello'
+  },
+
+  {
+    id: 'level-up',                      // <img src="/images/level-up.png">
+    title: 'Level Up',
+    tagline: 'Intermediate – get faster & smarter',
+    price: '4 995 zł + VAT',
+    badge: 'Najpopularniejsze',
+    bullets: [
+      'Data work',
+      'Speed-up methods',
+      'Advanced visualisation',
+      'Full-day workshop (or 2 × 4 h)',
+      'Progress validation',
+      'Email support',
+      'Custom GPT-4 Excel Q&A',
+      'Team work',
+      'Up to 12 people'
+    ],
+    calendly: 'https://calendly.com/your-link-levelup'
+  },
+
+  {
+    id: 'automate',                      // <img src="/images/automate.png">
+    title: 'Automate',
+    tagline: 'Tailored automation solutions',
+    price: 'Cena po rozmowie',
+    badge: null,
+    bullets: [
+      'Deduplicate',
+      'Analyse',
+      'Custom automation solutions'
+    ],
+    calendly: null                       // shows “Contact Sales”
+  }
+];
+---
+
+<section id="excel-packages">
+  <h2>Excel</h2>
+
+  <div class="package-grid">
+    {packages.map(pkg => (
+      <article class={`card ${pkg.id}`}>
+        {pkg.badge && <span class="badge">{pkg.badge}</span>}
+        <img src={`/images/${pkg.id}.png`} width="80" height="80" alt="" class="icon"/>
+
+        <h3>{pkg.title}</h3>
+        <p class="tagline">{pkg.tagline}</p>
+
+        <ul>
+          {pkg.bullets.map(b => <li>{b}</li>)}
+        </ul>
+
+        <p class="price" set:html={pkg.price} />
+
+        {pkg.calendly
+          ? <a href={pkg.calendly} class="cta">Zarezerwuj termin</a>
+          : <a href="#contact" class="cta secondary">Skontaktuj się</a>}
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* ----- layout & card styles (unchanged) ----- */
+  #excel-packages { padding:60px 20px; background:#fff; text-align:center; }
+  .package-grid {
+    display:flex; gap:24px; flex-wrap:wrap; justify-content:center;
+  }
+  .card {
+    flex:1 1 280px; max-width:320px;
+    background:#f8f8fa; border-radius:12px; padding:32px 24px;
+    position:relative; box-shadow:0 4px 12px rgba(0,0,0,.06);
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .icon { width:64px; height:64px; margin-bottom:16px; }
+  h3 { margin:8px 0 4px; }
+  .tagline { font-size:.95rem; color:#555; margin-bottom:16px; }
+  ul { text-align:left; padding-left:18px; margin:0 0 24px; }
+  li { margin-bottom:6px; }
+  .price { font-weight:700; margin-bottom:24px; }
+  .price .old-price { text-decoration:line-through; color:#888; font-weight:400; }
+  .cta {
+    background:var(--color-primary); color:#fff; padding:12px 24px;
+    border-radius:6px; text-decoration:none; font-weight:600;
+    transition:background .3s ease;
+  }
+  .cta:hover { background:var(--color-secondary); }
+  .cta.secondary { background:#ccc; }
+  .badge {
+    position:absolute; top:12px; right:12px;
+    background:var(--color-accent-blue); color:#fff; font-size:.75rem;
+    padding:4px 8px; border-radius:4px;
+  }
+  /* mobile stack */
+  @media(max-width:700px){ .package-grid{flex-direction:column;} }
+</style>
