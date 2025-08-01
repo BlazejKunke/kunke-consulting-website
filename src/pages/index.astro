@@ -3,6 +3,7 @@ import ContactForm from '../components/ContactForm.astro';
 import AiPackages from '../components/AiPackages.astro';
 import Excel from '../components/Excel.astro';
 import Testimonials from '../components/testimonials.astro';
+import ExperienceSection from '../components/ExperienceSection.astro';
 ---
 
 
@@ -33,11 +34,15 @@ import Testimonials from '../components/testimonials.astro';
     </header>
 
     <section id="hero">
-      <h1 style="background: #fff3cd; color: #856404; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: center; font-size: 1.2em;">Ta strona jest w trakcie konstrukcji i część danych nie jest aktualna, skontaktuj się z nami bezpośrednio aby potwierdzić szczegóły</h1>
       <h1><span class="text-gradient">Kunke Consulting</span></h1>
       <p>Nowoczesne rozwiązania AI, Excel dla małych i średnich firm.</p>
       <a href="#ai-packages" class="cta-btn">AI dla firm</a>
 
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+      <ExperienceSection />
     </section>
 
     <!-- AI Packages Section -->
@@ -50,10 +55,10 @@ import Testimonials from '../components/testimonials.astro';
       <Excel />   
     </section>
 
-<!-- Testimonials Section -->
-<section id="testimonials">
-  <Testimonials />
-</section>
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+    <Testimonials />
+    </section>
 
     <section id="about">
       <h2>O mnie</h2>
@@ -70,6 +75,7 @@ import Testimonials from '../components/testimonials.astro';
 
     <section id="services">
       <h2>Usługi</h2>
+      <div style="background: #fff3cd; color: #856404; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: center; font-size: 1.2em;">Ta strona jest w trakcie konstrukcji i część danych nie jest aktualna, skontaktuj się z nami bezpośrednio aby potwierdzić szczegóły</div>
       <div class="service-item">
         <h3>Praktyczne zastosowania AI</h3>
         <p>Wykorzystaj moc sztucznej inteligencji, aby usprawnić swoje operacje, poprawić podejmowanie decyzji i tworzyć innowacyjne rozwiązania. Od opracowania strategii AI po wdrożenie praktycznych narzędzi AI – pomagamy zintegrować najnowocześniejsze technologie z Twoją firmą w prosty sposób.</p>
