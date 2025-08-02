@@ -12,41 +12,42 @@ const packages = [
       'Lista najlepszych darmowych narzędzi',
       'PDF + nagranie po spotkaniu'
     ],
-    calendly: 'https://calendly.com/your-link-plant'
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   },
   {
     id: 'grow',
     title: 'AI Grow',
-    tagline: '4 piloty w 4 tygodnie – bestseller',
+    tagline: 'Wprowadź AI do Twojego zespołu',
     price: '3 999 PLN + VAT',
-    badge: 'Najczęstszy wybór',
     bullets: [
       'Półdniowy warsztat AI u Was',
       'Praktyczna sztuczna inteligencja',
       '4 programy pilotażowe + wsparcie',
       '2 h podsumowanie i zalecenia'
     ],
-    calendly: 'https://calendly.com/your-link-grow'
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   },
   {
     id: 'flourish',
     title: 'AI Flourish',
-    tagline: 'Program enterprise, 7+ pilotów',
-    price: 'Cena po rozmowie',
+    tagline: 'Progam AI dla całej firmy',
+    price: 'Cena ustalana indywidualnie',
     badge: null,
     bullets: [
-      'Kick-off z kluczowymi interesariuszami',
-      'Całodniowy workshop',
-      'Legal & IT assessment*',
-      'Dashboard pilotów + support 60 dni',
+      'Spotkanie Kick-off',
+      'Całodniowy workshop AI',
+      'Wsparcie prawne',
+      'Wsparcie techniczne IT',
+      'Konkretny plan wdrożenia AI',
+      'Programy pilotażowe',
       'Plan skalowania na całą organizację'
     ],
-    calendly: null // we’ll show a “Contact Sales” button instead
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   }
 ];
 ---
 <section id="ai-packages">
-  <h2>Wybierz etap wzrostu AI dla Twojego biznesu</h2>
+  <h2>Wybierz szkolenie AI</h2>
 
   <div class="package-grid">
     {packages.map(pkg => (
@@ -64,7 +65,7 @@ const packages = [
         <p class="price" set:html={pkg.price} />
 
         {pkg.calendly
-          ? <a href={pkg.calendly} class="cta">Zarezerwuj termin</a>
+          ? <a href={pkg.calendly} class="cta" target="_blank" rel="noopener noreferrer">Zarezerwuj termin</a>
           : <a href="#contact" class="cta secondary">Skontaktuj się</a>}
       </article>
     ))}

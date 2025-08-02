@@ -15,7 +15,7 @@ const packages = [
       'Skróty klawiaturowe',
       'Do 8 osób'
     ],
-    calendly: 'https://calendly.com/your-link-hello'
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   },
 
   {
@@ -35,7 +35,7 @@ const packages = [
       'Praca zespołowa',
       'Do 12 osób'
     ],
-    calendly: 'https://calendly.com/your-link-levelup'
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   },
 
   {
@@ -49,7 +49,7 @@ const packages = [
       'Zaawansowana analiza i projekty',
       'Indywidualne rozwiązania automatyzujące'
     ],
-    calendly: null                       // shows “Contact Sales”
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   }
 ];
 ---
@@ -72,7 +72,7 @@ const packages = [
         <p class="price" set:html={pkg.price} />
 
         {pkg.calendly
-          ? <a href={pkg.calendly} class="cta">Zarezerwuj termin</a>
+          ? <a href={pkg.calendly} class="cta" target="_blank" rel="noopener noreferrer">Zarezerwuj termin</a>
           : <a href="#contact" class="cta secondary">Skontaktuj się</a>}
       </article>
     ))}
