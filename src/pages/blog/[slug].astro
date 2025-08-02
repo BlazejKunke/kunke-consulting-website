@@ -1,0 +1,27 @@
+---
+import { getCollection, getEntryBySlug } from "astro:content";
+
+/* 1️⃣  Tell Astro all valid slugs ------------------------------------ */
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");          // read every .md file
+  return posts.map((post) => ({
+    params: { slug: post.slug },                      // { slug: "excel-tips" }
+  }));
+}
+
+/* 2️⃣  For each request, load that one post -------------------------- */
+const { slug } = Astro.params;
+const post = await getEntryBySlug("blog", slug);
+if (!post) throw new Error(`Post “${slug}” not found`);
+---
+
+
+<html lang="en">
+  <head><title>{post.data.title} | Blog</title></head>
+  <body class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold">{post.data.title}</h1>
+    <p class="text-sm text-gray-500">{post.data.date.toLocaleDateString()}</p>
+    <article class="prose">{post.body}</article>
+    <p class="mt-8"><a href="/blog/">← Back to all posts</a></p>
+  </body>
+</html>

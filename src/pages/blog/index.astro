@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date - a.data.date
+);
+
+console.log("POST COUNT:", posts.length);  // ← debug line
+---
+
+<html lang="en">
+  <head>
+    <title>Blog | Kunke Consulting</title>
+  </head>
+
+  <body class="max-w-4xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-extrabold text-center mb-12">
+      Kunke Consulting&nbsp;Blog
+    </h1>
+
+    {posts.map((post) => (
+      <article class="mb-16" id={post.slug}>
+        <h2 class="text-2xl font-bold">
+          <a href={`/blog/${post.slug}/`} class="hover:underline">
+            {post.data.title}
+          </a>
+        </h2>
+
+        <p class="text-sm text-gray-500 mb-4">
+          {post.data.date.toLocaleDateString()}
+        </p>
+
+        <p class="text-gray-700">{post.data.description}</p>
+      </article>
+    ))}
+  </body>
+</html>
