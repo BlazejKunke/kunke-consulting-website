@@ -58,15 +58,18 @@ const packages = [
         <h3>{pkg.title}</h3>
         <p class="tagline">{pkg.tagline}</p>
 
-        <ul>
-          {pkg.bullets.map(b => <li>{b}</li>)}
-        </ul>
+        <div class="content">
+          <ul>
+            {pkg.bullets.map(b => <li>{b}</li>)}
+          </ul>
 
-        <p class="price" set:html={pkg.price} />
+          <div class="spacer" />
+          <p class="price" set:html={pkg.price} />
 
-        {pkg.calendly
-          ? <a href={pkg.calendly} class="cta" target="_blank" rel="noopener noreferrer">Zarezerwuj termin</a>
-          : <a href="#contact" class="cta secondary">Skontaktuj się</a>}
+          {pkg.calendly
+            ? <a href={pkg.calendly} class="cta" target="_blank" rel="noopener noreferrer">Zarezerwuj termin</a>
+            : <a href="#contact" class="cta secondary">Skontaktuj się</a>}
+        </div>
       </article>
     ))}
   </div>

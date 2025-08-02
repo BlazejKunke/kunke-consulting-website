@@ -5,6 +5,7 @@ import Excel from '../components/Excel.astro';
 import Testimonials from '../components/testimonials.astro';
 import ExperienceSection from '../components/ExperienceSection.astro';
 import WorkshopSection from '../components/WorkshopSection.astro';
+import OMnie from '../components/OMnie.astro';
 ---
 
 
@@ -69,17 +70,9 @@ import WorkshopSection from '../components/WorkshopSection.astro';
     <Testimonials />
     </section>
 
-    <section id="about">
-      <h2>O mnie</h2>
-      <p>
-        Cześć! Nazywam się Błażej Kunke i prowadzę Kunke Consulting — firmę, w której łączę doświadczenie z korporacji (m.in. McKinsey & Company) z praktycznym podejściem do szkoleń i doradztwa.
-      </p>
-      <p>
-        Mam wykształcenie ekonomiczne z Uniwersytetu Ekonomicznego w Poznaniu, a od lat pasjonuję się tym, jak technologia może ułatwiać pracę. Pomagam firmom lepiej korzystać z Excela, wdrażać AI w codziennych zadaniach i usprawniać działania marketingowe.
-      </p>
-      <p>
-        Stawiam na proste, konkretne rozwiązania — i wierzę, że dobre szkolenie potrafi zmienić naprawdę wiele.
-      </p>
+    <!-- About Me Section -->
+    <section id="about-me">
+      <OMnie />
     </section>
 
     <section id="services">
@@ -96,8 +89,8 @@ import WorkshopSection from '../components/WorkshopSection.astro';
       </section>
 
     <section id="contact">
-      <h2>Skontaktuj się</h2>
-      <p style="text-align: center; margin-bottom: 20px;">Chcesz porozmawiać o potrzebach swojej firmy? Skorzystaj z formularza poniżej lub napisz bezpośrednio.</p>
+      <h2>Kontakt</h2>
+      <p style="text-align: center; margin-bottom: 20px;">Napisz mi email, lub skorzystaj z formularza poniżej lub napisz bezpośrednio.</p>
       <div class="contact-info" style="text-align: center; margin-bottom: 30px;">
         <p><strong>Email:</strong> <a href="mailto:info@kunkeconsulting.com" style="color: #2c3e50; text-decoration: none;">info@kunkeconsulting.com</a></p>
               </div>
@@ -140,6 +133,18 @@ import WorkshopSection from '../components/WorkshopSection.astro';
     }
     .footer-section ul li {
       margin: 0 0 8px 0;
+    }
+    .footer-section.social-media ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-section.social-media ul li {
+      margin-bottom: 8px;
+      width: 100%;
+      text-align: center;
     }
     .footer-bottom {
       margin-top: 30px;
