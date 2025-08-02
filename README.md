@@ -1,5 +1,29 @@
 # Astro Starter Kit: Minimal
+# Kunke Consulting Website
 
+This is the official website for Kunke Consulting, built with Astro. The site showcases consulting services, client testimonials, team information, blog articles, and contact options.
+
+## 🌱 About Kunke Consulting
+
+Kunke Consulting provides expert business and AI consulting services, workshops, and training. The website is designed to present offerings, share client success stories, and enable easy contact for new clients.
+
+## ✨ Features
+
+- Home page with service overview
+- Team and experience section
+- Blog with articles and tips
+- Workshop and training information
+- Contact form for inquiries
+- Client testimonials with ratings
+
+## 🛠️ Tech Stack
+
+- [Astro](https://astro.build/) (static site generator)
+- TypeScript
+- CSS Modules
+- Responsive design
+
+---
 ```sh
 npm create astro@latest -- --template minimal
 ```
