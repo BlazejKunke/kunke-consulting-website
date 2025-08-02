@@ -75,22 +75,10 @@ import OMnie from '../components/OMnie.astro';
       <OMnie />
     </section>
 
-    <section id="services">
-      <h2>Usługi</h2>
-      <div style="background: #fff3cd; color: #856404; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: center; font-size: 1.2em;">Ta strona jest w trakcie konstrukcji i część danych nie jest aktualna, skontaktuj się z nami bezpośrednio aby potwierdzić szczegóły</div>
-      <div class="service-item">
-        <h3>Praktyczne zastosowania AI</h3>
-        <p>Wykorzystaj moc sztucznej inteligencji, aby usprawnić swoje operacje, poprawić podejmowanie decyzji i tworzyć innowacyjne rozwiązania. Od opracowania strategii AI po wdrożenie praktycznych narzędzi AI – pomagamy zintegrować najnowocześniejsze technologie z Twoją firmą w prosty sposób.</p>
-      </div>
-      <div class="service-item">
-        <h3>Zaawansowany Excel i analiza danych</h3>
-        <p>Odblokuj potencjał swoich danych dzięki naszym spersonalizowanym warsztatom z podstaw programu Excel, stworzonym specjalnie dla małych i średnich firm.</p>
-      </div>
-      </section>
 
     <section id="contact">
       <h2>Kontakt</h2>
-      <p style="text-align: center; margin-bottom: 20px;">Napisz mi email, lub skorzystaj z formularza poniżej lub napisz bezpośrednio.</p>
+      <p style="text-align: center; margin-bottom: 20px;">Napisz mi email, lub skorzystaj z formularza poniżej.</p>
       <div class="contact-info" style="text-align: center; margin-bottom: 30px;">
         <p><strong>Email:</strong> <a href="mailto:info@kunkeconsulting.com" style="color: #2c3e50; text-decoration: none;">info@kunkeconsulting.com</a></p>
               </div>
@@ -148,12 +136,19 @@ import OMnie from '../components/OMnie.astro';
     }
     .footer-bottom {
       margin-top: 30px;
-      padding: 15px 0;
+      padding: 20px 10px;
       background: #ececf2;
-      font-size: 0.95em;
+      font-size: 0.85em;
       color: #555;
       width: 100%;
       text-align: center;
+      box-sizing: border-box;
+    }
+    @media (max-width: 600px) {
+      .footer-bottom {
+        font-size: 0.75em;
+        padding: 24px 12px;
+      }
     }
   </style>
   <footer>
