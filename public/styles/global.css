@@ -163,3 +163,58 @@ section {
 @media (min-width: 1536px) {     /* 1536 px = Tailwind’s 2xl */
   :root { --page-max: 87.5rem; } /* 87.5 × 16 px = 1400 px */
 }
+
+/* === BLOG CARDS =================================================== */
+.blog-grid {
+  display: grid;
+  gap: 48px;
+}
+
+/* 1-column on mobiles, 2-col from 640 px wide */
+@media (min-width: 640px) {
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Hero / featured card spans full width */
+.blog-card.big {
+  grid-column: 1 / -1;
+}
+
+.blog-card {
+  background: #f8f8fa;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.05);
+  transition: transform .2s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-4px);
+}
+
+.blog-card h2 {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+  color: var(--color-primary);
+}
+
+.blog-card p.desc {
+  margin: 0 0 12px;
+  color: #555;
+  line-height: 1.4;
+  font-size: .95rem;
+}
+
+.blog-card a {
+  text-decoration: none;
+}
+
+/* date */
+.blog-card time {
+  display: block;
+  font-size: .8rem;
+  color: #888;
+  margin-bottom: 4px;
+}
