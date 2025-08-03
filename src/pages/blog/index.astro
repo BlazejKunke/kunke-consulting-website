@@ -2,36 +2,88 @@
 import { getCollection } from "astro:content";
 
 const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 
-console.log("POST COUNT:", posts.length);  // ← debug line
+// Get the 3 most recent posts for the grid
+const recentPosts = posts.slice(0, 3);
 ---
 
-<html lang="en">
+<html lang="pl">
   <head>
-    <title>Blog | Kunke Consulting</title>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/images/Kunke_Favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/global.css" />
+    <title>Blog | Kunke Consulting - AI, Excel i Doradztwo</title>
+    <meta name="description" content="Blog Kunke Consulting - najnowsze artykuły o AI, Excel i doradztwie biznesowym" />
   </head>
 
-  <body class="max-w-4xl mx-auto px-4 py-12">
-    <h1 class="text-4xl font-extrabold text-center mb-12">
-      Kunke Consulting&nbsp;Blog
-    </h1>
+  <body>
+    <!-- Header with breadcrumb and follow link -->
+    <header class="blog-header">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> > <span>Kunke Consulting BLOG</span>
+      </nav>
+      <a href="https://www.linkedin.com/in/blazejkunke/" class="follow-link" target="_blank" rel="noopener noreferrer">FOLLOW US</a>
+    </header>
 
-    {posts.map((post) => (
-      <article class="mb-16" id={post.slug}>
-        <h2 class="text-2xl font-bold">
-          <a href={`/blog/${post.slug}/`} class="hover:underline">
-            {post.data.title}
-          </a>
-        </h2>
+    <!-- Main blog title section -->
+    <section class="blog-title-section">
+      <h1>Kunke Consulting Blog</h1>
+      <p class="subtitle">AI, Excel i Doradztwo</p>
+    </section>
 
-        <p class="text-sm text-gray-500 mb-4">
-          {post.data.date.toLocaleDateString()}
-        </p>
+    <!-- Hero workshop promotion -->
+    <section class="blog-hero">
+      <a href="#ai-packages" class="hero-block">
+        <div class="hero-image">
+          <img src="/images/ai-workshop-hero.png" alt="AI Workshop illustration" />
+        </div>
+        <div class="hero-content">
+          <h2>Warsztaty AI</h2>
+          <p>Praktyczne szkolenia AI dla Twojego zespołu. Naucz się wykorzystywać sztuczną inteligencję w codziennej pracy.</p>
+          <span class="hero-arrow">→</span>
+        </div>
+      </a>
+    </section>
 
-        <p class="text-gray-700">{post.data.description}</p>
-      </article>
-    ))}
+    <!-- Recent posts grid -->
+    <section class="blog-grid-section">
+      <div class="blog-posts-grid">
+        {recentPosts.map((post) => (
+          <article class="blog-post-card">
+            <a href={`/blog/${post.slug}/`}>
+              <div class="post-image">
+                <img src={`/images/blog-placeholder-${Math.floor(Math.random() * 3) + 1}.jpg`} alt={post.data.title} />
+              </div>
+              <h3>{post.data.title}</h3>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- All posts section -->
+    <section class="all-posts-section">
+      <h2>Wszystkie artykuły</h2>
+      <div class="all-posts-list">
+        {posts.map((post) => (
+          <article class="post-list-item">
+            <time>{post.data.date.toLocaleDateString('pl-PL')}</time>
+            <h3><a href={`/blog/${post.slug}/`}>{post.data.title}</a></h3>
+            <p>{post.data.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Footer link -->
+    <footer class="blog-footer">
+      <a href="/">← Powrót do strony głównej</a>
+    </footer>
   </body>
 </html>
