@@ -1,0 +1,89 @@
+---
+import TeamMember from '../components/TeamMember.astro';
+
+// Define your team members here
+const teamMembers = [
+  {
+    name: "Tomasz Łozowicki",
+    role: "Ekspert ds. marketingu, komunikacji i wystąpień publicznych",
+    bio: "Specjalistka z 15-letnim doświadczeniem w prowadzeniu projektów marketingowych, niezależny konsultant.",
+    image: "/images/TomaszLozowicki.jpg",
+    specializations: ["Digital Marketing", "Wystąpienia Publiczne", "Komunikacja"],
+    linkedin: "https://www.linkedin.com/in/tomasz-lozowicki/",
+    yearsOfCollaboration: "2022"
+  },
+  // Add more team members...
+  {
+    name: "Janusz Józef Kunke",
+    role: "CEO Kunke Poligrafia",
+    bio: "Ekspert od stretegii, sprzedaży, druku i tysiąca innych spraw. Prywatnie: tata :)",
+    image: "/images/JanuszKunke.jpg",
+    specializations: [
+      "Sprzedaż",
+      "Strategia rozwoju firmy",
+      "Psychologia bizensu"
+    ],
+    linkedin: "https://www.linkedin.com/in/janusz-j%C3%B3zef-kunke-83b08255/",
+    yearsOfCollaboration: "1991"
+  },
+  {
+    name: "Krzysztof Cichy",
+    role: "AI and Vibe Coding Expert",
+    bio: "",
+    image: "/images/KrzysztofCichy.jpg",
+    specializations: [
+      "Practica AI",
+      "VibeCoding",
+      "Sales"
+    ],
+    linkedin: "https://www.linkedin.com/in/krzysztofcichy/?originalSubdomain=pl",
+    yearsOfCollaboration: "2025"
+  },
+];
+---
+
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/images/Kunke_Favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/global.css" />
+    <title>Zespół | Kunke Consulting</title>
+    <meta name="description" content="Poznaj zespół ekspertów Kunke Consulting. Współpracujemy z najlepszymi specjalistami w dziedzinie AI, Excela i doradztwa biznesowego." />
+  </head>
+  <body>
+    <!-- Header with navigation -->
+    <header>
+      <nav>
+        <ul>
+          <li><a href="/">Strona główna</a></li>
+          <li><a href="/zespol">Zespół</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/#contact">Kontakt</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="team-hero">
+        <h1>Mój Zespół</h1>
+        <p class="subtitle">Współpracuję z najlepszymi ekspertami w branży</p>
+      </section>
+
+      <section class="team-grid">
+        {teamMembers.map(member => (
+          <TeamMember {...member} />
+        ))}
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <!-- Copy your existing footer here -->
+    </footer>
+  </body>
+</html>

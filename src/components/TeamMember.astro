@@ -1,0 +1,38 @@
+---
+export interface Props {
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+  specializations: string[];
+  linkedin?: string;
+  yearsOfCollaboration?: string;
+}
+
+const { name, role, bio, image, specializations, linkedin, yearsOfCollaboration } = Astro.props;
+---
+
+<article class="team-member">
+  <div class="member-image">
+    <img src={image} alt={name} class="team-member-img" />
+  </div>
+  <div class="member-info">
+    <h3>{name}</h3>
+    <p class="role">{role}</p>
+    <p class="bio">{bio}</p>
+    <div class="specializations">
+      <h4>Specjalizacje:</h4>
+      <ul>
+        {specializations.map(spec => <li>{spec}</li>)}
+      </ul>
+    </div>
+    {yearsOfCollaboration && (
+      <p class="collaboration">Współpracujemy od: {yearsOfCollaboration}</p>
+    )}
+    {linkedin && (
+      <a href={linkedin} class="linkedin-link" target="_blank" rel="noopener noreferrer">
+        LinkedIn →
+      </a>
+    )}
+  </div>
+</article>

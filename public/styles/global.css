@@ -1,3 +1,21 @@
+.team-member {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.member-image {
+  flex-shrink: 0;
+}
+.team-member-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: block;
+  margin: 0;
+}
 /* === AI Packages Card Styles === */
 .card {
   flex: 1 1 280px;
@@ -418,6 +436,17 @@ section {
   margin-bottom: 40px;
   color: var(--color-primary);
   text-align: left;
+}
+
+/* Team member image size */
+.team-member-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: block;
+  margin: 0 auto;
 }
 
 .all-posts-list {
