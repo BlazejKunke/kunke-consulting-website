@@ -38,11 +38,28 @@ import OMnie from '../components/OMnie.astro';
   </head>
   
 
+
+    <style>
+      section {
+        margin-top: 32px;
+        margin-bottom: 32px;
+      }
+      #hero {
+        margin-top: 24px;
+        margin-bottom: 24px;
+      }
+      #contact p {
+        margin-bottom: 10px !important;
+      }
+      .contact-info {
+        margin-bottom: 15px !important;
+      }
+    </style>
+
     <section id="hero">
       <h1><span class="text-gradient">^Kunke Consulting</span></h1>
       <p>Nowoczesne rozwiązania AI i Excel dla polskich firm.</p>
       <a href="#ai-packages" class="cta-btn">AI dla firm</a>
-
     </section>
 
     <!-- Experience Section -->
@@ -59,7 +76,7 @@ import OMnie from '../components/OMnie.astro';
     <section id="ai-packages">
       <AiPackages />
     </section>
-    
+
     <!-- Excel Packages Section -->
     <section id="excel-packages">
       <Excel />   
@@ -67,7 +84,7 @@ import OMnie from '../components/OMnie.astro';
 
     <!-- Testimonials Section -->
     <section id="testimonials">
-    <Testimonials />
+      <Testimonials />
     </section>
 
     <!-- About Me Section -->
@@ -75,14 +92,12 @@ import OMnie from '../components/OMnie.astro';
       <OMnie />
     </section>
 
-
     <section id="contact">
       <h2>Kontakt</h2>
-      <p style="text-align: center; margin-bottom: 20px;">Napisz mi email, lub skorzystaj z formularza poniżej.</p>
-      <div class="contact-info" style="text-align: center; margin-bottom: 30px;">
+      <p style="text-align: center; margin-bottom: 10px;">Napisz mi email, lub skorzystaj z formularza poniżej.</p>
+      <div class="contact-info" style="text-align: center; margin-bottom: 15px;">
         <p><strong>Email:</strong> <a href="mailto:info@kunkeconsulting.com" style="color: #2c3e50; text-decoration: none;">info@kunkeconsulting.com</a></p>
-              </div>
-
+      </div>
       <!-- New Contact Form -->
       <ContactForm />
     </section>
@@ -165,7 +180,7 @@ import OMnie from '../components/OMnie.astro';
           </p>
         </div>
         <div class="footer-section legal-info">
-          <h3>Legal</h3>
+          <h3>^Kunke Consulting</h3>
           <p><a href="/privacy-policy">Privacy Policy and Legal</a></p>
           <p><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></p>
         </div>
