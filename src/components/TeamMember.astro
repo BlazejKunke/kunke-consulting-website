@@ -6,10 +6,11 @@ export interface Props {
   image: string;
   specializations: string[];
   linkedin?: string;
+  website?: string;
   yearsOfCollaboration?: string;
 }
 
-const { name, role, bio, image, specializations, linkedin, yearsOfCollaboration } = Astro.props;
+const { name, role, bio, image, specializations, linkedin, website, yearsOfCollaboration } = Astro.props;
 ---
 
 <article class="team-member">
@@ -32,6 +33,11 @@ const { name, role, bio, image, specializations, linkedin, yearsOfCollaboration 
     {linkedin && (
       <a href={linkedin} class="linkedin-link" target="_blank" rel="noopener noreferrer">
         LinkedIn →
+      </a>
+    )}
+    {website && (
+      <a href={website} class="website-link" target="_blank" rel="noopener noreferrer" style="margin-left: 1em;">
+        Strona WWW →
       </a>
     )}
   </div>
