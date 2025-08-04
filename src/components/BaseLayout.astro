@@ -1,0 +1,75 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const { title, description = "Kunke Consulting: szkolenia i doradztwo z AI oraz Excela dla firm", ogImage } = Astro.props;
+
+// Generate a random nonce for inline styles
+const nonce = Math.random().toString(36).substring(2, 15);
+
+// Content Security Policy
+const csp = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'", // Astro needs inline scripts for hydration
+  `style-src 'self' 'unsafe-inline' fonts.googleapis.com`, // Allow Google Fonts and inline styles
+  "font-src 'self' fonts.gstatic.com",
+  "connect-src 'self' formspree.io",
+  "form-action 'self' formspree.io",
+  "frame-ancestors 'none'", // Prevents clickjacking
+  "base-uri 'self'",
+  "object-src 'none'",
+  "img-src 'self' data:",
+  "media-src 'self'",
+  "manifest-src 'self'"
+].join('; ');
+---
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy" content={csp} />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  
+  <!-- SEO Meta Tags -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="keywords" content="AI, Excel, szkolenia, doradztwo, firmy, analiza danych, automatyzacja, Poznań, Błażej Kunke" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={Astro.url} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage || "/images/Kunke_Favicon.png"} />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={Astro.url} />
+  <meta property="twitter:title" content={title} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content={ogImage || "/images/Kunke_Favicon.png"} />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+<body>
+  <slot />
+</body>
+</html>

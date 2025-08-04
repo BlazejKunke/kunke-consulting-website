@@ -16,6 +16,9 @@
   display: block;
   margin: 0;
 }
+.website-link {
+  margin-left: 1em;
+}
 /* === AI Packages Card Styles === */
 .card {
   flex: 1 1 280px;
