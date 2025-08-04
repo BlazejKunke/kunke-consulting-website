@@ -1,11 +1,11 @@
 ---
-title: "Warsztaty AI - Praktyczne szkolenia dla firm"
-description: "Kompleksowe szkolenia AI dla polskich firm. Naucz się wykorzystywać sztuczną inteligencję w codziennej pracy z gotowymi narzędziami."
+title: "Warsztaty AI - Praktyczne szkolenia sztucznej inteligencji dla firm"
+description: "Kompleksowe szkolenia AI i warsztaty sztucznej inteligencji dla polskich firm. Kursy AI online, szkolenia ChatGPT, AI w Excel. Szkolenia AI Poznań, Warszawa, Łódź."
 date: 2025-01-15
-tags: ["AI", "Warsztaty", "Szkolenia", "Produktywność"]
+tags: ["AI", "Warsztaty", "Szkolenia AI", "Szkolenia sztucznej inteligencji", "Kursy AI", "ChatGPT", "AI Excel", "Szkolenia AI Poznań"]
 ---
 
-W dzisiejszym konkurencyjnym środowisku biznesowym, **sztuczna inteligencja przestała być technologią przyszłości** – to narzędzie, które już dziś może znacząco zwiększyć efektywność Twojej firmy. Nasze warsztaty AI zostały zaprojektowane specjalnie dla polskich przedsiębiorców, którzy chcą **praktycznie** nauczyć się wykorzystywać AI w codziennej pracy.
+W dzisiejszym konkurencyjnym środowisku biznesowym, **sztuczna inteligencja przestała być technologią przyszłości** – to narzędzie, które już dziś może znacząco zwiększyć efektywność Twojej firmy. Nasze **szkolenia AI dla firm** i warsztaty zostały zaprojektowane specjalnie dla polskich przedsiębiorców, którzy chcą **praktycznie** nauczyć się wykorzystywać AI w codziennej pracy. Oferujemy **kursy AI online** oraz **szkolenia AI stacjonarne** w największych miastach Polski, w tym **szkolenia AI Poznań**, **szkolenia AI Warszawa** i **szkolenia AI dla firm** w całym kraju.
 
 ## Dlaczego AI to nie tylko dla gigantów technologicznych?
 

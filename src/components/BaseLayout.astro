@@ -42,7 +42,7 @@ const csp = [
   <!-- SEO Meta Tags -->
   <title>{title}</title>
   <meta name="description" content={description} />
-  <meta name="keywords" content="AI, Excel, szkolenia, doradztwo, firmy, analiza danych, automatyzacja, Poznań, Błażej Kunke" />
+  <meta name="keywords" content="szkolenia AI, szkolenia sztucznej inteligencji, kursy AI Polska, AI training Poland, szkolenia ChatGPT, AI w Excel, szkolenia Excel AI, ChatGPT Excel, konsulting AI, doradztwo AI, AI dla biznesu, implementacja AI w firmie, AI dla managerów, szkolenia AI Poznań, szkolenia AI Warszawa, szkolenia AI Łódź, szkolenia AI online Polska, szkolenia AI dla firm" />
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -72,6 +72,93 @@ const csp = [
   
   <!-- Styles -->
   <link rel="stylesheet" href="/styles/global.css" />
+  
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Kunke Consulting",
+      "image": "/images/Kunke_Favicon.png",
+      "description": "Profesjonalne szkolenia AI i Excel dla firm w Polsce. Kursy sztucznej inteligencji, konsulting AI, doradztwo biznesowe.",
+      "url": "https://kunkeconsulting.pl",
+      "telephone": "+48722156925",
+      "email": "info@kunkeconsulting.pl",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "PL",
+        "addressLocality": "Polska"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "52.2297",
+        "longitude": "21.0122"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday", 
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "serviceArea": {
+        "@type": "Country",
+        "name": "Poland"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Szkolenia AI i Excel",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Course",
+              "name": "Szkolenia AI dla firm",
+              "description": "Praktyczne szkolenia sztucznej inteligencji dla polskich firm",
+              "provider": {
+                "@type": "Organization",
+                "name": "Kunke Consulting"
+              }
+            }
+          },
+          {
+            "@type": "Offer", 
+            "itemOffered": {
+              "@type": "Course",
+              "name": "Szkolenia Excel z AI",
+              "description": "Kursy Excel z wykorzystaniem sztucznej inteligencji",
+              "provider": {
+                "@type": "Organization",
+                "name": "Kunke Consulting"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Konsulting AI",
+              "description": "Doradztwo w zakresie implementacji AI w firmie",
+              "provider": {
+                "@type": "Organization", 
+                "name": "Kunke Consulting"
+              }
+            }
+          }
+        ]
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/blazejkunke/",
+        "https://www.facebook.com/blazej.kunke",
+        "https://www.youtube.com/@BlazeAdventuresWorld"
+      ]
+    }
+  </script>
 </head>
 <body>
   <slot />

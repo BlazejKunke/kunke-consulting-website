@@ -1,0 +1,362 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Testimonials from '../components/testimonials.astro';
+---
+
+<BaseLayout 
+  title="Konsulting AI | Doradztwo AI dla firm | Implementacja sztucznej inteligencji | Kunke Consulting"
+  description="Profesjonalny konsulting AI i doradztwo w zakresie sztucznej inteligencji. Implementacja AI w firmie, strategia AI, wybór narzędzi AI. Doradztwo AI dla biznesu w Polsce."
+  ogImage="/images/Kunke_Favicon.png"
+>
+
+<style>
+  .hero-consulting {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+  }
+  .hero-consulting h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  .hero-consulting p {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .services-section {
+    padding: 60px 20px;
+    background: #f8f8fa;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .service-card {
+    background: white;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  .service-card:hover {
+    transform: translateY(-5px);
+  }
+  .service-icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .service-card h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+  }
+  .process-section {
+    padding: 60px 20px;
+    background: white;
+    text-align: center;
+  }
+  .process-timeline {
+    max-width: 1000px;
+    margin: 40px auto 0;
+    position: relative;
+  }
+  .timeline-item {
+    display: flex;
+    margin-bottom: 40px;
+    align-items: center;
+  }
+  .timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  .timeline-content {
+    flex: 1;
+    background: #f8f8fa;
+    padding: 25px;
+    border-radius: 12px;
+    margin: 0 20px;
+  }
+  .timeline-number {
+    width: 60px;
+    height: 60px;
+    background: #667eea;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .benefits-section {
+    padding: 60px 20px;
+    background: #f8f8fa;
+  }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .benefit-item {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+  }
+  .benefit-item h4 {
+    color: #667eea;
+    margin-bottom: 10px;
+  }
+  .industries-section {
+    padding: 60px 20px;
+    background: white;
+    text-align: center;
+  }
+  .industries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 800px;
+    margin: 40px auto 0;
+  }
+  .industry-card {
+    background: #f8f8fa;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .industry-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .cta-section {
+    padding: 60px 20px;
+    background: #667eea;
+    color: white;
+    text-align: center;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: white;
+    color: #667eea;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+  }
+  .cta-btn:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+  }
+  @media (max-width: 768px) {
+    .hero-consulting h1 {
+      font-size: 2rem;
+    }
+    .hero-consulting p {
+      font-size: 1.1rem;
+    }
+    .timeline-item {
+      flex-direction: column !important;
+      text-align: center;
+    }
+    .timeline-item:nth-child(even) {
+      flex-direction: column !important;
+    }
+    .timeline-content {
+      margin: 15px 0;
+    }
+  }
+</style>
+
+<section class="hero-consulting">
+  <h1>Konsulting AI dla Firm</h1>
+  <p>
+    Profesjonalne doradztwo w zakresie implementacji sztucznej inteligencji w biznesie. 
+    Pomożemy Ci wybrać odpowiednie rozwiązania AI i wdrożyć je skutecznie w Twojej organizacji.
+  </p>
+  <a href="#contact" class="cta-btn">Bezpłatna konsultacja AI</a>
+</section>
+
+<section class="services-section">
+  <h2 style="text-align: center; margin-bottom: 50px;">Nasze usługi konsultingowe AI</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">🎯</span>
+      <h3>Strategia AI</h3>
+      <p>Opracujemy kompleksową strategię wdrażania AI dostosowaną do specyfiki Twojej firmy i branży.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🔍</span>
+      <h3>Audyt procesów</h3>
+      <p>Zidentyfikujemy obszary w Twojej firmie, gdzie AI przyniesie największe korzyści i ROI.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">⚙️</span>
+      <h3>Wybór narzędzi AI</h3>
+      <p>Pomożemy wybrać najlepsze narzędzia AI dla Twoich potrzeb i budżetu.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🚀</span>
+      <h3>Implementacja AI</h3>
+      <p>Wspieramy pełny proces wdrażania rozwiązań AI w Twojej organizacji.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">📊</span>
+      <h3>Pomiar efektów</h3>
+      <p>Ustalimy KPI i metodyki pomiaru skuteczności wdrożonych rozwiązań AI.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">👥</span>
+      <h3>Szkolenia zespołu</h3>
+      <p>Przeszkolimy Twój zespół w zakresie używania nowych narzędzi AI.</p>
+    </div>
+  </div>
+</section>
+
+<section class="process-section">
+  <h2>Jak wygląda proces konsultingu AI?</h2>
+  <div class="process-timeline">
+    <div class="timeline-item">
+      <div class="timeline-number">1</div>
+      <div class="timeline-content">
+        <h4>Analiza potrzeb</h4>
+        <p>Szczegółowe omówienie celów biznesowych i identyfikacja obszarów do optymalizacji przez AI.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-number">2</div>
+      <div class="timeline-content">
+        <h4>Audyt procesów</h4>
+        <p>Przegląd istniejących procesów i identyfikacja możliwości zastosowania AI.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-number">3</div>
+      <div class="timeline-content">
+        <h4>Strategia AI</h4>
+        <p>Opracowanie kompleksowej strategii wdrażania AI z planem działań i harmonogramem.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-number">4</div>
+      <div class="timeline-content">
+        <h4>Pilotaż</h4>
+        <p>Wdrożenie rozwiązań AI w wybranych obszarach jako projekt pilotażowy.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-number">5</div>
+      <div class="timeline-content">
+        <h4>Skalowanie</h4>
+        <p>Rozszerzenie rozwiązań AI na całą organizację z pełnym wsparciem i monitoringiem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="benefits-section">
+  <h2 style="text-align: center; margin-bottom: 50px;">Korzyści z konsultingu AI</h2>
+  <div class="benefits-grid">
+    <div class="benefit-item">
+      <h4>Zwiększenie efektywności</h4>
+      <p>Automatyzacja zadań pozwala pracownikom skupić się na bardziej wartościowych czynnościach.</p>
+    </div>
+    <div class="benefit-item">
+      <h4>Redukcja kosztów</h4>
+      <p>Optymalizacja procesów przez AI prowadzi do znacznej redukcji kosztów operacyjnych.</p>
+    </div>
+    <div class="benefit-item">
+      <h4>Lepsze decyzje</h4>
+      <p>AI dostarcza głębokich analiz, które wspierają podejmowanie lepszych decyzji biznesowych.</p>
+    </div>
+    <div class="benefit-item">
+      <h4>Przewaga konkurencyjna</h4>
+      <p>Wczesne wdrożenie AI daje znaczną przewagę nad konkurencją na rynku.</p>
+    </div>
+    <div class="benefit-item">
+      <h4>Skalowalność</h4>
+      <p>Rozwiązania AI można łatwo skalować wraz z rozwojem firmy.</p>
+    </div>
+    <div class="benefit-item">
+      <h4>ROI</h4>
+      <p>Inwestycja w AI zwraca się zazwyczaj w ciągu 6-12 miesięcy.</p>
+    </div>
+  </div>
+</section>
+
+<section class="industries-section">
+  <h2>Branże, w których specjalizujemy się w AI</h2>
+  <div class="industries-grid">
+    <div class="industry-card">
+      <span class="industry-icon">🏭</span>
+      <h4>Produkcja</h4>
+      <p>Optymalizacja procesów, predykcja awarii, kontrola jakości</p>
+    </div>
+    <div class="industry-card">
+      <span class="industry-icon">🛒</span>
+      <h4>E-commerce</h4>
+      <p>Personalizacja, chatboty, analiza zachowań klientów</p>
+    </div>
+    <div class="industry-card">
+      <span class="industry-icon">🏦</span>
+      <h4>Finanse</h4>
+      <p>Analiza ryzyka, automatyzacja raportów, fraud detection</p>
+    </div>
+    <div class="industry-card">
+      <span class="industry-icon">🏥</span>
+      <h4>Medycyna</h4>
+      <p>Analiza danych medycznych, optymalizacja procesów</p>
+    </div>
+    <div class="industry-card">
+      <span class="industry-icon">🏢</span>
+      <h4>Usługi</h4>
+      <p>Automatyzacja obsługi klienta, optymalizacja zasobów</p>
+    </div>
+    <div class="industry-card">
+      <span class="industry-icon">📚</span>
+      <h4>Edukacja</h4>
+      <p>Personalizacja nauki, automatyzacja oceniania</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Rozpocznij transformację AI już dziś!</h2>
+  <p style="font-size: 1.2rem; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;">
+    Nie czekaj, aż konkurencja wyprzedzi Cię w wykorzystaniu AI. 
+    Umów się na bezpłatną konsultację i dowiedz się, jak AI może zmienić Twój biznes.
+  </p>
+  <a href="#contact" class="cta-btn">Umów bezpłatną konsultację</a>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials">
+  <Testimonials />
+</section>
+
+<section id="contact" style="padding: 60px 20px; background: #f8f8fa;">
+  <h2 style="text-align: center; margin-bottom: 30px;">Skontaktuj się z ekspertem AI</h2>
+  <p style="text-align: center; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+    Chcesz dowiedzieć się więcej o możliwościach AI w Twojej firmie? 
+    Skontaktuj się z nami i omówmy Twoje potrzeby podczas bezpłatnej konsultacji.
+  </p>
+  <ContactForm />
+</section>
+
+</BaseLayout>

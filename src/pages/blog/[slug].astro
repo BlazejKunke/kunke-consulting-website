@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntryBySlug } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 
 /* 1️⃣  Tell Astro all valid slugs ------------------------------------ */
 export async function getStaticPaths() {
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 
 /* 2️⃣  For each request, load that one post -------------------------- */
 const { slug } = Astro.params;
-const post = await getEntryBySlug("blog", slug);
+const post = await getEntry("blog", slug as string);
 if (!post) throw new Error(`Post "${slug}" not found`);
 
 const { Content } = await post.render();
