@@ -63,6 +63,9 @@ const { Content } = await post.render();
           alt={`Hero image for ${post.data.title}`}
           class="hero-image"
           loading="eager"
+          decoding="async"
+          width="800"
+          height="400"
         />
         <div class="hero-overlay"></div>
       </div>

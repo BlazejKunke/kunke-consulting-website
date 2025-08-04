@@ -65,13 +65,64 @@ const csp = [
   <link rel="shortcut icon" href="/favicon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   
-  <!-- Fonts -->
+  <!-- Resource hints for performance -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  
+  <!-- Fonts - Optimized for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"></noscript>
   
-  <!-- Styles -->
-  <link rel="stylesheet" href="/styles/global.css" />
+  <!-- Critical CSS inline for faster initial render -->
+  <style>
+    /* Critical CSS for initial render */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
+    h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+    p { margin-bottom: 1rem; }
+    a { color: #667eea; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .text-gradient { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    #hero { text-align: center; padding: 80px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    #hero h1 { font-size: 3rem; margin-bottom: 20px; }
+    #hero p { font-size: 1.3rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .cta-btn { display: inline-block; background: #667eea; color: white; padding: 15px 30px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; }
+    .cta-btn:hover { background: #5a67d8; transform: translateY(-2px); }
+    
+    /* Image optimization styles */
+    img { max-width: 100%; height: auto; }
+    img[loading="lazy"] { transition: opacity 0.3s ease; }
+    img[loading="lazy"]:not([src]) { opacity: 0; }
+    
+    /* Prevent layout shift with aspect ratios */
+    .icon { aspect-ratio: 1 / 1; }
+    .hero-image { aspect-ratio: 2 / 1; object-fit: cover; }
+    .post-image img { aspect-ratio: 16 / 10; object-fit: cover; }
+    
+    /* Loading placeholder for images */
+    img[loading="lazy"]::before {
+      content: '';
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+    
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+  </style>
+  
+  <!-- Styles - Non-blocking load -->
+  <link rel="preload" href="/styles/global.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/styles/global.css"></noscript>
+  
+  <!-- CSS loading polyfill for older browsers -->
+  <script>
+    !function(e){"use strict";var t=function(t,n,r){function o(e){return i.body?e():void setTimeout(function(){o(e)})}function c(){d.addEventListener&&d.removeEventListener("load",c),d.media=r||"all"}var l,i=e.document,d=i.createElement("link");if(n)l=n;else{var a=(i.body||i.getElementsByTagName("head")[0]).childNodes;l=a[a.length-1]}var u=i.styleSheets;d.rel="stylesheet",d.href=t,d.media="only x",o(function(){l.parentNode.insertBefore(d,n?l:l.nextSibling)});var f=function(e){for(var t=d.href,n=u.length;n--;)if(u[n].href===t)return e();setTimeout(function(){f(e)})};return d.addEventListener&&d.addEventListener("load",c),d.onloadcssdefined=f,f(c),d};"undefined"!=typeof exports?exports.loadCSS=t:e.loadCSS=t}("undefined"!=typeof global?global:this);
+  </script>
   
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">

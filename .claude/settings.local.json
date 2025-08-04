@@ -9,7 +9,9 @@
       "Bash(timeout 15 npm run dev)",
       "Bash(cp:*)",
       "Bash(taskkill:*)",
-      "Bash(npx astro:*)"
+      "Bash(npx astro:*)",
+      "Bash(timeout 10 npm run dev)",
+      "Bash(ls:*)"
     ],
     "deny": []
   }
