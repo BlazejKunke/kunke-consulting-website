@@ -1,0 +1,15 @@
+{
+    "name": "Kunke Consulting",
+    "short_name": "Kunke",
+    "description": "Szkolenia AI i Excel dla firm - Kunke Consulting",
+    "icons": [
+        {
+            "src": "/images/Kunke_Favicon.png",
+            "sizes": "any",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#2c3e50",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}
