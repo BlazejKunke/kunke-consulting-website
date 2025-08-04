@@ -6,7 +6,7 @@ tags: ["Excel", "Produktywność", "Konsulting"]
 ---
 W erze nowoczesnych technologii Excel nadal pozostaje jednym z najważniejszych narzędzi w pracy konsultanta. Jego wszechstronność i funkcjonalność sprawiają, że jest niezastąpiony w codziennej pracy z danymi.
 
-## Top 5 tricków Excel dla konsultantów
+## Top 3 tricki Excel dla konsultantów
 
 ### 1. Zaawansowane tabele przestawne
 **Analiza wielowymiarowa danych** - Wykorzystaj slicer i timeline do interaktywnej analizy danych. Pozwala to na szybkie filtrowanie i prezentację wyników klientom.
@@ -14,14 +14,8 @@ W erze nowoczesnych technologii Excel nadal pozostaje jednym z najważniejszych 
 ### 2. Funkcje XLOOKUP i INDEX/MATCH
 **Potężne wyszukiwanie danych** - Zamiast podstawowego VLOOKUP, użyj XLOOKUP dla elastycznego wyszukiwania w obu kierunkach.
 
-### 3. Power Query - automatyzacja importów
-**Koniec z ręczną obróbką** - Zautomatyzuj ładowanie i oczyszczanie danych z różnych źródeł.
-
-### 4. Dynamiczne wykresy z form-kontrolkami
+### 3. Dynamiczne wykresy z form-kontrolkami
 **Interaktywne dashboardy** - Twórz profesjonalne raporty z przyciskami i rozwijanymi listami.
-
-### 5. Makra VBA dla powtarzalnych zadań
-**Automatyzacja rutyny** - Zapisuj i modyfikuj makra dla często wykonywanych operacji.
 
 ## Praktyczne zastosowania
 

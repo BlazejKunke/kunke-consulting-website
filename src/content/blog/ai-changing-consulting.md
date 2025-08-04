@@ -8,7 +8,7 @@ Sztuczna inteligencja fundamentalnie zmienia sposób, w jaki pracują konsultanc
 
 ## Kluczowe obszary zmian
 
-**Automatyzacja procesów analitycznych** 
+**Wspomaganie procesów analitycznych** 
 AI pozwala na szybką analizę ogromnych ilości danych, identyfikację trendów i wzorców, które wcześniej wymagały tygodni pracy analityków.
 
 **Personalizacja doradztwa**

@@ -8,7 +8,7 @@ W erze szybkich zmian i rosnącej konkurencji, umiejętność budowania i prowad
 
 ## Fundamenty zwyczęskiego zespołu
 
-### 1. Jasna wizja i cele 🎯
+### 1. Jasna wizja i cele
 
 **Każdy członek zespołu musi wiedzieć:**
 - Dokąd zmierzamy jako zespoł
@@ -17,7 +17,7 @@ W erze szybkich zmian i rosnącej konkurencji, umiejętność budowania i prowad
 
 **Narzędzia pomocne:** OKRs (Objectives and Key Results), mapowanie celów, regularne check-iny
 
-### 2. Różnorodność kompetencji i perspektyw 🌈
+### 2. Różnorodność kompetencji i perspektyw
 
 **Siła zespołu** leży w różnorodności. Łączenie różnych:
 - Umiejętności technicznych
@@ -25,7 +25,7 @@ W erze szybkich zmian i rosnącej konkurencji, umiejętność budowania i prowad
 - Doświadczeń zawodowych
 - Perspektyw kulturowych
 
-### 3. Psychologiczne bezpieczeństwo 🔒
+### 3. Psychologiczne bezpieczeństwo
 
 **Kluczowy element** odkryty przez badania Google Project Aristotle:
 - Prawo do popełniania błędów
@@ -34,14 +34,14 @@ W erze szybkich zmian i rosnącej konkurencji, umiejętność budowania i prowad
 
 ## Praktyczne strategie budowania zespołu
 
-### Komunikacja i transparentność 💬
+### Komunikacja i transparentność
 
 **Regularne rytuąy komunikacyjne:**
 - Daily standups - krótkie spotkania informacyjne
 - Weekly retrospectives - analiza tego, co działało i co można poprawić
 - Quarterly reviews - przegląd celów i strategii
 
-### Rozwój i mentoring 🌱
+### Rozwój i mentoring
 
 **Inwestycja w rozwój** każdego członka zespołu:
 - Indywidualne plany rozwoju
@@ -49,7 +49,7 @@ W erze szybkich zmian i rosnącej konkurencji, umiejętność budowania i prowad
 - Budgets na szkolenia i konferencje
 - Knowledge sharing sessions
 
-### Celebrowanie sukcesów 🎉
+### Celebrowanie sukcesów
 
 **Uznanie i docenienie** są kluczowe dla motywacji:
 - Publiczne podziękowania

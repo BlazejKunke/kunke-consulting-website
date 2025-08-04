@@ -8,7 +8,7 @@ Nasz warsztat 2025 to wyjątkowe wydarzenie, które łączy najnowsze trendy w t
 
 ## Co Cię czeka?
 
-**Sesje praktyczne AI** - Dowiesz się, jak wykorzystać sztuczną inteligencję do automatyzacji procesów biznesowych, analizy danych i zwiększenia produktywności zespołu.
+**Sesje praktyczne AI** - Dowiesz się, jak wykorzystać sztuczną inteligencję do optymalizacji procesów biznesowych, analizy danych i zwiększenia produktywności zespołu.
 
 **Warsztaty Excel Advanced** - Opanuj zaawansowane funkcje Excel, które pozwolą Ci na szybsze i skuteczniejsze zarządzanie danymi biznesowymi.
 
