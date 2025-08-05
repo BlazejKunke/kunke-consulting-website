@@ -10,7 +10,7 @@ const { title, description = "Kunke Consulting: szkolenia i doradztwo z AI oraz 
 // Generate a random nonce for inline styles
 const nonce = Math.random().toString(36).substring(2, 15);
 
-// Content Security Policy
+// Content Security Policy (meta tag compatible directives only)
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com", // Astro needs inline scripts for hydration + GTM
@@ -18,7 +18,7 @@ const csp = [
   "font-src 'self' fonts.gstatic.com",
   "connect-src 'self' formspree.io https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com",
   "form-action 'self' formspree.io",
-  "frame-ancestors 'none'", // Prevents clickjacking
+  // Note: frame-ancestors removed - only works via HTTP headers, not meta tags
   "base-uri 'self'",
   "object-src 'none'",
   "img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com",
@@ -33,16 +33,16 @@ const csp = [
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <!-- Security Headers -->
+  <!-- Security Headers (meta tag compatible only) -->
   <meta http-equiv="Content-Security-Policy" content={csp} />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="X-Frame-Options" content="DENY" />
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <!-- Note: X-Frame-Options removed - only works via HTTP headers, not meta tags -->
   
   <!-- SEO Meta Tags -->
   <title>{title}</title>
   <meta name="description" content={description} />
-  <meta name="keywords" content="AI, Excel, szkolenia, doradztwo, firmy, analiza danych, automatyzacja, Poznań, Błażej Kunke" />
+  <meta name="keywords" content="szkolenia AI, szkolenia sztucznej inteligencji, kursy AI Polska, AI training Poland, szkolenia ChatGPT, AI w Excel, szkolenia Excel AI, ChatGPT Excel, konsulting AI, doradztwo AI, AI dla biznesu, implementacja AI w firmie, AI dla managerów, szkolenia AI Poznań, szkolenia AI Warszawa, szkolenia AI Łódź, szkolenia AI online Polska, szkolenia AI dla firm" />
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -65,10 +65,15 @@ const csp = [
   <link rel="shortcut icon" href="/favicon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   
-  <!-- Fonts -->
+  <!-- Resource hints for performance -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  
+  <!-- Fonts - Optimized for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"></noscript>
   
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -78,8 +83,157 @@ const csp = [
   })(window,document,'script','dataLayer','GTM-MWRKLP2S');</script>
   <!-- End Google Tag Manager -->
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="/styles/global.css" />
+  <!-- Critical CSS inline for faster initial render -->
+  <style>
+    /* Critical CSS for initial render */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
+    h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+    
+    /* Fix deprecated API warning - H1 elements in sectioning content need explicit font-size */
+    section h1, article h1, aside h1, nav h1 { font-size: 2.5rem; }
+    #hero h1 { font-size: 3rem; }
+    
+    /* Specific hero sections */
+    .hero-ai h1, .hero-consulting h1, .hero-poznan h1, .hero-online h1, .hero-excel-ai h1,
+    .team-hero h1, .blog-title-section h1, .hero-title { font-size: 3rem; }
+    p { margin-bottom: 1rem; }
+    a { color: #667eea; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .text-gradient { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    #hero { text-align: center; padding: 80px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    #hero h1 { font-size: 3rem; margin-bottom: 20px; }
+    #hero p { font-size: 1.3rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .cta-btn { display: inline-block; background: #667eea; color: white; padding: 15px 30px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; }
+    .cta-btn:hover { background: #5a67d8; transform: translateY(-2px); }
+    
+    /* Image optimization styles */
+    img { max-width: 100%; height: auto; }
+    img[loading="lazy"] { transition: opacity 0.3s ease; }
+    img[loading="lazy"]:not([src]) { opacity: 0; }
+    
+    /* Prevent layout shift with aspect ratios */
+    .icon { aspect-ratio: 1 / 1; }
+    .hero-image { aspect-ratio: 2 / 1; object-fit: cover; }
+    .post-image img { aspect-ratio: 16 / 10; object-fit: cover; }
+    
+    /* Loading placeholder for images */
+    img[loading="lazy"]::before {
+      content: '';
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+    
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    
+    /* Responsive font sizes for H1 in sections */
+    @media (max-width: 768px) {
+      section h1, article h1, aside h1, nav h1 { font-size: 2rem; }
+      .hero-ai h1, .hero-consulting h1, .hero-poznan h1, .hero-online h1, .hero-excel-ai h1,
+      .team-hero h1, .blog-title-section h1, .hero-title { font-size: 2rem; }
+      #hero h1 { font-size: 2rem; }
+    }
+  </style>
+  
+  <!-- Styles - Non-blocking load -->
+  <link rel="preload" href="/styles/global.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/styles/global.css"></noscript>
+  
+  <!-- CSS loading polyfill for older browsers -->
+  <script>
+    !function(e){"use strict";var t=function(t,n,r){function o(e){return i.body?e():void setTimeout(function(){o(e)})}function c(){d.addEventListener&&d.removeEventListener("load",c),d.media=r||"all"}var l,i=e.document,d=i.createElement("link");if(n)l=n;else{var a=(i.body||i.getElementsByTagName("head")[0]).childNodes;l=a[a.length-1]}var u=i.styleSheets;d.rel="stylesheet",d.href=t,d.media="only x",o(function(){l.parentNode.insertBefore(d,n?l:l.nextSibling)});var f=function(e){for(var t=d.href,n=u.length;n--;)if(u[n].href===t)return e();setTimeout(function(){f(e)})};return d.addEventListener&&d.addEventListener("load",c),d.onloadcssdefined=f,f(c),d};"undefined"!=typeof exports?exports.loadCSS=t:e.loadCSS=t}("undefined"!=typeof global?global:this);
+  </script>
+  
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Kunke Consulting",
+      "image": "/images/Kunke_Favicon.png",
+      "description": "Profesjonalne szkolenia AI i Excel dla firm w Polsce. Kursy sztucznej inteligencji, konsulting AI, doradztwo biznesowe.",
+      "url": "https://kunkeconsulting.pl",
+      "telephone": "+48722156925",
+      "email": "info@kunkeconsulting.pl",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "PL",
+        "addressLocality": "Polska"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "52.2297",
+        "longitude": "21.0122"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday", 
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "serviceArea": {
+        "@type": "Country",
+        "name": "Poland"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Szkolenia AI i Excel",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Course",
+              "name": "Szkolenia AI dla firm",
+              "description": "Praktyczne szkolenia sztucznej inteligencji dla polskich firm",
+              "provider": {
+                "@type": "Organization",
+                "name": "Kunke Consulting"
+              }
+            }
+          },
+          {
+            "@type": "Offer", 
+            "itemOffered": {
+              "@type": "Course",
+              "name": "Szkolenia Excel z AI",
+              "description": "Kursy Excel z wykorzystaniem sztucznej inteligencji",
+              "provider": {
+                "@type": "Organization",
+                "name": "Kunke Consulting"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Konsulting AI",
+              "description": "Doradztwo w zakresie implementacji AI w firmie",
+              "provider": {
+                "@type": "Organization", 
+                "name": "Kunke Consulting"
+              }
+            }
+          }
+        ]
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/blazejkunke/",
+        "https://www.facebook.com/blazej.kunke",
+        "https://www.youtube.com/@BlazeAdventuresWorld"
+      ]
+    }
+  </script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
