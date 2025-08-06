@@ -13,8 +13,8 @@ const nonce = Math.random().toString(36).substring(2, 15);
 // Content Security Policy (meta tag compatible directives only)
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com", // Astro needs inline scripts for hydration + GTM
-  `style-src 'self' 'unsafe-inline' fonts.googleapis.com`, // Allow Google Fonts and inline styles
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",
+  `style-src 'self' 'unsafe-inline' fonts.googleapis.com`,
   "font-src 'self' fonts.gstatic.com",
   "connect-src 'self' formspree.io https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com",
   "form-action 'self' formspree.io",
@@ -76,11 +76,18 @@ const csp = [
   <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"></noscript>
   
   <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-MWRKLP2S');</script>
+  <script>
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[];
+      w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),
+          dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MWRKLP2S');
+  </script>
   <!-- End Google Tag Manager -->
 
   <!-- Critical CSS inline for faster initial render -->
