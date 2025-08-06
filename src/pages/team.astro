@@ -1,16 +1,14 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
 import TeamMember from '../components/TeamMember.astro';
-import { generateNonce } from '../utils/nonce';
 
-const nonce = generateNonce();
 
 // Define your team members here
 const teamMembers = [
   {
     name: "Tomasz Aozowicki",
     role: "Marketing, komunikacja i wystpienia publiczne",
-    bio: "Specjalista z 15-letnim do[wiadczeniem w prowadzeniu projektów marketingowych, niezale|ny konsultant.",
+    bio: "Specjalista z 15-letnim do[wiadczeniem w prowadzeniu projektï¿½w marketingowych, niezale|ny konsultant.",
     image: "/images/TomaszLozowicki.jpg",
     specializations: ["Digital Marketing", "Wystpienia Publiczne", "Komunikacja"],
     linkedin: "https://www.linkedin.com/in/tomasz-lozowicki/",
@@ -18,7 +16,7 @@ const teamMembers = [
     yearsOfCollaboration: "2022"
   },
   {
-    name: "Janusz Józef Kunke",
+    name: "Janusz Jï¿½zef Kunke",
     role: "CEO Kunke Poligrafia",
     bio: "Ekspert od strategii, sprzeda|y, druku i wielu innych spraw. Prywatnie: tata :)",
     image: "/images/JanuszKunke.jpg",
@@ -34,7 +32,7 @@ const teamMembers = [
   {
     name: "Krzysztof Cichy",
     role: "ZaBo|yciel Vibinapps",
-    bio: "Tworzy aplikacje, strony i automatyzacje, które pomagaj firmom oszczdza czas i zwiksza zyski.",
+    bio: "Tworzy aplikacje, strony i automatyzacje, ktï¿½re pomagaj firmom oszczdza czas i zwiksza zyski.",
     image: "/images/KrzysztofCichy.jpg",
     specializations: [
       "Practica AI",
@@ -79,7 +77,6 @@ const teamMembers = [
 <BaseLayout 
   title="Team | Kunke Consulting"
   description="Meet the team of experts at Kunke Consulting. We collaborate with the best specialists in AI, Excel, and business consulting."
-  nonce={nonce}
 >
 
 <style>

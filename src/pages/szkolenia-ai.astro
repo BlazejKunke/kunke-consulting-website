@@ -3,16 +3,13 @@ import BaseLayout from '../components/BaseLayout.astro';
 import AiPackages from '../components/AiPackages.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Testimonials from '../components/testimonials.astro';
-import { generateNonce } from '../utils/nonce';
 
-const nonce = generateNonce();
 ---
 
 <BaseLayout 
   title="Szkolenia AI dla firm | Profesjonalne kursy sztucznej inteligencji | Kunke Consulting"
   description="Kompleksowe szkolenia AI i sztucznej inteligencji dla firm w Polsce. Praktyczne warsztaty ChatGPT, AI w Excel, konsulting AI. Szkolenia stacjonarne i online w całej Polsce."
   ogImage="/images/Kunke_Favicon.png"
-  nonce={nonce}
 >
 
 <style>

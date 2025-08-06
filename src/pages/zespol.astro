@@ -1,8 +1,7 @@
 ---
 import TeamMember from '../components/TeamMember.astro';
-import { generateNonce } from '../utils/nonce';
 
-const nonce = generateNonce();
+const nonce = Astro.locals.nonce;
 
 // Define your team members here
 const teamMembers = [

@@ -3,16 +3,13 @@ import BaseLayout from '../components/BaseLayout.astro';
 import AiPackages from '../components/AiPackages.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Testimonials from '../components/testimonials.astro';
-import { generateNonce } from '../utils/nonce';
 
-const nonce = generateNonce();
 ---
 
 <BaseLayout 
   title="Szkolenia AI Poznań | Kursy sztucznej inteligencji dla firm Poznań | Kunke Consulting"
   description="Profesjonalne szkolenia AI w Poznaniu. Kursy sztucznej inteligencji dla firm, szkolenia ChatGPT, AI w Excel, konsulting AI. AI training Poznań, AI dla biznesu."
   ogImage="/images/Kunke_Favicon.png"
-  nonce={nonce}
 >
 
 <style>

@@ -2,16 +2,13 @@
 import BaseLayout from '../components/BaseLayout.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Testimonials from '../components/testimonials.astro';
-import { generateNonce } from '../utils/nonce';
 
-const nonce = generateNonce();
 ---
 
 <BaseLayout 
   title="Konsulting AI | Doradztwo AI dla firm | Implementacja sztucznej inteligencji | Kunke Consulting"
   description="Profesjonalny konsulting AI i doradztwo w zakresie sztucznej inteligencji. Implementacja AI w firmie, strategia AI, wybór narzędzi AI. Doradztwo AI dla biznesu w Polsce."
   ogImage="/images/Kunke_Favicon.png"
-  nonce={nonce}
 >
 
 <style>

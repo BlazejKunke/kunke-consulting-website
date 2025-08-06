@@ -7,16 +7,13 @@ import Testimonials from '../components/testimonials.astro';
 import ExperienceSection from '../components/ExperienceSection.astro';
 import WorkshopSection from '../components/WorkshopSection.astro';
 import OMnie from '../components/OMnie.astro';
-import { generateNonce } from '../utils/nonce';
 
-const nonce = generateNonce();
 ---
 
 <BaseLayout 
   title="Szkolenia AI i Excel dla firm | Kunke Consulting | Kursy AI Online Polska"
   description="Profesjonalne szkolenia AI i sztucznej inteligencji dla firm w Polsce. Praktyczne kursy AI online, szkolenia ChatGPT, AI w Excel, konsulting AI i doradztwo. Szkolenia AI Poznań, Warszawa, Łódź."
   ogImage="/images/Kunke_Favicon.png"
-  nonce={nonce}
 >
 
 <style>
