@@ -10,6 +10,10 @@ const { title, description = "Kunke Consulting: szkolenia i doradztwo z AI oraz 
 // Get nonce from middleware context
 const nonce = Astro.locals.nonce;
 
+// Generate absolute URLs for social media images
+const siteUrl = Astro.site;
+const absoluteOgImage = ogImage ? new URL(ogImage, siteUrl).href : new URL('/images/Kunke_Favicon.png', siteUrl).href;
+
 // CSP is now handled by middleware as HTTP headers
 ---
 
@@ -26,21 +30,23 @@ const nonce = Astro.locals.nonce;
   <!-- SEO Meta Tags -->
   <title>{title}</title>
   <meta name="description" content={description} />
-  <meta name="keywords" content="szkolenia AI, szkolenia sztucznej inteligencji, kursy AI Polska, AI training Poland, szkolenia ChatGPT, AI w Excel, szkolenia Excel AI, ChatGPT Excel, konsulting AI, doradztwo AI, AI dla biznesu, implementacja AI w firmie, AI dla managerów, szkolenia AI Poznań, szkolenia AI Warszawa, szkolenia AI Łódź, szkolenia AI online Polska, szkolenia AI dla firm" />
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href={Astro.url.href} />
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={Astro.url} />
+  <meta property="og:url" content={Astro.url.href} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={ogImage || "/images/Kunke_Favicon.png"} />
+  <meta property="og:image" content={absoluteOgImage} />
   
   <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content={Astro.url} />
-  <meta property="twitter:title" content={title} />
-  <meta property="twitter:description" content={description} />
-  <meta property="twitter:image" content={ogImage || "/images/Kunke_Favicon.png"} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={Astro.url.href} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={absoluteOgImage} />
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
