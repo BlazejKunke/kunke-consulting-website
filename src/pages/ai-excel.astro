@@ -3,12 +3,16 @@ import BaseLayout from '../components/BaseLayout.astro';
 import Excel from '../components/Excel.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Testimonials from '../components/testimonials.astro';
+import { generateNonce } from '../utils/nonce';
+
+const nonce = generateNonce();
 ---
 
 <BaseLayout 
   title="AI w Excel | Szkolenia Excel z AI | ChatGPT Excel | Kunke Consulting"
   description="Profesjonalne szkolenia AI w Excel. Naucz się wykorzystywać ChatGPT w Excel, automatyzować analizy i tworzyć inteligentne raporty. Kursy Excel AI dla firm w Polsce."
   ogImage="/images/Kunke_Favicon.png"
+  nonce={nonce}
 >
 
 <style>

@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry } from "astro:content";
+import { generateNonce } from '../../utils/nonce';
 
 /* 1️⃣  Tell Astro all valid slugs ------------------------------------ */
 export async function getStaticPaths() {
@@ -14,6 +15,8 @@ const { slug } = Astro.params;
 const post = await getEntry("blog", slug as string);
 if (!post) throw new Error(`Post "${slug}" not found`);
 
+const nonce = generateNonce();
+
 const { Content } = await post.render();
 ---
 
@@ -26,7 +29,7 @@ const { Content } = await post.render();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="stylesheet" href="/styles/global.css" nonce={nonce} />
     <title>{post.data.title} | Blog - Kunke Consulting</title>
     <meta name="description" content={post.data.description} />
     

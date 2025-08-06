@@ -1,10 +1,14 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import { generateNonce } from '../utils/nonce';
+
+const nonce = generateNonce();
 ---
 
 <BaseLayout 
   title="Polityka prywatności i informacje prawne | Kunke Consulting"
   description="Polityka prywatności i informacje prawne dotyczące usług Kunke Consulting"
+  nonce={nonce}
 >
 
 <style>

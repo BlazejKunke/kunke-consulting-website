@@ -11,7 +11,12 @@
       "Bash(taskkill:*)",
       "Bash(npx astro:*)",
       "Bash(timeout 10 npm run dev)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(grep:*)",
+      "Bash(true)"
     ],
     "deny": []
   }

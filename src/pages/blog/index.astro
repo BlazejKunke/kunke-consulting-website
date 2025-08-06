@@ -1,5 +1,8 @@
 ---
 import { getCollection } from "astro:content";
+import { generateNonce } from '../../utils/nonce';
+
+const nonce = generateNonce();
 
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -17,7 +20,7 @@ const recentPosts = posts.slice(0, 3);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="stylesheet" href="/styles/global.css" nonce={nonce} />
     <title>Blog | Kunke Consulting - AI, Excel i Doradztwo</title>
     <meta name="description" content="Blog Kunke Consulting - najnowsze artykuły o AI, Excel i doradztwie biznesowym" />
   </head>
