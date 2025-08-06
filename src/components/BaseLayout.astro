@@ -7,14 +7,27 @@ export interface Props {
 
 const { title, description = "Kunke Consulting: szkolenia i doradztwo z AI oraz Excela dla firm", ogImage } = Astro.props;
 
-// Get nonce from middleware context
-const nonce = Astro.locals.nonce;
+// Get nonce from middleware context, or generate as fallback
+const nonce = Astro.locals.nonce || crypto.randomUUID();
 
 // Generate absolute URLs for social media images
 const siteUrl = Astro.site;
 const absoluteOgImage = ogImage ? new URL(ogImage, siteUrl).href : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 
-// CSP is now handled by middleware as HTTP headers
+// Fallback CSP for static builds (middleware doesn't work in static mode)
+const csp = [
+  "default-src 'self'",
+  `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://tagmanager.google.com`,
+  `style-src 'self' 'nonce-${nonce}' 'unsafe-inline' https://fonts.googleapis.com https://tagmanager.google.com`,
+  "font-src 'self' https://fonts.gstatic.com",
+  "connect-src 'self' formspree.io https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://region1.google-analytics.com https://analytics.google.com",
+  "form-action 'self' formspree.io",
+  "img-src 'self' data: blob: https://*.google-analytics.com https://*.googletagmanager.com https://www.google.com https://googleads.g.doubleclick.net https://www.google.pl",
+  "frame-src https://www.googletagmanager.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "frame-ancestors 'none'"
+].join('; ');
 ---
 
 <!DOCTYPE html>
@@ -23,7 +36,8 @@ const absoluteOgImage = ogImage ? new URL(ogImage, siteUrl).href : new URL('/ima
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <!-- Security Headers (CSP now handled by middleware as HTTP headers) -->
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy" content={csp} />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
   

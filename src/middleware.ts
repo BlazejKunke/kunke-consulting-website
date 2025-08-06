@@ -21,5 +21,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
   ].join('; ');
 
   response.headers.set('Content-Security-Policy', csp);
+  
+  // Debug: Log CSP to console in development
+  if (import.meta.env.DEV) {
+    console.log('CSP Applied:', csp);
+  }
+  
   return response;
 });
