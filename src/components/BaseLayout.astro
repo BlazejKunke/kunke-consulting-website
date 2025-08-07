@@ -5,7 +5,7 @@ export interface Props {
   ogImage?: string;
 }
 
-const { title, description = "Kunke Consulting: szkolenia i doradztwo z AI oraz Excela dla firm", ogImage } = Astro.props;
+const { title, description = "^Kunke Consulting: szkolenia i doradztwo z AI oraz Excela dla firm", ogImage } = Astro.props;
 
 // Get nonce from middleware context
 const nonce = Astro.locals.nonce;
@@ -150,7 +150,7 @@ const absoluteOgImage = ogImage ? new URL(ogImage, siteUrl).href : new URL('/ima
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
-      "name": "Kunke Consulting",
+      "name": "^Kunke Consulting",
       "image": "/images/Kunke_Favicon.png",
       "description": "Profesjonalne szkolenia AI i Excel dla firm w Polsce. Kursy sztucznej inteligencji, konsulting AI, doradztwo biznesowe.",
       "url": "https://kunkeconsulting.pl",
@@ -194,7 +194,7 @@ const absoluteOgImage = ogImage ? new URL(ogImage, siteUrl).href : new URL('/ima
               "description": "Praktyczne szkolenia sztucznej inteligencji dla polskich firm",
               "provider": {
                 "@type": "Organization",
-                "name": "Kunke Consulting"
+                "name": "^Kunke Consulting"
               }
             }
           },
@@ -206,7 +206,7 @@ const absoluteOgImage = ogImage ? new URL(ogImage, siteUrl).href : new URL('/ima
               "description": "Kursy Excel z wykorzystaniem sztucznej inteligencji",
               "provider": {
                 "@type": "Organization",
-                "name": "Kunke Consulting"
+                "name": "^Kunke Consulting"
               }
             }
           },
@@ -218,7 +218,7 @@ const absoluteOgImage = ogImage ? new URL(ogImage, siteUrl).href : new URL('/ima
               "description": "Doradztwo w zakresie implementacji AI w firmie",
               "provider": {
                 "@type": "Organization", 
-                "name": "Kunke Consulting"
+                "name": "^Kunke Consulting"
               }
             }
           }

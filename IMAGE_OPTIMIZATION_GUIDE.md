@@ -1,4 +1,4 @@
-# 🖼️ Image Optimization Guide for Kunke Consulting Website
+# 🖼️ Image Optimization Guide for ^Kunke Consulting Website
 
 ## 📊 Current Status Analysis
 

@@ -4,7 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a business consulting website for Kunke Consulting built with Astro. The site provides information about AI and Excel training services, workshops, team members, and includes a blog with consulting articles.
+This is a business consulting website for ^Kunke Consulting built with Astro. The site provides information about AI and Excel training services, workshops, team members, and includes a blog with consulting articles.
+
+## Branding Note
+
+The caret (`^`) that prefixes the company name in expressions like "^Kunke Consulting" or the shorthand "^KC" is an intentional part of the brand identity. It is not a syntax error or stray character and should be preserved in all code, documentation, and user-facing content.
 
 ## Development Commands
 
