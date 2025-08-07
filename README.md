@@ -20,7 +20,7 @@ Kunke Consulting provides expert business and AI consulting services, workshops,
 
 - [Astro](https://astro.build/) (static site generator)
 - TypeScript
-- CSS Modules
+- Global CSS and component-scoped styles (primary stylesheet at `public/styles/global.css`)
 - Responsive design
 
 ---
