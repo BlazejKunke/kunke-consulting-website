@@ -1,11 +1,15 @@
 # Astro Starter Kit: Minimal
-# Kunke Consulting Website
+# ^Kunke Consulting Website
 
-This is the official website for Kunke Consulting, built with Astro. The site showcases consulting services, client testimonials, team information, blog articles, and contact options.
+This is the official website for ^Kunke Consulting, built with Astro. The site showcases consulting services, client testimonials, team information, blog articles, and contact options.
 
-## 🌱 About Kunke Consulting
+## 🌱 About ^Kunke Consulting
 
-Kunke Consulting provides expert business and AI consulting services, workshops, and training. The website is designed to present offerings, share client success stories, and enable easy contact for new clients.
+^Kunke Consulting provides expert business and AI consulting services, workshops, and training. The website is designed to present offerings, share client success stories, and enable easy contact for new clients.
+
+## Branding: the `^` symbol
+
+The caret (`^`) that prefixes names like "^Kunke Consulting" or the abbreviation "^KC" is an intentional part of the company's brand identity. It should always appear with the company name or acronym and is **not** a stray character or typographical error. Please retain the caret in all references to the brand across the website and documentation.
 
 ## ✨ Features
 
