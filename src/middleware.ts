@@ -1,7 +1,8 @@
 import { defineMiddleware } from 'astro:middleware';
+import { generateNonce } from './utils/nonce';
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const nonce = crypto.randomUUID();
+  const nonce = generateNonce();
   context.locals.nonce = nonce;
 
   const response = await next();
