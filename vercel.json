@@ -8,10 +8,6 @@
           "value": "DENY"
         },
         {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; connect-src 'self' formspree.io; form-action 'self' formspree.io; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; img-src 'self' data:; media-src 'self'; manifest-src 'self'"
-        },
-        {
           "key": "X-Content-Type-Options",
           "value": "nosniff"
         },

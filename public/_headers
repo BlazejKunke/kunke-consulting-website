@@ -3,9 +3,6 @@
   # Frame protection (replaces X-Frame-Options meta tag)
   X-Frame-Options: DENY
   
-  # Enhanced Content Security Policy with frame-ancestors
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; connect-src 'self' formspree.io; form-action 'self' formspree.io; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; img-src 'self' data:; media-src 'self'; manifest-src 'self'
-  
   # Additional security headers
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
