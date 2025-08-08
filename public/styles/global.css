@@ -63,6 +63,24 @@ ul {
 
   /* ADD: desktop content width cap  ───────────────────────────── */
   --page-max: 72rem;      /* 72 × 16 px  = 1152 px */
+
+  /* Cookie banner design tokens */
+  --kc-bg: #f6f7f8;            /* light gray background */
+  --kc-text: #2f2f2f;          /* body text */
+  --kc-muted: #6a6a6a;         /* secondary text */
+  --kc-border: #e6e6e6;        /* subtle borders */
+
+  --kc-brand: #0b6b48;         /* Kunke CTA green */
+  --kc-brand-press: #0a5a3d;   /* pressed/hover state */
+  --kc-link: #0b6b48;          /* same as brand for links */
+
+  --kc-btn-radius: 12px;       /* match “AI dla firm” button radius */
+  --kc-btn-h: 42px;            /* compact height */
+  --kc-gap: 12px;              /* compact spacing */
+  --kc-maxw: 1100px;           /* banner content width */
+  --kc-shadow: 0 8px 24px rgba(0,0,0,.08);
+
+  --kc-anim: 240ms cubic-bezier(.2,.8,.2,1);
 }
 /* Smooth scrolling for in-page anchor links */
 html {
