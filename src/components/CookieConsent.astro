@@ -2,13 +2,15 @@
 // src/components/CookieConsent.astro
 ---
 <div id="cookie-consent" class="cookie-consent" hidden>
-  <p>
-    Używamy plików cookie do analizy ruchu oraz poprawy działania strony.
-    Więcej informacji znajdziesz w naszej <a href="/privacy-policy">polityce prywatności</a>.
-  </p>
-  <div class="buttons">
-    <button id="cookie-accept" class="accept">Akceptuję</button>
-    <button id="cookie-reject" class="reject">Odrzucam</button>
+  <div class="cookie-inner">
+    <p>
+      Używamy plików cookie do analizy ruchu oraz poprawy działania strony.
+      Więcej informacji znajdziesz w naszej <a href="/privacy-policy">polityce prywatności</a>.
+    </p>
+    <div class="buttons">
+      <button id="cookie-accept" class="accept">Akceptuję</button>
+      <button id="cookie-reject" class="reject">Odrzucam</button>
+    </div>
   </div>
 </div>
 <script>
@@ -47,30 +49,54 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: #222;
-    color: #fff;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    background: var(--kc-bg);
+    color: var(--kc-text);
+    box-shadow: var(--kc-shadow);
+    font-size: 0.875rem;
     z-index: 1000;
+  }
+  .cookie-consent .cookie-inner {
+    max-width: var(--kc-maxw);
+    margin: 0 auto;
+    padding: var(--kc-gap);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--kc-gap);
+  }
+  .cookie-consent p {
+    margin: 0;
+    flex: 1 1 260px;
+  }
+  .cookie-consent a {
+    color: var(--kc-link);
   }
   .cookie-consent .buttons {
     display: flex;
-    gap: 1rem;
+    flex-shrink: 0;
+    gap: var(--kc-gap);
   }
   .cookie-consent button {
-    padding: 0.5rem 1rem;
+    height: var(--kc-btn-h);
+    padding: 0 1rem;
+    border-radius: var(--kc-btn-radius);
+    border: 1px solid var(--kc-border);
+    background: transparent;
+    color: var(--kc-text);
+    font-family: inherit;
+    font-weight: 600;
     cursor: pointer;
+    transition: background var(--kc-anim), color var(--kc-anim);
   }
   .cookie-consent .accept {
-    background: #4caf50;
+    background: var(--kc-brand);
+    border-color: var(--kc-brand);
     color: #fff;
-    border: none;
   }
-  .cookie-consent .reject {
-    background: #f44336;
-    color: #fff;
-    border: none;
+  .cookie-consent .accept:hover {
+    background: var(--kc-brand-press);
+  }
+  .cookie-consent .reject:hover {
+    background: var(--kc-border);
   }
 </style>
