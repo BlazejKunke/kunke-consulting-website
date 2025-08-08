@@ -5,22 +5,46 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const nonce = generateNonce();
   context.locals.nonce = nonce;
 
-  const response = await next();
+  const res = await next();
 
   const csp = [
+    // Baseline
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://tagmanager.google.com`,
-    `style-src 'self' 'nonce-${nonce}' 'unsafe-inline' https://fonts.googleapis.com https://tagmanager.google.com`,
-    "font-src 'self' https://fonts.gstatic.com",
-    "connect-src 'self' formspree.io https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://region1.google-analytics.com https://analytics.google.com",
-    "form-action 'self' formspree.io",
-    "img-src 'self' data: blob: https://*.google-analytics.com https://*.googletagmanager.com https://www.google.com https://googleads.g.doubleclick.net https://www.google.pl",
-    "frame-src https://www.googletagmanager.com",
-    "object-src 'none'",
     "base-uri 'self'",
-    "frame-ancestors 'none'"
+    "object-src 'none'",
+    "frame-ancestors 'none'",
+
+    // Scripts: nonce + strict-dynamic; keep hosts for legacy
+    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://www.googletagmanager.com https://www.google-analytics.com`,
+
+    // Styles: no unsafe-inline; rely on nonce & external
+    `style-src 'self' 'nonce-${nonce}' https://fonts.googleapis.com`,
+
+    // Fonts
+    "font-src 'self' https://fonts.gstatic.com",
+
+    // XHR/fetch/beacon
+    "connect-src 'self' formspree.io https://www.google-analytics.com https://region1.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net",
+
+    // Images (incl. GA/GTM pixels)
+    "img-src 'self' data: blob: https://www.google-analytics.com https://*.googletagmanager.com https://stats.g.doubleclick.net",
+
+    // Frames you embed (GTM noscript + Tag Assistant)
+    "frame-src https://www.googletagmanager.com",
+
+    // Optional extras
+    "worker-src 'self'",
+    "upgrade-insecure-requests"
   ].join('; ');
 
-  response.headers.set('Content-Security-Policy', csp);
-  return response;
+  res.headers.set('Content-Security-Policy', csp);
+
+  // Move these to real headers (meta won’t work)
+  res.headers.set('X-Content-Type-Options', 'nosniff');
+  res.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()'); // adjust if you need them
+  // For legacy clickjacking protection alongside CSP:
+  res.headers.set('X-Frame-Options', 'DENY');
+
+  return res;
 });
