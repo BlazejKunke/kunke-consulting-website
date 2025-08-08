@@ -1,0 +1,76 @@
+---
+// src/components/CookieConsent.astro
+---
+<div id="cookie-consent" class="cookie-consent" hidden>
+  <p>
+    Używamy plików cookie do analizy ruchu oraz poprawy działania strony.
+    Więcej informacji znajdziesz w naszej <a href="/privacy-policy">polityce prywatności</a>.
+  </p>
+  <div class="buttons">
+    <button id="cookie-accept" class="accept">Akceptuję</button>
+    <button id="cookie-reject" class="reject">Odrzucam</button>
+  </div>
+</div>
+<script>
+  const banner = document.getElementById('cookie-consent');
+  const consentName = 'cookie_consent';
+  function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + days*24*60*60*1000);
+    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+  }
+  function getCookie(name) {
+    const match = document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));
+    return match ? match[2] : null;
+  }
+  function update(status){
+    setCookie(consentName, status, 365);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'consent_update',
+      consent: {
+        ad_storage: status,
+        analytics_storage: status
+      }
+    });
+    banner.remove();
+  }
+  if (!getCookie(consentName)) {
+    banner.removeAttribute('hidden');
+  }
+  document.getElementById('cookie-accept').addEventListener('click', () => update('granted'));
+  document.getElementById('cookie-reject').addEventListener('click', () => update('denied'));
+</script>
+<style>
+  .cookie-consent {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #222;
+    color: #fff;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 1000;
+  }
+  .cookie-consent .buttons {
+    display: flex;
+    gap: 1rem;
+  }
+  .cookie-consent button {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  .cookie-consent .accept {
+    background: #4caf50;
+    color: #fff;
+    border: none;
+  }
+  .cookie-consent .reject {
+    background: #f44336;
+    color: #fff;
+    border: none;
+  }
+</style>
