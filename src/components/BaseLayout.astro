@@ -100,9 +100,14 @@ const absoluteOgImage = ogImage
     .gtm-noscript { display:none; visibility:hidden; width:0; height:0; }
   </style>
 
-  <!-- Drop the old loadCSS polyfill + link onload hacks.
-       Modern browsers + HTTP/2 are fine. Keep it simple. -->
-  <link rel="stylesheet" href="/styles/global.css">
+  <!-- Non-blocking load for global stylesheet -->
+  <link
+    rel="preload"
+    href="/styles/global.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript><link rel="stylesheet" href="/styles/global.css" /></noscript>
   
   <!-- JSON-LD MUST have nonce -->
   <script type="application/ld+json" nonce={nonce}>
