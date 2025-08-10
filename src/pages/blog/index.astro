@@ -60,7 +60,7 @@ const recentPosts = posts.slice(0, 3);
           <article class="blog-post-card">
             <a href={`/blog/${post.slug}/`}>
               <div class="post-image">
-                <img src={`/images/blog-placeholder-${Math.floor(Math.random() * 3) + 1}.jpg`} alt={post.data.title} loading="lazy" decoding="async" width="400" height="250" />
+                <img src={post.data.heroImage || `/images/blog-placeholder-${Math.floor(Math.random() * 3) + 1}.jpg`} alt={post.data.title} loading="lazy" decoding="async" width="400" height="250" />
               </div>
               <h3>{post.data.title}</h3>
             </a>
