@@ -17,6 +17,7 @@ if (!post) throw new Error(`Post "${slug}" not found`);
 const nonce = Astro.locals.nonce;
 
 const { Content } = await post.render();
+const heroImage = post.data.heroImage || "/images/Workshop2025.JPG";
 ---
 
 <!DOCTYPE html>
@@ -36,11 +37,13 @@ const { Content } = await post.render();
     <meta property="og:type" content="article" />
     <meta property="og:title" content={post.data.title} />
     <meta property="og:description" content={post.data.description} />
+    <meta property="og:image" content={heroImage} />
     
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content={post.data.title} />
     <meta property="twitter:description" content={post.data.description} />
+    <meta property="twitter:image" content={heroImage} />
   </head>
   <body>
 
@@ -59,9 +62,8 @@ const { Content } = await post.render();
     -->
     <div class="hero-image-container">
       <div class="hero-image-placeholder">
-        <!-- Replace this placeholder with actual image -->
-        <img 
-          src="/images/Workshop2025.JPG" 
+        <img
+          src={heroImage}
           alt={`Hero image for ${post.data.title}`}
           class="hero-image"
           loading="eager"
