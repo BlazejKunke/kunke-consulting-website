@@ -1,59 +1,29 @@
 ---
 // src/components/BaseLayout.astro
 import CookieConsent from './CookieConsent.astro';
-import { getLangFromUrl, useTranslations } from '../utils/i18n';
-
 export interface Props {
+  title: string;
+  description?: string;
   ogImage?: string;
-  // title and description are now handled by the layout based on the language
 }
 
-const { ogImage } = Astro.props;
-
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+const {
+  title,
+  description = "Kunke Consulting: szkolenia i doradztwo z AI oraz Excela dla firm",
+  ogImage
+} = Astro.props;
 
 const nonce: string | undefined = Astro.locals?.nonce;
 
+// safer attr helper: Astro renders empty attrs if value is undefined, which is OK.
 const siteUrl = Astro.site;
 const absoluteOgImage = ogImage
   ? new URL(ogImage, siteUrl).href
-  : new URL(t('site.ogImage'), siteUrl).href;
-
-const title = t('site.title');
-const description = t('site.description');
-
-const slugTranslations: Record<string, string> = {
-  'konsulting-ai': 'ai-consulting',
-  'szkolenia-ai-online': 'ai-training-online',
-  'szkolenia-ai-poznan': 'ai-training-poznan',
-  'szkolenia-ai': 'ai-training',
-  'zespol': 'team',
-  'privacy-policy': 'privacy-policy',
-  'blog': 'blog',
-  'ai-excel': 'ai-excel',
-};
-
-const getAlternatePath = () => {
-    const currentPath = Astro.url.pathname;
-    const slug = currentPath.split('/').pop() || '';
-
-    if (lang === 'en') {
-        const plSlug = Object.keys(slugTranslations).find(key => slugTranslations[key] === slug);
-        return `/${plSlug || ''}`;
-    } else {
-        const enSlug = slugTranslations[slug] || '';
-        return `/en/${enSlug}`;
-    }
-};
-
-const plUrl = lang === 'pl' ? Astro.url.pathname : getAlternatePath();
-const enUrl = lang === 'en' ? Astro.url.pathname : getAlternatePath();
-
+  : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 ---
 
 <!DOCTYPE html>
-<html lang={lang}>
+<html lang="pl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -62,8 +32,6 @@ const enUrl = lang === 'en' ? Astro.url.pathname : getAlternatePath();
   <meta name="description" content={description} />
 
   <link rel="canonical" href={Astro.url.href} />
-  <link rel="alternate" hreflang="pl" href={new URL(plUrl, Astro.site).href} />
-  <link rel="alternate" hreflang="en" href={new URL(enUrl, Astro.site).href} />
 
   <!-- OG/Twitter -->
   <meta property="og:type" content="website" />
@@ -126,6 +94,8 @@ const enUrl = lang === 'en' ? Astro.url.pathname : getAlternatePath();
 
   <!-- Critical CSS (nonce ok) -->
   <style nonce={nonce}>
+    /* … your CSS unchanged … */
+
     /* Move noscript iframe inline style to class to avoid style-src 'unsafe-inline' */
     .gtm-noscript { display:none; visibility:hidden; width:0; height:0; }
   </style>
@@ -146,7 +116,7 @@ const enUrl = lang === 'en' ? Astro.url.pathname : getAlternatePath();
     "@type": "LocalBusiness",
     "name": "Kunke Consulting",
     "image": "/images/Kunke_Favicon.png",
-    "description": "{lang === 'pl' ? 'Profesjonalne szkolenia AI i Excel dla firm w Polsce.' : 'Professional AI and Excel training for companies in Poland.'}",
+    "description": "Profesjonalne szkolenia AI i Excel dla firm w Polsce. Kursy sztucznej inteligencji, konsulting AI, doradztwo biznesowe.",
     "url": "https://kunkeconsulting.pl",
     "telephone": "+48722156925",
     "email": "info@kunkeconsulting.pl",
@@ -159,9 +129,9 @@ const enUrl = lang === 'en' ? Astro.url.pathname : getAlternatePath();
     "serviceArea": { "@type": "Country", "name": "Poland" },
     "hasOfferCatalog": { "@type": "OfferCatalog", "name":"Szkolenia AI i Excel",
       "itemListElement":[
-        {"@type":"Offer","itemOffered":{"@type":"Course","name": "{lang === 'pl' ? 'Szkolenia AI dla firm' : 'AI Training for Companies'}","description":"{lang === 'pl' ? 'Praktyczne szkolenia sztucznej inteligencji dla polskich firm' : 'Practical artificial intelligence training for Polish companies'}" ,"provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Course","name":"{lang === 'pl' ? 'Szkolenia Excel z AI' : 'Excel Training with AI'}", "description":"{lang === 'pl' ? 'Kursy Excel z wykorzystaniem sztucznej inteligencji' : 'Excel courses using artificial intelligence'}", "provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Service","name":"{lang === 'pl' ? 'Konsulting AI' : 'AI Consulting'}", "description":"{lang === 'pl' ? 'Doradztwo w zakresie implementacji AI w firmie' : 'Consulting on AI implementation in the company'}", "provider":{"@type":"Organization","name":"Kunke Consulting"}}}
+        {"@type":"Offer","itemOffered":{"@type":"Course","name":"Szkolenia AI dla firm","description":"Praktyczne szkolenia sztucznej inteligencji dla polskich firm","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
+        {"@type":"Offer","itemOffered":{"@type":"Course","name":"Szkolenia Excel z AI","description":"Kursy Excel z wykorzystaniem sztucznej inteligencji","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Konsulting AI","description":"Doradztwo w zakresie implementacji AI w firmie","provider":{"@type":"Organization","name":"Kunke Consulting"}}}
       ]
     },
     "sameAs": [
@@ -180,86 +150,5 @@ const enUrl = lang === 'en' ? Astro.url.pathname : getAlternatePath();
 
   <slot />
   <CookieConsent />
-
-  <footer>
-    <div class="footer-wrapper">
-      <div class="footer-content">
-        <div class="footer-section contact-info-footer">
-          <h3>{t('footer.contact')}</h3>
-          <p>^Kunke Consulting</p>
-          <p><a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a></p>
-          <p><a href="tel:+48722156925">m. +48 722 156 925</a></p>
-        </div>
-        <div class="footer-section legal-info">
-          <h3>{t('footer.legal')}</h3>
-          <p><a href={lang === 'en' ? '/en/privacy-policy' : '/privacy-policy'}>{t('footer.privacy')}</a></p>
-          <p><a href={lang === 'en' ? '/en/blog' : '/blog'} target="_blank" rel="noopener noreferrer">{t('footer.blog')}</a></p>
-        </div>
-        <div class="footer-section social-media">
-          <h3>{t('footer.follow')}</h3>
-          <ul>
-            <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-            <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-            <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>{t('footer.copyright')}</p>
-      <div class="language-switcher">
-        <a href={`${plUrl}?lang=pl`}>{t('lang.pl')}</a> | <a href={`${enUrl}?lang=en`}>{t('lang.en')}</a>
-      </div>
-    </div>
-  </footer>
-  <style>
-    footer {
-      background: #f8f8fa;
-      padding: 40px 0 0 0;
-      text-align: center;
-      width: 100%;
-    }
-    .footer-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-    .footer-content {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 40px;
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .footer-section {
-      min-width: 200px;
-      text-align: center;
-    }
-    .footer-section ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .footer-section ul li {
-      margin: 0 0 8px 0;
-    }
-    .footer-bottom {
-      margin-top: 30px;
-      padding: 20px 10px;
-      background: #ececf2;
-      font-size: 0.85em;
-      color: #555;
-      width: 100%;
-      text-align: center;
-      box-sizing: border-box;
-    }
-    .language-switcher a {
-      color: #555;
-      text-decoration: none;
-    }
-  </style>
 </body>
 </html>

@@ -7,13 +7,14 @@ import Testimonials from '../components/testimonials.astro';
 import ExperienceSection from '../components/ExperienceSection.astro';
 import WorkshopSection from '../components/WorkshopSection.astro';
 import OMnie from '../components/OMnie.astro';
-import { getLangFromUrl, useTranslations } from '../utils/i18n';
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
 ---
 
-<BaseLayout>
+<BaseLayout 
+  title="Szkolenia AI i Excel dla firm | ^Kunke Consulting | Kursy AI Online Polska"
+  description="Profesjonalne szkolenia AI i sztucznej inteligencji dla firm w Polsce. Praktyczne kursy AI online, szkolenia ChatGPT, AI w Excel, konsulting AI i doradztwo. Szkolenia AI Poznań, Warszawa, Łódź."
+  ogImage="/images/Kunke_Favicon.png"
+>
 
 <style>
   .team-center {
@@ -31,38 +32,214 @@ const t = useTranslations(lang);
     color: #2c3e50;
     text-decoration: none;
   }
+  footer {
+    background: #f8f8fa;
+    padding: 40px 0 0 0;
+    text-align: center;
+    width: 100%;
+  }
+  .footer-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .footer-section {
+    min-width: 200px;
+    text-align: center;
+  }
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-section ul li {
+    margin: 0 0 8px 0;
+  }
+  .footer-section.social-media ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-section.social-media ul li {
+    margin-bottom: 8px;
+    width: 100%;
+    text-align: center;
+  }
+  .footer-bottom {
+    margin-top: 30px;
+    padding: 20px 10px;
+    background: #ececf2;
+    font-size: 0.85em;
+    color: #555;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  @media (max-width: 600px) {
+    .footer-bottom {
+      font-size: 0.75em;
+      padding: 24px 12px;
+    }
+  }
 </style>
 
 <section id="hero">
   <h1><span class="text-gradient">^Kunke Consulting</span></h1>
-  <p>{t('hero.title')}</p>
-  <a href="#ai-packages" class="cta-btn">{t('hero.cta')}</a>
+  <p>Nowoczesne szkolenia AI i Excel dla polskich firm.</p>
+  <a href="#ai-packages" class="cta-btn">AI dla firm</a>
 </section>
 
-<!-- Sections remain the same for now, will need translation -->
-<ExperienceSection />
-<WorkshopSection />
-<AiPackages />
-<Excel />
-<Testimonials />
+<!-- Experience Section -->
+<section id="experience">
+  <ExperienceSection />
+</section>
+
+<!-- Workshop Section -->
+<section id="workshops">
+  <WorkshopSection />
+</section>
+
+<!-- AI Packages Section -->
+<section id="ai-packages">
+  <AiPackages />
+</section>
+
+<!-- Excel Packages Section -->
+<section id="excel-packages">
+  <Excel />   
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials">
+  <Testimonials />
+</section>
+
+<!-- Team Preview Section -->
 <section id="team-preview" class="team-preview-section">
   <div class="team-preview-content team-center">
-    <h3>{t('team_preview.title')}</h3>
-    <p set:html={t('team_preview.text')} />
-    <a href="/zespol" class="cta-btn">{t('team_preview.cta')}</a>
+    <h3>Współpraca z ekspertami</h3>
+    <p>
+      Realizuję projekty z doświadczonymi specjalistami z różnych dziedzin.<br>
+      Dzięki temu mogę oferować kompleksowe rozwiązania dostosowane do Twoich potrzeb.
+    </p>
+    <a href="/zespol" class="cta-btn">Poznaj zespół</a>
   </div>
 </section>
-<OMnie />
+
+<!-- About Me Section -->
+<section id="about-me">
+  <OMnie />
+</section>
+
+<!-- FAQ Section -->
 <section id="faq" style="padding: 60px 20px; background: #f8f8fa;">
-  <h2 style="text-align: center; margin-bottom: 50px;">{t('faq.title')}</h2>
-  </section>
+  <h2 style="text-align: center; margin-bottom: 50px;">Często zadawane pytania o szkolenia AI</h2>
+  <div style="max-width: 800px; margin: 0 auto;">
+    <div class="faq-item">
+      <h3>Czy szkolenia AI są odpowiednie dla początkujących?</h3>
+      <p>Tak! Nasze szkolenia AI dla firm są dostosowane do różnych poziomów zaawansowania. Zaczynamy od podstaw i stopniowo przechodzimy do bardziej zaawansowanych zastosowań AI w biznesie.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Gdzie odbywają się szkolenia AI?</h3>  
+      <p>Oferujemy szkolenia AI w całej Polsce, w tym szkolenia AI Poznań, szkolenia AI Warszawa, szkolenia AI Łódź, oraz kursy AI online dla maksymalnej wygody uczestników.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Jak długo trwa szkolenie ChatGPT?</h3>
+      <p>Podstawowe szkolenie ChatGPT trwa 3-4 godziny, podczas gdy kompleksowe warsztaty AI dla firm mogą trwać od pół dnia do dwóch dni, w zależności od potrzeb organizacji.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Czy otrzymam certyfikat po szkoleniu AI?</h3>
+      <p>Tak, wszyscy uczestnicy otrzymują certyfikat ukończenia szkolenia AI oraz dostęp do materiałów szkoleniowych i 10 dni wsparcia e-mailowego.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Jak AI w Excel może pomóc mojej firmie?</h3>
+      <p>AI w Excel pomoże automatyzować raporty, tworzyć inteligentne analizy, oszczędzać czas na powtarzalnych zadaniach i podejmować lepsze decyzje biznesowe oparte na danych.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Co obejmuje konsulting AI dla firm?</h3>
+      <p>Nasz konsulting AI obejmuje audyt procesów, strategię implementacji AI, wybór odpowiednich narzędzi, szkolenia zespołu i wsparcie przy wdrażaniu rozwiązań AI w firmie.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Czy mogę zamówić szkolenia AI dla managerów?</h3>
+      <p>Oczywiście! Oferujemy specjalistyczne szkolenia AI dla managerów, które skupiają się na strategicznym wykorzystaniu AI, zarządzaniu zespołami w erze AI i podejmowaniu decyzji wspartych sztuczną inteligencją.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-item {
+    background: white;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-left: 4px solid var(--color-primary);
+  }
+  .faq-item h3 {
+    color: var(--color-primary);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+  }
+  .faq-item p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+  }
+</style>
+
 <section id="contact">
-  <h2>{t('contact.title')}</h2>
-  <p class="contact-text">{t('contact.text')}</p>
+  <h2>Kontakt</h2>
+  <p class="contact-text">Napisz mi email lub skorzystaj z formularza poniżej.</p>
   <div class="contact-info contact-center">
     <p><strong>Email:</strong> <a href="mailto:info@kunkeconsulting.com" class="contact-email">info@kunkeconsulting.com</a></p>
   </div>
+  <!-- New Contact Form -->
   <ContactForm />
 </section>
+
+<footer>
+  <div class="footer-wrapper">
+    <div class="footer-content">
+      <div class="footer-section contact-info-footer">
+        <h3>Contact</h3>
+        <p>^Kunke Consulting</p>
+        <p>
+          <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+        </p>
+        <p>
+          <a href="tel:+48722156925">m. +48 722 156 925</a>
+        </p>
+      </div>
+      <div class="footer-section legal-info">
+        <h3>^Kunke Consulting</h3>
+        <p><a href="/privacy-policy">Privacy Policy and Legal</a></p>
+        <p><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></p>
+      </div>
+      <div class="footer-section social-media">
+        <h3>Follow</h3>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
+  </div>
+</footer>
 
 </BaseLayout>
