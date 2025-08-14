@@ -1,0 +1,256 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import AiPackages from '../../components/AiPackages.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import Testimonials from '../../components/testimonials.astro';
+
+---
+
+<BaseLayout
+  title="Szkolenia AI Poznań | Kursy sztucznej inteligencji dla firm Poznań | ^Kunke Consulting"
+  description="Profesjonalne szkolenia AI w Poznaniu. Kursy sztucznej inteligencji dla firm, szkolenia ChatGPT, AI w Excel, konsulting AI. AI training Poznań, AI dla biznesu."
+  ogImage="/images/Kunke_Favicon.png"
+>
+
+<style>
+  .hero-poznan {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+  }
+  .hero-poznan h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  .hero-poznan p {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .local-benefits {
+    padding: 60px 20px;
+    background: #f8f8fa;
+  }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .benefit-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    text-align: center;
+  }
+  .benefit-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    display: block;
+  }
+  .poznań-stats {
+    padding: 60px 20px;
+    background: white;
+    text-align: center;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    max-width: 800px;
+    margin: 40px auto 0;
+  }
+  .stat-card {
+    background: #f8f8fa;
+    padding: 30px 20px;
+    border-radius: 12px;
+  }
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .local-companies {
+    padding: 60px 20px;
+    background: #f8f8fa;
+  }
+  .companies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .company-item {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    border-top: 3px solid #667eea;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: #667eea;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+  }
+  .cta-btn:hover {
+    background: #5a67d8;
+    transform: translateY(-2px);
+  }
+  @media (max-width: 768px) {
+    .hero-poznan h1 {
+      font-size: 2rem;
+    }
+    .hero-poznan p {
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
+<section class="hero-poznan">
+  <h1>Szkolenia AI w Poznaniu</h1>
+  <p>
+    Profesjonalne szkolenia sztucznej inteligencji dla firm w Poznaniu i okolicach.
+    Praktyczne kursy AI, które zwiększą produktywność Twojego zespołu i dadzą przewagę konkurencyjną na rynku wielkopolskim.
+  </p>
+  <a href="#ai-packages" class="cta-btn">Zobacz szkolenia AI Poznań</a>
+</section>
+
+<section class="local-benefits">
+  <h2 style="text-align: center; margin-bottom: 50px;">Dlaczego szkolenia AI w Poznaniu?</h2>
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <span class="benefit-icon">🏢</span>
+      <h3>Szkolenia u Ciebie</h3>
+      <p>Prowadzimy szkolenia AI bezpośrednio w Twojej firmie w Poznaniu - oszczędzasz czas i koszty dojazdu pracowników.</p>
+    </div>
+    <div class="benefit-card">
+      <span class="benefit-icon">🚗</span>
+      <h3>Dogodna lokalizacja</h3>
+      <p>Poznań jest centralnie położony w Wielkopolsce - łatwy dojazd dla firm z całego regionu.</p>
+    </div>
+    <div class="benefit-card">
+      <span class="benefit-icon">🤝</span>
+      <h3>Lokalny ekspert</h3>
+      <p>Znamy specyfikę poznańskiego rynku i potrzeby firm z Wielkopolski w zakresie digitalizacji.</p>
+    </div>
+    <div class="benefit-card">
+      <span class="benefit-icon">📞</span>
+      <h3>Wsparcie lokalne</h3>
+      <p>Oferujemy bezpośrednie wsparcie po szkoleniu - spotkania, konsultacje, pomoc przy wdrożeniach.</p>
+    </div>
+  </div>
+</section>
+
+<section class="poznań-stats">
+  <h2>Szkolenia AI w Poznaniu - liczby</h2>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-number">150+</span>
+      <h4>Przeszkolonych firm w Wielkopolsce</h4>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">500+</span>
+      <h4>Uczestników szkoleń AI</h4>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">95%</span>
+      <h4>Zadowolonych klientów</h4>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">24h</span>
+      <h4>Średni czas odpowiedzi</h4>
+    </div>
+  </div>
+</section>
+
+<section class="local-companies">
+  <h2 style="text-align: center; margin-bottom: 50px;">Branże, które szkolimy w Poznaniu</h2>
+  <div class="companies-grid">
+    <div class="company-item">
+      <h4>🏭 Produkcja</h4>
+      <p>Volkswagen, MAN, Bridgestone - szkolenia AI dla optymalizacji procesów produkcyjnych</p>
+    </div>
+    <div class="company-item">
+      <h4>💻 IT & Tech</h4>
+      <p>Software houses, startupy technologiczne - zaawansowane zastosowania AI w rozwoju oprogramowania</p>
+    </div>
+    <div class="company-item">
+      <h4>🏦 Finanse</h4>
+      <p>Banki, firmy ubezpieczeniowe - AI w analizie ryzyka i obsłudze klienta</p>
+    </div>
+    <div class="company-item">
+      <h4>🛒 Handel</h4>
+      <p>Centra handlowe, e-commerce - AI w personalizacji i analityce sprzedaży</p>
+    </div>
+    <div class="company-item">
+      <h4>🏥 Ochrona zdrowia</h4>
+      <p>Szpitale, kliniki - AI w diagnostyce i zarządzaniu danymi medycznymi</p>
+    </div>
+    <div class="company-item">
+      <h4>🎓 Edukacja</h4>
+      <p>Uniwersytety, szkoły - AI w personalizacji procesu nauczania</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding: 60px 20px; background: white; text-align: center;">
+  <h2>Co wyróżnia nasze szkolenia AI w Poznaniu?</h2>
+  <div style="max-width: 800px; margin: 0 auto; text-align: left;">
+    <ul style="list-style: none; padding: 0;">
+      <li style="padding: 15px; margin-bottom: 10px; background: #f8f8fa; border-radius: 8px; border-left: 4px solid #667eea;"><strong>🎯 Praktyczne podejście:</strong> Pracujemy z prawdziwymi danymi z Twojej firmy</li>
+      <li style="padding: 15px; margin-bottom: 10px; background: #f8f8fa; border-radius: 8px; border-left: 4px solid #667eea;"><strong>🇵🇱 Język polski:</strong> Wszystkie materiały i szkolenia prowadzone w języku polskim</li>
+      <li style="padding: 15px; margin-bottom: 10px; background: #f8f8fa; border-radius: 8px; border-left: 4px solid #667eea;"><strong>📚 Kompleksowe materiały:</strong> Otrzymujesz pakiet materiałów i przykładów do wykorzystania</li>
+      <li style="padding: 15px; margin-bottom: 10px; background: #f8f8fa; border-radius: 8px; border-left: 4px solid #667eea;"><strong>⏰ Elastyczne terminy:</strong> Dostosowujemy się do Twojego kalendarza</li>
+      <li style="padding: 15px; margin-bottom: 10px; background: #f8f8fa; border-radius: 8px; border-left: 4px solid #667eea;"><strong>💼 Wsparcie po szkoleniu:</strong> 10 dni bezpłatnego wsparcia e-mailowego</li>
+    </ul>
+  </div>
+</section>
+
+<!-- AI Packages Section -->
+<section id="ai-packages">
+  <AiPackages />
+</section>
+
+<section style="padding: 60px 20px; background: #667eea; color: white; text-align: center;">
+  <h2>Zacznij transformację AI w Poznaniu już dziś!</h2>
+  <p style="font-size: 1.2rem; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;">
+    Dołącz do grona poznańskich firm, które już wykorzystują AI do zwiększania efektywności i przewagi konkurencyjnej.
+  </p>
+  <a href="#contact" class="cta-btn" style="background: white; color: #667eea;">Umów szkolenie AI w Poznaniu</a>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials">
+  <Testimonials />
+</section>
+
+<section id="contact" style="padding: 60px 20px; background: #f8f8fa;">
+  <h2 style="text-align: center; margin-bottom: 30px;">Skontaktuj się - szkolenia AI Poznań</h2>
+  <p style="text-align: center; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+    Chcesz dowiedzieć się więcej o naszych szkoleniach AI w Poznaniu?
+    Skontaktuj się z nami i omówmy potrzeby szkoleniowe Twojej firmy.
+  </p>
+  <div style="text-align: center; margin-bottom: 30px;">
+    <p><strong>📍 Poznań i okolice</strong></p>
+    <p><strong>📞 Telefon:</strong> <a href="tel:+48722156925">+48 722 156 925</a></p>
+    <p><strong>✉️ Email:</strong> <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a></p>
+  </div>
+  <ContactForm />
+</section>
+
+</BaseLayout>
