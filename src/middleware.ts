@@ -65,7 +65,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
       : targetPath;
 
     cookies.set(LANG_COOKIE_NAME, langParam, { path: '/', maxAge: 60 * 60 * 24 * 180, sameSite: 'lax' });
-    return redirect(finalPath, 302);
+    if (finalPath !== pathname) {
+      return redirect(finalPath, 302);
+    }
   }
 
   // 5. Check for language cookie
