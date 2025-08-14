@@ -64,9 +64,37 @@ export const onRequest = defineMiddleware(async (context, next) => {
       ? (pathname.startsWith(`/${OTHER_LANG}`) ? pathname : getTranslatedPath(pathname, OTHER_LANG))
       : targetPath;
 
-    cookies.set(LANG_COOKIE_NAME, langParam, { path: '/', maxAge: 60 * 60 * 24 * 180, sameSite: 'lax' });
+    // Set the cookie with the language preference
+    cookies.set(LANG_COOKIE_NAME, langParam, { 
+      path: '/', 
+      maxAge: 60 * 60 * 24 * 180, 
+      sameSite: 'lax' 
+    });
+    
+    // FIX: Only redirect if the path needs to change AND remove the lang parameter
     if (finalPath !== pathname) {
-      return redirect(finalPath, 302);
+      // Create a new URL without the lang parameter
+      const newUrl = new URL(finalPath, url.origin);
+      // Copy all search params EXCEPT 'lang'
+      url.searchParams.forEach((value, key) => {
+        if (key !== 'lang') {
+          newUrl.searchParams.set(key, value);
+        }
+      });
+      return redirect(newUrl.toString(), 302);
+    } else {
+      // If we're already on the correct path, just remove the lang param
+      // by redirecting to the same path without it
+      const newUrl = new URL(pathname, url.origin);
+      url.searchParams.forEach((value, key) => {
+        if (key !== 'lang') {
+          newUrl.searchParams.set(key, value);
+        }
+      });
+      // Only redirect if there was actually a lang param to remove
+      if (url.searchParams.has('lang')) {
+        return redirect(newUrl.toString(), 302);
+      }
     }
   }
 
