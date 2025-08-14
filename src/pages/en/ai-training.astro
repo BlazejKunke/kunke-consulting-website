@@ -1,0 +1,187 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import AiPackages from '../../components/AiPackages.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import Testimonials from '../../components/testimonials.astro';
+
+---
+
+<BaseLayout
+  title="Szkolenia AI dla firm | Profesjonalne kursy sztucznej inteligencji | ^Kunke Consulting"
+  description="Kompleksowe szkolenia AI i sztucznej inteligencji dla firm w Polsce. Praktyczne warsztaty ChatGPT, AI w Excel, konsulting AI. Szkolenia stacjonarne i online w całej Polsce."
+  ogImage="/images/Kunke_Favicon.png"
+>
+
+<style>
+  .hero-ai {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+  }
+  .hero-ai h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  .hero-ai p {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .benefits-section {
+    padding: 60px 20px;
+    background: #f8f8fa;
+  }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .benefit-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    text-align: center;
+  }
+  .benefit-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    display: block;
+  }
+  .why-ai-section {
+    padding: 60px 20px;
+    background: white;
+    text-align: center;
+  }
+  .features-list {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .features-list li {
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+  }
+  .features-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+  }
+  .cta-section {
+    padding: 60px 20px;
+    background: #667eea;
+    color: white;
+    text-align: center;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: white;
+    color: #667eea;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+  }
+  .cta-btn:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+  }
+  @media (max-width: 768px) {
+    .hero-ai h1 {
+      font-size: 2rem;
+    }
+    .hero-ai p {
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
+<section class="hero-ai">
+  <h1>Szkolenia AI dla Firm</h1>
+  <p>
+    Odkryj potencjał sztucznej inteligencji w swojej firmie. Praktyczne szkolenia AI,
+    które zwiększą produktywność Twojego zespołu i dadzą przewagę konkurencyjną.
+  </p>
+  <a href="#ai-packages" class="cta-btn">Zobacz pakiety szkoleń</a>
+</section>
+
+<section class="benefits-section">
+  <h2 style="text-align: center; margin-bottom: 50px;">Dlaczego szkolenia AI są kluczowe dla Twojej firmy?</h2>
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <span class="benefit-icon">⚡</span>
+      <h3>Zwiększenie produktywności</h3>
+      <p>Pracownicy oszczędzają 2-4 godziny dziennie dzięki automatyzacji powtarzalnych zadań z pomocą AI.</p>
+    </div>
+    <div class="benefit-card">
+      <span class="benefit-icon">💡</span>
+      <h3>Lepsze decyzje biznesowe</h3>
+      <p>AI pomoże w analizie danych i przewidywaniu trendów, wspierając strategiczne decyzje.</p>
+    </div>
+    <div class="benefit-card">
+      <span class="benefit-icon">🎯</span>
+      <h3>Przewaga konkurencyjna</h3>
+      <p>Firmy używające AI są o 23% bardziej rentowne od tych, które tego nie robią.</p>
+    </div>
+    <div class="benefit-card">
+      <span class="benefit-icon">📈</span>
+      <h3>Wzrost przychodów</h3>
+      <p>Automatyzacja procesów i lepsza personalizacja prowadzą do zwiększenia przychodów.</p>
+    </div>
+  </div>
+</section>
+
+<section class="why-ai-section">
+  <h2>Co otrzymasz na naszych szkoleniach AI?</h2>
+  <ul class="features-list">
+    <li><strong>Praktyczne szkolenia ChatGPT</strong> - naucz się wykorzystywać najpopularniejsze narzędzie AI</li>
+    <li><strong>AI w Excel</strong> - automatyzuj analizy i raporty z pomocą sztucznej inteligencji</li>
+    <li><strong>Implementacja AI w firmie</strong> - kompleksowy plan wdrożenia rozwiązań AI</li>
+    <li><strong>Szkolenia dla managerów</strong> - jak zarządzać zespołem w erze AI</li>
+    <li><strong>Konsulting AI</strong> - indywidualne doradztwo dostosowane do Twojej branży</li>
+    <li><strong>Kursy online i stacjonarne</strong> - elastyczne formy szkoleń</li>
+    <li><strong>Materiały po polsku</strong> - wszystko w naszym rodzimym języku</li>
+    <li><strong>Wsparcie po szkoleniu</strong> - pomoc przy wdrażaniu rozwiązań</li>
+  </ul>
+</section>
+
+<!-- AI Packages Section -->
+<section id="ai-packages">
+  <AiPackages />
+</section>
+
+<section class="cta-section">
+  <h2>Gotowy na transformację cyfrową?</h2>
+  <p>
+    Nie pozwól, aby konkurencja wyprzedziła Cię w wykorzystaniu AI.
+    Zainwestuj w szkolenia AI już dziś i zobacz różnicę w wydajności swojego zespołu.
+  </p>
+  <a href="#contact" class="cta-btn">Skontaktuj się z nami</a>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials">
+  <Testimonials />
+</section>
+
+<section id="contact" style="padding: 60px 20px; background: #f8f8fa;">
+  <h2 style="text-align: center; margin-bottom: 30px;">Rozpocznij swoją przygodę z AI</h2>
+  <p style="text-align: center; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+    Skontaktuj się z nami, aby omówić potrzeby szkoleniowe Twojej firmy.
+    Dobierzemy odpowiedni program szkoleń AI dla Twojego zespołu.
+  </p>
+  <ContactForm />
+</section>
+
+</BaseLayout>

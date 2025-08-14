@@ -1,0 +1,35 @@
+{
+  "site": {
+    "title": "AI and Excel Training for Companies | ^Kunke Consulting | AI Courses Online Poland",
+    "description": "Professional AI and artificial intelligence training for companies in Poland. Practical online AI courses, ChatGPT training, AI in Excel, AI consulting and advisory. AI training Poznań, Warsaw, Łódź.",
+    "ogImage": "/images/Kunke_Favicon.png"
+  },
+  "hero": {
+    "title": "Modern AI and Excel training for Polish companies.",
+    "cta": "AI for companies"
+  },
+  "team_preview": {
+    "title": "Collaboration with experts",
+    "text": "I carry out projects with experienced specialists from various fields.<br>This allows me to offer comprehensive solutions tailored to your needs.",
+    "cta": "Meet the team"
+  },
+  "footer": {
+    "contact": "Contact",
+    "legal": "^Kunke Consulting",
+    "privacy": "Privacy Policy and Legal",
+    "blog": "Blog",
+    "follow": "Follow",
+    "copyright": "© 2025 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement."
+  },
+  "lang": {
+    "pl": "Polski",
+    "en": "English"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions about AI Training"
+  },
+  "contact": {
+    "title": "Contact",
+    "text": "Email me or use the form below."
+  }
+}

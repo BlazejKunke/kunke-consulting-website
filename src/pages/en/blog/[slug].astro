@@ -3,7 +3,7 @@ import { getCollection, getEntry } from "astro:content";
 
 /* 1️⃣  Tell Astro all valid slugs ------------------------------------ */
 export async function getStaticPaths() {
-  const posts = await getCollection("pl/blog");          // read every .md file
+  const posts = await getCollection("en/blog");          // read every .md file
   return posts.map((post) => ({
     params: { slug: post.slug },                      // { slug: "excel-tips" }
   }));
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 
 /* 2️⃣  For each request, load that one post -------------------------- */
 const { slug } = Astro.params;
-const post = await getEntry("pl/blog", slug as string);
+const post = await getEntry("en/blog", slug as string);
 if (!post) throw new Error(`Post "${slug}" not found`);
 
 const nonce = Astro.locals.nonce;
@@ -21,7 +21,7 @@ const heroImage = post.data.heroImage || "/images/Workshop2025.JPG";
 ---
 
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,13 +32,13 @@ const heroImage = post.data.heroImage || "/images/Workshop2025.JPG";
     <link rel="stylesheet" href="/styles/global.css" nonce={nonce} />
     <title>{post.data.title} | Blog - ^Kunke Consulting</title>
     <meta name="description" content={post.data.description} />
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article" />
     <meta property="og:title" content={post.data.title} />
     <meta property="og:description" content={post.data.description} />
     <meta property="og:image" content={heroImage} />
-    
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content={post.data.title} />
@@ -48,7 +48,7 @@ const heroImage = post.data.heroImage || "/images/Workshop2025.JPG";
   <body>
 
     <!-- Hero Image Section -->
-    <!-- 
+    <!--
       HERO IMAGE RECOMMENDATIONS:
       - Optimal size: 1200x600px (2:1 aspect ratio)
       - Format: WebP with JPG fallback for best performance
@@ -73,17 +73,17 @@ const heroImage = post.data.heroImage || "/images/Workshop2025.JPG";
         />
         <div class="hero-overlay"></div>
       </div>
-      
+
       <!-- Hero content overlay -->
       <div class="hero-content-overlay">
         <div class="hero-text-container">
           <h1 class="hero-title">{post.data.title}</h1>
           <div class="hero-meta">
             <time datetime={post.data.date.toISOString()}>
-              {post.data.date.toLocaleDateString('pl-PL', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+              {post.data.date.toLocaleDateString('pl-PL', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
               })}
             </time>
             {post.data.tags && (
@@ -105,14 +105,14 @@ const heroImage = post.data.heroImage || "/images/Workshop2025.JPG";
         <article class="article-content">
           <Content />
         </article>
-        
+
         <!-- Sidebar for additional content -->
         <aside class="article-sidebar">
           <div class="sidebar-widget">
             <h3>O tym artykule</h3>
             <p class="article-description">{post.data.description}</p>
           </div>
-          
+
           <div class="sidebar-widget">
             <h3>^Kunke Consulting</h3>
             <p>Ekspert w dziedzinie AI i automatyzacji biznesowej. Pomagamy firmom zwiększać efektywność poprzez nowoczesne technologie.</p>

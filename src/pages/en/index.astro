@@ -1,13 +1,13 @@
 ---
-import BaseLayout from '../components/BaseLayout.astro';
-import ContactForm from '../components/ContactForm.astro';
-import AiPackages from '../components/AiPackages.astro';
-import Excel from '../components/Excel.astro';
-import Testimonials from '../components/testimonials.astro';
-import ExperienceSection from '../components/ExperienceSection.astro';
-import WorkshopSection from '../components/WorkshopSection.astro';
-import OMnie from '../components/OMnie.astro';
-import { getLangFromUrl, useTranslations } from '../utils/i18n';
+import BaseLayout from '../../components/BaseLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import AiPackages from '../../components/AiPackages.astro';
+import Excel from '../../components/Excel.astro';
+import Testimonials from '../../components/testimonials.astro';
+import ExperienceSection from '../../components/ExperienceSection.astro';
+import WorkshopSection from '../../components/WorkshopSection.astro';
+import OMnie from '../../components/OMnie.astro';
+import { getLangFromUrl, useTranslations } from '../../utils/i18n';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -49,7 +49,7 @@ const t = useTranslations(lang);
   <div class="team-preview-content team-center">
     <h3>{t('team_preview.title')}</h3>
     <p set:html={t('team_preview.text')} />
-    <a href="/zespol" class="cta-btn">{t('team_preview.cta')}</a>
+    <a href="/en/team" class="cta-btn">{t('team_preview.cta')}</a>
   </div>
 </section>
 <OMnie />

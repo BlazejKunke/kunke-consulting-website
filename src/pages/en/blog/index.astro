@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 
 const nonce = Astro.locals.nonce;
 
-const posts = (await getCollection("pl/blog")).sort(
+const posts = (await getCollection("en/blog")).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 
