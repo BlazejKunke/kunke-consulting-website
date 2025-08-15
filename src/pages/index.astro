@@ -147,55 +147,155 @@ import OMnie from '../components/OMnie.astro';
 <section id="faq" style="padding: 60px 20px; background: #f8f8fa;">
   <h2 style="text-align: center; margin-bottom: 50px;">Często zadawane pytania o szkolenia AI</h2>
   <div style="max-width: 800px; margin: 0 auto;">
-    <div class="faq-item">
-      <h3>Czy szkolenia AI są odpowiednie dla początkujących?</h3>
-      <p>Tak! Nasze szkolenia AI dla firm są dostosowane do różnych poziomów zaawansowania. Zaczynamy od podstaw i stopniowo przechodzimy do bardziej zaawansowanych zastosowań AI w biznesie.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Gdzie odbywają się szkolenia AI?</h3>  
-      <p>Oferujemy szkolenia AI w całej Polsce, w tym szkolenia AI Poznań, szkolenia AI Warszawa, szkolenia AI Łódź, oraz kursy AI online dla maksymalnej wygody uczestników.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Jak długo trwa szkolenie ChatGPT?</h3>
-      <p>Podstawowe szkolenie ChatGPT trwa 3-4 godziny, podczas gdy kompleksowe warsztaty AI dla firm mogą trwać od pół dnia do dwóch dni, w zależności od potrzeb organizacji.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Czy otrzymam certyfikat po szkoleniu AI?</h3>
-      <p>Tak, wszyscy uczestnicy otrzymują certyfikat ukończenia szkolenia AI oraz dostęp do materiałów szkoleniowych i 10 dni wsparcia e-mailowego.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Jak AI w Excel może pomóc mojej firmie?</h3>
-      <p>AI w Excel pomoże automatyzować raporty, tworzyć inteligentne analizy, oszczędzać czas na powtarzalnych zadaniach i podejmować lepsze decyzje biznesowe oparte na danych.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Co obejmuje konsulting AI dla firm?</h3>
-      <p>Nasz konsulting AI obejmuje audyt procesów, strategię implementacji AI, wybór odpowiednich narzędzi, szkolenia zespołu i wsparcie przy wdrażaniu rozwiązań AI w firmie.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Czy mogę zamówić szkolenia AI dla managerów?</h3>
-      <p>Oczywiście! Oferujemy specjalistyczne szkolenia AI dla managerów, które skupiają się na strategicznym wykorzystaniu AI, zarządzaniu zespołami w erze AI i podejmowaniu decyzji wspartych sztuczną inteligencją.</p>
+    <div class="faq-accordion">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Czy szkolenia AI są odpowiednie dla początkujących?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Tak! Nasze szkolenia AI dla firm są dostosowane do różnych poziomów zaawansowania. Zaczynamy od podstaw i stopniowo przechodzimy do bardziej zaawansowanych zastosowań AI w biznesie.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Gdzie odbywają się szkolenia AI?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Oferujemy szkolenia AI w całej Polsce, w tym szkolenia AI Poznań, szkolenia AI Warszawa, szkolenia AI Łódź, oraz kursy AI online dla maksymalnej wygody uczestników.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Jak długo trwa szkolenie ChatGPT?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Podstawowe szkolenie ChatGPT trwa 3-4 godziny, podczas gdy kompleksowe warsztaty AI dla firm mogą trwać od pół dnia do dwóch dni, w zależności od potrzeb organizacji.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Czy otrzymam certyfikat po szkoleniu AI?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Tak, wszyscy uczestnicy otrzymują certyfikat ukończenia szkolenia AI oraz dostęp do materiałów szkoleniowych i 10 dni wsparcia e-mailowego.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Jak AI w Excel może pomóc mojej firmie?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>AI w Excel pomoże automatyzować raporty, tworzyć inteligentne analizy, oszczędzać czas na powtarzalnych zadaniach i podejmować lepsze decyzje biznesowe oparte na danych.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Co obejmuje konsulting AI dla firm?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Nasz konsulting AI obejmuje audyt procesów, strategię implementacji AI, wybór odpowiednich narzędzi, szkolenia zespołu i wsparcie przy wdrażaniu rozwiązań AI w firmie.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Czy mogę zamówić szkolenia AI dla managerów?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Oczywiście! Oferujemy specjalistyczne szkolenia AI dla managerów, które skupiają się na strategicznym wykorzystaniu AI, zarządzaniu zespołami w erze AI i podejmowaniu decyzji wspartych sztuczną inteligencją.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
   .faq-item {
     background: white;
-    padding: 25px;
-    margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,.05);
     border-left: 4px solid var(--color-primary);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
   }
-  .faq-item h3 {
+  .faq-item:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,.1);
+  }
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 25px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+  }
+  .faq-question:hover {
+    background-color: #f8f9fa;
+  }
+  .faq-question:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+  }
+  .faq-question h3 {
     color: var(--color-primary);
-    margin-bottom: 15px;
+    margin: 0;
     font-size: 1.2rem;
+    flex-grow: 1;
   }
-  .faq-item p {
+  .faq-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 20px;
+  }
+  .faq-item[data-expanded="true"] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    padding: 0 25px;
+  }
+  .faq-item[data-expanded="true"] .faq-answer {
+    max-height: 200px;
+    padding: 15px 25px 25px 25px;
+  }
+  .faq-answer p {
     margin: 0;
     line-height: 1.6;
     color: #555;
+  }
+  @media (max-width: 600px) {
+    .faq-question {
+      padding: 20px;
+    }
+    .faq-question h3 {
+      font-size: 1.1rem;
+    }
+    .faq-icon {
+      margin-left: 15px;
+    }
+    .faq-item[data-expanded="true"] .faq-answer {
+      padding: 15px 20px 20px 20px;
+    }
   }
 </style>
 
@@ -241,5 +341,48 @@ import OMnie from '../components/OMnie.astro';
     <p>© 2025 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
   </div>
 </footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      
+      question.addEventListener('click', function() {
+        const isExpanded = item.getAttribute('data-expanded') === 'true';
+        
+        // Close all other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.setAttribute('data-expanded', 'false');
+            otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          }
+        });
+        
+        // Toggle current item
+        const newExpandedState = !isExpanded;
+        item.setAttribute('data-expanded', newExpandedState.toString());
+        question.setAttribute('aria-expanded', newExpandedState.toString());
+        
+        // Adjust max-height for smooth animation
+        if (newExpandedState) {
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        } else {
+          answer.style.maxHeight = '0px';
+        }
+      });
+      
+      // Keyboard navigation
+      question.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          question.click();
+        }
+      });
+    });
+  });
+</script>
 
 </BaseLayout>
