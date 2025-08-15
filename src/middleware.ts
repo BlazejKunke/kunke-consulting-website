@@ -3,6 +3,11 @@ import { defineMiddleware } from 'astro:middleware';
 import { generateNonce } from './utils/nonce';
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  // Skip CSP in development
+  if (import.meta.env.DEV) {
+    return next();
+  }
+  
   const nonce = generateNonce();
   context.locals.nonce = nonce;
 
