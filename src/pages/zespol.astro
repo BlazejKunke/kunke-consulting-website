@@ -3,8 +3,8 @@ import TeamMember from '../components/TeamMember.astro';
 
 const nonce = Astro.locals.nonce;
 
-// Define your team members here
-const teamMembers = [
+// Define experts
+const experts = [
   {
     name: "Tomasz Łozowicki",
     role: "Marketing, komunikacja i wystąpienia publiczne",
@@ -15,7 +15,22 @@ const teamMembers = [
     website: "https://lozowicki.pl/",
     yearsOfCollaboration: "2022"
   },
-  // Add more team members...
+  {
+    name: "Bartosz Radacz",
+    role: "Strategia, sprzedaż i marketing B2B",
+    bio: "Specjalizuje się w strategii, sprzedaży i marketingu B2B oraz w wykorzystaniu narzędzi AI w rozwoju biznesu. Wspiera firmy w projektowaniu procesów sprzedażowych, generowaniu leadów oraz optymalizacji działań marketingowych. Łączy analityczne myślenie z elastycznym działaniem, stawiając na rozwiązania o realnym wpływie na wzrost sprzedaży.",
+    image: "/images/BartoszRadacz.jpg",
+    specializations: [
+      "Strategia B2B",
+      "Sprzedaż i marketing",
+      "AI w biznesie"
+    ],
+    email: "bartosz.radacz@gmail.com",
+  },
+];
+
+// Define collaborators
+const collaborators = [
   {
     name: "Janusz Józef Kunke",
     role: "CEO Kunke Poligrafia",
@@ -29,6 +44,18 @@ const teamMembers = [
     linkedin: "https://www.linkedin.com/in/janusz-j%C3%B3zef-kunke-83b08255/",
     website: "https://kunke.pl/",
     yearsOfCollaboration: "1991"
+  },
+  {
+    name: "David Gardner-Goulet (Kanada)",
+    role: "Niezależny trener AI",
+    bio: "David Gardner-Goulet jest niezależnym trenerem AI, specjalizującym się w dostosowywaniu dużych modeli językowych (LLM) do realiów językowych i kulturowych języka kanadyjskiego francuskiego. Współpracuje z wiodącymi firmami, takimi jak Scale AI, Samsung Electronics i LTX, wykorzystując techniki NLP (Natural Language Processing – przetwarzanie języka naturalnego) oraz RLHF (Reinforcement Learning from Human Feedback – uczenie przez wzmacnianie na podstawie opinii człowieka). Pomaga systemom AI generować precyzyjne, zrozumiałe i lokalnie dopasowane odpowiedzi, wspierając rozwój rozwiązań, które ułatwiają codzienne życie.",
+    image: "/images/Dawid_GG.png",
+    specializations: [
+      "Dostosowywanie LLM",
+      "NLP (Natural Language Processing)",
+      "RLHF (Reinforcement Learning from Human Feedback)"
+    ],
+    linkedin: "https://www.linkedin.com/in/david-gardner-goulet-638041212/",
   },
   {
     name: "Krzysztof Cichy",
@@ -72,30 +99,6 @@ const teamMembers = [
     website: "", // Brak strony internetowej
     yearsOfCollaboration: "2018"
   },
-  {
-    name: "Bartosz Radacz",
-    role: "Strategia, sprzedaż i marketing B2B",
-    bio: "Specjalizuje się w strategii, sprzedaży i marketingu B2B oraz w wykorzystaniu narzędzi AI w rozwoju biznesu. Wspiera firmy w projektowaniu procesów sprzedażowych, generowaniu leadów oraz optymalizacji działań marketingowych. Łączy analityczne myślenie z elastycznym działaniem, stawiając na rozwiązania o realnym wpływie na wzrost sprzedaży.",
-    image: "/images/BartoszRadacz.jpg",
-    specializations: [
-      "Strategia B2B",
-      "Sprzedaż i marketing",
-      "AI w biznesie"
-    ],
-    email: "bartosz.radacz@gmail.com",
-  },
-  {
-    name: "David Gardner-Goulet (Kanada)",
-    role: "Niezależny trener AI",
-    bio: "David Gardner-Goulet jest niezależnym trenerem AI, specjalizującym się w dostosowywaniu dużych modeli językowych (LLM) do realiów językowych i kulturowych języka kanadyjskiego francuskiego. Współpracuje z wiodącymi firmami, takimi jak Scale AI, Samsung Electronics i LTX, wykorzystując techniki NLP (Natural Language Processing – przetwarzanie języka naturalnego) oraz RLHF (Reinforcement Learning from Human Feedback – uczenie przez wzmacnianie na podstawie opinii człowieka). Pomaga systemom AI generować precyzyjne, zrozumiałe i lokalnie dopasowane odpowiedzi, wspierając rozwój rozwiązań, które ułatwiają codzienne życie.",
-    image: "/images/Dawid_GG.png",
-    specializations: [
-      "Dostosowywanie LLM",
-      "NLP (Natural Language Processing)",
-      "RLHF (Reinforcement Learning from Human Feedback)"
-    ],
-    linkedin: "https://www.linkedin.com/in/david-gardner-goulet-638041212/",
-  },
 ];
 ---
 
@@ -109,21 +112,33 @@ const teamMembers = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/global.css" nonce={nonce} />
-    <title>Zespół | ^Kunke Consulting</title>
-    <meta name="description" content="Poznaj zespół ekspertów ^Kunke Consulting. Współpracujemy z najlepszymi specjalistami w dziedzinie AI, Excela i doradztwa biznesowego." />
+    <title>Eksperci i doradcy | ^Kunke Consulting</title>
+    <meta name="description" content="Eksperci i doradcy ^Kunke Consulting. ^Kunke Consulting to głównie moja praca, ale współpracuję z najlepszymi specjalistami w dziedzinie AI, Excela i doradztwa biznesowego." />
   </head>
   <body>
 
     <main>
       <section class="team-hero">
-        <h1>Mój Zespół</h1>
-        <p class="subtitle">Współpracuję z najlepszymi ekspertami w branży</p>
+        <h1>Eksperci i doradcy</h1>
+        <p class="subtitle">^Kunke Consulting to głównie moja praca - lecz niebyłbym w stanie zrealizować moich projektów bez zewnętrznego wsparcia ekspertów, doradców, przyjaciół, współpracowników i mentorów. Każdy z nich wnosi unikalne doświadczenie i perspektywę, dzięki którym mogę oferować kompleksowe rozwiązania dostosowane do różnorodnych potrzeb moich klientów.</p>
       </section>
 
-      <section class="team-grid">
-        {teamMembers.map(member => (
-          <TeamMember {...member} />
-        ))}
+      <section class="experts-section">
+        <h2>Eksperci</h2>
+        <div class="team-grid">
+          {experts.map(member => (
+            <TeamMember {...member} />
+          ))}
+        </div>
+      </section>
+
+      <section class="collaborators-section">
+        <h2>Inni współpracownicy, doradcy i mentorzy</h2>
+        <div class="team-grid">
+          {collaborators.map(member => (
+            <TeamMember {...member} />
+          ))}
+        </div>
       </section>
     </main>
 
