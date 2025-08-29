@@ -3,57 +3,62 @@
 const packages = [
   {
     id: 'plant',
-    title: 'AI Plant',
-    tagline: 'Szybki start z AI',
-    price: 'Od 999 PLN + VAT',
-    badge: 'Nowość',
+    title: 'Konsultacja AI',
+    tagline: 'Szybka diagnoza i pierwsze kroki',
+    price: 'Od 999 zł + VAT',
+    badge: null,
     bullets: [
-      '3 h warsztat 1-on-1 (online)',
-      'Lista najlepszych darmowych narzędzi',
-      'PDF + nagranie po spotkaniu'
+      'Ocena potencjału AI w Twojej firmie',
+      'Możliwe obszary pierwszych wdrożeń',
+      'Sugerowane narzędzia AI',
+      '90 minut online, albo stacjonarnie',
+      'Możliwość nagrania spotkania'
     ],
     calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   },
   {
     id: 'grow',
-    title: 'AI Grow',
-    tagline: 'Wprowadź AI do Twojego zespołu',
-    price: '3 999 PLN + VAT',
+    title: 'Szkolenie AI dla firm',
+    tagline: 'Wprowadź AI, zyskaj przewagę',
+    price: 'Od 3999 zł + VAT',
     bullets: [
-      'Półdniowy warsztat AI u Was',
-      'Praktyczna sztuczna inteligencja',
-      '4 programy pilotażowe + wsparcie',
-      '2 h podsumowanie i zalecenia'
+      'Dwa szkolenia stacjonarne',
+      'Praktyczne narzędzia AI',
+      'Programy pilotażowe AI',
+      'Etyka, Środowisko, Prawo AI',
+      'AI Video, AI obrazy, AI dźwięk',
+      'Inżynieria promptu',
+      'Prezentacja PDF, Certyfikat'
     ],
+    badge: 'AI dla firm',
     calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   },
   {
     id: 'flourish',
-    title: 'AI Flourish',
-    tagline: 'Progam AI dla całej firmy',
+    title: 'Projekty AI',
+    tagline: 'Stała współpraca',
     price: 'Cena ustalana indywidualnie',
     badge: null,
     bullets: [
-      'Spotkanie Kick-off',
-      'Całodniowy workshop AI',
-      'Wsparcie prawne',
-      'Wsparcie techniczne IT',
-      'Konkretny plan wdrożenia AI',
-      'Programy pilotażowe',
-      'Plan skalowania na całą organizację'
+      'Stała współpraca w obszarze AI',
+      'Działania długofalowe',
+      'Najbardziej ambitne projekty',
+      'Szkolenia zespołów',
+      'Wsparcie IT',
+      'Wsparcie prawne AI',
+      'Konsulting AI'
     ],
     calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   }
 ];
 ---
 <section id="ai-packages">
-  <h2>Wybierz szkolenie AI</h2>
+  <h2>Szkolenia i doradztwo AI</h2>
 
   <div class="package-grid">
     {packages.map(pkg => (
       <article class="card {pkg.id}">
         {pkg.badge && <span class="badge">{pkg.badge}</span>}
-        <img src={`/images/${pkg.id}.png`} width="80" height="80" alt={`${pkg.title} icon`} class="icon" loading="lazy" decoding="async"/>
 
         <h3>{pkg.title}</h3>
         <p class="tagline">{pkg.tagline}</p>
@@ -67,7 +72,7 @@ const packages = [
           <p class="price" set:html={pkg.price} />
 
           {pkg.calendly
-            ? <a href={pkg.calendly} class="cta" target="_blank" rel="noopener noreferrer">Porozmawiajmy</a>
+            ? <a href={pkg.calendly} class="cta" target="_blank" rel="noopener noreferrer">{pkg.id === 'plant' || pkg.id === 'grow' ? 'Dowiedz się więcej' : 'Porozmawiajmy'}</a>
             : <a href="#contact" class="cta secondary">Skontaktuj się</a>}
         </div>
       </article>
@@ -87,7 +92,6 @@ const packages = [
     position:relative; box-shadow:0 4px 12px rgba(0,0,0,.06);
     display:flex; flex-direction:column; align-items:center;
   }
-  .icon { width:64px; height:64px; margin-bottom:16px; }
   h3 { margin:8px 0 4px; }
   .tagline { font-size:.95rem; color:#555; margin-bottom:16px; }
   ul { text-align:left; padding-left:18px; margin:0 0 24px; }
