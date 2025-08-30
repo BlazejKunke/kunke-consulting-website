@@ -567,8 +567,16 @@ import BaseLayout from '../components/BaseLayout.astro';
 
     .cta-primary,
     .cta-secondary {
-      width: 100%;
+      width: auto;
+      min-width: 200px;
+      max-width: 280px;
+      padding: 14px 24px;
+      font-size: 1rem;
       text-align: center;
+    }
+
+    .hero-cta-buttons {
+      justify-content: center;
     }
   }
 
