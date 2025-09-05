@@ -14,8 +14,6 @@ const { slug } = Astro.params;
 const post = await getEntry("blog", slug as string);
 if (!post) throw new Error(`Post "${slug}" not found`);
 
-const nonce = Astro.locals.nonce;
-
 const { Content } = await post.render();
 const heroImage = post.data.heroImage || "/images/Workshop2025.JPG";
 ---
@@ -29,7 +27,7 @@ const heroImage = post.data.heroImage || "/images/Workshop2025.JPG";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/global.css" nonce={nonce} />
+    <link rel="stylesheet" href="/styles/global.css" />
     <title>{post.data.title} | Blog - ^Kunke Consulting</title>
     <meta name="description" content={post.data.description} />
     
