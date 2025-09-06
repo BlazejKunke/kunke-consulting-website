@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import ExperienceSection from '../components/ExperienceSection.astro';
 ---
 
 <BaseLayout
@@ -80,6 +81,54 @@ import BaseLayout from '../components/BaseLayout.astro';
       box-shadow: 0 6px 18px rgba(74, 144, 226, 0.4);
     }
 
+    .ai-tools-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .tool-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .tool-cloud span {
+      background: #e6f0ee;
+      color: var(--color-primary);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .cta-column {
+      text-align: center;
+    }
+
+    .cta-column h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta-column p {
+      margin-bottom: 1.5rem;
+      color: #555;
+    }
+
+    @media (max-width: 768px) {
+      .ai-tools-section {
+        grid-template-columns: 1fr;
+      }
+      .cta-column {
+        margin-top: 2rem;
+      }
+    }
+
     /* Footer Styles */
     footer {
       background: #f8f8fa;
@@ -152,6 +201,28 @@ import BaseLayout from '../components/BaseLayout.astro';
       <div class="hero-cta-buttons">
         <a href="/Sztuczna%20Inteligencja%20dla%20ucznia%20i%20studenta%202025%20KC.pdf" class="cta-primary" download>Ściągnij za darmo PDF</a>
       </div>
+    </div>
+  </section>
+
+  <ExperienceSection />
+
+  <section class="ai-tools-section">
+    <div class="tool-cloud">
+      <span>ChatGPT</span>
+      <span>Gemini</span>
+      <span>Notebook&nbsp;LM</span>
+      <span>LM&nbsp;Studio</span>
+      <span>Claude</span>
+      <span>Copilot</span>
+      <span>Perplexity</span>
+      <span>DALL·E</span>
+      <span>Midjourney</span>
+      <span>Stable Diffusion</span>
+    </div>
+    <div class="cta-column">
+      <h2>Najnowsze narzędzia AI</h2>
+      <p>Poznaj możliwości sztucznej inteligencji i wybierz rozwiązania idealne do nauki.</p>
+      <a href="/Sztuczna%20Inteligencja%20dla%20ucznia%20i%20studenta%202025%20KC.pdf" class="cta-primary" download>Ściągnij darmowy PDF</a>
     </div>
   </section>
 
