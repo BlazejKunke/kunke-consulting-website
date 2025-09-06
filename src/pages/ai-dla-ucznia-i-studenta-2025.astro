@@ -81,30 +81,22 @@ import ExperienceSection from '../components/ExperienceSection.astro';
       box-shadow: 0 6px 18px rgba(74, 144, 226, 0.4);
     }
 
-      .ai-tools-section {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-        align-items: center;
-        padding: 60px 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-        background: #f5fbf8;
-      }
+    .ai-tools-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-      .section-divider {
-        border: none;
-        height: 4px;
-        background: var(--color-primary);
-        margin: 0;
-      }
-
-      .tool-cloud {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        justify-content: center;
-      }
+    .tool-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
 
     .tool-cloud span {
       background: #e6f0ee;
@@ -138,12 +130,12 @@ import ExperienceSection from '../components/ExperienceSection.astro';
     }
 
     /* Footer Styles */
-      footer {
-        background: #f2f9f5;
-        padding: 40px 0 0 0;
-        text-align: center;
-        width: 100%;
-      }
+    footer {
+      background: #f8f8fa;
+      padding: 40px 0 0 0;
+      text-align: center;
+      width: 100%;
+    }
     .footer-wrapper {
       display: flex;
       flex-direction: column;
@@ -183,16 +175,16 @@ import ExperienceSection from '../components/ExperienceSection.astro';
       width: 100%;
       text-align: center;
     }
-      .footer-bottom {
-        margin-top: 30px;
-        padding: 20px 10px;
-        background: #e0eee8;
-        font-size: 0.85em;
-        color: #555;
-        width: 100%;
-        text-align: center;
-        box-sizing: border-box;
-      }
+    .footer-bottom {
+      margin-top: 30px;
+      padding: 20px 10px;
+      background: #ececf2;
+      font-size: 0.85em;
+      color: #555;
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+    }
     @media (max-width: 600px) {
       .footer-bottom {
         font-size: 0.75em;
@@ -223,13 +215,9 @@ import ExperienceSection from '../components/ExperienceSection.astro';
         <a href="/Sztuczna%20Inteligencja%20dla%20ucznia%20i%20studenta%202025%20KC.pdf" class="cta-primary" download>Ściągnij za darmo PDF</a>
       </div>
     </div>
-    </section>
+  </section>
 
-    <hr class="section-divider" />
-
-    <ExperienceSection />
-
-    <hr class="section-divider" />
+  <ExperienceSection />
 
   <section class="ai-tools-section">
     <div class="tool-cloud">
@@ -249,8 +237,6 @@ import ExperienceSection from '../components/ExperienceSection.astro';
       <a href="/Sztuczna%20Inteligencja%20dla%20ucznia%20i%20studenta%202025%20KC.pdf" class="cta-primary" download>Ściągnij darmowy PDF</a>
     </div>
   </section>
-
-  <hr class="section-divider" />
 
   <footer>
     <div class="footer-wrapper">
