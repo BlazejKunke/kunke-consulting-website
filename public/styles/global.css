@@ -186,8 +186,8 @@ section {
   display: inline-block;
   background-image: linear-gradient(45deg, #0a4731 0%, #187650 100%); /* subtle green gradient */
   color: var(--color-white);
-  padding: 18px 36px;        /* bigger */
-  font-size: 1.15rem;        /* bigger text */
+  padding: 18px 36px;        /* default for small screens */
+  font-size: 1.15rem;        /* default for small screens */
   font-weight: 700;
   border-radius: 8px;
   text-decoration: none;
@@ -197,6 +197,13 @@ section {
 .cta-btn:hover {
   background-image: linear-gradient(45deg, #d4af37 0%, #b8922d 100%); /* warm gold */
   transform: translateY(-3px);  /* nice lift effect */
+}
+
+@media (min-width: 768px) {
+  .cta-btn {
+    padding: 14px 28px;      /* smaller on desktop */
+    font-size: 1rem;         /* better proportion */
+  }
 }
 
 @media (min-width: 1536px) {     /* 1536 px = Tailwind’s 2xl */
