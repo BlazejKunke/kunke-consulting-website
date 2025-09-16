@@ -46,7 +46,7 @@ The project implements robust security measures:
 - Origin checking enabled in `astro.config.mjs`
 - Security headers including X-Frame-Options, X-Content-Type-Options
 - Nonce-based inline style protection
-- Formspree integration for secure form handling
+- Google Apps Script integration for secure form handling
 
 ### Key Directories
 
@@ -69,7 +69,7 @@ Blog posts are managed through Astro Content Collections with schema defined in 
 
 The site uses a component-based structure with specialized components:
 - `BaseLayout.astro` - Main layout with SEO meta tags, security headers, and styling
-- `ContactForm.astro` - Contact form functionality with Formspree integration
+- `ContactForm.astro` - Contact form functionality with Google Apps Script integration
 - `AiPackages.astro` - AI service offerings display
 - `Excel.astro` - Excel training packages presentation
 - `TeamMember.astro` - Team member profiles with photos and links
@@ -96,7 +96,7 @@ The site includes both Polish and English content with dedicated team pages (`te
 - Uses Inter font family from Google Fonts
 - Includes comprehensive SEO meta tags and Open Graph/Twitter Card support
 - Footer includes contact information and social media links (LinkedIn, Facebook, YouTube)
-- Contact form integrates with Formspree for secure form handling
+- Contact form integrates with Google Apps Script for secure form handling
 - Images are stored in `public/images/` including team photos and service graphics
 - No testing framework is currently configured
 

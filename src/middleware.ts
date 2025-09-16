@@ -30,13 +30,16 @@ export const onRequest = defineMiddleware(async (context, next) => {
       "'self'",
       'ws://localhost:*',
       'http://localhost:*',
-      'formspree.io',
+      'https://script.google.com',
+      'https://script.googleusercontent.com',
       'https://www.google-analytics.com',
       'https://region1.google-analytics.com',
       'https://*.analytics.google.com',
       'https://*.googletagmanager.com',
       'https://stats.g.doubleclick.net'
     ];
+
+    const formActionSources = ["'self'", 'https://script.google.com'];
 
     const devCsp = [
       "default-src 'self'",
@@ -45,6 +48,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
       "img-src 'self' data: blob: https://www.google-analytics.com https://*.googletagmanager.com https://stats.g.doubleclick.net",
       "font-src 'self' https://fonts.gstatic.com",
       `connect-src ${connectSources.join(' ')}`,
+      `form-action ${formActionSources.join(' ')}`,
       "frame-src https://www.googletagmanager.com"
     ].join('; ');
 
@@ -66,13 +70,16 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
     const connectSources = [
       "'self'",
-      'formspree.io',
+      'https://script.google.com',
+      'https://script.googleusercontent.com',
       'https://www.google-analytics.com',
       'https://region1.google-analytics.com',
       'https://*.analytics.google.com',
       'https://*.googletagmanager.com',
       'https://stats.g.doubleclick.net'
     ];
+
+    const formActionSources = ["'self'", 'https://script.google.com'];
 
     const prodCsp = [
       "default-src 'self'",
@@ -83,6 +90,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
       `style-src ${styleSources.join(' ')}`,
       "font-src 'self' https://fonts.gstatic.com",
       `connect-src ${connectSources.join(' ')}`,
+      `form-action ${formActionSources.join(' ')}`,
       "img-src 'self' data: blob: https://www.google-analytics.com https://*.googletagmanager.com https://stats.g.doubleclick.net",
       "frame-src https://www.googletagmanager.com",
       "worker-src 'self'",

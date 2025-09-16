@@ -1,17 +1,19 @@
 ---
 /*  ContactForm.astro
-    Lead-capture form wired to Formspree
+    Lead-capture form wired to Google Apps Script
 ---------------------------------------------------------------- */
+const nonce: string | undefined = Astro.locals?.nonce;
 ---
 <form
   class="contact-form"
-  action="https://formspree.io/f/xldlbvep"
+  id="kc-contact"
+  action="https://script.google.com/macros/s/AKfycbz5xjPMBICnaCIvsE52rFHLX57iYORLXleQMUMobIorOvifsaNj5_9LEGsnBdC13NNWdQ/exec"
   method="POST"
 >
   <label for="name">Imię i nazwisko<span aria-hidden="true">*</span></label>
   <input
     id="name"
-    name="name"
+    name="Name"
     type="text"
     placeholder="Twoje imię i nazwisko"
     required
@@ -20,38 +22,66 @@
   <label for="email">Adres e-mail służbowy<span aria-hidden="true">*</span></label>
   <input
     id="email"
-    name="email"
+    name="WorkEmail"
     type="email"
     placeholder="ty@firma.com"
     required
   />
 
   <label for="type">Typ zapytania<span aria-hidden="true">*</span></label>
-  <select id="type" name="type" required>
-    <option value="Consulting">Doradztwo</option>
-    <option value="Training">Szkolenie</option>
-    <option value="Other">Inne</option>
+  <select id="type" name="Type" required>
+    <option value="Doradztwo">Doradztwo</option>
+    <option value="Szkolenie">Szkolenie</option>
+    <option value="Inne">Inne</option>
   </select>
 
   <label for="message">Wiadomość</label>
   <textarea
     id="message"
-    name="message"
+    name="Message"
     placeholder="W czym mogę pomóc?"
     rows="5"
   ></textarea>
 
-  <!-- Extra metadata for clearer emails -->
+  <input type="hidden" name="Referrer" id="kc-referrer" />
+  <input type="hidden" name="UTM" id="kc-utm" />
+  <input type="hidden" name="FormSecret" value="kunke-2025" />
   <input
-    type="hidden"
-    name="_subject"
-    value="Nowe zapytanie ze strony ^Kunke Consulting"
+    class="honeypot"
+    type="text"
+    name="_gotcha"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
   />
-  <input type="hidden" name="_template" value="table" />
 
   <!--  🎉 NEW: matches hero CTA  -->
-  <button type="submit" class="cta-btn">Wyślij wiadomość</button>
+  <button id="kc-submit" type="submit" class="cta-btn">Wyślij wiadomość</button>
 </form>
+
+<script is:inline nonce={nonce}>
+  const form = document.getElementById('kc-contact');
+  if (form) {
+    const submitButton = form.querySelector('#kc-submit');
+    const referrerField = form.querySelector('#kc-referrer');
+    const utmField = form.querySelector('#kc-utm');
+
+    if (referrerField) {
+      referrerField.value = document.referrer || '';
+    }
+
+    if (utmField) {
+      utmField.value = window.location.search || '';
+    }
+
+    form.addEventListener('submit', () => {
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Wysyłanie…';
+      }
+    });
+  }
+</script>
 
 <style>
 /********************  Contact Form Styles  ********************/
@@ -103,6 +133,13 @@
   .contact-form {
     padding: 1.5rem 1rem;
   }
+}
+
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  opacity: 0;
+  pointer-events: none;
 }
 /* Ultra-wide screens: give 4K monitors a wider cap */
 @media (min-width: 2000px) {
