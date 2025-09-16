@@ -3,11 +3,13 @@
     Lead-capture form wired to Google Apps Script
 ---------------------------------------------------------------- */
 const nonce: string | undefined = Astro.locals?.nonce;
+const formAction =
+  'https://script.google.com/macros/s/AKfycbz5xjPMBICnaCIvsE52rFHLX57iYORLXleQMUMobIorOvifsaNj5_9LEGsnBdC13NNWdQ/exec';
 ---
 <form
   class="contact-form"
   id="kc-contact"
-  action="https://script.google.com/macros/s/AKfycbz5xjPMBICnaCIvsE52rFHLX57iYORLXleQMUMobIorOvifsaNj5_9LEGsnBdC13NNWdQ/exec"
+  action={formAction}
   method="POST"
 >
   <label for="name">Imię i nazwisko<span aria-hidden="true">*</span></label>
