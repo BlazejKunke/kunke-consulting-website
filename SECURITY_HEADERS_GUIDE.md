@@ -21,8 +21,8 @@ These headers are now configured via server configuration files instead of meta 
   - `script-src 'self' 'unsafe-inline'` - Allow inline scripts (required for Astro)
   - `style-src 'self' 'unsafe-inline' fonts.googleapis.com` - Allow inline styles + Google Fonts
   - `font-src 'self' fonts.gstatic.com` - Allow Google Fonts
-  - `connect-src 'self' formspree.io` - Allow Formspree API calls
-  - `form-action 'self' formspree.io` - Allow form submissions to Formspree
+  - `connect-src 'self' https://script.google.com https://script.googleusercontent.com` - Allow Google Apps Script web app calls
+  - `form-action 'self' https://script.google.com` - Allow form submissions to Google Apps Script
   - `frame-ancestors 'none'` - Prevent embedding (replaces X-Frame-Options)
   - `base-uri 'self'` - Restrict base element
   - `object-src 'none'` - Block plugins
