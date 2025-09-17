@@ -14,15 +14,20 @@ import BaseLayout from '../components/BaseLayout.astro';
       padding: 100px 20px 80px;
       text-align: center;
     }
-    .thank-hero h1 {
+    .thank-hero h1,
+    .thank-hero h2 {
       font-size: 3rem;
       margin-bottom: 20px;
+      color: #d4af37;
     }
     .thank-hero p {
       font-size: 1.2rem;
       max-width: 720px;
       margin: 0 auto 30px;
       line-height: 1.8;
+    }
+    .thank-hero-content + .thank-hero-content {
+      margin-top: 60px;
     }
     .thank-hero .cta-btn {
       background-image: none;
@@ -104,6 +109,11 @@ import BaseLayout from '../components/BaseLayout.astro';
     }
     .resource-card a:hover {
       color: var(--color-accent-blue);
+    }
+    .resource-card .resource-link {
+      color: var(--color-secondary);
+      font-weight: 600;
+      margin-top: 8px;
     }
 
     .contact-highlight {
@@ -199,7 +209,8 @@ import BaseLayout from '../components/BaseLayout.astro';
     }
 
     @media (max-width: 720px) {
-      .thank-hero h1 {
+      .thank-hero h1,
+      .thank-hero h2 {
         font-size: 2.2rem;
       }
       .thank-hero p {
@@ -227,6 +238,14 @@ import BaseLayout from '../components/BaseLayout.astro';
       </p>
       <a class="cta-btn" href="/">Wróć na stronę główną</a>
     </div>
+    <div class="thank-hero-content" lang="en">
+      <h2>Thanks for reaching out!</h2>
+      <p>
+        Your form has been successfully submitted. If you have any questions, please contact us via email at
+        info@kunkeconsulting.pl or by phone at +48 722 156 925.
+      </p>
+      <a class="cta-btn" href="/">Return to the homepage</a>
+    </div>
   </section>
 
   <section class="next-steps">
@@ -253,12 +272,10 @@ import BaseLayout from '../components/BaseLayout.astro';
       <div class="resource-card">
         <h3>Szkolenia AI dla zespołów</h3>
         <p>Dowiedz się, jak przygotowujemy praktyczne warsztaty AI i szkolenia dopasowane do branży.</p>
-        <a href="/szkolenia-ai">Zobacz ofertę szkoleń</a>
       </div>
       <div class="resource-card">
         <h3>Konsulting i wdrożenia AI</h3>
         <p>Wspieramy firmy w opracowaniu strategii AI, wyborze narzędzi i tworzeniu pierwszych wdrożeń.</p>
-        <a href="/konsulting-ai">Poznaj konsulting AI</a>
       </div>
       <div class="resource-card">
         <h3>Aktualności i wiedza</h3>
