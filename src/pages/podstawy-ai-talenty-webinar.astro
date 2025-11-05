@@ -1,0 +1,400 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Podstawy AI - Webinar dla Talentów | ^Kunke Consulting"
+  description="Zaproszenie na zamknięty webinar Podstawy AI dla stypendystów Funduszu Talenty. 20 listopada, 20:00-21:30."
+  ogImage="/images/Kunke_Favicon.png"
+>
+  <style>
+    .webinar-hero {
+      background: linear-gradient(135deg, rgba(10, 71, 49, 0.95), rgba(74, 144, 226, 0.85));
+      color: var(--color-white);
+      padding: 120px 20px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .webinar-hero::before,
+    .webinar-hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 1;
+    }
+
+    .webinar-hero::before {
+      width: 420px;
+      height: 420px;
+      top: -200px;
+      left: -120px;
+    }
+
+    .webinar-hero::after {
+      width: 320px;
+      height: 320px;
+      bottom: -160px;
+      right: -100px;
+    }
+
+    .webinar-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .webinar-hero h1 {
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      color: var(--color-white);
+    }
+
+    .webinar-hero p {
+      font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+      margin-bottom: 2rem;
+      opacity: 0.95;
+      line-height: 1.5;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .event-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin: 0 auto;
+      margin-bottom: 2.5rem;
+      max-width: 760px;
+    }
+
+    .event-card {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 1.75rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(6px);
+      text-align: left;
+    }
+
+    .event-card h3 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .event-card p {
+      font-size: 1.1rem;
+      margin: 0;
+      font-weight: 600;
+      color: var(--color-white);
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: var(--color-white);
+      color: var(--color-primary);
+      padding: 14px 36px;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .page-section {
+      padding: clamp(60px, 8vw, 100px) 20px;
+      background: var(--color-white);
+    }
+
+    .page-section:nth-of-type(even) {
+      background: var(--color-light-bg);
+    }
+
+    .section-content {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .section-content h2 {
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      color: var(--color-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-content p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #374151;
+    }
+
+    .agenda-list {
+      margin-top: 2rem;
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .agenda-item {
+      background: var(--color-white);
+      border-left: 4px solid var(--color-primary);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 16px 30px rgba(15, 34, 58, 0.08);
+    }
+
+    .agenda-item h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-primary);
+    }
+
+    .agenda-item p {
+      margin: 0;
+      font-size: 1.05rem;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .speaker-card {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      align-items: center;
+      background: var(--color-white);
+      padding: 2.5rem;
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(15, 34, 58, 0.12);
+    }
+
+    .speaker-info h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--color-primary);
+    }
+
+    .speaker-info p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #374151;
+      margin-bottom: 1rem;
+    }
+
+    .speaker-info a {
+      color: var(--color-accent-blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .speaker-info a:hover {
+      text-decoration: underline;
+    }
+
+    .logistics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .logistics-card {
+      background: var(--color-white);
+      border-radius: 14px;
+      padding: 1.75rem;
+      box-shadow: 0 12px 30px rgba(15, 34, 58, 0.1);
+      border-top: 4px solid var(--color-accent-blue);
+    }
+
+    .logistics-card h3 {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+      color: #1f2937;
+    }
+
+    .logistics-card p {
+      margin: 0;
+      font-size: 1.05rem;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .closing-section {
+      text-align: center;
+      padding: clamp(60px, 8vw, 100px) 20px 120px;
+      background: linear-gradient(135deg, rgba(10, 71, 49, 0.92), rgba(15, 98, 128, 0.92));
+      color: var(--color-white);
+    }
+
+    .closing-section h2 {
+      font-size: clamp(2.1rem, 3.6vw, 2.8rem);
+      margin-bottom: 1rem;
+      color: var(--color-white);
+    }
+
+    .closing-section p {
+      font-size: 1.1rem;
+      margin: 0 auto 2rem;
+      max-width: 720px;
+      line-height: 1.6;
+      opacity: 0.95;
+    }
+
+    @media (max-width: 640px) {
+      .event-card,
+      .logistics-card {
+        text-align: center;
+      }
+
+      .cta-button {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <section class="webinar-hero">
+    <div class="webinar-hero-content">
+      <p class="eyebrow">Zamknięty webinar dla stypendystów Funduszu Talenty</p>
+      <h1>Podstawy AI — ^Kunke Consulting Webinar dla Talentów</h1>
+      <p>
+        Dedykowane spotkanie online, podczas którego pokażemy jak praktycznie wykorzystywać sztuczną inteligencję w nauce,
+        pracy i codziennych projektach. Wydarzenie przygotowane specjalnie dla zaproszonych studentów Funduszu Talenty.
+      </p>
+
+      <div class="event-details">
+        <div class="event-card">
+          <h3>Data i czas</h3>
+          <p>20 listopada 2024<br />20:00 – 21:30</p>
+        </div>
+        <div class="event-card">
+          <h3>Forma</h3>
+          <p>Spotkanie online<br />Zaproszenie indywidualne</p>
+        </div>
+        <div class="event-card">
+          <h3>Dostęp</h3>
+          <p>Google Meet<br />meet.google.com/itr-zcnw-brd</p>
+        </div>
+      </div>
+
+      <a class="cta-button" href="https://meet.google.com/itr-zcnw-brd" target="_blank" rel="noopener">
+        Dołącz do pokoju spotkania
+      </a>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="section-content">
+      <h2>O webinarze</h2>
+      <p>
+        „Podstawy AI” to godzinne, kameralne spotkanie poświęcone praktycznemu wykorzystaniu narzędzi sztucznej inteligencji.
+        Chcemy pokazać, jak narzędzia AI pomagają w nauce, analizie danych, przygotowaniu do zajęć oraz w rozwoju kariery.
+        Uczestnicy otrzymają konkretne wskazówki, sprawdzone aplikacje i przykłady działań, które można wdrożyć od razu po
+        zakończeniu webinaru.
+      </p>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="section-content">
+      <h2>Agenda spotkania</h2>
+      <div class="agenda-list">
+        <div class="agenda-item">
+          <h3>Powitanie i wstęp do AI</h3>
+          <p>Krótki przegląd trendów w AI, przykłady zastosowań i uporządkowanie podstawowych pojęć, które przydadzą się w dalszej części spotkania.</p>
+        </div>
+        <div class="agenda-item">
+          <h3>Narzędzia AI w pracy i nauce</h3>
+          <p>Przegląd aplikacji AI wspierających organizację, tworzenie treści, analizy danych oraz codzienną naukę — z konkretnymi scenariuszami użycia.</p>
+        </div>
+        <div class="agenda-item">
+          <h3>AI w edukacji i badaniach</h3>
+          <p>Jak planować projekty, analizować artykuły naukowe i przyspieszać research z wykorzystaniem modeli językowych i narzędzi AI.</p>
+        </div>
+        <div class="agenda-item">
+          <h3>Użyteczne narzędzia i automatyzacje</h3>
+          <p>Lista praktycznych narzędzi, integracji i rozszerzeń przydatnych w codziennej pracy oraz wskazówki, jak je wdrażać odpowiedzialnie.</p>
+        </div>
+        <div class="agenda-item">
+          <h3>Modele i ich możliwości</h3>
+          <p>Przegląd najpopularniejszych modeli, ich mocnych stron i ograniczeń oraz dyskusja o tym, jak wybierać odpowiednie narzędzie do zadania.</p>
+        </div>
+        <div class="agenda-item">
+          <h3>Sesja pytań i analiza przykładów</h3>
+          <p>Omówienie realnych case studies, analiza krótkich zapytań i demonstracja procesu pracy z AI na żywo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="section-content">
+      <h2>Prowadzący</h2>
+      <div class="speaker-card">
+        <div class="speaker-info">
+          <h3>Błażej Kunke, założyciel ^Kunke Consulting</h3>
+          <p>
+            Konsultant i trener specjalizujący się w strategiach wykorzystania AI w biznesie i edukacji. Wspiera polskie firmy oraz
+            organizacje edukacyjne w projektach wdrożeniowych i szkoleniowych. Pracuje na styku technologii, danych i rozwoju kompetencji cyfrowych.
+          </p>
+          <p>
+            Dowiedz się więcej na stronie <a href="https://kunkeconsulting.pl/" target="_blank" rel="noopener">kunkeconsulting.pl</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="section-content">
+      <h2>Organizacja i dostęp</h2>
+      <p>
+        Spotkanie przeznaczone jest wyłącznie dla zaproszonych stypendystów Funduszu Talenty. Link do wydarzenia otrzymasz w zaproszeniu mailowym.
+        Jeśli potrzebujesz pomocy technicznej lub chcesz przekazać pytania przed spotkaniem, napisz do nas na info@kunkeconsulting.pl.
+      </p>
+      <div class="logistics-grid">
+        <div class="logistics-card">
+          <h3>Forma wydarzenia</h3>
+          <p>W 100% online, transmisja na Google Meet. Dołącz przez przeglądarkę z komputera lub telefonu.</p>
+        </div>
+        <div class="logistics-card">
+          <h3>Termin</h3>
+          <p>Środa, 20 listopada 2024 roku, godzina 20:00 – 21:30. Wydarzenie jednorazowe.</p>
+        </div>
+        <div class="logistics-card">
+          <h3>Uczestnicy</h3>
+          <p>Studenci i stypendyści Funduszu Talenty, którzy otrzymali indywidualne zaproszenie od organizatora.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing-section">
+    <h2>Do zobaczenia na webinarze</h2>
+    <p>
+      Czekamy na wspólne spotkanie, podczas którego odkryjemy, jak narzędzia AI mogą wspierać rozwój i edukację. Przygotuj pytania, przykłady swoich projektów i dołącz kilka minut wcześniej, aby sprawdzić połączenie.
+    </p>
+    <a class="cta-button" href="https://meet.google.com/itr-zcnw-brd" target="_blank" rel="noopener">Wejdź do pokoju webinaru</a>
+  </section>
+</BaseLayout>
