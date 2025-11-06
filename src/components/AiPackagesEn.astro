@@ -1,0 +1,115 @@
+---
+// props could be used later for localisation; hard-coded for now
+const packages = [
+  {
+    id: 'plant',
+    title: 'AI consultation',
+    tagline: 'Quick diagnosis and first steps',
+    price: 'From 999 PLN + VAT',
+    badge: null,
+    bullets: [
+      'Assess the AI potential in your company',
+      'Identify first implementation areas',
+      'Recommend the right AI tools',
+      '90 minutes online or on-site',
+      'Optional meeting recording'
+    ],
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
+  },
+  {
+    id: 'grow',
+    title: 'AI training for companies',
+    tagline: 'Introduce AI and gain an advantage',
+    price: 'From 5000 PLN + VAT',
+    bullets: [
+      'Two in-person training days',
+      'Practical AI tools',
+      'AI pilot programmes',
+      'AI ethics, environment, law',
+      'AI video, image, audio',
+      'Prompt engineering',
+      'Slide deck and certificate'
+    ],
+    badge: 'AI for business',
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
+  },
+  {
+    id: 'flourish',
+    title: 'AI projects',
+    tagline: 'Ongoing partnership',
+    price: 'Pricing on request',
+    badge: null,
+    bullets: [
+      'Long-term AI partnership',
+      'Sustained change initiatives',
+      'Ambitious transformation projects',
+      'Team training',
+      'IT support',
+      'AI legal support',
+      'AI consulting'
+    ],
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
+  }
+];
+---
+<section id="ai-packages">
+  <h2>AI training and advisory</h2>
+
+  <div class="package-grid">
+    {packages.map(pkg => (
+      <article class="card {pkg.id}">
+        {pkg.badge && <span class="badge">{pkg.badge}</span>}
+
+        <h3>{pkg.title}</h3>
+        <p class="tagline">{pkg.tagline}</p>
+
+        <div class="content">
+          <ul>
+            {pkg.bullets.map(b => <li>{b}</li>)}
+          </ul>
+
+          <div class="spacer" />
+          <p class="price" set:html={pkg.price} />
+
+          {pkg.calendly
+            ? <a href="/ai-workshop" class="cta">{pkg.id === 'plant' || pkg.id === 'grow' ? 'Learn more' : 'Let’s talk'}</a>
+            : <a href="#contact" class="cta secondary">Get in touch</a>}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* ----- layout ----- */
+  #ai-packages { padding: 60px 20px; background:#fff; text-align:center; }
+  .package-grid {
+    display:flex; gap:24px; flex-wrap:wrap; justify-content:center;
+  }
+  .card {
+    flex:1 1 280px; max-width:320px;
+    background:#f8f8fa; border-radius:12px; padding:32px 24px;
+    position:relative; box-shadow:0 4px 12px rgba(0,0,0,.06);
+    display:flex; flex-direction:column; align-items:center;
+  }
+  h3 { margin:8px 0 4px; }
+  .tagline { font-size:.95rem; color:#555; margin-bottom:16px; }
+  ul { text-align:left; padding-left:18px; margin:0 0 24px; }
+  li { margin-bottom:6px; }
+  .price { font-weight:700; margin-bottom:24px; }
+  .price .old-price { text-decoration:line-through; color:#888; font-weight:400; }
+  .cta {
+    background:var(--color-primary); color:#fff; padding:12px 24px;
+    border-radius:6px; text-decoration:none; font-weight:600;
+    transition:background .3s ease;
+  }
+  .cta:hover { background:var(--color-secondary); }
+  .cta.secondary { background:#ccc; }
+  .badge {
+    position:absolute; top:12px; right:12px;
+    background:var(--color-accent-blue); color:#fff; font-size:.75rem;
+    padding:4px 8px; border-radius:4px;
+  }
+  /* mobile stack */
+  @media(max-width:700px){ .package-grid{flex-direction:column;} }
+</style>

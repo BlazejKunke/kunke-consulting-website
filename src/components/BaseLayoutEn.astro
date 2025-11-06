@@ -1,6 +1,6 @@
 ---
-// src/components/BaseLayout.astro
-import CookieConsent from './CookieConsent.astro';
+// src/components/BaseLayoutEn.astro
+import CookieConsent from './CookieConsentEn.astro';
 export interface Props {
   title: string;
   description?: string;
@@ -9,7 +9,7 @@ export interface Props {
 
 const {
   title,
-  description = "Kunke Consulting: szkolenia i doradztwo z AI oraz Excela dla firm",
+  description = "Kunke Consulting: AI and Excel training and advisory for companies.",
   ogImage
 } = Astro.props;
 
@@ -22,13 +22,12 @@ const absoluteOgImage = ogImage
   : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 
 const canonicalUrl = Astro.url.href;
-const englishUrl = Astro.url.pathname === '/'
-  ? new URL('/en', siteUrl).href
-  : undefined;
+const plPath = Astro.url.pathname.replace(/^\/en(\/)?/, '$1');
+const polishUrl = new URL(plPath || '/', siteUrl).href;
 ---
 
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,13 +36,13 @@ const englishUrl = Astro.url.pathname === '/'
   <meta name="description" content={description} />
 
   <link rel="canonical" href={canonicalUrl} />
-  <link rel="alternate" hreflang="pl" href={canonicalUrl} />
-  {englishUrl && <link rel="alternate" hreflang="en" href={englishUrl} />}
-  {englishUrl && <link rel="alternate" hreflang="x-default" href={englishUrl} />}
+  <link rel="alternate" hreflang="en" href={canonicalUrl} />
+  <link rel="alternate" hreflang="pl" href={polishUrl} />
+  <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
   <!-- OG/Twitter -->
   <meta property="og:type" content="website" />
-  <meta property="og:locale" content="pl_PL" />
+  <meta property="og:locale" content="en_GB" />
   <meta property="og:site_name" content="Kunke Consulting" />
   <meta property="og:url" content={Astro.url.href} />
   <meta property="og:title" content={title} />
@@ -118,7 +117,7 @@ const englishUrl = Astro.url.pathname === '/'
     onload="this.onload=null;this.rel='stylesheet'"
   />
   <noscript><link rel="stylesheet" href="/styles/global.css" /></noscript>
-  
+
   <!-- JSON-LD MUST have nonce -->
   <script type="application/ld+json" nonce={nonce}>
   {
@@ -126,22 +125,22 @@ const englishUrl = Astro.url.pathname === '/'
     "@type": "LocalBusiness",
     "name": "Kunke Consulting",
     "image": "/images/Kunke_Favicon.png",
-    "description": "Profesjonalne szkolenia AI i Excel dla firm w Polsce. Kursy sztucznej inteligencji, konsulting AI, doradztwo biznesowe.",
+    "description": "Professional AI and Excel training for companies in Poland. Artificial intelligence courses, AI consulting, business advisory.",
     "url": "https://kunkeconsulting.pl",
     "telephone": "+48722156925",
     "email": "info@kunkeconsulting.pl",
-    "address": { "@type": "PostalAddress", "addressCountry": "PL", "addressLocality": "Polska" },
+    "address": { "@type": "PostalAddress", "addressCountry": "PL", "addressLocality": "Poland" },
     "geo": { "@type": "GeoCoordinates", "latitude": "52.2297", "longitude": "21.0122" },
     "openingHoursSpecification": { "@type": "OpeningHoursSpecification",
       "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
       "opens":"09:00","closes":"17:00"
     },
     "serviceArea": { "@type": "Country", "name": "Poland" },
-    "hasOfferCatalog": { "@type": "OfferCatalog", "name":"Szkolenia AI i Excel",
+    "hasOfferCatalog": { "@type": "OfferCatalog", "name":"AI and Excel training",
       "itemListElement":[
-        {"@type":"Offer","itemOffered":{"@type":"Course","name":"Szkolenia AI dla firm","description":"Praktyczne szkolenia sztucznej inteligencji dla polskich firm","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Course","name":"Szkolenia Excel z AI","description":"Kursy Excel z wykorzystaniem sztucznej inteligencji","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Konsulting AI","description":"Doradztwo w zakresie implementacji AI w firmie","provider":{"@type":"Organization","name":"Kunke Consulting"}}}
+        {"@type":"Offer","itemOffered":{"@type":"Course","name":"AI training for companies","description":"Practical artificial intelligence training for Polish businesses","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
+        {"@type":"Offer","itemOffered":{"@type":"Course","name":"Excel training with AI","description":"Excel courses enhanced with artificial intelligence","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"AI consulting","description":"Advisory on implementing AI inside your company","provider":{"@type":"Organization","name":"Kunke Consulting"}}}
       ]
     },
     "sameAs": [
