@@ -1,0 +1,388 @@
+---
+import BaseLayout from '../../components/BaseLayoutEn.astro';
+import ContactForm from '../../components/ContactFormEn.astro';
+import AiPackages from '../../components/AiPackagesEn.astro';
+import Testimonials from '../../components/testimonialsEn.astro';
+import ExperienceSection from '../../components/ExperienceSectionEn.astro';
+import WorkshopSection from '../../components/WorkshopSectionEn.astro';
+import AboutMe from '../../components/AboutMeEn.astro';
+import StudentReport from '../../components/StudentReportEn.astro';
+---
+
+<BaseLayout
+  title="AI and Excel training for companies | ^Kunke Consulting | AI Courses Poland"
+  description="Professional AI and artificial intelligence training for companies in Poland. Practical online AI courses, ChatGPT workshops, AI in Excel, consulting, and advisory."
+  ogImage="/images/Kunke_Favicon.png"
+>
+
+<style>
+  .team-center {
+    text-align: center;
+  }
+  .contact-text {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .contact-center {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .contact-email {
+    color: #2c3e50;
+    text-decoration: none;
+  }
+  footer {
+    background: #f8f8fa;
+    padding: 40px 0 0 0;
+    text-align: center;
+    width: 100%;
+  }
+  .footer-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .footer-section {
+    min-width: 200px;
+    text-align: center;
+  }
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-section ul li {
+    margin: 0 0 8px 0;
+  }
+  .footer-section.social-media ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-section.social-media ul li {
+    margin-bottom: 8px;
+    width: 100%;
+    text-align: center;
+  }
+  .footer-bottom {
+    margin-top: 30px;
+    padding: 20px 10px;
+    background: #ececf2;
+    font-size: 0.85em;
+    color: #555;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  @media (max-width: 600px) {
+    .footer-bottom {
+      font-size: 0.75em;
+      padding: 24px 12px;
+    }
+  }
+</style>
+
+<section id="hero">
+  <h1><span class="text-gradient">^Kunke Consulting</span></h1>
+  <p>Practical AI training for modern businesses.</p>
+  <a href="#ai-packages" class="cta-btn">AI for companies</a>
+</section>
+
+<!-- Student Report Section -->
+<section id="student-report">
+  <StudentReport />
+</section>
+
+<!-- Experience Section -->
+<section id="experience">
+  <ExperienceSection />
+</section>
+
+<!-- Workshop Section -->
+<section id="workshops">
+  <WorkshopSection />
+</section>
+
+<!-- AI Packages Section -->
+<section id="ai-packages">
+  <AiPackages />
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials">
+  <Testimonials />
+</section>
+
+<!-- Team Preview Section -->
+<section id="team-preview" class="team-preview-section">
+  <div class="team-preview-content team-center">
+    <h3>Work with experts</h3>
+    <p>
+      I collaborate with experienced specialists from different fields.<br>
+      That way I can deliver comprehensive solutions tailored to your needs.
+    </p>
+    <a href="/team" class="cta-btn">Experts</a>
+  </div>
+</section>
+
+<!-- About Me Section -->
+<section id="about-me">
+  <AboutMe />
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" style="padding: 60px 20px; background: #f8f8fa;">
+  <h2 style="text-align: center; margin-bottom: 50px;">Frequently asked questions about AI training</h2>
+  <div style="max-width: 800px; margin: 0 auto;">
+    <div class="faq-accordion">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Is your AI training suitable for beginners?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Yes. My corporate AI training is designed for different experience levels. We start with the essentials and move towards more advanced business applications.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Where do the AI workshops take place?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>I deliver AI sessions across Poland — including Poznań, Warsaw, Łódź — and run online courses for maximum flexibility.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>How long does a ChatGPT training last?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>The core ChatGPT workshop lasts one day, while comprehensive corporate AI programmes can run for several days depending on your organisation’s needs.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Do participants receive a certificate?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Yes. Every participant receives a certificate of completion and ongoing access to the training materials.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>How can AI in Excel support my company?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>AI in Excel speeds up reporting, delivers smarter analysis, saves time on repetitive work, and supports better data-driven decisions.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>What does AI consulting include?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>AI consulting includes a process audit, an implementation strategy, choosing the right tools, team training, and support while you deploy AI solutions.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Can I order AI training for managers?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Absolutely. I run dedicated AI sessions for managers focused on strategic adoption, leading teams in the age of AI, and decision-making with intelligent tools.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .faq-item {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-left: 4px solid var(--color-primary);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+  }
+  .faq-item:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,.1);
+  }
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 25px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+  }
+  .faq-question:hover {
+    background-color: #f8f9fa;
+  }
+  .faq-question:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+  }
+  .faq-question h3 {
+    color: var(--color-primary);
+    margin: 0;
+    font-size: 1.2rem;
+    flex-grow: 1;
+  }
+  .faq-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 20px;
+  }
+  .faq-item[data-expanded="true"] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    padding: 0 25px;
+  }
+  .faq-item[data-expanded="true"] .faq-answer {
+    max-height: 200px;
+    padding: 15px 25px 25px 25px;
+  }
+  .faq-answer p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+  }
+  @media (max-width: 600px) {
+    .faq-question {
+      padding: 20px;
+    }
+    .faq-question h3 {
+      font-size: 1.1rem;
+    }
+    .faq-icon {
+      margin-left: 15px;
+    }
+    .faq-item[data-expanded="true"] .faq-answer {
+      padding: 15px 20px 20px 20px;
+    }
+  }
+</style>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p class="contact-text">Send me an email or use the form below.</p>
+  <div class="contact-info contact-center">
+    <p><strong>Email:</strong> <a href="mailto:info@kunkeconsulting.com" class="contact-email">info@kunkeconsulting.com</a></p>
+  </div>
+  <!-- New Contact Form -->
+  <ContactForm />
+</section>
+
+<footer>
+  <div class="footer-wrapper">
+    <div class="footer-content">
+      <div class="footer-section contact-info-footer">
+        <h3>Contact</h3>
+        <p>^Kunke Consulting</p>
+        <p>
+          <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+        </p>
+        <p>
+          <a href="tel:+48722156925">m. +48 722 156 925</a>
+        </p>
+      </div>
+      <div class="footer-section legal-info">
+        <h3>^Kunke Consulting</h3>
+        <p><a href="/privacy-policy">Privacy Policy and Legal</a></p>
+        <p><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></p>
+      </div>
+      <div class="footer-section social-media">
+        <h3>Follow</h3>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
+  </div>
+</footer>
+
+<script>
+// @ts-nocheck
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+
+      question.addEventListener('click', function() {
+        const isExpanded = item.getAttribute('data-expanded') === 'true';
+
+        // Close all other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.setAttribute('data-expanded', 'false');
+            otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Toggle current item
+        const newExpandedState = !isExpanded;
+        item.setAttribute('data-expanded', newExpandedState.toString());
+        question.setAttribute('aria-expanded', newExpandedState.toString());
+
+        // Adjust max-height for smooth animation
+        if (newExpandedState) {
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        } else {
+          answer.style.maxHeight = '0px';
+        }
+      });
+
+      // Keyboard navigation
+      question.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          question.click();
+        }
+      });
+    });
+  });
+</script>
+
+</BaseLayout>

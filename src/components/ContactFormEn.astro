@@ -1,0 +1,173 @@
+---
+/*  ContactForm.astro
+    Lead-capture form wired to Google Apps Script
+---------------------------------------------------------------- */
+const nonce: string | undefined = Astro.locals?.nonce;
+---
+<form
+  class="contact-form"
+  id="kc-contact"
+  action="https://script.google.com/macros/s/AKfycbz5xjPMBICnaCIvsE52rFHLX57iYORLXleQMUMobIorOvifsaNj5_9LEGsnBdC13NNWdQ/exec"
+  method="POST"
+>
+  <label for="name">Full name<span aria-hidden="true">*</span></label>
+  <input
+    id="name"
+    name="Name"
+    type="text"
+    placeholder="Your full name"
+    required
+  />
+
+  <label for="email">Business email<span aria-hidden="true">*</span></label>
+  <input
+    id="email"
+    name="WorkEmail"
+    type="email"
+    placeholder="you@company.com"
+    required
+  />
+
+  <label for="type">Enquiry type<span aria-hidden="true">*</span></label>
+  <select id="type" name="Type" required>
+    <option value="Doradztwo">Advisory</option>
+    <option value="Szkolenie">Training</option>
+    <option value="Inne">Other</option>
+  </select>
+
+  <label for="message">Message</label>
+  <textarea
+    id="message"
+    name="Message"
+    placeholder="How can I help?"
+    rows="5"
+  ></textarea>
+
+  <input type="hidden" name="Referrer" id="kc-referrer" />
+  <input type="hidden" name="UTM" id="kc-utm" />
+  <input type="hidden" name="FormSecret" value="kunke-2025" />
+  <input
+    class="honeypot"
+    type="text"
+    name="_gotcha"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+  />
+
+  <!--  🎉 NEW: matches hero CTA  -->
+  <button id="kc-submit" type="submit" class="cta-btn">Send message</button>
+</form>
+
+<script is:inline nonce={nonce}>
+  const form = document.getElementById('kc-contact');
+  if (form) {
+    const submitButton = form.querySelector('#kc-submit');
+    const referrerField = form.querySelector('#kc-referrer');
+    const utmField = form.querySelector('#kc-utm');
+
+    if (referrerField) {
+      referrerField.value = document.referrer || '';
+    }
+
+    if (utmField) {
+      utmField.value = window.location.search || '';
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent the default form submission
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending…';
+      }
+
+      const formData = new FormData(form);
+      const params = new URLSearchParams(formData);
+
+      fetch(form.action, {
+        method: 'POST',
+        body: params, // Use URLSearchParams
+        mode: 'no-cors' // Use no-cors mode for Google Apps Script
+      })
+      .then(() => {
+        // Redirect to the thank you page after successful submission
+        window.location.href = 'https://kunkeconsulting.pl/thank-you';
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        // Optionally, handle the error, e.g., show an error message
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Send message';
+        }
+      });
+    });
+  }
+</script>
+
+<style>
+/********************  Contact Form Styles  ********************/
+.contact-form {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  display: grid;
+  gap: 1.25rem;   /* space between fields */
+  /* ADD: desktop content width cap  ───────────────────────────── */
+  --page-max: 72rem;      /* 72 × 16 px  = 1152 px */
+}
+
+.contact-form label {
+  font-weight: 600;
+  color: var(--color-dark-text);
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font: 1rem/1.4 "Inter", sans-serif;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color: var(--color-primary); /* #0a4731 */
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 40%, transparent);
+  outline: none;
+}
+
+/* Centre the CTA inside the grid */
+.contact-form .cta-btn {
+  justify-self: center;
+}
+
+@media (max-width: 480px) {
+  .contact-form {
+    padding: 1.5rem 1rem;
+  }
+}
+
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  opacity: 0;
+  pointer-events: none;
+}
+/* Ultra-wide screens: give 4K monitors a wider cap */
+@media (min-width: 2000px) {
+  :root {
+    --page-max: 96rem; /* 96 × 16px = 1536px */
+  }
+}
+</style>
