@@ -16,6 +16,30 @@ import StudentReport from '../../components/StudentReportEn.astro';
 >
 
 <style>
+  #hero {
+    text-align: center;
+  }
+  #hero .hero-location {
+    font-weight: 600;
+    margin-top: 12px;
+    color: #1a3a6d;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+  #hero .hero-availability {
+    margin-top: 6px;
+    color: #2c3e50;
+    font-size: 1rem;
+  }
+  #hero .hero-flags {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.5rem;
+  }
   .team-center {
     text-align: center;
   }
@@ -97,6 +121,16 @@ import StudentReport from '../../components/StudentReportEn.astro';
 <section id="hero">
   <h1><span class="text-gradient">^Kunke Consulting</span></h1>
   <p>Practical AI training for modern businesses.</p>
+  <p class="hero-location"><span aria-hidden="true">🇪🇺</span> Based in Europe. Working with clients across the world.</p>
+  <p class="hero-availability">Serving organisations across Europe and beyond with on-site and online collaboration.</p>
+  <div class="hero-flags" aria-label="Countries across Europe I collaborate with">
+    <span role="img" aria-label="European Union">🇪🇺</span>
+    <span role="img" aria-label="Poland">🇵🇱</span>
+    <span role="img" aria-label="Germany">🇩🇪</span>
+    <span role="img" aria-label="France">🇫🇷</span>
+    <span role="img" aria-label="Spain">🇪🇸</span>
+    <span role="img" aria-label="Netherlands">🇳🇱</span>
+  </div>
   <a href="#ai-packages" class="cta-btn">AI for companies</a>
 </section>
 
@@ -162,7 +196,7 @@ import StudentReport from '../../components/StudentReportEn.astro';
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">
-          <p>I deliver AI sessions across Poland — including Poznań, Warsaw, Łódź — and run online courses for maximum flexibility.</p>
+          <p>I deliver AI sessions across Europe and beyond. I also offer online courses for maximum flexibility.</p>
         </div>
       </div>
       <div class="faq-item">
