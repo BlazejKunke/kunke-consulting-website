@@ -1,0 +1,103 @@
+---
+// src/components/CookieConsentNl.astro
+---
+<div id="cookie-consent" class="cookie-consent" hidden>
+  <div class="cookie-inner">
+    <p>
+      We gebruiken cookies om verkeer te analyseren en uw ervaring te verbeteren.
+      Lees meer in ons <a href="/privacy-policy">privacybeleid</a>.
+    </p>
+    <div class="buttons">
+      <button id="cookie-accept" class="accept">Accepteren</button>
+      <button id="cookie-reject" class="reject">Weigeren</button>
+    </div>
+  </div>
+</div>
+<script>
+// @ts-nocheck
+  const banner = document.getElementById('cookie-consent');
+  const consentName = 'cookie_consent';
+  function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + days*24*60*60*1000);
+    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+  }
+  function getCookie(name) {
+    const match = document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));
+    return match ? match[2] : null;
+  }
+  function update(status){
+    setCookie(consentName, status, 365);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'consent_update',
+      consent: {
+        ad_storage: status,
+        analytics_storage: status
+      }
+    });
+    banner.remove();
+  }
+  if (!getCookie(consentName)) {
+    banner.removeAttribute('hidden');
+  }
+  document.getElementById('cookie-accept').addEventListener('click', () => update('granted'));
+  document.getElementById('cookie-reject').addEventListener('click', () => update('denied'));
+</script>
+<style>
+  .cookie-consent {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--kc-bg);
+    color: var(--kc-text);
+    box-shadow: var(--kc-shadow);
+    font-size: 0.875rem;
+    z-index: 1000;
+  }
+  .cookie-consent .cookie-inner {
+    max-width: var(--kc-maxw);
+    margin: 0 auto;
+    padding: var(--kc-gap);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--kc-gap);
+  }
+  .cookie-consent p {
+    margin: 0;
+    flex: 1 1 260px;
+  }
+  .cookie-consent a {
+    color: var(--kc-link);
+  }
+  .cookie-consent .buttons {
+    display: flex;
+    flex-shrink: 0;
+    gap: var(--kc-gap);
+  }
+  .cookie-consent button {
+    height: var(--kc-btn-h);
+    padding: 0 1rem;
+    border-radius: var(--kc-btn-radius);
+    border: 1px solid var(--kc-border);
+    background: transparent;
+    color: var(--kc-text);
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--kc-anim), color var(--kc-anim);
+  }
+  .cookie-consent .accept {
+    background: var(--kc-brand);
+    border-color: var(--kc-brand);
+    color: #fff;
+  }
+  .cookie-consent .accept:hover {
+    background: var(--kc-brand-press);
+  }
+  .cookie-consent .reject:hover {
+    background: var(--kc-border);
+  }
+</style>

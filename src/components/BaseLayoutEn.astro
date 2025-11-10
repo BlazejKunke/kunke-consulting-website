@@ -22,8 +22,9 @@ const absoluteOgImage = ogImage
   : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 
 const canonicalUrl = Astro.url.href;
-const plPath = Astro.url.pathname.replace(/^\/en(\/)?/, '$1');
-const polishUrl = new URL(plPath || '/', siteUrl).href;
+const pathSuffix = Astro.url.pathname.replace(/^\/en/, '') || '/';
+const polishUrl = new URL(pathSuffix, siteUrl).href;
+const dutchUrl = new URL(`/nl${pathSuffix === '/' ? '' : pathSuffix}`, siteUrl).href;
 ---
 
 <!DOCTYPE html>
@@ -38,6 +39,7 @@ const polishUrl = new URL(plPath || '/', siteUrl).href;
   <link rel="canonical" href={canonicalUrl} />
   <link rel="alternate" hreflang="en" href={canonicalUrl} />
   <link rel="alternate" hreflang="pl" href={polishUrl} />
+  <link rel="alternate" hreflang="nl" href={dutchUrl} />
   <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
   <!-- OG/Twitter -->

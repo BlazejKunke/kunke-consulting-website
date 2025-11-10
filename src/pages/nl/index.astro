@@ -1,0 +1,414 @@
+---
+import BaseLayout from '../../components/BaseLayoutNl.astro';
+import ContactForm from '../../components/ContactFormNl.astro';
+import AiPackages from '../../components/AiPackagesNl.astro';
+import Testimonials from '../../components/testimonialsNl.astro';
+import ExperienceSection from '../../components/ExperienceSectionNl.astro';
+import WorkshopSection from '../../components/WorkshopSectionNl.astro';
+import AboutMe from '../../components/AboutMeNl.astro';
+import StudentReport from '../../components/StudentReportNl.astro';
+---
+
+<BaseLayout
+  title="AI- en Excel-training voor bedrijven in Nederland | ^Kunke Consulting"
+  description="Praktische AI- en Excel-training voor teams in Nederland. Workshops op locatie en online sessies gericht op echte taken, dataveiligheid en duidelijke resultaten."
+  ogImage="/images/Kunke_Favicon.png"
+>
+
+<style>
+  #hero {
+    text-align: center;
+  }
+  #hero .hero-location {
+    font-weight: 600;
+    margin-top: 12px;
+    color: #1a3a6d;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+  #hero .hero-availability {
+    margin-top: 6px;
+    color: #2c3e50;
+    font-size: 1rem;
+  }
+  #hero .hero-flags {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.5rem;
+  }
+  .team-center {
+    text-align: center;
+  }
+  .contact-text {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .contact-center {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .contact-email {
+    color: #2c3e50;
+    text-decoration: none;
+  }
+  footer {
+    background: #f8f8fa;
+    padding: 40px 0 0 0;
+    text-align: center;
+    width: 100%;
+  }
+  .footer-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .footer-section {
+    min-width: 200px;
+    text-align: center;
+  }
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-section ul li {
+    margin: 0 0 8px 0;
+  }
+  .footer-section.social-media ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-section.social-media ul li {
+    margin-bottom: 8px;
+    width: 100%;
+    text-align: center;
+  }
+  .footer-bottom {
+    margin-top: 30px;
+    padding: 20px 10px;
+    background: #ececf2;
+    font-size: 0.85em;
+    color: #555;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  @media (max-width: 600px) {
+    .footer-bottom {
+      font-size: 0.75em;
+      padding: 24px 12px;
+    }
+  }
+</style>
+
+<section id="hero">
+  <p><span class="text-gradient">^Kunke Consulting</span></p>
+  <h1 class="text-gradient">Praktische AI-training voor teams in Nederland en daarbuiten</h1>
+  <p>Praktische AI-opleidingen voor moderne organisaties.</p>
+  <p class="hero-location"><span aria-hidden="true">🇪🇺</span> Gevestigd in Europa. Werkt met klanten over de hele wereld.</p>
+  <p class="hero-availability">Ondersteunt organisaties in heel Europa en daarbuiten met sessies op locatie en online.</p>
+  <div class="hero-flags" aria-label="Landen in Europa waarmee ik samenwerk">
+    <span role="img" aria-label="Europese Unie">🇪🇺</span>
+    <span role="img" aria-label="Zweden">🇸🇪</span>
+    <span role="img" aria-label="Nederland">🇳🇱</span>
+    <span role="img" aria-label="Verenigd Koninkrijk">🇬🇧</span>
+    <span role="img" aria-label="Polen">🇵🇱</span>
+    <span role="img" aria-label="Verenigde Staten">🇺🇸</span>
+  </div>
+  <a href="#ai-packages" class="cta-btn">AI voor bedrijven</a>
+</section>
+
+<section id="student-report">
+  <StudentReport />
+</section>
+
+<section id="experience">
+  <ExperienceSection />
+</section>
+
+<section id="workshops">
+  <WorkshopSection />
+</section>
+
+<section id="ai-packages">
+  <AiPackages />
+</section>
+
+<section id="testimonials">
+  <Testimonials />
+</section>
+
+<section id="team-preview" class="team-preview-section">
+  <div class="team-preview-content team-center">
+    <h3>Werk met experts</h3>
+    <p>
+      Ik werk samen met ervaren specialisten uit verschillende disciplines.<br>
+      Zo lever ik totaaloplossingen die aansluiten bij uw doelen.
+    </p>
+    <a href="/team" class="cta-btn">Experts</a>
+  </div>
+</section>
+
+<section id="about-me">
+  <AboutMe />
+</section>
+
+<section id="faq" style="padding: 60px 20px; background: #f8f8fa;">
+  <h2 style="text-align: center; margin-bottom: 50px;">Veelgestelde vragen over AI-training</h2>
+  <div style="max-width: 800px; margin: 0 auto;">
+    <div class="faq-accordion">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Is jullie AI-training geschikt voor beginners?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Ja. Mijn AI-training voor bedrijven is gemaakt voor verschillende ervaringsniveaus. We starten met de basis en gaan daarna naar meer geavanceerde zakelijke toepassingen.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Waar vinden de AI-workshops plaats?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Ik verzorg AI-sessies in Nederland, in de rest van Europa en online. Zo kiest u de vorm die het beste bij uw team past.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Hoe lang duurt een ChatGPT-training?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>De kernworkshop rond ChatGPT duurt één dag. Uitgebreide AI-programma's voor bedrijven kunnen meerdere dagen beslaan, afhankelijk van de behoeften van uw organisatie.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Ontvangen deelnemers een certificaat?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Ja. Elke deelnemer ontvangt een certificaat van deelname en blijvende toegang tot het trainingsmateriaal.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Hoe kan AI in Excel mijn bedrijf ondersteunen?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>AI in Excel versnelt rapportages, biedt slimmere analyses, bespaart tijd op repetitieve taken en ondersteunt betere datagedreven beslissingen.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Wat omvat AI-consultancy?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>AI-consultancy omvat een procesaudit, implementatiestrategie, selectie van de juiste tools, training voor uw team en ondersteuning tijdens de uitrol van AI-oplossingen.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Kan ik AI-training voor managers aanvragen?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Zeker. Ik organiseer speciale AI-sessies voor managers gericht op strategische adoptie, leidinggeven in het AI-tijdperk en besluitvorming met intelligente tools.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .faq-item {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-left: 4px solid var(--color-primary);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+  }
+  .faq-item:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,.1);
+  }
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 25px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+  }
+  .faq-question:hover {
+    background-color: #f8f9fa;
+  }
+  .faq-question:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+  }
+  .faq-question h3 {
+    color: var(--color-primary);
+    margin: 0;
+    font-size: 1.2rem;
+    flex-grow: 1;
+  }
+  .faq-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 20px;
+  }
+  .faq-item[data-expanded="true"] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    padding: 0 25px;
+  }
+  .faq-item[data-expanded="true"] .faq-answer {
+    max-height: 200px;
+    padding: 15px 25px 25px 25px;
+  }
+  .faq-answer p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+  }
+  @media (max-width: 600px) {
+    .faq-question {
+      padding: 20px;
+    }
+    .faq-question h3 {
+      font-size: 1.1rem;
+    }
+    .faq-icon {
+      margin-left: 15px;
+    }
+    .faq-item[data-expanded="true"] .faq-answer {
+      padding: 15px 20px 20px 20px;
+    }
+  }
+</style>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p class="contact-text">Vertel kort iets over uw team en ik stuur u voorgestelde vervolgstappen.</p>
+  <div class="contact-info contact-center">
+    <p><strong>Email:</strong> <a href="mailto:info@kunkeconsulting.pl" class="contact-email">info@kunkeconsulting.pl</a></p>
+  </div>
+  <p class="contact-center">
+    Liever telefonisch overleg?
+    Bel me op <a href="tel:+48722156925">+48 722 156 925</a>.
+  </p>
+  <ContactForm />
+</section>
+
+<footer>
+  <div class="footer-wrapper">
+    <div class="footer-content">
+      <div class="footer-section contact-info-footer">
+        <h3>Contact</h3>
+        <p>^Kunke Consulting</p>
+        <p>
+          <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+        </p>
+        <p>
+          <a href="tel:+48722156925">m. +48 722 156 925</a>
+        </p>
+      </div>
+      <div class="footer-section legal-info">
+        <h3>^Kunke Consulting</h3>
+        <p><a href="/privacy-policy">Privacybeleid en juridische informatie</a></p>
+        <p><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></p>
+      </div>
+      <div class="footer-section social-media">
+        <h3>Volg</h3>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 ^Kunke Consulting. Alle productnamen, logo's en merken zijn eigendom van hun respectieve eigenaren. Het gebruik van deze namen, logo's en merken impliceert geen goedkeuring.</p>
+  </div>
+</footer>
+
+<script>
+// @ts-nocheck
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+
+      question.addEventListener('click', function() {
+        const isExpanded = item.getAttribute('data-expanded') === 'true';
+
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.setAttribute('data-expanded', 'false');
+            otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        const newExpandedState = !isExpanded;
+        item.setAttribute('data-expanded', newExpandedState.toString());
+        question.setAttribute('aria-expanded', newExpandedState.toString());
+
+        if (newExpandedState) {
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        } else {
+          answer.style.maxHeight = '0px';
+        }
+      });
+
+      question.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          question.click();
+        }
+      });
+    });
+  });
+</script>
+
+</BaseLayout>
