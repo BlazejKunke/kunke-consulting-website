@@ -16,6 +16,7 @@ if (!post) throw new Error(`Post "${slug}" not found`);
 
 const { Content } = await post.render();
 const heroImage = post.data.heroImage || "/images/Workshop2025.JPG";
+import { contactEmail, contactEmailHref } from "../../data/contact";
 ---
 
 <!DOCTYPE html>
@@ -196,7 +197,7 @@ const heroImage = post.data.heroImage || "/images/Workshop2025.JPG";
             <h3>Contact</h3>
             <p>^Kunke Consulting</p>
             <p>
-              <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+              <a href={contactEmailHref}>{contactEmail}</a>
             </p>
             <p>
               <a href="tel:+48722156925">m. +48 722 156 925</a>

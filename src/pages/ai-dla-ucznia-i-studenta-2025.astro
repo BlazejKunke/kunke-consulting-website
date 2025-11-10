@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
 import ExperienceSection from '../components/ExperienceSection.astro';
+import { contactEmail, contactEmailHref } from '../data/contact';
 ---
 
 <BaseLayout
@@ -245,7 +246,7 @@ import ExperienceSection from '../components/ExperienceSection.astro';
           <h3>Contact</h3>
           <p>^Kunke Consulting</p>
           <p>
-            <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+            <a href={contactEmailHref}>{contactEmail}</a>
           </p>
           <p>
             <a href="tel:+48722156925">m. +48 722 156 925</a>

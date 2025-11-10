@@ -3,6 +3,7 @@ import BaseLayout from '../components/BaseLayout.astro';
 import AiPackages from '../components/AiPackages.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Testimonials from '../components/testimonials.astro';
+import { contactEmail, contactEmailHref } from '../data/contact';
 
 ---
 
@@ -248,7 +249,7 @@ import Testimonials from '../components/testimonials.astro';
   <div style="text-align: center; margin-bottom: 30px;">
     <p><strong>📍 Poznań i okolice</strong></p>
     <p><strong>📞 Telefon:</strong> <a href="tel:+48722156925">+48 722 156 925</a></p>
-    <p><strong>✉️ Email:</strong> <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a></p>
+    <p><strong>✉️ Email:</strong> <a href={contactEmailHref}>{contactEmail}</a></p>
   </div>
   <ContactForm />
 </section>

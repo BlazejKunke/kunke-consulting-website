@@ -1,6 +1,7 @@
 ---
 // src/components/BaseLayout.astro
 import CookieConsent from './CookieConsent.astro';
+import { contactEmail } from '../data/contact';
 export interface Props {
   title: string;
   description?: string;
@@ -25,6 +26,65 @@ const canonicalUrl = Astro.url.href;
 const englishUrl = Astro.url.pathname === '/'
   ? new URL('/en', siteUrl).href
   : undefined;
+
+const organizationLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Kunke Consulting',
+  image: '/images/Kunke_Favicon.png',
+  description:
+    'Profesjonalne szkolenia AI i Excel dla firm w Polsce. Kursy sztucznej inteligencji, konsulting AI, doradztwo biznesowe.',
+  url: 'https://kunkeconsulting.pl',
+  telephone: '+48722156925',
+  email: contactEmail,
+  address: { '@type': 'PostalAddress', addressCountry: 'PL', addressLocality: 'Polska' },
+  geo: { '@type': 'GeoCoordinates', latitude: '52.2297', longitude: '21.0122' },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '09:00',
+    closes: '17:00'
+  },
+  serviceArea: { '@type': 'Country', name: 'Poland' },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Szkolenia AI i Excel',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Course',
+          name: 'Szkolenia AI dla firm',
+          description: 'Praktyczne szkolenia sztucznej inteligencji dla polskich firm',
+          provider: { '@type': 'Organization', name: 'Kunke Consulting' }
+        }
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Course',
+          name: 'Szkolenia Excel z AI',
+          description: 'Kursy Excel z wykorzystaniem sztucznej inteligencji',
+          provider: { '@type': 'Organization', name: 'Kunke Consulting' }
+        }
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Konsulting AI',
+          description: 'Doradztwo w zakresie implementacji AI w firmie',
+          provider: { '@type': 'Organization', name: 'Kunke Consulting' }
+        }
+      }
+    ]
+  },
+  sameAs: [
+    'https://www.linkedin.com/in/blazejkunke/',
+    'https://www.facebook.com/blazej.kunke',
+    'https://www.youtube.com/@BlazeAdventuresWorld'
+  ]
+};
 ---
 
 <!DOCTYPE html>
@@ -121,35 +181,7 @@ const englishUrl = Astro.url.pathname === '/'
   
   <!-- JSON-LD MUST have nonce -->
   <script type="application/ld+json" nonce={nonce}>
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Kunke Consulting",
-    "image": "/images/Kunke_Favicon.png",
-    "description": "Profesjonalne szkolenia AI i Excel dla firm w Polsce. Kursy sztucznej inteligencji, konsulting AI, doradztwo biznesowe.",
-    "url": "https://kunkeconsulting.pl",
-    "telephone": "+48722156925",
-    "email": "info@kunkeconsulting.pl",
-    "address": { "@type": "PostalAddress", "addressCountry": "PL", "addressLocality": "Polska" },
-    "geo": { "@type": "GeoCoordinates", "latitude": "52.2297", "longitude": "21.0122" },
-    "openingHoursSpecification": { "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-      "opens":"09:00","closes":"17:00"
-    },
-    "serviceArea": { "@type": "Country", "name": "Poland" },
-    "hasOfferCatalog": { "@type": "OfferCatalog", "name":"Szkolenia AI i Excel",
-      "itemListElement":[
-        {"@type":"Offer","itemOffered":{"@type":"Course","name":"Szkolenia AI dla firm","description":"Praktyczne szkolenia sztucznej inteligencji dla polskich firm","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Course","name":"Szkolenia Excel z AI","description":"Kursy Excel z wykorzystaniem sztucznej inteligencji","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Konsulting AI","description":"Doradztwo w zakresie implementacji AI w firmie","provider":{"@type":"Organization","name":"Kunke Consulting"}}}
-      ]
-    },
-    "sameAs": [
-      "https://www.linkedin.com/in/blazejkunke/",
-      "https://www.facebook.com/blazej.kunke",
-      "https://www.youtube.com/@BlazeAdventuresWorld"
-    ]
-  }
+    {JSON.stringify(organizationLd)}
   </script>
 </head>
 <body>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import { contactEmail, contactEmailHref } from '../data/contact';
 
 ---
 
@@ -39,7 +40,7 @@ import BaseLayout from '../components/BaseLayout.astro';
       <section>
         <h2>Informacje prawne</h2>
         <p>Wszelkie treści, materiały oraz znaki towarowe zamieszczone na tej stronie są własnością ich odpowiednich właścicieli. Korzystanie z nich nie oznacza poparcia ani rekomendacji.</p>
-        <p>W przypadku pytań dotyczących polityki prywatności lub kwestii prawnych prosimy o kontakt pod adresem <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>.</p>
+        <p>W przypadku pytań dotyczących polityki prywatności lub kwestii prawnych prosimy o kontakt pod adresem <a href={contactEmailHref}>{contactEmail}</a>.</p>
       </section>
 
       <section>

@@ -1,6 +1,7 @@
 ---
 // src/components/BaseLayoutEn.astro
 import CookieConsent from './CookieConsentEn.astro';
+import { contactEmail } from '../data/contact';
 export interface Props {
   title: string;
   description?: string;
@@ -24,6 +25,65 @@ const absoluteOgImage = ogImage
 const canonicalUrl = Astro.url.href;
 const plPath = Astro.url.pathname.replace(/^\/en(\/)?/, '$1');
 const polishUrl = new URL(plPath || '/', siteUrl).href;
+
+const organizationLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Kunke Consulting',
+  image: '/images/Kunke_Favicon.png',
+  description:
+    'Professional AI and Excel training for companies in Poland. Artificial intelligence courses, AI consulting, business advisory.',
+  url: 'https://kunkeconsulting.pl',
+  telephone: '+48722156925',
+  email: contactEmail,
+  address: { '@type': 'PostalAddress', addressCountry: 'PL', addressLocality: 'Poland' },
+  geo: { '@type': 'GeoCoordinates', latitude: '52.2297', longitude: '21.0122' },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '09:00',
+    closes: '17:00'
+  },
+  serviceArea: { '@type': 'Country', name: 'Poland' },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'AI and Excel training',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Course',
+          name: 'AI training for companies',
+          description: 'Practical artificial intelligence training for Polish businesses',
+          provider: { '@type': 'Organization', name: 'Kunke Consulting' }
+        }
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Course',
+          name: 'Excel training with AI',
+          description: 'Excel courses enhanced with artificial intelligence',
+          provider: { '@type': 'Organization', name: 'Kunke Consulting' }
+        }
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'AI consulting',
+          description: 'Advisory on implementing AI inside your company',
+          provider: { '@type': 'Organization', name: 'Kunke Consulting' }
+        }
+      }
+    ]
+  },
+  sameAs: [
+    'https://www.linkedin.com/in/blazejkunke/',
+    'https://www.facebook.com/blazej.kunke',
+    'https://www.youtube.com/@BlazeAdventuresWorld'
+  ]
+};
 ---
 
 <!DOCTYPE html>
@@ -120,35 +180,7 @@ const polishUrl = new URL(plPath || '/', siteUrl).href;
 
   <!-- JSON-LD MUST have nonce -->
   <script type="application/ld+json" nonce={nonce}>
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Kunke Consulting",
-    "image": "/images/Kunke_Favicon.png",
-    "description": "Professional AI and Excel training for companies in Poland. Artificial intelligence courses, AI consulting, business advisory.",
-    "url": "https://kunkeconsulting.pl",
-    "telephone": "+48722156925",
-    "email": "info@kunkeconsulting.pl",
-    "address": { "@type": "PostalAddress", "addressCountry": "PL", "addressLocality": "Poland" },
-    "geo": { "@type": "GeoCoordinates", "latitude": "52.2297", "longitude": "21.0122" },
-    "openingHoursSpecification": { "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-      "opens":"09:00","closes":"17:00"
-    },
-    "serviceArea": { "@type": "Country", "name": "Poland" },
-    "hasOfferCatalog": { "@type": "OfferCatalog", "name":"AI and Excel training",
-      "itemListElement":[
-        {"@type":"Offer","itemOffered":{"@type":"Course","name":"AI training for companies","description":"Practical artificial intelligence training for Polish businesses","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Course","name":"Excel training with AI","description":"Excel courses enhanced with artificial intelligence","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Service","name":"AI consulting","description":"Advisory on implementing AI inside your company","provider":{"@type":"Organization","name":"Kunke Consulting"}}}
-      ]
-    },
-    "sameAs": [
-      "https://www.linkedin.com/in/blazejkunke/",
-      "https://www.facebook.com/blazej.kunke",
-      "https://www.youtube.com/@BlazeAdventuresWorld"
-    ]
-  }
+    {JSON.stringify(organizationLd)}
   </script>
 </head>
 <body>

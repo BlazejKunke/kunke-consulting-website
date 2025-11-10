@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import { contactEmail, contactEmailHref } from '../data/contact';
 ---
 
 <BaseLayout
   title="Dziękujemy za wiadomość | ^Kunke Consulting"
-  description="Dziękujemy za przesłanie formularza. W razie pytań prosimy o kontakt mailowy info@kunkeconsulting.pl lub telefoniczny +48 722 156 925. ^Kunke Consulting – szkolenia AI i konsulting w Polsce."
+  description={`Dziękujemy za przesłanie formularza. W razie pytań prosimy o kontakt mailowy ${contactEmail} lub telefoniczny +48 722 156 925. ^Kunke Consulting – szkolenia AI i konsulting w Polsce.`}
   ogImage="/images/Kunke_Favicon.png"
 >
   <style>
@@ -233,7 +234,7 @@ import BaseLayout from '../components/BaseLayout.astro';
     <div class="thank-hero-content">
       <h1>Dziękujemy za wiadomość!</h1>
       <p>
-        Formularz został poprawnie przesłany. W razie pytań proszę o kontakt email info@kunkeconsulting.pl albo telefonicznie
+        Formularz został poprawnie przesłany. W razie pytań proszę o kontakt email {contactEmail} albo telefonicznie
         +48 722 156 925.
       </p>
       <a class="cta-btn" href="/">Wróć na stronę główną</a>
@@ -242,7 +243,7 @@ import BaseLayout from '../components/BaseLayout.astro';
       <h2>Thanks for reaching out!</h2>
       <p>
         Your form has been successfully submitted. If you have any questions, please contact us via email at
-        info@kunkeconsulting.pl or by phone at +48 722 156 925.
+        {contactEmail} or by phone at +48 722 156 925.
       </p>
       <a class="cta-btn" href="/">Return to the homepage</a>
     </div>
@@ -288,7 +289,7 @@ import BaseLayout from '../components/BaseLayout.astro';
   <section class="contact-highlight">
     <h2>Masz pilne pytanie?</h2>
     <div class="contact-options">
-      <a class="contact-pill" href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+      <a class="contact-pill" href={contactEmailHref}>{contactEmail}</a>
       <a class="contact-pill" href="tel:+48722156925">+48 722 156 925</a>
     </div>
   </section>
@@ -300,7 +301,7 @@ import BaseLayout from '../components/BaseLayout.astro';
           <h3>Contact</h3>
           <p>^Kunke Consulting</p>
           <p>
-            <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+            <a href={contactEmailHref}>{contactEmail}</a>
           </p>
           <p>
             <a href="tel:+48722156925">m. +48 722 156 925</a>
