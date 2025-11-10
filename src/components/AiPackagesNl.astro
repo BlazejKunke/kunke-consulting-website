@@ -1,0 +1,112 @@
+---
+const packages = [
+  {
+    id: 'plant',
+    title: 'AI-consultatie',
+    tagline: 'Snelle diagnose en eerste stappen',
+    price: 'Vanaf 235 EUR + btw',
+    badge: null,
+    bullets: [
+      'Inzicht in het AI-potentieel binnen uw organisatie',
+      'Eerste implementatiegebieden bepalen',
+      'Aanbeveling van de juiste AI-tools',
+      '90 minuten online of op locatie',
+      'Optioneel opname van de sessie'
+    ],
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
+  },
+  {
+    id: 'grow',
+    title: 'AI-training voor bedrijven',
+    tagline: 'Introduceer AI en creëer voorsprong',
+    price: 'Vanaf 1200 EUR + btw',
+    bullets: [
+      'Twee trainingsdagen op locatie',
+      'Praktische AI-tools',
+      'AI-pilotprogramma\'s',
+      'AI-ethiek, duurzaamheid en wetgeving',
+      'AI voor video, beeld en audio',
+      'Prompt engineering',
+      'Presentatie en certificaat'
+    ],
+    badge: 'AI voor business',
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
+  },
+  {
+    id: 'flourish',
+    title: 'AI-projecten',
+    tagline: 'Partnerschap op lange termijn',
+    price: 'Prijs op aanvraag',
+    badge: null,
+    bullets: [
+      'Langdurige AI-samenwerking',
+      'Veranderprogramma\'s met impact',
+      'Ambitieuze transformatietrajecten',
+      'Training voor teams',
+      'IT-ondersteuning',
+      'Juridische AI-begeleiding',
+      'AI-consultancy'
+    ],
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
+  }
+];
+---
+<section id="ai-packages">
+  <h2>AI-training en advies</h2>
+
+  <div class="package-grid">
+    {packages.map(pkg => (
+      <article class="card {pkg.id}">
+        {pkg.badge && <span class="badge">{pkg.badge}</span>}
+
+        <h3>{pkg.title}</h3>
+        <p class="tagline">{pkg.tagline}</p>
+
+        <div class="content">
+          <ul>
+            {pkg.bullets.map(b => <li>{b}</li>)}
+          </ul>
+
+          <div class="spacer" />
+          <p class="price" set:html={pkg.price} />
+
+          {pkg.calendly
+            ? <a href="/ai-workshop" class="cta">{pkg.id === 'plant' || pkg.id === 'grow' ? 'Meer informatie' : 'Laten we praten'}</a>
+            : <a href="#contact" class="cta secondary">Neem contact op</a>}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  #ai-packages { padding: 60px 20px; background:#fff; text-align:center; }
+  .package-grid {
+    display:flex; gap:24px; flex-wrap:wrap; justify-content:center;
+  }
+  .card {
+    flex:1 1 280px; max-width:320px;
+    background:#f8f8fa; border-radius:12px; padding:32px 24px;
+    position:relative; box-shadow:0 4px 12px rgba(0,0,0,.06);
+    display:flex; flex-direction:column; align-items:center;
+  }
+  h3 { margin:8px 0 4px; }
+  .tagline { font-size:.95rem; color:#555; margin-bottom:16px; }
+  ul { text-align:left; padding-left:18px; margin:0 0 24px; }
+  li { margin-bottom:6px; }
+  .price { font-weight:700; margin-bottom:24px; }
+  .price .old-price { text-decoration:line-through; color:#888; font-weight:400; }
+  .cta {
+    background:var(--color-primary); color:#fff; padding:12px 24px;
+    border-radius:6px; text-decoration:none; font-weight:600;
+    transition:background .3s ease;
+  }
+  .cta:hover { background:var(--color-secondary); }
+  .cta.secondary { background:#ccc; }
+  .badge {
+    position:absolute; top:12px; right:12px;
+    background:var(--color-accent-blue); color:#fff; font-size:.75rem;
+    padding:4px 8px; border-radius:4px;
+  }
+  @media(max-width:700px){ .package-grid{flex-direction:column;} }
+</style>
