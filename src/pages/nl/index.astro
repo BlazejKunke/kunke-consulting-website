@@ -28,12 +28,6 @@ import StudentReport from '../../components/StudentReportNl.astro';
     gap: 8px;
     justify-content: center;
   }
-  #hero .hero-location img {
-    width: 24px;
-    height: 18px;
-    border-radius: 3px;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-  }
   #hero .hero-availability {
     margin-top: 6px;
     color: #2c3e50;
@@ -43,18 +37,8 @@ import StudentReport from '../../components/StudentReportNl.astro';
     margin-top: 12px;
     display: flex;
     justify-content: center;
-    gap: 12px;
-  }
-  #hero .hero-flags img {
-    width: 32px;
-    height: 24px;
-    border-radius: 3px;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-  }
-  #hero .hero-flags span {
-    font-family: 'Twemoji Country Flags', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Inter', sans-serif;
-    display: inline-flex;
-    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
   }
   .team-center {
     text-align: center;
@@ -138,15 +122,15 @@ import StudentReport from '../../components/StudentReportNl.astro';
   <p><span class="text-gradient">^Kunke Consulting</span></p>
   <h1 class="text-gradient">Praktische AI-implementaties voor teams in Nederland en daarbuiten</h1>
   <p>We helpen moderne organisaties automatisering en AI-oplossingen te lanceren die impact maken.</p>
-  <p class="hero-location"><img src="/images/flags/eu.svg" width="24" height="18" alt="" aria-hidden="true" /> Gevestigd in Europa. Werkt met klanten over de hele wereld.</p>
+  <p class="hero-location"><span aria-hidden="true">🇪🇺</span> Gevestigd in Europa. Werkt met klanten over de hele wereld.</p>
   <p class="hero-availability">Ondersteunt organisaties in heel Europa en daarbuiten met sessies op locatie en online.</p>
   <div class="hero-flags" aria-label="Landen in Europa waarmee ik samenwerk">
-    <img src="/images/flags/eu.svg" width="32" height="24" alt="Vlag van de Europese Unie" loading="lazy" />
-    <img src="/images/flags/sweden.svg" width="32" height="24" alt="Vlag van Zweden" loading="lazy" />
-    <img src="/images/flags/netherlands.svg" width="32" height="24" alt="Vlag van Nederland" loading="lazy" />
-    <img src="/images/flags/united-kingdom.svg" width="32" height="24" alt="Vlag van het Verenigd Koninkrijk" loading="lazy" />
-    <img src="/images/flags/poland.svg" width="32" height="24" alt="Vlag van Polen" loading="lazy" />
-    <img src="/images/flags/united-states.svg" width="32" height="24" alt="Vlag van de Verenigde Staten" loading="lazy" />
+    <span role="img" aria-label="Europese Unie">🇪🇺</span>
+    <span role="img" aria-label="Zweden">🇸🇪</span>
+    <span role="img" aria-label="Nederland">🇳🇱</span>
+    <span role="img" aria-label="Verenigd Koninkrijk">🇬🇧</span>
+    <span role="img" aria-label="Polen">🇵🇱</span>
+    <span role="img" aria-label="Verenigde Staten">🇺🇸</span>
   </div>
   <a href="#ai-packages" class="cta-btn">AI voor bedrijven</a>
 </section>
