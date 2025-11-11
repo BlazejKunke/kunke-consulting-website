@@ -9,7 +9,7 @@ export interface Props {
 
 const {
   title,
-  description = "Kunke Consulting: AI and Excel training and advisory for companies.",
+  description = "Kunke Consulting: practical AI implementations, automation programs, and advisory for companies.",
   ogImage
 } = Astro.props;
 
@@ -127,7 +127,7 @@ const dutchUrl = new URL(`/nl${pathSuffix === '/' ? '' : pathSuffix}`, siteUrl).
     "@type": "LocalBusiness",
     "name": "Kunke Consulting",
     "image": "/images/Kunke_Favicon.png",
-    "description": "Professional AI and Excel training for companies in Poland. Artificial intelligence courses, AI consulting, business advisory.",
+    "description": "Practical AI implementations for companies in Poland, including automation, adoption programs, and strategic AI advisory.",
     "url": "https://kunkeconsulting.pl",
     "telephone": "+48722156925",
     "email": "info@kunkeconsulting.pl",
@@ -138,11 +138,11 @@ const dutchUrl = new URL(`/nl${pathSuffix === '/' ? '' : pathSuffix}`, siteUrl).
       "opens":"09:00","closes":"17:00"
     },
     "serviceArea": { "@type": "Country", "name": "Poland" },
-    "hasOfferCatalog": { "@type": "OfferCatalog", "name":"AI and Excel training",
+    "hasOfferCatalog": { "@type": "OfferCatalog", "name":"AI implementation and automation services",
       "itemListElement":[
-        {"@type":"Offer","itemOffered":{"@type":"Course","name":"AI training for companies","description":"Practical artificial intelligence training for Polish businesses","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Course","name":"Excel training with AI","description":"Excel courses enhanced with artificial intelligence","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Service","name":"AI consulting","description":"Advisory on implementing AI inside your company","provider":{"@type":"Organization","name":"Kunke Consulting"}}}
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"AI implementations for companies","description":"End-to-end delivery of artificial intelligence solutions tailored to business processes","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"AI-powered automation","description":"Designing and launching automations that leverage artificial intelligence across teams","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Strategic AI advisory","description":"Roadmaps, change enablement, and capability building for AI transformation","provider":{"@type":"Organization","name":"Kunke Consulting"}}}
       ]
     },
     "sameAs": [

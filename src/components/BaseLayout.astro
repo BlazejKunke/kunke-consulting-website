@@ -9,7 +9,7 @@ export interface Props {
 
 const {
   title,
-  description = "Kunke Consulting: szkolenia i doradztwo z AI oraz Excela dla firm",
+  description = "Kunke Consulting: wdrożenia sztucznej inteligencji, automatyzacje procesów i doradztwo dla firm",
   ogImage
 } = Astro.props;
 
@@ -130,7 +130,7 @@ const dutchUrl = Astro.url.pathname === '/'
     "@type": "LocalBusiness",
     "name": "Kunke Consulting",
     "image": "/images/Kunke_Favicon.png",
-    "description": "Profesjonalne szkolenia AI i Excel dla firm w Polsce. Kursy sztucznej inteligencji, konsulting AI, doradztwo biznesowe.",
+    "description": "Praktyczne wdrożenia sztucznej inteligencji, automatyzacje procesów i strategiczne doradztwo AI dla firm w Polsce.",
     "url": "https://kunkeconsulting.pl",
     "telephone": "+48722156925",
     "email": "info@kunkeconsulting.pl",
@@ -141,11 +141,11 @@ const dutchUrl = Astro.url.pathname === '/'
       "opens":"09:00","closes":"17:00"
     },
     "serviceArea": { "@type": "Country", "name": "Poland" },
-    "hasOfferCatalog": { "@type": "OfferCatalog", "name":"Szkolenia AI i Excel",
+    "hasOfferCatalog": { "@type": "OfferCatalog", "name":"Wdrożenia i automatyzacje AI",
       "itemListElement":[
-        {"@type":"Offer","itemOffered":{"@type":"Course","name":"Szkolenia AI dla firm","description":"Praktyczne szkolenia sztucznej inteligencji dla polskich firm","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Course","name":"Szkolenia Excel z AI","description":"Kursy Excel z wykorzystaniem sztucznej inteligencji","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Konsulting AI","description":"Doradztwo w zakresie implementacji AI w firmie","provider":{"@type":"Organization","name":"Kunke Consulting"}}}
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Wdrożenia AI dla firm","description":"Implementacja rozwiązań sztucznej inteligencji dopasowanych do procesów biznesowych","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Automatyzacje oparte na AI","description":"Projektowanie i uruchamianie automatyzacji procesów z wykorzystaniem sztucznej inteligencji","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Doradztwo strategiczne AI","description":"Strategia, roadmapy i szkolenia wspierające transformację AI w organizacji","provider":{"@type":"Organization","name":"Kunke Consulting"}}}
       ]
     },
     "sameAs": [
