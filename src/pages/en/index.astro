@@ -28,6 +28,12 @@ import StudentReport from '../../components/StudentReportEn.astro';
     gap: 8px;
     justify-content: center;
   }
+  #hero .hero-location img {
+    width: 24px;
+    height: 18px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  }
   #hero .hero-availability {
     margin-top: 6px;
     color: #2c3e50;
@@ -37,8 +43,13 @@ import StudentReport from '../../components/StudentReportEn.astro';
     margin-top: 12px;
     display: flex;
     justify-content: center;
-    gap: 10px;
-    font-size: 1.5rem;
+    gap: 12px;
+  }
+  #hero .hero-flags img {
+    width: 32px;
+    height: 24px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   }
   .team-center {
     text-align: center;
@@ -122,15 +133,15 @@ import StudentReport from '../../components/StudentReportEn.astro';
   <p><span class="text-gradient">^Kunke Consulting</span></p>
   <h1 class="text-gradient">Practical AI implementations for teams in Europe and beyond</h1>
   <p>We help modern businesses launch automation and AI solutions that deliver measurable outcomes.</p>
-  <p class="hero-location"><span aria-hidden="true">🇪🇺</span> Based in Europe. Working with clients across the world.</p>
+  <p class="hero-location"><img src="/images/flags/eu.svg" width="24" height="18" alt="" aria-hidden="true" /> Based in Europe. Working with clients across the world.</p>
   <p class="hero-availability">Serving organisations across Europe and beyond with on-site and online collaboration.</p>
   <div class="hero-flags" aria-label="Countries across Europe I collaborate with">
-    <span role="img" aria-label="European Union">🇪🇺</span>
-    <span role="img" aria-label="Sweden">🇸🇪</span>
-    <span role="img" aria-label="Netherlands">🇳🇱</span>
-    <span role="img" aria-label="United Kingdom">🇬🇧</span>
-    <span role="img" aria-label="Poland">🇵🇱</span>
-    <span role="img" aria-label="United States">🇺🇸</span>
+    <img src="/images/flags/eu.svg" width="32" height="24" alt="Flag of the European Union" loading="lazy" />
+    <img src="/images/flags/sweden.svg" width="32" height="24" alt="Flag of Sweden" loading="lazy" />
+    <img src="/images/flags/netherlands.svg" width="32" height="24" alt="Flag of the Netherlands" loading="lazy" />
+    <img src="/images/flags/united-kingdom.svg" width="32" height="24" alt="Flag of the United Kingdom" loading="lazy" />
+    <img src="/images/flags/poland.svg" width="32" height="24" alt="Flag of Poland" loading="lazy" />
+    <img src="/images/flags/united-states.svg" width="32" height="24" alt="Flag of the United States" loading="lazy" />
   </div>
   <a href="#ai-packages" class="cta-btn">AI for companies</a>
 </section>
