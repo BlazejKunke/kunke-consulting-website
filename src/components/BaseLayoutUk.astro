@@ -1,0 +1,151 @@
+---
+import CookieConsent from './CookieConsentEn.astro';
+export interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = "Kunke Consulting: practical AI implementations, automation programmes, and advisory for British organisations.",
+  ogImage
+} = Astro.props;
+
+const nonce: string | undefined = Astro.locals?.nonce;
+
+const siteUrl = Astro.site;
+const absoluteOgImage = ogImage
+  ? new URL(ogImage, siteUrl).href
+  : new URL('/images/Kunke_Favicon.png', siteUrl).href;
+
+const canonicalUrl = Astro.url.href;
+const pathSuffix = Astro.url.pathname.replace(/^\/uk/, '') || '/';
+const polishUrl = new URL(pathSuffix, siteUrl).href;
+const dutchUrl = new URL(`/nl${pathSuffix === '/' ? '' : pathSuffix}`, siteUrl).href;
+const globalEnUrl = new URL(`/en${pathSuffix === '/' ? '' : pathSuffix}`, siteUrl).href;
+---
+
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <link rel="canonical" href={canonicalUrl} />
+  <link rel="alternate" hreflang="en-GB" href={canonicalUrl} />
+  <link rel="alternate" hreflang="en" href={globalEnUrl} />
+  <link rel="alternate" hreflang="pl" href={polishUrl} />
+  <link rel="alternate" hreflang="nl" href={dutchUrl} />
+  <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:site_name" content="Kunke Consulting" />
+  <meta property="og:url" content={Astro.url.href} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={absoluteOgImage} />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={Astro.url.href} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={absoluteOgImage} />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Kunke_Favicon.png" />
+  <link rel="shortcut icon" href="/favicon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+
+  <script nonce={nonce}>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'gtm.start': new Date().getTime(),
+      event: 'gtm.js'
+    });
+    (function(){
+      function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));
+        return match ? match[2] : null;
+      }
+      const consent = getCookie('cookie_consent') === 'granted' ? 'granted' : 'denied';
+      window.dataLayer.push({
+        event: 'default_consent_set',
+        consent: {
+          ad_storage: consent,
+          analytics_storage: consent,
+          wait_for_update: 500
+        }
+      });
+    })();
+  </script>
+  <script nonce={nonce}>
+    (function(w,d,s,l,i){
+      var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true; j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MWRKLP2S');
+  </script>
+
+  <style nonce={nonce}>
+    .gtm-noscript { display:none; visibility:hidden; width:0; height:0; }
+  </style>
+
+  <link
+    rel="preload"
+    href="/styles/global.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript><link rel="stylesheet" href="/styles/global.css" /></noscript>
+
+  <script type="application/ld+json" nonce={nonce}>
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Kunke Consulting",
+    "image": "/images/Kunke_Favicon.png",
+    "description": "Practical AI implementations for British organisations, including automation, adoption programmes, and strategic AI advisory.",
+    "url": "https://kunkeconsulting.pl/uk",
+    "telephone": "+48722156925",
+    "email": "info@kunkeconsulting.pl",
+    "address": { "@type": "PostalAddress", "addressCountry": "GB", "addressLocality": "London" },
+    "geo": { "@type": "GeoCoordinates", "latitude": "51.5074", "longitude": "-0.1278" },
+    "openingHoursSpecification": { "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens":"09:00","closes":"17:00"
+    },
+    "serviceArea": { "@type":"Country", "name":"United Kingdom" },
+    "hasOfferCatalog": { "@type":"OfferCatalog", "name":"AI implementation and automation services",
+      "itemListElement":[
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"AI implementations for companies","description":"End-to-end delivery of artificial intelligence solutions tailored to business processes","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"AI-powered automation","description":"Designing and launching automations that leverage artificial intelligence across teams","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Strategic AI advisory","description":"Roadmaps, change enablement, and capability building for AI transformation","provider":{"@type":"Organization","name":"Kunke Consulting"}}}
+      ]
+    },
+    "sameAs": [
+      "https://www.linkedin.com/in/blazejkunke/",
+      "https://www.facebook.com/blazej.kunke",
+      "https://www.youtube.com/@BlazeAdventuresWorld"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <noscript>
+    <iframe class="gtm-noscript" src="https://www.googletagmanager.com/ns.html?id=GTM-MWRKLP2S"></iframe>
+  </noscript>
+
+  <slot />
+  <CookieConsent />
+</body>
+</html>
