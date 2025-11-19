@@ -1,0 +1,414 @@
+---
+import BaseLayout from '../../components/BaseLayoutFr.astro';
+import ContactForm from '../../components/ContactFormFr.astro';
+import AiPackages from '../../components/AiPackagesFr.astro';
+import Testimonials from '../../components/testimonialsFr.astro';
+import ExperienceSection from '../../components/ExperienceSectionFr.astro';
+import WorkshopSection from '../../components/WorkshopSectionFr.astro';
+import AboutMe from '../../components/AboutMeFr.astro';
+import StudentReport from '../../components/StudentReportFr.astro';
+---
+
+<BaseLayout
+  title="Implémentation de l'IA pour les entreprises en France | ^Kunke Consulting"
+  description="Programmes d’implémentation IA pour les équipes françaises : automatisation, solutions sur mesure et accompagnement sécurisé orienté résultats."
+  ogImage="/images/Kunke_Favicon.png"
+>
+
+<style>
+  #hero {
+    text-align: center;
+  }
+  #hero .hero-location {
+    font-weight: 600;
+    margin-top: 12px;
+    color: #1a3a6d;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+  #hero .hero-availability {
+    margin-top: 6px;
+    color: #2c3e50;
+    font-size: 1rem;
+  }
+  #hero .hero-flags {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.5rem;
+  }
+  .team-center {
+    text-align: center;
+  }
+  .contact-text {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .contact-center {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .contact-email {
+    color: #2c3e50;
+    text-decoration: none;
+  }
+  footer {
+    background: #f8f8fa;
+    padding: 40px 0 0 0;
+    text-align: center;
+    width: 100%;
+  }
+  .footer-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .footer-section {
+    min-width: 200px;
+    text-align: center;
+  }
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-section ul li {
+    margin: 0 0 8px 0;
+  }
+  .footer-section.social-media ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-section.social-media ul li {
+    margin-bottom: 8px;
+    width: 100%;
+    text-align: center;
+  }
+  .footer-bottom {
+    margin-top: 30px;
+    padding: 20px 10px;
+    background: #ececf2;
+    font-size: 0.85em;
+    color: #555;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  @media (max-width: 600px) {
+    .footer-bottom {
+      font-size: 0.75em;
+      padding: 24px 12px;
+    }
+  }
+</style>
+
+<section id="hero">
+  <p><span class="text-gradient">^Kunke Consulting</span></p>
+  <h1 class="text-gradient">Implémentations IA concrètes pour les équipes en France et en Europe</h1>
+  <p>Nous aidons les entreprises modernes à lancer des automatisations et des solutions IA orientées impact.</p>
+  <p class="hero-location"><span aria-hidden="true">🇫🇷</span> Basé en France. Clients servis dans toute l’Europe.</p>
+  <p class="hero-availability">Accompagnement hybride : ateliers sur site dans les capitales européennes et sessions en ligne.</p>
+  <div class="hero-flags" aria-label="Pays européens avec lesquels nous collaborons">
+    <span role="img" aria-label="France">🇫🇷</span>
+    <span role="img" aria-label="Union européenne">🇪🇺</span>
+    <span role="img" aria-label="Belgique">🇧🇪</span>
+    <span role="img" aria-label="Suisse">🇨🇭</span>
+    <span role="img" aria-label="Espagne">🇪🇸</span>
+    <span role="img" aria-label="Canada">🇨🇦</span>
+  </div>
+  <a href="#ai-packages" class="cta-btn">Programmes IA</a>
+</section>
+
+<section id="student-report">
+  <StudentReport />
+</section>
+
+<section id="experience">
+  <ExperienceSection />
+</section>
+
+<section id="workshops">
+  <WorkshopSection />
+</section>
+
+<section id="ai-packages">
+  <AiPackages />
+</section>
+
+<section id="testimonials">
+  <Testimonials />
+</section>
+
+<section id="team-preview" class="team-preview-section">
+  <div class="team-preview-content team-center">
+    <h3>Travaillez avec des experts</h3>
+    <p>
+      Je collabore avec des spécialistes seniors dans plusieurs disciplines.<br>
+      Nous livrons des solutions complètes adaptées à votre secteur.
+    </p>
+    <a href="/team" class="cta-btn">Découvrir l'équipe</a>
+  </div>
+</section>
+
+<section id="about-me">
+  <AboutMe />
+</section>
+
+<section id="faq" style="padding: 60px 20px; background: #f8f8fa;">
+  <h2 style="text-align: center; margin-bottom: 50px;">Questions fréquentes sur nos formations IA</h2>
+  <div style="max-width: 800px; margin: 0 auto;">
+    <div class="faq-accordion">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Vos formations IA conviennent-elles aux débutants ?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Oui. Les ateliers sont structurés par niveau : nous posons les bases avant de passer à des cas métiers avancés.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Où se déroulent les workshops IA ?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Nous intervenons à Paris, Lyon, Lille, Bruxelles, Genève… et également en ligne pour vos équipes réparties.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Quelle est la durée d’une formation ChatGPT ?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Le module central se déroule sur une journée. Les parcours complets pour managers durent de deux à cinq jours selon vos besoins.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Remettez-vous un certificat ?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Chaque participant reçoit un certificat nominatif ainsi qu’un accès prolongé aux ressources pédagogiques.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Comment l’IA dans Excel peut-elle aider mon entreprise ?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Les assistants IA accélèrent les rapports, automatisent les analyses répétitives et fiabilisent vos décisions data-driven.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Que comprend une mission de conseil IA ?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Audit des processus, feuille de route, sélection d’outils, formation des équipes et accompagnement jusqu’au déploiement.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <h3>Proposez-vous des ateliers pour les managers ?</h3>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Oui. Nous animons des sessions dédiées à la stratégie, au pilotage de projets IA et à la gouvernance responsable.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .faq-item {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-left: 4px solid var(--color-primary);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+  }
+  .faq-item:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,.1);
+  }
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 25px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+  }
+  .faq-question:hover {
+    background-color: #f8f9fa;
+  }
+  .faq-question:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+  }
+  .faq-question h3 {
+    color: var(--color-primary);
+    margin: 0;
+    font-size: 1.2rem;
+    flex-grow: 1;
+  }
+  .faq-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 20px;
+  }
+  .faq-item[data-expanded="true"] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    padding: 0 25px;
+  }
+  .faq-item[data-expanded="true"] .faq-answer {
+    max-height: 200px;
+    padding: 15px 25px 25px 25px;
+  }
+  .faq-answer p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+  }
+  @media (max-width: 600px) {
+    .faq-question {
+      padding: 20px;
+    }
+    .faq-question h3 {
+      font-size: 1.1rem;
+    }
+    .faq-icon {
+      margin-left: 15px;
+    }
+    .faq-item[data-expanded="true"] .faq-answer {
+      padding: 15px 20px 20px 20px;
+    }
+  }
+</style>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p class="contact-text">Expliquez-nous vos objectifs et nous reviendrons vers vous avec la meilleure approche.</p>
+  <div class="contact-info contact-center">
+    <p><strong>Email :</strong> <a href="mailto:info@kunkeconsulting.pl" class="contact-email">info@kunkeconsulting.pl</a></p>
+  </div>
+  <p class="contact-center">
+    Besoin d’échanger de vive voix ?
+    Appelez le <a href="tel:+48722156925">+48 722 156 925</a>.
+  </p>
+  <ContactForm />
+</section>
+
+<footer>
+  <div class="footer-wrapper">
+    <div class="footer-content">
+      <div class="footer-section contact-info-footer">
+        <h3>Contact</h3>
+        <p>^Kunke Consulting</p>
+        <p>
+          <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+        </p>
+        <p>
+          <a href="tel:+48722156925">m. +48 722 156 925</a>
+        </p>
+      </div>
+      <div class="footer-section legal-info">
+        <h3>^Kunke Consulting</h3>
+        <p><a href="/privacy-policy">Politique de confidentialité & mentions légales</a></p>
+        <p><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></p>
+      </div>
+      <div class="footer-section social-media">
+        <h3>Réseaux</h3>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 ^Kunke Consulting. Toutes les marques citées appartiennent à leurs propriétaires respectifs.</p>
+  </div>
+</footer>
+
+<script>
+// @ts-nocheck
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+
+      question.addEventListener('click', function() {
+        const isExpanded = item.getAttribute('data-expanded') === 'true';
+
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.setAttribute('data-expanded', 'false');
+            otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        const newExpandedState = !isExpanded;
+        item.setAttribute('data-expanded', newExpandedState.toString());
+        question.setAttribute('aria-expanded', newExpandedState.toString());
+
+        if (newExpandedState) {
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        } else {
+          answer.style.maxHeight = '0px';
+        }
+      });
+
+      question.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          question.click();
+        }
+      });
+    });
+  });
+</script>
+
+</BaseLayout>

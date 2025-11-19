@@ -1,0 +1,111 @@
+---
+const packages = [
+  {
+    id: 'plant',
+    title: 'Consultation IA',
+    tagline: 'Diagnostic rapide et premières actions',
+    price: 'À partir de 235 € HT',
+    badge: null,
+    bullets: [
+      "Évaluer le potentiel de l'IA dans votre organisation",
+      "Identifier les premiers cas d'usage",
+      "Recommander les bons outils IA",
+      '90 minutes en ligne ou sur site',
+      'Enregistrement du rendez-vous sur demande'
+    ],
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
+  },
+  {
+    id: 'grow',
+    title: 'Formation IA pour entreprises',
+    tagline: 'Acculturation rapide et avantage compétitif',
+    price: 'À partir de 1200 € HT',
+    bullets: [
+      'Deux journées de formation en présentiel',
+      'Outils IA concrets pour vos équipes',
+      'Programmes pilotes IA',
+      'Éthique, environnement et cadre légal',
+      'IA pour la vidéo, l’image et le son',
+      'Prompt engineering',
+      'Support de présentation et certificat'
+    ],
+    badge: 'IA pour les équipes',
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
+  },
+  {
+    id: 'flourish',
+    title: 'Projets IA sur mesure',
+    tagline: 'Partenariat dans la durée',
+    price: 'Tarifs sur devis',
+    badge: null,
+    bullets: [
+      'Partenariat IA long terme',
+      'Programmes de transformation continue',
+      'Projets ambitieux et multi-équipes',
+      'Montée en compétence des collaborateurs',
+      'Support IT et gouvernance',
+      'Accompagnement juridique IA',
+      'Conseil stratégique'
+    ],
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
+  }
+];
+---
+<section id="ai-packages">
+  <h2>Formations et conseil IA</h2>
+
+  <div class="package-grid">
+    {packages.map(pkg => (
+      <article class="card {pkg.id}">
+        {pkg.badge && <span class="badge">{pkg.badge}</span>}
+
+        <h3>{pkg.title}</h3>
+        <p class="tagline">{pkg.tagline}</p>
+
+        <div class="content">
+          <ul>
+            {pkg.bullets.map(b => <li>{b}</li>)}
+          </ul>
+
+          <div class="spacer" />
+          <p class="price" set:html={pkg.price} />
+
+          {pkg.calendly
+            ? <a href="/ai-workshop" class="cta">{pkg.id === 'plant' || pkg.id === 'grow' ? 'Découvrir' : 'Échanger'}</a>
+            : <a href="#contact" class="cta secondary">Contactez-nous</a>}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  #ai-packages { padding: 60px 20px; background:#fff; text-align:center; }
+  .package-grid {
+    display:flex; gap:24px; flex-wrap:wrap; justify-content:center;
+  }
+  .card {
+    flex:1 1 280px; max-width:320px;
+    background:#f8f8fa; border-radius:12px; padding:32px 24px;
+    position:relative; box-shadow:0 4px 12px rgba(0,0,0,.06);
+    display:flex; flex-direction:column; align-items:center;
+  }
+  h3 { margin:8px 0 4px; }
+  .tagline { font-size:.95rem; color:#555; margin-bottom:16px; }
+  ul { text-align:left; padding-left:18px; margin:0 0 24px; }
+  li { margin-bottom:6px; }
+  .price { font-weight:700; margin-bottom:24px; }
+  .cta {
+    background:var(--color-primary); color:#fff; padding:12px 24px;
+    border-radius:6px; text-decoration:none; font-weight:600;
+    transition:background .3s ease;
+  }
+  .cta:hover { background:var(--color-secondary); }
+  .cta.secondary { background:#ccc; }
+  .badge {
+    position:absolute; top:12px; right:12px;
+    background:var(--color-accent-blue); color:#fff; font-size:.75rem;
+    padding:4px 8px; border-radius:4px;
+  }
+  @media(max-width:700px){ .package-grid{flex-direction:column;} }
+</style>
