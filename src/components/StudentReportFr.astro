@@ -1,0 +1,109 @@
+---
+---
+<section class="student-report">
+  <div class="tags">
+    <span>ChatGPT</span>
+    <span>Gemini</span>
+    <span>Notebook LM</span>
+    <span>LM Studio</span>
+    <span>Perplexity</span>
+    <span>STORM</span>
+    <span>Nano Banana</span>
+    <span>SORA</span>
+    <span>CODEX</span>
+  </div>
+  <div class="content">
+    <h2>Les derniers outils IA</h2>
+    <p>Découvrez ce que l’intelligence artificielle peut apporter à vos études et choisissez les solutions adaptées.</p>
+    <a href="/Sztuczna%20Inteligencja%20dla%20ucznia%20i%20studenta%202025%20KC.pdf"
+       class="pdf-download-btn"
+       download>
+      <span class="pdf-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+      </span>
+      Télécharger le PDF gratuit
+      <span class="download-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+      </span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .student-report {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 60px 20px;
+    align-items: center;
+    justify-items: center;
+    background: #f8f8fa;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+  .tags span {
+    background: #e6f8f2;
+    color: #187650;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .content h2 {
+    margin-bottom: 0.5rem;
+  }
+  .content p {
+    margin-bottom: 1.25rem;
+    color: #555;
+  }
+  .pdf-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #0b6b48 0%, #187650 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(11, 107, 72, 0.3);
+    transition: all 0.3s ease;
+    width: fit-content;
+    margin: 0 auto;
+    white-space: nowrap;
+  }
+  .pdf-download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(11, 107, 72, 0.4);
+    background: linear-gradient(135deg, #0a5a3d 0%, #0b6b48 100%);
+  }
+  .pdf-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .download-icon {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+  }
+  .pdf-download-btn:hover .download-icon {
+    opacity: 1;
+  }
+  @media (max-width: 768px) {
+    .student-report {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+  }
+</style>

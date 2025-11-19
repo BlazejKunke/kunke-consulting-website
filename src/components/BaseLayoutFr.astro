@@ -1,0 +1,151 @@
+---
+import CookieConsent from './CookieConsentFr.astro';
+export interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = "Kunke Consulting : implémentations d'IA pratiques, automatisation et conseil pour les entreprises françaises et européennes.",
+  ogImage
+} = Astro.props;
+
+const nonce: string | undefined = Astro.locals?.nonce;
+const siteUrl = Astro.site;
+const absoluteOgImage = ogImage
+  ? new URL(ogImage, siteUrl).href
+  : new URL('/images/Kunke_Favicon.png', siteUrl).href;
+
+const canonicalUrl = Astro.url.href;
+const relativePath = Astro.url.pathname.replace(/^\/fr/, '') || '/';
+const suffix = relativePath === '/' ? '' : relativePath;
+const englishUrl = new URL(`/en${suffix}`, siteUrl).href;
+const polishUrl = new URL(relativePath, siteUrl).href;
+const dutchUrl = new URL(`/nl${suffix}`, siteUrl).href;
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <link rel="canonical" href={canonicalUrl} />
+  <link rel="alternate" hreflang="fr" href={canonicalUrl} />
+  <link rel="alternate" hreflang="en" href={englishUrl} />
+  <link rel="alternate" hreflang="pl" href={polishUrl} />
+  <link rel="alternate" hreflang="nl" href={dutchUrl} />
+  <link rel="alternate" hreflang="x-default" href={englishUrl} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="Kunke Consulting" />
+  <meta property="og:url" content={Astro.url.href} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={absoluteOgImage} />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={Astro.url.href} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={absoluteOgImage} />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Kunke_Favicon.png" />
+  <link rel="shortcut icon" href="/favicon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+
+  <script nonce={nonce}>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'gtm.start': new Date().getTime(),
+      event: 'gtm.js'
+    });
+    (function(){
+      function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));
+        return match ? match[2] : null;
+      }
+      const consent = getCookie('cookie_consent') === 'granted' ? 'granted' : 'denied';
+      window.dataLayer.push({
+        event: 'default_consent_set',
+        consent: {
+          ad_storage: consent,
+          analytics_storage: consent,
+          wait_for_update: 500
+        }
+      });
+    })();
+  </script>
+  <script nonce={nonce}>
+    (function(w,d,s,l,i){
+      var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true; j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MWRKLP2S');
+  </script>
+
+  <style nonce={nonce}>
+    .gtm-noscript { display:none; visibility:hidden; width:0; height:0; }
+  </style>
+
+  <link
+    rel="preload"
+    href="/styles/global.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript><link rel="stylesheet" href="/styles/global.css" /></noscript>
+
+  <script type="application/ld+json" nonce={nonce}>
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Kunke Consulting",
+    "image": "/images/Kunke_Favicon.png",
+    "description": "Implémentations d'IA concrètes, automatisation des processus et conseil stratégique pour les entreprises en France et en Europe.",
+    "url": "https://kunkeconsulting.pl",
+    "telephone": "+48722156925",
+    "email": "info@kunkeconsulting.pl",
+    "address": { "@type": "PostalAddress", "addressCountry": "FR", "addressLocality": "Paris" },
+    "geo": { "@type": "GeoCoordinates", "latitude": "48.8566", "longitude": "2.3522" },
+    "openingHoursSpecification": { "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens":"09:00","closes":"17:00"
+    },
+    "serviceArea": { "@type": "Country", "name": "France" },
+    "hasOfferCatalog": { "@type": "OfferCatalog", "name":"Programmes d'implémentation et d'automatisation IA",
+      "itemListElement":[
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Implémentations IA pour entreprises","description":"Déploiement de solutions d'intelligence artificielle adaptées aux processus métiers","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Automatisation pilotée par l'IA","description":"Conception et lancement d'automatisations intelligentes dans les équipes","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Conseil stratégique en IA","description":"Feuilles de route, conduite du changement et montée en compétence pour la transformation IA","provider":{"@type":"Organization","name":"Kunke Consulting"}}}
+      ]
+    },
+    "sameAs": [
+      "https://www.linkedin.com/in/blazejkunke/",
+      "https://www.facebook.com/blazej.kunke",
+      "https://www.youtube.com/@BlazeAdventuresWorld"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <noscript>
+    <iframe class="gtm-noscript" src="https://www.googletagmanager.com/ns.html?id=GTM-MWRKLP2S"></iframe>
+  </noscript>
+
+  <slot />
+  <CookieConsent />
+</body>
+</html>
