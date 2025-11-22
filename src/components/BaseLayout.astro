@@ -22,12 +22,27 @@ const absoluteOgImage = ogImage
   : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 
 const canonicalUrl = Astro.url.href;
-const englishUrl = Astro.url.pathname === '/'
-  ? new URL('/en', siteUrl).href
-  : undefined;
-const dutchUrl = Astro.url.pathname === '/'
-  ? new URL('/nl', siteUrl).href
-  : undefined;
+const locales = ['pl', 'en', 'nl'] as const;
+
+const stripLocale = (pathname: string) => {
+  for (const locale of locales.slice(1)) {
+    const prefix = `/${locale}`;
+    if (pathname === prefix) return '/';
+    if (pathname.startsWith(`${prefix}/`)) return pathname.slice(prefix.length) || '/';
+  }
+  return pathname;
+};
+
+const basePath = stripLocale(Astro.url.pathname);
+const alternateUrls = locales.map((locale) => {
+  const localizedPath = locale === 'pl' ? basePath : `/${locale}${basePath === '/' ? '' : basePath}`;
+  return {
+    locale,
+    href: new URL(localizedPath, siteUrl).href,
+  };
+});
+
+const xDefaultUrl = alternateUrls.find(({ locale }) => locale === 'en')?.href ?? canonicalUrl;
 ---
 
 <!DOCTYPE html>
@@ -40,10 +55,10 @@ const dutchUrl = Astro.url.pathname === '/'
   <meta name="description" content={description} />
 
   <link rel="canonical" href={canonicalUrl} />
-  <link rel="alternate" hreflang="pl" href={canonicalUrl} />
-  {englishUrl && <link rel="alternate" hreflang="en" href={englishUrl} />}
-  {dutchUrl && <link rel="alternate" hreflang="nl" href={dutchUrl} />}
-  {englishUrl && <link rel="alternate" hreflang="x-default" href={englishUrl} />}
+  {alternateUrls.map(({ locale, href }) => (
+    <link rel="alternate" hreflang={locale} href={href} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
 
   <!-- OG/Twitter -->
   <meta property="og:type" content="website" />
