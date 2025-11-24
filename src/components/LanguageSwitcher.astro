@@ -157,11 +157,13 @@ const { currentLocale, alternateUrls } = Astro.props;
 
   @media (max-width: 640px) {
     .language-switcher {
-      top: auto;
-      right: 50%;
-      bottom: 16px;
-      transform: translateX(50%);
-      width: min(92vw, 340px);
+      top: 12px;
+      right: 12px;
+      left: 12px;
+      bottom: auto;
+      transform: none;
+      width: auto;
+      max-width: calc(100% - 24px);
     }
 
     .language-button {

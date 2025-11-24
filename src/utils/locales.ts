@@ -3,7 +3,7 @@ export const locales = [
   { code: 'en', label: 'English', pathPrefix: '/en' },
   { code: 'fr', label: 'Français', pathPrefix: '/fr' },
   { code: 'nl', label: 'Nederlands', pathPrefix: '/nl' },
-  { code: 'uk', label: 'Українська', pathPrefix: '/uk' },
+  { code: 'uk', label: 'United Kingdom', pathPrefix: '/uk' },
 ] as const;
 
 export type LocaleCode = typeof locales[number]['code'];
@@ -21,7 +21,7 @@ export const localeOgMap: Record<LocaleCode, string> = {
   en: 'en_GB',
   fr: 'fr_FR',
   nl: 'nl_NL',
-  uk: 'uk_UA',
+  uk: 'en_GB',
 };
 
 export const defaultLocale: LocaleCode = 'pl';
