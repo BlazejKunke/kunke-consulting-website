@@ -1,5 +1,7 @@
 ---
 import CookieConsent from './CookieConsentEn.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { buildAlternateUrls, detectLocale, localeOgMap } from '../utils/locales';
 export interface Props {
   title: string;
   description?: string;
@@ -20,14 +22,14 @@ const absoluteOgImage = ogImage
   : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 
 const canonicalUrl = Astro.url.href;
-const pathSuffix = Astro.url.pathname.replace(/^\/uk/, '') || '/';
-const polishUrl = new URL(pathSuffix, siteUrl).href;
-const dutchUrl = new URL(`/nl${pathSuffix === '/' ? '' : pathSuffix}`, siteUrl).href;
-const globalEnUrl = new URL(`/en${pathSuffix === '/' ? '' : pathSuffix}`, siteUrl).href;
+const currentLocale = detectLocale(Astro.url.pathname);
+const alternateUrls = buildAlternateUrls(Astro.url.pathname, siteUrl);
+const xDefaultUrl = alternateUrls.find(({ locale }) => locale === 'en')?.href ?? canonicalUrl;
+const ogLocale = localeOgMap[currentLocale] ?? 'en_GB';
 ---
 
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang={currentLocale}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -36,14 +38,13 @@ const globalEnUrl = new URL(`/en${pathSuffix === '/' ? '' : pathSuffix}`, siteUr
   <meta name="description" content={description} />
 
   <link rel="canonical" href={canonicalUrl} />
-  <link rel="alternate" hreflang="en-GB" href={canonicalUrl} />
-  <link rel="alternate" hreflang="en" href={globalEnUrl} />
-  <link rel="alternate" hreflang="pl" href={polishUrl} />
-  <link rel="alternate" hreflang="nl" href={dutchUrl} />
-  <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+  {alternateUrls.map(({ locale, href }) => (
+    <link rel="alternate" hreflang={locale} href={href} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
 
   <meta property="og:type" content="website" />
-  <meta property="og:locale" content="en_GB" />
+  <meta property="og:locale" content={ogLocale} />
   <meta property="og:site_name" content="Kunke Consulting" />
   <meta property="og:url" content={Astro.url.href} />
   <meta property="og:title" content={title} />
@@ -144,6 +145,8 @@ const globalEnUrl = new URL(`/en${pathSuffix === '/' ? '' : pathSuffix}`, siteUr
   <noscript>
     <iframe class="gtm-noscript" src="https://www.googletagmanager.com/ns.html?id=GTM-MWRKLP2S"></iframe>
   </noscript>
+
+  <LanguageSwitcher currentLocale={currentLocale} alternateUrls={alternateUrls} />
 
   <slot />
   <CookieConsent />

@@ -1,6 +1,8 @@
 ---
 // src/components/BaseLayoutNl.astro
 import CookieConsent from './CookieConsentNl.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { buildAlternateUrls, detectLocale, localeOgMap } from '../utils/locales';
 export interface Props {
   title: string;
   description?: string;
@@ -21,15 +23,14 @@ const absoluteOgImage = ogImage
   : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 
 const canonicalUrl = Astro.url.href;
-const relativePath = Astro.url.pathname.replace(/^\/nl/, '');
-const englishPath = `/en${relativePath || ''}`;
-const polishPath = relativePath || '/';
-const englishUrl = new URL(englishPath, siteUrl).href;
-const polishUrl = new URL(polishPath, siteUrl).href;
+const currentLocale = detectLocale(Astro.url.pathname);
+const alternateUrls = buildAlternateUrls(Astro.url.pathname, siteUrl);
+const xDefaultUrl = alternateUrls.find(({ locale }) => locale === 'en')?.href ?? canonicalUrl;
+const ogLocale = localeOgMap[currentLocale] ?? 'nl_NL';
 ---
 
 <!DOCTYPE html>
-<html lang="nl">
+<html lang={currentLocale}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,14 +39,14 @@ const polishUrl = new URL(polishPath, siteUrl).href;
   <meta name="description" content={description} />
 
   <link rel="canonical" href={canonicalUrl} />
-  <link rel="alternate" hreflang="nl" href={canonicalUrl} />
-  <link rel="alternate" hreflang="en" href={englishUrl} />
-  <link rel="alternate" hreflang="pl" href={polishUrl} />
-  <link rel="alternate" hreflang="x-default" href={englishUrl} />
+  {alternateUrls.map(({ locale, href }) => (
+    <link rel="alternate" hreflang={locale} href={href} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
 
   <!-- OG/Twitter -->
   <meta property="og:type" content="website" />
-  <meta property="og:locale" content="nl_NL" />
+  <meta property="og:locale" content={ogLocale} />
   <meta property="og:site_name" content="Kunke Consulting" />
   <meta property="og:url" content={Astro.url.href} />
   <meta property="og:title" content={title} />
@@ -156,6 +157,8 @@ const polishUrl = new URL(polishPath, siteUrl).href;
   <noscript>
     <iframe class="gtm-noscript" src="https://www.googletagmanager.com/ns.html?id=GTM-MWRKLP2S"></iframe>
   </noscript>
+
+  <LanguageSwitcher currentLocale={currentLocale} alternateUrls={alternateUrls} />
 
   <slot />
   <CookieConsent />

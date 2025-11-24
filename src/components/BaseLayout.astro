@@ -1,6 +1,8 @@
 ---
 // src/components/BaseLayout.astro
 import CookieConsent from './CookieConsent.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { buildAlternateUrls, detectLocale, localeOgMap } from '../utils/locales';
 export interface Props {
   title: string;
   description?: string;
@@ -22,31 +24,14 @@ const absoluteOgImage = ogImage
   : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 
 const canonicalUrl = Astro.url.href;
-const locales = ['pl', 'en', 'nl'] as const;
-
-const stripLocale = (pathname: string) => {
-  for (const locale of locales.slice(1)) {
-    const prefix = `/${locale}`;
-    if (pathname === prefix) return '/';
-    if (pathname.startsWith(`${prefix}/`)) return pathname.slice(prefix.length) || '/';
-  }
-  return pathname;
-};
-
-const basePath = stripLocale(Astro.url.pathname);
-const alternateUrls = locales.map((locale) => {
-  const localizedPath = locale === 'pl' ? basePath : `/${locale}${basePath === '/' ? '' : basePath}`;
-  return {
-    locale,
-    href: new URL(localizedPath, siteUrl).href,
-  };
-});
-
+const currentLocale = detectLocale(Astro.url.pathname);
+const alternateUrls = buildAlternateUrls(Astro.url.pathname, siteUrl);
 const xDefaultUrl = alternateUrls.find(({ locale }) => locale === 'en')?.href ?? canonicalUrl;
+const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
 ---
 
 <!DOCTYPE html>
-<html lang="pl">
+<html lang={currentLocale}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -62,7 +47,7 @@ const xDefaultUrl = alternateUrls.find(({ locale }) => locale === 'en')?.href ??
 
   <!-- OG/Twitter -->
   <meta property="og:type" content="website" />
-  <meta property="og:locale" content="pl_PL" />
+  <meta property="og:locale" content={ogLocale} />
   <meta property="og:site_name" content="Kunke Consulting" />
   <meta property="og:url" content={Astro.url.href} />
   <meta property="og:title" content={title} />
@@ -176,6 +161,8 @@ const xDefaultUrl = alternateUrls.find(({ locale }) => locale === 'en')?.href ??
   <noscript>
     <iframe class="gtm-noscript" src="https://www.googletagmanager.com/ns.html?id=GTM-MWRKLP2S"></iframe>
   </noscript>
+
+  <LanguageSwitcher currentLocale={currentLocale} alternateUrls={alternateUrls} />
 
   <slot />
   <CookieConsent />

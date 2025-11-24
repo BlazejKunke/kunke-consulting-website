@@ -1,0 +1,176 @@
+---
+import type { LocaleCode } from '../utils/locales';
+import { localeLabels } from '../utils/locales';
+
+interface AlternateUrl {
+  locale: LocaleCode;
+  href: string;
+}
+
+interface Props {
+  currentLocale: LocaleCode;
+  alternateUrls: AlternateUrl[];
+}
+
+const { currentLocale, alternateUrls } = Astro.props;
+---
+
+<div class="language-switcher" aria-label="Language selector">
+  <details class="language-menu">
+    <summary class="language-button">
+      <span class="language-dot" aria-hidden="true"></span>
+      <span class="language-label">{localeLabels[currentLocale] ?? currentLocale.toUpperCase()}</span>
+      <svg
+        class="chevron"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </summary>
+    <div class="language-list">
+      {alternateUrls.map(({ locale, href }) => (
+        <a
+          class={`language-option${locale === currentLocale ? ' is-active' : ''}`}
+          href={href}
+          aria-current={locale === currentLocale ? 'page' : undefined}
+        >
+          <span class="option-label">{localeLabels[locale] ?? locale.toUpperCase()}</span>
+          <span class="locale-code">{locale.toUpperCase()}</span>
+        </a>
+      ))}
+    </div>
+  </details>
+</div>
+
+<style>
+  .language-switcher {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 40;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .language-menu {
+    margin: 0;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .language-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    color: var(--color-primary, #0a4731);
+    font-weight: 600;
+    text-decoration: none;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+    list-style: none;
+  }
+
+  .language-menu[open] .language-button,
+  .language-button:focus-visible,
+  .language-button:hover {
+    border-color: var(--color-secondary, #2a8c6a);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    outline: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .language-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-secondary, #2a8c6a);
+    box-shadow: 0 0 0 4px rgba(42, 140, 106, 0.16);
+    display: inline-block;
+  }
+
+  .language-label {
+    white-space: nowrap;
+  }
+
+  .chevron {
+    margin-left: 4px;
+    color: currentColor;
+    transition: transform 180ms ease;
+  }
+
+  .language-menu[open] .chevron {
+    transform: rotate(180deg);
+  }
+
+  .language-list {
+    display: grid;
+    gap: 4px;
+    padding: 8px 8px 12px;
+    min-width: 220px;
+  }
+
+  .language-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: var(--color-dark-text, #333);
+    text-decoration: none;
+    background: transparent;
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+
+  .language-option:hover,
+  .language-option:focus-visible {
+    background: rgba(42, 140, 106, 0.08);
+    color: var(--color-primary, #0a4731);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .language-option.is-active {
+    background: rgba(10, 71, 49, 0.08);
+    color: var(--color-primary, #0a4731);
+    font-weight: 700;
+  }
+
+  .locale-code {
+    font-size: 0.85em;
+    color: rgba(0, 0, 0, 0.55);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 640px) {
+    .language-switcher {
+      top: auto;
+      right: 50%;
+      bottom: 16px;
+      transform: translateX(50%);
+      width: min(92vw, 340px);
+    }
+
+    .language-button {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .language-list {
+      min-width: 100%;
+    }
+  }
+</style>
