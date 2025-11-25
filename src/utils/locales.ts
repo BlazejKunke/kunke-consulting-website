@@ -1,6 +1,6 @@
 export const locales = [
   { code: 'pl', label: 'Polski', pathPrefix: '' },
-  { code: 'en', label: 'English', pathPrefix: '/en' },
+  { code: 'en', label: 'United States', pathPrefix: '/en' },
   { code: 'fr', label: 'Français', pathPrefix: '/fr' },
   { code: 'nl', label: 'Nederlands', pathPrefix: '/nl' },
   { code: 'uk', label: 'United Kingdom', pathPrefix: '/uk' },
@@ -18,7 +18,7 @@ export const localeLabels = locales.reduce(
 
 export const localeOgMap: Record<LocaleCode, string> = {
   pl: 'pl_PL',
-  en: 'en_GB',
+  en: 'en_US',
   fr: 'fr_FR',
   nl: 'nl_NL',
   uk: 'en_GB',
