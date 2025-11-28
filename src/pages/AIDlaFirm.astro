@@ -1,0 +1,525 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+---
+
+<BaseLayout
+  title="AI Dla Firm | Wdrożenia, audyty i narzędzia AI | ^Kunke Consulting"
+  description="Nowoczesne wdrożenia AI dla polskich firm. Trzy poziomy usług: Podstawy, Standard i Horyzont. Szkolenia, audyty prawne, polityki AI i automatyzacje tworzone przez zespół ^Kunke Consulting."
+  ogImage="/images/Kunke_Favicon.png"
+>
+  <style>
+    :global(body) {
+      background: var(--color-white);
+    }
+
+    .page-wrapper {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--color-dark-text);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      align-items: center;
+      padding: 100px 24px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.5rem, 4vw, 3.4rem);
+      line-height: 1.1;
+      color: var(--color-primary);
+      margin-bottom: 20px;
+    }
+
+    .hero-copy p {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin-bottom: 22px;
+      color: #2c3e50;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 26px;
+      font-weight: 600;
+      color: #0f3629;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: 14px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(10, 71, 49, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(10, 71, 49, 0.3);
+      background: color-mix(in srgb, var(--color-primary) 85%, #0f5a40);
+    }
+
+    .hero-image {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+    }
+
+    .hero-image::after {
+      content: '^KC';
+      position: absolute;
+      right: 18px;
+      bottom: 14px;
+      background: rgba(10, 71, 49, 0.85);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-image img {
+      width: 100%;
+      display: block;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .section {
+      padding: 80px 24px;
+    }
+
+    .section-narrow {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section h2 {
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      margin-bottom: 18px;
+      color: var(--color-primary);
+      text-align: center;
+    }
+
+    .section p.lead {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto 28px;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #2f3b42;
+    }
+
+    .three-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .pill {
+      background: var(--color-light-bg);
+      border-radius: 14px;
+      padding: 18px 20px;
+      border: 1px solid var(--color-border);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
+
+    .pill h3 {
+      margin: 0 0 8px;
+      color: var(--color-primary);
+      font-size: 1.15rem;
+    }
+
+    .pill p {
+      margin: 0;
+      line-height: 1.6;
+      color: #3a464c;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      margin-top: 36px;
+    }
+
+    .pricing-card {
+      background: #f8f8fa;
+      border-radius: 16px;
+      padding: 26px 24px;
+      border: 1px solid var(--color-border);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .pricing-card h3 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: var(--color-primary);
+    }
+
+    .price-tag {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #10271f;
+    }
+
+    .pricing-card p {
+      margin: 0;
+      line-height: 1.6;
+      color: #34434a;
+    }
+
+    .pricing-list {
+      padding-left: 18px;
+      margin: 0;
+      color: #2f3b42;
+      line-height: 1.55;
+    }
+
+    .pricing-list li + li {
+      margin-top: 6px;
+    }
+
+    .card-cta {
+      margin-top: 8px;
+      align-self: flex-start;
+      padding: 12px 18px;
+      font-size: 0.98rem;
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      box-shadow: 0 10px 24px rgba(10, 71, 49, 0.18);
+    }
+
+    .card-cta:hover {
+      transform: translateY(-2px);
+      background: color-mix(in srgb, var(--color-primary) 88%, #0f5a40);
+      box-shadow: 0 12px 26px rgba(10, 71, 49, 0.22);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+      margin-top: 40px;
+      align-items: start;
+    }
+
+    .profile-card {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .profile-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 14px;
+      border: 3px solid var(--color-light-bg);
+    }
+
+    .profile-card h3 {
+      margin: 0 0 6px;
+      color: var(--color-primary);
+    }
+
+    .profile-card p {
+      margin: 0;
+      color: #3a464c;
+      line-height: 1.6;
+    }
+
+    .contact-section {
+      background: #f8f8fa;
+      text-align: center;
+    }
+
+    .contact-section h2 {
+      margin-bottom: 12px;
+    }
+
+    .contact-section p {
+      margin-bottom: 18px;
+      color: #2f3b42;
+    }
+
+    footer {
+      background: #f8f8fa;
+      padding: 40px 0 0 0;
+      text-align: center;
+      width: 100%;
+    }
+
+    .footer-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .footer-section {
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section ul li {
+      margin: 0 0 8px 0;
+    }
+
+    .footer-section.social-media ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section.social-media ul li {
+      margin-bottom: 8px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+      padding: 20px 10px;
+      background: #ececf2;
+      font-size: 0.85em;
+      color: #555;
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        padding-top: 70px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 60px 18px 60px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-bottom {
+        font-size: 0.75em;
+        padding: 24px 12px;
+      }
+    }
+  </style>
+
+  <main class="page-wrapper">
+    <section class="hero">
+      <div class="hero-copy">
+        <h1>AI Dla Firm. Praktyczne wdrożenia, audyty i narzędzia AI, które działają.</h1>
+        <p>Pomagamy firmom w Polsce przejść od „słyszeliśmy o AI” do konkretnej, bezpiecznej i mierzalnej transformacji.</p>
+        <div class="hero-meta">
+          <span>Ponad 20 przeprowadzonych warsztatów i setki przeszkolonych pracowników w całej Polsce.</span>
+          <span>Średnia ocena warsztatów AI to 98%.</span>
+        </div>
+        <div class="hero-actions">
+          <a class="cta-btn" href="https://calendly.com/kunkeconsulting-info/30min" target="_blank" rel="noopener noreferrer">
+            Umów bezpłatną konsultację (30 minut)
+          </a>
+          <a class="cta-btn" href="#pricing" style="background: var(--color-secondary); box-shadow: 0 10px 30px rgba(73, 126, 98, 0.25);">
+            Zobacz ofertę
+          </a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="/images/Workshop2025.JPG" alt="Zespół Kunke Consulting" loading="lazy" />
+      </div>
+    </section>
+
+    <section class="section section-narrow" id="dlaczego">
+      <h2>Dlaczego to działa?</h2>
+      <p class="lead">
+        Firmy w Polsce mają realny problem: wszyscy mówią o AI, ale niewiele osób potrafi wprowadzić je do codziennej pracy.
+        Pracownicy próbują różnych narzędzi, ale brakuje polityki, audytu, bezpieczeństwa prawnego, procesów i gotowych automatyzacji.
+      </p>
+      <div class="three-columns">
+        <div class="pill">
+          <h3>Biznes i produktywność</h3>
+          <p><strong>Błażej</strong> pokazuje, jak AI podnosi produktywność zespołów i wspiera liderów w codziennych decyzjach.</p>
+        </div>
+        <div class="pill">
+          <h3>Prawo i bezpieczeństwo danych</h3>
+          <p><strong>Justyna</strong> dba o zgodność z GDPR i AI Act, projektując polityki AI oraz jasne zasady korzystania z narzędzi.</p>
+        </div>
+        <div class="pill">
+          <h3>Technologia i automatyzacje</h3>
+          <p><strong>Bartek</strong> projektuje narzędzia AI i automatyzacje, które natychmiast skracają czas realizacji procesów.</p>
+        </div>
+      </div>
+      <p class="lead" style="margin-top: 28px;">
+        Dzięki temu oferujemy wdrożenia AI z trzech stron jednocześnie: praktycznej, prawnej i technologicznej. To przewaga,
+        której nie zapewniają pojedyncze szkolenia.
+      </p>
+    </section>
+
+    <section class="section section-narrow" id="pricing">
+      <h2>Trzy poziomy usług</h2>
+      <p class="lead">Nowoczesne panele inspirowane stroną główną ^Kunke Consulting.</p>
+      <div class="pricing-grid">
+        <article class="pricing-card">
+          <h3>Podstawy</h3>
+          <span class="price-tag">od 6000 PLN + VAT</span>
+          <p>Dwudniowy, praktyczny warsztat AI w Twojej firmie.</p>
+          <ul class="pricing-list">
+            <li>Pracownicy wychodzą z inspiracją, podstawami i gotowymi narzędziami do codziennej pracy.</li>
+            <li>Wiedzą jak praktycznie korzystać z AI.</li>
+            <li>Najczęściej wybierana opcja dla firm rozpoczynających przygodę z AI.</li>
+          </ul>
+          <a class="card-cta" href="https://calendly.com/kunkeconsulting-info/30min" target="_blank" rel="noopener noreferrer">Umów konsultację</a>
+        </article>
+        <article class="pricing-card">
+          <h3>Standard</h3>
+          <span class="price-tag">od 11 000 PLN + VAT</span>
+          <p>Kompleksowa usługa dla firm, które chcą czegoś więcej niż jednorazowego szkolenia.</p>
+          <ul class="pricing-list">
+            <li>Audyt procesów w firmie</li>
+            <li>Warsztat AI</li>
+            <li>Audyt prawny (GDPR, AI Act, ryzyka prawne)</li>
+            <li>Stworzenie polityki AI dopasowanej do firmy</li>
+            <li>Odpowiedzi na pytania prawne i organizacyjne</li>
+            <li>Wdrożenie prostego narzędzia AI</li>
+            <li>Idealne dla firm, które chcą konkretów, bezpieczeństwa i widocznych efektów.</li>
+          </ul>
+          <a class="card-cta" href="https://calendly.com/kunkeconsulting-info/30min" target="_blank" rel="noopener noreferrer">Umów konsultację</a>
+        </article>
+        <article class="pricing-card">
+          <h3>Horyzont</h3>
+          <span class="price-tag">wycena indywidualna</span>
+          <p>Zaawansowany program transformacji AI, obejmujący wiele działów i długoterminową współpracę.</p>
+          <ul class="pricing-list">
+            <li>Seria warsztatów dla 20–100 osób</li>
+            <li>Polityki AI dopasowane do działów (HR, Sprzedaż, Księgowość, Produkcja)</li>
+            <li>Konsultacje prawne AI</li>
+            <li>Projektowanie złożonych narzędzi AI lub automatyzacji</li>
+            <li>Wsparcie wdrożeniowe i stałe doradztwo</li>
+            <li>Opcja dla firm, które chcą ambitnych wdrożeń i przewagi konkurencyjnej.</li>
+          </ul>
+          <a class="card-cta" href="https://calendly.com/kunkeconsulting-info/30min" target="_blank" rel="noopener noreferrer">Umów konsultację</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-narrow" id="onas">
+      <h2>O nas</h2>
+      <p class="lead">Trzy perspektywy, jedno wdrożenie.</p>
+      <div class="about-grid">
+        <div class="profile-card">
+          <img src="/images/BKunkeExp.jpg" alt="Błażej - trener i edukator AI" loading="lazy" />
+          <h3>Błażej</h3>
+          <p>Trener AI, praktyk, edukator. Po latach w korporacjach założył ^Kunke Consulting.</p>
+        </div>
+        <div class="profile-card">
+          <img src="/images/LinkedIn_Aug072025.jpeg" alt="Justyna - radczyni prawna specjalizująca się w GDPR i AI Act" loading="lazy" />
+          <h3>Justyna</h3>
+          <p>Radczyni prawna, specjalistka od GDPR i AI Act. Tworzy bezpieczne polityki AI.</p>
+        </div>
+        <div class="profile-card">
+          <img src="/images/BartoszRadacz.jpg" alt="Bartek - programista i twórca narzędzi AI" loading="lazy" />
+          <h3>Bartek</h3>
+          <p>Programista i twórca narzędzi AI. Buduje automatyzacje i rozwiązania szyte na miarę.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="section-narrow">
+        <h2>Porozmawiajmy o AI w Twojej firmie</h2>
+        <p>Dokładnie taki sam formularz jak na stronie głównej.</p>
+        <ContactForm />
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-wrapper">
+        <div class="footer-content">
+          <div class="footer-section contact-info-footer">
+            <h3>Contact</h3>
+            <p>^Kunke Consulting</p>
+            <p>
+              <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+            </p>
+            <p>
+              <a href="tel:+48722156925">m. +48 722 156 925</a>
+            </p>
+          </div>
+          <div class="footer-section legal-info">
+            <h3>^Kunke Consulting</h3>
+            <p><a href="/privacy-policy">Privacy Policy and Legal</a></p>
+            <p><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></p>
+          </div>
+          <div class="footer-section social-media">
+            <h3>Follow</h3>
+            <ul>
+              <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+              <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+              <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
+      </div>
+    </footer>
+  </main>
+</BaseLayout>
