@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Verify certificate | Kunke Consulting</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #fff; color: #111; }
+    .wrap { max-width: 760px; margin: 48px auto; padding: 0 18px; }
+    .card { border: 1px solid #e6e6e6; border-radius: 14px; padding: 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
+    h1 { font-size: 22px; margin: 0 0 8px; }
+    p { margin: 8px 0 0; line-height: 1.45; color: #333; }
+    .row { display: flex; gap: 10px; margin-top: 14px; }
+    input[type="text"] { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 10px; font-size: 14px; }
+    button { padding: 12px 14px; border: 1px solid #111; border-radius: 10px; background: #111; color: #fff; font-size: 14px; cursor: pointer; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .hint { font-size: 12px; color: #555; margin-top: 8px; }
+    .status { margin-top: 16px; padding: 14px; border-radius: 12px; border: 1px solid #e6e6e6; background: #fafafa; display: none; }
+    .badge { display: inline-block; padding: 5px 10px; border-radius: 999px; font-size: 12px; border: 1px solid #ddd; background: #fff; }
+    .kv { margin-top: 10px; display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; }
+    .k { color: #444; font-size: 13px; }
+    .v { color: #111; font-size: 13px; word-break: break-word; }
+    .loading { display: none; margin-top: 10px; font-size: 13px; color: #444; }
+    .footer { margin-top: 14px; font-size: 12px; color: #666; }
+    .ok { border-color: #b7e0c2; background: #f3fbf5; }
+    .bad { border-color: #f0c1c1; background: #fff6f6; }
+    .warn { border-color: #f1e0b7; background: #fffaf0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Verify certificate</h1>
+      <p>Paste your credential code to verify a certificate issued by Kunke Consulting.</p>
+
+      <div class="row">
+        <input id="codeInput" type="text" placeholder="Example: KC-TEST-7H2K9Q" autocomplete="off" />
+        <button id="verifyBtn">Verify</button>
+      </div>
+      <div class="hint">Tip: open this page with <code>?code=YOUR_CODE</code> to verify automatically.</div>
+
+      <div id="loading" class="loading">Verifying, please wait…</div>
+
+      <div id="statusBox" class="status">
+        <div><span id="badge" class="badge">Status</span></div>
+
+        <div class="kv">
+          <div class="k">Credential code</div><div class="v" id="outCode">-</div>
+          <div class="k">Course</div><div class="v" id="outCourse">-</div>
+          <div class="k">Issue date</div><div class="v" id="outIssue">-</div>
+          <div class="k">Expiration date</div><div class="v" id="outExpiry">-</div>
+          <div class="k">Message</div><div class="v" id="outMsg">-</div>
+        </div>
+
+        <div class="footer">
+          This verification checks a registry maintained by Kunke Consulting. If you believe this result is incorrect, contact us.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzJlxCllM5qdAMwYtZfnlBr28fDxHmFAt-YiDVqvPT5gaD1kFla-2Q_gTt26Y3Mf1V/exec";
+
+    const codeInput = document.getElementById("codeInput");
+    const verifyBtn = document.getElementById("verifyBtn");
+    const loadingEl = document.getElementById("loading");
+    const statusBox = document.getElementById("statusBox");
+
+    const badge = document.getElementById("badge");
+    const outCode = document.getElementById("outCode");
+    const outCourse = document.getElementById("outCourse");
+    const outIssue = document.getElementById("outIssue");
+    const outExpiry = document.getElementById("outExpiry");
+    const outMsg = document.getElementById("outMsg");
+
+    function escapeHtml(s) {
+      return String(s ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[c]));
+    }
+
+    function setLoading(isLoading) {
+      verifyBtn.disabled = isLoading;
+      loadingEl.style.display = isLoading ? "block" : "none";
+    }
+
+    function setStatusClass(kind) {
+      statusBox.classList.remove("ok", "bad", "warn");
+      if (kind) statusBox.classList.add(kind);
+    }
+
+    function renderResult(res) {
+      statusBox.style.display = "block";
+
+      const status = (res && res.status) ? String(res.status) : "unknown";
+      const ok = !!(res && res.ok);
+
+      outCode.innerHTML = escapeHtml(res.credential_code || "");
+      outCourse.innerHTML = escapeHtml(res.course_name || "");
+      outIssue.innerHTML = escapeHtml(res.issue_date || "");
+      outExpiry.innerHTML = escapeHtml(res.expiration_date || "");
+      outMsg.innerHTML = escapeHtml(res.message || "");
+
+      if (ok && status === "valid") { badge.textContent = "Valid"; setStatusClass("ok"); }
+      else if (status === "expired") { badge.textContent = "Expired"; setStatusClass("warn"); }
+      else if (status === "not_found") { badge.textContent = "Not found"; setStatusClass("bad"); }
+      else if (status === "missing_code") { badge.textContent = "Missing code"; setStatusClass("warn"); }
+      else { badge.textContent = "Invalid"; setStatusClass("bad"); }
+    }
+
+    function verifyCode(rawCode) {
+      const code = String(rawCode || "").trim();
+      if (!code) {
+        renderResult({ ok:false, status:"missing_code", message:"Provide a credential code to verify." });
+        return;
+      }
+
+      setLoading(true);
+
+      const cbName = "kc_cb_" + Math.random().toString(36).slice(2);
+      const timeoutMs = 10000;
+
+      let finished = false;
+      let timer = setTimeout(() => {
+        if (finished) return;
+        finished = true;
+        cleanup();
+        setLoading(false);
+        renderResult({ ok:false, status:"error", message:"Verification timed out. Please try again." });
+      }, timeoutMs);
+
+      function cleanup() {
+        try { delete window[cbName]; } catch (e) {}
+        const script = document.getElementById(cbName);
+        if (script && script.parentNode) script.parentNode.removeChild(script);
+        if (timer) clearTimeout(timer);
+      }
+
+      window[cbName] = (data) => {
+        if (finished) return;
+        finished = true;
+        cleanup();
+        setLoading(false);
+        renderResult(data || { ok:false, status:"error", message:"Empty response." });
+      };
+
+      const src = APPS_SCRIPT_URL + "?code=" + encodeURIComponent(code) + "&prefix=" + encodeURIComponent(cbName);
+
+      const script = document.createElement("script");
+      script.id = cbName;
+      script.src = src;
+      script.async = true;
+      script.onerror = () => {
+        if (finished) return;
+        finished = true;
+        cleanup();
+        setLoading(false);
+        renderResult({ ok:false, status:"error", message:"Network error while verifying. Please try again." });
+      };
+
+      document.body.appendChild(script);
+    }
+
+    verifyBtn.addEventListener("click", () => verifyCode(codeInput.value));
+    codeInput.addEventListener("keydown", (e) => { if (e.key === "Enter") verifyCode(codeInput.value); });
+
+    (function initFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      if (code) {
+        codeInput.value = code;
+        verifyCode(code);
+      }
+    })();
+  </script>
+</body>
+</html>
