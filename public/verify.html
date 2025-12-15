@@ -5,38 +5,346 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Verify certificate | Kunke Consulting</title>
   <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #fff; color: #111; }
-    .wrap { max-width: 760px; margin: 48px auto; padding: 0 18px; }
-    .card { border: 1px solid #e6e6e6; border-radius: 14px; padding: 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
-    h1 { font-size: 22px; margin: 0 0 8px; }
-    p { margin: 8px 0 0; line-height: 1.45; color: #333; }
-    .row { display: flex; gap: 10px; margin-top: 14px; }
-    input[type="text"] { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 10px; font-size: 14px; }
-    button { padding: 12px 14px; border: 1px solid #111; border-radius: 10px; background: #111; color: #fff; font-size: 14px; cursor: pointer; }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-    .hint { font-size: 12px; color: #555; margin-top: 8px; }
-    .status { margin-top: 16px; padding: 14px; border-radius: 12px; border: 1px solid #e6e6e6; background: #fafafa; display: none; }
-    .badge { display: inline-block; padding: 5px 10px; border-radius: 999px; font-size: 12px; border: 1px solid #ddd; background: #fff; }
-    .kv { margin-top: 10px; display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; }
-    .k { color: #444; font-size: 13px; }
-    .v { color: #111; font-size: 13px; word-break: break-word; }
-    .loading { display: none; margin-top: 10px; font-size: 13px; color: #444; }
-    .footer { margin-top: 14px; font-size: 12px; color: #666; }
-    .ok { border-color: #b7e0c2; background: #f3fbf5; }
-    .bad { border-color: #f0c1c1; background: #fff6f6; }
-    .warn { border-color: #f1e0b7; background: #fffaf0; }
+    :root {
+      --color-primary: #0a4731;
+      --color-secondary: #2a8c6a;
+      --color-accent-blue: #4a90e2;
+      --color-dark-text: #2c3e50;
+      --color-muted: #4a5568;
+      --color-light-bg: #f8f8fa;
+      --color-panel: #ffffff;
+      --color-border: #e4e7ec;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      --radius: 14px;
+      --page-max: 72rem;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: var(--color-light-bg);
+      color: var(--color-dark-text);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    .topbar {
+      width: min(92%, var(--page-max));
+      margin: 0 auto;
+      padding: 14px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--color-dark-text);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+    }
+
+    .caret {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--color-secondary), var(--color-accent-blue));
+      color: #fff;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(42, 140, 106, 0.25);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--color-dark-text);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    nav a:hover { background: #eef3f0; color: var(--color-primary); }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: none;
+      background-image: linear-gradient(45deg, #0a4731 0%, #187650 100%);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 12px 24px rgba(10, 71, 49, 0.22);
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.3s ease;
+    }
+
+    .cta-btn:hover { transform: translateY(-2px); background-image: linear-gradient(45deg, #d4af37 0%, #b8922d 100%); }
+
+    main { flex: 1; width: 100%; }
+
+    .hero {
+      width: min(92%, var(--page-max));
+      margin: 36px auto 18px;
+      background: #ffffff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 28px 24px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #eef3f0;
+      color: var(--color-primary);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      width: fit-content;
+      font-size: 0.9rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 38px);
+      color: var(--color-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .lead {
+      margin: 0;
+      max-width: 720px;
+      color: var(--color-muted);
+    }
+
+    .verify-card {
+      width: min(92%, var(--page-max));
+      margin: 12px auto 26px;
+      background: var(--color-panel);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    label { font-weight: 600; color: var(--color-dark-text); }
+
+    input[type="text"] {
+      flex: 1;
+      min-width: 240px;
+      padding: 14px 14px;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      font-size: 15px;
+      background: #fff;
+      color: var(--color-dark-text);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input[type="text"]:focus { border-color: var(--color-secondary); box-shadow: 0 0 0 4px rgba(42, 140, 106, 0.16); }
+
+    .hint { font-size: 13px; color: var(--color-muted); margin-top: -4px; }
+
+    button.verify-btn {
+      padding: 14px 18px;
+      border-radius: 12px;
+      background-image: linear-gradient(45deg, #0a4731 0%, #187650 100%);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 12px 26px rgba(10, 71, 49, 0.2);
+      transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.25s ease;
+    }
+
+    button.verify-btn:hover { transform: translateY(-1px); background-image: linear-gradient(45deg, #d4af37 0%, #b8922d 100%); }
+    button.verify-btn:active { transform: translateY(0); }
+    button.verify-btn:disabled { opacity: 0.65; cursor: not-allowed; }
+
+    .status {
+      margin-top: 4px;
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      background: #f4f7f9;
+      display: none;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid #d6e3db;
+      background: #eef3f0;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--color-primary);
+    }
+
+    .kv {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 8px 14px;
+    }
+
+    .k { color: var(--color-muted); font-size: 14px; }
+    .v { color: var(--color-dark-text); font-size: 14px; word-break: break-word; }
+
+    .loading { display: none; font-size: 14px; color: var(--color-muted); }
+
+    .footer-text { margin-top: 14px; font-size: 12px; color: var(--color-muted); }
+
+    .ok { border-color: rgba(16, 185, 129, 0.35); background: #ecf7f2; }
+    .bad { border-color: rgba(248, 113, 113, 0.35); background: #fdf1f1; }
+    .warn { border-color: rgba(234, 179, 8, 0.35); background: #fdf6e3; }
+
+    .about {
+      width: min(92%, var(--page-max));
+      margin: 0 auto 34px;
+      background: #ffffff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px 22px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .about h2 { margin: 0; font-size: 20px; color: var(--color-primary); letter-spacing: -0.01em; }
+    .about p { margin: 0; color: var(--color-muted); }
+
+    footer {
+      background: #f8f8fa;
+      padding: 40px 0 0 0;
+      text-align: center;
+      width: 100%;
+      border-top: 1px solid var(--color-border);
+      color: var(--color-dark-text);
+    }
+
+    .footer-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; }
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .footer-section { min-width: 200px; text-align: center; }
+    .footer-section h3 { margin-top: 0; margin-bottom: 12px; color: var(--color-primary); }
+    .footer-section ul { list-style: none; padding: 0; margin: 0; }
+    .footer-section ul li { margin: 0 0 8px 0; }
+
+    .footer-section.social-media ul { display: flex; flex-direction: column; align-items: center; padding: 0; margin: 0; }
+    .footer-section.social-media ul li { margin-bottom: 8px; width: 100%; text-align: center; }
+
+    .footer-bottom {
+      margin-top: 30px;
+      padding: 20px 10px;
+      background: #ececf2;
+      font-size: 0.9rem;
+      color: #555;
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    a { color: var(--color-primary); }
+
+    @media (max-width: 720px) {
+      .topbar { justify-content: center; }
+      nav { width: 100%; justify-content: center; }
+      .kv { grid-template-columns: 1fr; }
+      .hero, .verify-card, .about { padding: 18px; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <h1>Verify certificate</h1>
-      <p>Paste your credential code to verify a certificate issued by Kunke Consulting.</p>
+  <header>
+    <div class="topbar">
+      <a href="/" class="brand">
+        <span class="caret">^</span>
+        <span>Kunke Consulting</span>
+      </a>
+      <nav>
+        <a href="/">AI for companies</a>
+        <a href="/konsulting-ai">Consulting</a>
+        <a href="/szkolenia-ai">Trainings</a>
+        <a href="/blog">Blog</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="cta-btn" href="/">AI for firms</a>
+    </div>
+  </header>
 
+  <main>
+    <section class="hero">
+      <span class="eyebrow">Certificate verification</span>
+      <h1>Check a Kunke Consulting certificate</h1>
+      <p class="lead">Paste your credential code to confirm an official certificate issued by ^Kunke Consulting. We check your entry against our internal training registry to make sure everything matches.</p>
+    </section>
+
+    <section class="verify-card">
+      <label for="codeInput">Credential code</label>
       <div class="row">
         <input id="codeInput" type="text" placeholder="Example: KC-TEST-7H2K9Q" autocomplete="off" />
-        <button id="verifyBtn">Verify</button>
+        <button class="verify-btn" id="verifyBtn">Verify</button>
       </div>
       <div class="hint">Tip: open this page with <code>?code=YOUR_CODE</code> to verify automatically.</div>
 
@@ -53,12 +361,49 @@
           <div class="k">Message</div><div class="v" id="outMsg">-</div>
         </div>
 
-        <div class="footer">
+        <div class="footer-text">
           This verification checks a registry maintained by Kunke Consulting. If you believe this result is incorrect, contact us.
         </div>
       </div>
+    </section>
+
+    <section class="about">
+      <h2>What is ^Kunke Consulting?</h2>
+      <p>^Kunke Consulting blends practical AI implementation with automation expertise and hands-on training. We help teams deliver trustworthy, human-centered technology through clear workshops, secure deployments, and measurable results from day one.</p>
+      <div class="row" style="margin-top: 6px;">
+        <a href="/" class="cta-btn" style="text-decoration: none;">Find out more about "^Kunke Consulting"</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="footer-wrapper">
+      <div class="footer-content">
+        <div class="footer-section contact-info-footer">
+          <h3>Contact</h3>
+          <p>^Kunke Consulting</p>
+          <p><a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a></p>
+          <p><a href="tel:+48722156925">m. +48 722 156 925</a></p>
+        </div>
+        <div class="footer-section legal-info">
+          <h3>^Kunke Consulting</h3>
+          <p><a href="/privacy-policy">Privacy Policy and Legal</a></p>
+          <p><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></p>
+        </div>
+        <div class="footer-section social-media">
+          <h3>Follow</h3>
+          <ul>
+            <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
+    <div class="footer-bottom">
+      <p>© 2025 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
+    </div>
+  </footer>
 
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzJlxCllM5qdAMwYtZfnlBr28fDxHmFAt-YiDVqvPT5gaD1kFla-2Q_gTt26Y3Mf1V/exec";
