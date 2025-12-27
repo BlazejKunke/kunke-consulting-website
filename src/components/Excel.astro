@@ -59,7 +59,10 @@ const packages = [
     {packages.map(pkg => (
       <article class={`card ${pkg.id}`}>
         {pkg.badge && <span class="badge">{pkg.badge}</span>}
-        <img src={pkg.id === 'hello' ? '/images/Hello.png' : pkg.id === 'level-up' ? '/images/LevelUp.png' : `/images/${pkg.id}.png`} width="80" height="80" alt={`${pkg.title} Excel training icon`} class="icon" loading="lazy" decoding="async"/>
+        <picture class="icon-picture">
+          <source srcset={pkg.id === 'hello' ? '/images/Hello.webp' : pkg.id === 'level-up' ? '/images/LevelUp.webp' : `/images/${pkg.id}.webp`} type="image/webp" />
+          <img src={pkg.id === 'hello' ? '/images/Hello.png' : pkg.id === 'level-up' ? '/images/LevelUp.png' : `/images/${pkg.id}.png`} width="80" height="80" alt={`${pkg.title} Excel training icon`} class="icon" loading="lazy" decoding="async"/>
+        </picture>
         <h3>{pkg.title}</h3>
         <p class="tagline">{pkg.tagline}</p>
 
@@ -89,7 +92,8 @@ const packages = [
     position:relative; box-shadow:0 4px 12px rgba(0,0,0,.06);
     display:flex; flex-direction:column; align-items:center;
   }
-  .icon { width:64px; height:64px; margin-bottom:16px; }
+  .icon-picture { display:block; margin-bottom:16px; }
+  .icon { width:64px; height:64px; }
   h3 { margin:8px 0 4px; }
   .tagline { font-size:.95rem; color:#555; margin-bottom:16px; }
   ul { text-align:left; padding-left:18px; margin:0 0 24px; }
