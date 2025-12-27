@@ -1,0 +1,14 @@
+# Robots.txt for kunkeconsulting.pl
+# AI Workshops & Consulting for Businesses in Poland and Europe
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://kunkeconsulting.pl/sitemap-index.xml
+
+# Disallow thank you and internal pages
+Disallow: /thank-you
+
+# Crawl-delay for responsible crawling
+Crawl-delay: 1

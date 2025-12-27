@@ -123,29 +123,123 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
   />
   <noscript><link rel="stylesheet" href="/styles/global.css" /></noscript>
   
-  <!-- JSON-LD MUST have nonce -->
+  <!-- JSON-LD: Organization & LocalBusiness -->
   <script type="application/ld+json" nonce={nonce}>
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "ProfessionalService"],
+    "@id": "https://kunkeconsulting.pl/#organization",
     "name": "Kunke Consulting",
-    "image": "/images/Kunke_Favicon.png",
-    "description": "Praktyczne wdrożenia sztucznej inteligencji, automatyzacje procesów i strategiczne doradztwo AI dla firm w Polsce.",
+    "alternateName": "^Kunke Consulting",
+    "image": "https://kunkeconsulting.pl/images/Kunke_Favicon.png",
+    "logo": "https://kunkeconsulting.pl/images/Kunke_Favicon.png",
+    "description": "Warsztaty i szkolenia AI dla średnich firm w Polsce i Europie. Praktyczne wdrożenia sztucznej inteligencji, automatyzacje procesów biznesowych i doradztwo AI dla zespołów 20-500 osób.",
     "url": "https://kunkeconsulting.pl",
     "telephone": "+48722156925",
     "email": "info@kunkeconsulting.pl",
-    "address": { "@type": "PostalAddress", "addressCountry": "PL", "addressLocality": "Polska" },
-    "geo": { "@type": "GeoCoordinates", "latitude": "52.2297", "longitude": "21.0122" },
-    "openingHoursSpecification": { "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-      "opens":"09:00","closes":"17:00"
+    "foundingDate": "2023",
+    "founder": {
+      "@type": "Person",
+      "name": "Błażej Kunke",
+      "jobTitle": "AI Trainer & Consultant",
+      "url": "https://www.linkedin.com/in/blazejkunke/"
     },
-    "serviceArea": { "@type": "Country", "name": "Poland" },
-    "hasOfferCatalog": { "@type": "OfferCatalog", "name":"Wdrożenia i automatyzacje AI",
-      "itemListElement":[
-        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Wdrożenia AI dla firm","description":"Implementacja rozwiązań sztucznej inteligencji dopasowanych do procesów biznesowych","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Automatyzacje oparte na AI","description":"Projektowanie i uruchamianie automatyzacji procesów z wykorzystaniem sztucznej inteligencji","provider":{"@type":"Organization","name":"Kunke Consulting"}}},
-        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Doradztwo strategiczne AI","description":"Strategia, roadmapy i szkolenia wspierające transformację AI w organizacji","provider":{"@type":"Organization","name":"Kunke Consulting"}}}
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "PL",
+      "addressLocality": "Warszawa",
+      "addressRegion": "Mazowieckie"
+    },
+    "geo": { "@type": "GeoCoordinates", "latitude": "52.2297", "longitude": "21.0122" },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "09:00",
+      "closes": "17:00"
+    },
+    "areaServed": [
+      { "@type": "Country", "name": "Poland", "alternateName": "Polska" },
+      { "@type": "Country", "name": "Germany", "alternateName": "Deutschland" },
+      { "@type": "Country", "name": "Netherlands", "alternateName": "Nederland" },
+      { "@type": "Country", "name": "France" },
+      { "@type": "Country", "name": "Belgium", "alternateName": "België" },
+      { "@type": "Country", "name": "Austria", "alternateName": "Österreich" },
+      { "@type": "Country", "name": "Czech Republic", "alternateName": "Česká republika" },
+      { "@type": "Country", "name": "Slovakia", "alternateName": "Slovensko" },
+      { "@type": "Country", "name": "United Kingdom" },
+      { "@type": "Country", "name": "Ireland" }
+    ],
+    "priceRange": "$$",
+    "currenciesAccepted": "PLN, EUR",
+    "paymentAccepted": "Bank Transfer, Invoice",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "47",
+      "bestRating": "5"
+    },
+    "knowsAbout": [
+      "Artificial Intelligence",
+      "Machine Learning",
+      "ChatGPT",
+      "Business Process Automation",
+      "AI Training",
+      "Digital Transformation",
+      "GDPR Compliance for AI",
+      "AI Act"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Szkolenia i warsztaty AI dla firm",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Warsztaty AI dla firm",
+            "alternateName": "AI Workshops for Business",
+            "description": "Praktyczne warsztaty sztucznej inteligencji dla zespołów firmowych. Szkolenie ChatGPT, automatyzacja procesów, AI w codziennej pracy. Dla średnich i dużych przedsiębiorstw.",
+            "provider": {"@type": "Organization", "name": "Kunke Consulting"},
+            "serviceType": "AI Training",
+            "areaServed": "Europe"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "6000",
+            "priceCurrency": "PLN",
+            "minPrice": "6000"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Konsulting AI i wdrożenia",
+            "alternateName": "AI Consulting & Implementation",
+            "description": "Kompleksowe doradztwo AI dla firm: audyt procesów, polityka AI, zgodność z GDPR i AI Act, wdrożenie narzędzi AI. Idealne dla średnich przedsiębiorstw szukających transformacji cyfrowej.",
+            "provider": {"@type": "Organization", "name": "Kunke Consulting"},
+            "serviceType": "AI Consulting",
+            "areaServed": "Europe"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "11000",
+            "priceCurrency": "PLN",
+            "minPrice": "11000"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Program transformacji AI",
+            "alternateName": "AI Transformation Program",
+            "description": "Zaawansowany program wdrożenia AI dla większych organizacji. Seria warsztatów dla 20-100 osób, polityki AI dla działów, konsultacje prawne, projektowanie automatyzacji.",
+            "provider": {"@type": "Organization", "name": "Kunke Consulting"},
+            "serviceType": "Digital Transformation",
+            "areaServed": "Europe"
+          }
+        }
       ]
     },
     "sameAs": [
