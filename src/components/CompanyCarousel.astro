@@ -1,0 +1,186 @@
+---
+const { title = 'I worked with' } = Astro.props;
+
+const companies = [
+  {
+    name: 'PragmatIQ',
+    href: 'https://pragmatiq.pl/',
+    logo: '/images/companies/pragmatiq.svg',
+  },
+  {
+    name: 'SAR Stowarzyszenie Komunikacji Marketingowej',
+    href: 'https://www.sar.org.pl/o-nas',
+    logo: '/images/companies/sar.svg',
+  },
+  {
+    name: 'pdo pałucka drukarnia opakowań',
+    href: 'https://pdo.com.pl/',
+    logo: '/images/companies/pdo.svg',
+  },
+  {
+    name: 'Kancelaria PragmatIQ',
+    href: 'https://pragmatiq.pl/en',
+    logo: '/images/companies/pragmatiq-legal.svg',
+  },
+  {
+    name: 'Barbara Luijckx',
+    href: 'https://www.barbara-luijckx.pl/',
+    logo: '/images/companies/barbara-luijckx.svg',
+  },
+  {
+    name: 'AIESEC Alumni Poland',
+    href: 'https://aiesec-alumni-poland.org/',
+    logo: '/images/companies/aiesec-alumni-poland.svg',
+  },
+  {
+    name: 'Fundusz Talenty',
+    href: 'https://fundusz-talenty.pl/',
+    logo: '/images/companies/fundusz-talenty.svg',
+  },
+  {
+    name: 'Kunke Poligrafia',
+    href: 'http://kunke.pl/',
+    logo: '/images/companies/kunke-poligrafia.svg',
+  },
+  {
+    name: 'SGB Leasing',
+    href: 'https://www.sgbleasing.pl/',
+    logo: '/images/companies/sgb-leasing.svg',
+  },
+  {
+    name: 'API Architekci i Urbaniści',
+    href: 'https://apispzoo.pl/architektura/',
+    logo: '/images/companies/api-architekci.svg',
+  },
+];
+
+const ariaLabel = `${title} - logo carousel`;
+---
+
+<section class="company-carousel" aria-label={ariaLabel}>
+  <div class="company-carousel__inner">
+    <h2>{title}</h2>
+    <div class="company-carousel__viewport">
+      <div class="company-carousel__track">
+        <ul class="company-carousel__list">
+          {companies.map((company) => (
+            <li>
+              <a href={company.href} target="_blank" rel="noopener noreferrer">
+                <img src={company.logo} alt={company.name} loading="lazy" />
+              </a>
+            </li>
+          ))}
+        </ul>
+        <ul class="company-carousel__list" aria-hidden="true">
+          {companies.map((company) => (
+            <li>
+              <a href={company.href} tabIndex="-1">
+                <img src={company.logo} alt="" aria-hidden="true" loading="lazy" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .company-carousel {
+    padding: 70px 20px;
+    background: #ffffff;
+  }
+
+  .company-carousel__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .company-carousel h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: #1f2d3d;
+  }
+
+  .company-carousel__viewport {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .company-carousel__track {
+    display: flex;
+    gap: 32px;
+    width: max-content;
+    animation: logo-scroll 40s linear infinite;
+  }
+
+  .company-carousel__list {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .company-carousel__list li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+  }
+
+  .company-carousel__list a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .company-carousel__list a:focus-visible,
+  .company-carousel__list a:hover {
+    transform: translateY(-2px);
+    opacity: 0.85;
+  }
+
+  .company-carousel__list img {
+    height: 54px;
+    width: auto;
+    display: block;
+    filter: grayscale(0.05);
+  }
+
+  @keyframes logo-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .company-carousel {
+      padding: 50px 16px;
+    }
+
+    .company-carousel h2 {
+      font-size: 1.6rem;
+    }
+
+    .company-carousel__track,
+    .company-carousel__list {
+      gap: 20px;
+    }
+
+    .company-carousel__list img {
+      height: 44px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .company-carousel__track {
+      animation: none;
+    }
+  }
+</style>
