@@ -113,6 +113,7 @@ const ariaLabel = `${title} - logo carousel`;
     gap: 32px;
     width: max-content;
     animation: logo-scroll 40s linear infinite;
+    will-change: transform;
   }
 
   .company-carousel__list {
@@ -173,8 +174,12 @@ const ariaLabel = `${title} - logo carousel`;
       gap: 20px;
     }
 
+    .company-carousel__track {
+      animation-duration: 24s;
+    }
+
     .company-carousel__list img {
-      height: 44px;
+      height: 60px;
     }
   }
 
