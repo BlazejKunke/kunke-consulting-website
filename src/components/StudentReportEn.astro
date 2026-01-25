@@ -1,37 +1,66 @@
 ---
 ---
 <section class="student-report">
-  <div class="tags">
-    <span>ChatGPT</span>
-    <span>Gemini</span>
-    <span>Notebook LM</span>
-    <span>LM Studio</span>
-    <span>Perplexity</span>
-    <span>STORM</span>
-    <span>Nano Banana</span>
-    <span>SORA</span>
-    <span>CODEX</span>
+  <div class="report-preview" aria-hidden="true">
+    <div class="report-cover">
+      <span class="cover-label">PDF • 13 pages</span>
+      <strong>Case study</strong>
+      <span>AI at PragmatIQ (2025)</span>
+    </div>
+    <div class="metrics">
+      <div class="metric-card">
+        <p>6 months of rollouts</p>
+      </div>
+      <div class="metric-card">
+        <p>11 people on the team</p>
+      </div>
+      <div class="metric-card">
+        <p>8 projects</p>
+      </div>
+      <div class="metric-card">
+        <p>7 launches</p>
+      </div>
+    </div>
   </div>
   <div class="content">
-    <h2>Latest AI tools</h2>
-    <p>Discover what artificial intelligence can do and choose the solutions that fit your learning.</p>
-    <a href="/Sztuczna%20Inteligencja%20dla%20ucznia%20i%20studenta%202025%20KC.pdf"
-       class="pdf-download-btn"
-       download>
-      <span class="pdf-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <polyline points="14 2 14 8 20 8"></polyline>
-        </svg>
-      </span>
-      Download the free PDF
-      <span class="download-icon">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <polyline points="7 10 12 15 17 10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
-      </span>
-    </a>
+    <h2>AI implementation example: PragmatIQ law firm in Poznań</h2>
+    <p>Half a year of rollouts: 8 projects, 11 people. Lessons from what worked and what we abandoned.</p>
+    <ul>
+      <li>Department-by-department use cases: finance, accounting, administration, marketing, specialist teams</li>
+      <li>What reached production and what stayed in pilot</li>
+      <li>Risks and lessons: data, habits, time, reputation</li>
+      <li>Recommendations: knowledge base, experimentation culture, ROI monitoring</li>
+    </ul>
+    <div class="cta-group">
+      <a
+        href="/Kunke%20Consulting%20Use%20Case%20AI%20in%20a%20Law%20Firm%20English%20Translation%202025.pdf"
+        class="pdf-download-btn"
+        download
+        data-event="download_pragmatiq_report"
+      >
+        <span class="pdf-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+        </span>
+        Download PDF
+        <span class="download-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </span>
+      </a>
+      <a
+        href="https://pragmatiq.pl/aktualnosci/wydalismy-raport-ai-w-pragmatiq"
+        class="cta-secondary"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Client perspective
+      </a>
+    </div>
   </div>
 </section>
 
@@ -45,19 +74,58 @@
     justify-items: center;
     background: #f8f8fa;
   }
-  .tags {
+  .report-preview {
+    width: 100%;
+    max-width: 420px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
+    flex-direction: column;
+    gap: 1.5rem;
   }
-  .tags span {
+  .report-cover {
+    background: white;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 12px 30px rgba(17, 28, 68, 0.08);
+    border: 1px solid #e4e9f0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+  }
+  .report-cover strong {
+    font-size: 1.3rem;
+    color: #1a1f36;
+  }
+  .report-cover span {
+    color: #50627a;
+    font-weight: 600;
+  }
+  .cover-label {
+    align-self: flex-start;
     background: #e6f8f2;
     color: #187650;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.85rem;
     font-weight: 600;
+  }
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .metric-card {
+    background: white;
+    border-radius: 12px;
+    padding: 12px 14px;
+    border: 1px solid #e4e9f0;
+    box-shadow: 0 8px 20px rgba(17, 28, 68, 0.06);
+  }
+  .metric-card p {
+    margin: 0;
+    color: #1a1f36;
+    font-weight: 600;
+    font-size: 0.95rem;
   }
   .content h2 {
     margin-bottom: 0.5rem;
@@ -65,6 +133,13 @@
   .content p {
     margin-bottom: 1.25rem;
     color: #555;
+  }
+  .content ul {
+    margin: 0 0 1.5rem 1.2rem;
+    color: #3d4b5c;
+  }
+  .content li {
+    margin-bottom: 0.65rem;
   }
   .pdf-download-btn {
     display: inline-flex;
@@ -80,7 +155,6 @@
     box-shadow: 0 4px 12px rgba(11, 107, 72, 0.3);
     transition: all 0.3s ease;
     width: fit-content;
-    margin: 0 auto;
     white-space: nowrap;
   }
   .pdf-download-btn:hover {
@@ -100,10 +174,40 @@
   .pdf-download-btn:hover .download-icon {
     opacity: 1;
   }
+  .cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+  .cta-secondary {
+    color: #187650;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px 4px;
+  }
+  .cta-secondary:hover {
+    text-decoration: underline;
+  }
   @media (max-width: 768px) {
     .student-report {
       grid-template-columns: 1fr;
       text-align: center;
+    }
+    .report-preview {
+      align-items: center;
+    }
+    .report-cover {
+      text-align: center;
+    }
+    .cover-label {
+      align-self: center;
+    }
+    .content ul {
+      text-align: left;
+    }
+    .cta-group {
+      justify-content: center;
     }
   }
 </style>
