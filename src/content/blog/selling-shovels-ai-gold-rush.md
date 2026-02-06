@@ -4,6 +4,7 @@ description: "Why implementation expertise, not technology, is what SMEs actuall
 date: 2026-02-06
 author: "Blazej Kunke"
 tags: ["AI consulting", "SME", "AI implementation", "business strategy", "Claude Opus 4.6", "Chat GPT 5.2", "CODEX"]
+heroImage: "/images/GoldRush_Me.jpg"
 ---
 
 # Selling Shovels in the AI Gold Rush
