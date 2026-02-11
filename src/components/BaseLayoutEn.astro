@@ -74,37 +74,25 @@ const ogLocale = localeOgMap[currentLocale] ?? 'en_GB';
   <!-- Load fonts WITHOUT inline onload handler -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
 
-  <!-- Google Tag Manager (init dataLayer before loader for Consent Mode etc.) -->
+  <!-- Google Tag Manager -->
   <script nonce={nonce}>
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      'gtm.start': new Date().getTime(),
-      event: 'gtm.js'
-    });
-    (function(){
-      function getCookie(name) {
-        const match = document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));
-        return match ? match[2] : null;
-      }
-      const consent = getCookie('cookie_consent') === 'granted' ? 'granted' : 'denied';
-      window.dataLayer.push({
-        event: 'default_consent_set',
-        consent: {
-          ad_storage: consent,
-          analytics_storage: consent,
-          wait_for_update: 500
-        }
-      });
-    })();
-  </script>
-  <script nonce={nonce}>
-    (function(w,d,s,l,i){
-      var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true; j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-      f.parentNode.insertBefore(j,f);
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-MWRKLP2S');
   </script>
-  <!-- End GTM -->
+  <!-- End Google Tag Manager -->
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J1G4R6VQKW"></script>
+  <script nonce={nonce}>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-J1G4R6VQKW');
+  </script>
 
   <!-- Critical CSS (nonce ok) -->
   <style nonce={nonce}>
