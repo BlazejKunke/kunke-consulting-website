@@ -48,5 +48,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/ai-excel/:match*",
+      "destination": "/szkolenia-ai",
+      "permanent": true
+    }
   ]
 }
