@@ -23,6 +23,12 @@ export default defineConfig({
       filter: (page) => !page.includes('/thank-you')
     })
   ],
+  redirects: {
+    '/ai-excel': {
+      status: 301,
+      destination: '/szkolenia-ai'
+    },
+  },
   security: {
     checkOrigin: true
   },
