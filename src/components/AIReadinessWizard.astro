@@ -12,10 +12,10 @@ const questionBlocks = [
 
 <section class="readiness-wrap" aria-labelledby="readiness-title">
   <div class="header-block">
-    <p class="eyebrow">AI Readiness Pyramid</p>
+    <p class="eyebrow">Ocena gotowości firmy do pracy z AI</p>
     <h1 id="readiness-title">Sprawdź gotowość AI swojej firmy w 5 minut</h1>
     <p class="intro">
-      Krótka diagnoza oparta na frameworku Kunke Consulting. Otrzymasz wynik 0–100, poziom dojrzałości
+      Krótka diagnoza oparta na metodzie Kunke Consulting. Otrzymasz wynik 0–100, poziom dojrzałości
       oraz 3 konkretne działania na najbliższe 30 dni.
     </p>
     <p class="meta">~4–5 minut · 10 pytań · bez rejestracji</p>
@@ -65,10 +65,10 @@ const questionBlocks = [
         <legend>Twoja samoocena (kontrola pewności)</legend>
         <p>Jak oceniasz aktualny poziom dojrzałości AI Twojej firmy?</p>
         <div class="options" role="radiogroup" aria-label="Samoocena poziomu">
-          <label class="option-row"><input type="radio" name="self-level" value="1" /><span>Poziom 1 — Accidental Users</span></label>
-          <label class="option-row"><input type="radio" name="self-level" value="2" /><span>Poziom 2 — Basic Users</span></label>
-          <label class="option-row"><input type="radio" name="self-level" value="3" /><span>Poziom 3 — Advanced Layer</span></label>
-          <label class="option-row"><input type="radio" name="self-level" value="4" /><span>Poziom 4 — AI Leaders</span></label>
+          <label class="option-row"><input type="radio" name="self-level" value="1" /><span>Poziom 1 — Początki</span></label>
+          <label class="option-row"><input type="radio" name="self-level" value="2" /><span>Poziom 2 — Pierwsze nawyki</span></label>
+          <label class="option-row"><input type="radio" name="self-level" value="3" /><span>Poziom 3 — Uporządkowane działania</span></label>
+          <label class="option-row"><input type="radio" name="self-level" value="4" /><span>Poziom 4 — Świadome przywództwo</span></label>
         </div>
       </fieldset>
 
@@ -81,9 +81,9 @@ const questionBlocks = [
         </div>
 
         <div class="axis-grid">
-          <div><strong>Hands (X):</strong> <span id="axis-x">0</span>/100</div>
-          <div><strong>Head (Y):</strong> <span id="axis-y">0</span>/100</div>
-          <div><strong>Voice (Z):</strong> <span id="axis-z">0</span>/100</div>
+          <div><strong>Działanie (X):</strong> <span id="axis-x">0</span>/100</div>
+          <div><strong>Myślenie (Y):</strong> <span id="axis-y">0</span>/100</div>
+          <div><strong>Współpraca (Z):</strong> <span id="axis-z">0</span>/100</div>
         </div>
 
         <p id="confidence-note" class="confidence-note" hidden>
@@ -287,10 +287,10 @@ const questionBlocks = [
 
   function profileLabel(profile) {
     const labels = {
-      '3A': 'Profil zbliżony do 3A (Power User)',
-      '3B': 'Profil zbliżony do 3B (Advocate)',
-      '4A': 'Profil zbliżony do 4A (Technical Architect)',
-      '4B': 'Profil zbliżony do 4B (Strategic Visionary)',
+      '3A': 'Profil 3A — mocna codzienna praktyka',
+      '3B': 'Profil 3B — mocne dzielenie się wiedzą',
+      '4A': 'Profil 4A — mocne uporządkowanie działań',
+      '4B': 'Profil 4B — mocne myślenie długoterminowe',
       Balanced: 'Profil zbalansowany'
     };
 
@@ -316,9 +316,9 @@ const questionBlocks = [
     confidenceNote.hidden = !result.confidenceAdjusted;
 
     const summaryText = [
-      `AI Readiness Score: ${result.overall}/100`,
+      `Wynik gotowości AI: ${result.overall}/100`,
       `Poziom: ${level.levelName}`,
-      `Hands/Head/Voice: ${result.axisX}/${result.axisY}/${result.axisZ}`,
+      `Działanie/Myślenie/Współpraca: ${result.axisX}/${result.axisY}/${result.axisZ}`,
       `Profil: ${profileLabel(result.profile)}`,
       'Top 3 kroki:',
       ...level.nextSteps.map((item, index) => `${index + 1}. ${item}`)

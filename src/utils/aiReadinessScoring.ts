@@ -56,13 +56,13 @@ export const readinessQuestions: QuestionDefinition[] = [
   },
   {
     id: 'q3_prompting',
-    text: 'Jak wygląda tworzenie promptów?',
+    text: 'Jak wygląda pisanie poleceń dla AI?',
     options: [
       { label: 'Jedno krótkie polecenie bez kontekstu', value: 0 },
-      { label: 'Prosty prompt + czasem doprecyzowanie', value: 1 },
+      { label: 'Proste polecenie + czasem doprecyzowanie', value: 1 },
       { label: 'Dodajemy kontekst i oczekiwany format', value: 2 },
-      { label: 'Iterujemy 2–4 razy i używamy szablonów', value: 3 },
-      { label: 'Stosujemy zaawansowane techniki i biblioteki promptów', value: 4 }
+      { label: 'Poprawiamy polecenie 2–4 razy i używamy gotowych wzorów', value: 3 },
+      { label: 'Mamy dopracowane sposoby pisania poleceń i własną bazę sprawdzonych wzorów', value: 4 }
     ],
     axes: { x: 1 }
   },
@@ -80,13 +80,13 @@ export const readinessQuestions: QuestionDefinition[] = [
   },
   {
     id: 'q5_integration',
-    text: 'Jak mocno AI jest zintegrowane z codziennym workflow?',
+    text: 'Jak mocno AI jest włączone w codzienny sposób pracy?',
     options: [
       { label: 'To osobne narzędzie „od czasu do czasu”', value: 0 },
       { label: 'Często kopiuj-wklej między aplikacjami', value: 1 },
-      { label: 'Mamy kilka stałych use-case’ów', value: 2 },
+      { label: 'Mamy kilka stałych zastosowań', value: 2 },
       { label: 'AI wspiera kluczowe etapy procesów', value: 3 },
-      { label: 'Workflow jest zaprojektowany z AI od podstaw', value: 4 }
+      { label: 'Sposób pracy został od początku ułożony z udziałem AI', value: 4 }
     ],
     axes: { x: 1, y: 1 }
   },
@@ -96,9 +96,9 @@ export const readinessQuestions: QuestionDefinition[] = [
     options: [
       { label: 'Wyłącznie ustawienia domyślne', value: 0 },
       { label: 'Kilka narzędzi, bez konfiguracji', value: 1 },
-      { label: 'Podstawowe custom instrukcje lub pliki', value: 2 },
+      { label: 'Podstawowe własne instrukcje lub pliki', value: 2 },
       { label: 'Dobór modeli pod zadanie, własne szablony', value: 3 },
-      { label: 'Integracje/API/automatyzacje + zarządzanie kosztami', value: 4 }
+      { label: 'Połączenia między narzędziami i automatyzacje + kontrola kosztów', value: 4 }
     ],
     axes: { x: 1 }
   },
@@ -107,10 +107,10 @@ export const readinessQuestions: QuestionDefinition[] = [
     text: 'Jak wiedza o AI rozchodzi się po firmie?',
     options: [
       { label: 'Każdy działa sam, bez wymiany wiedzy', value: 0 },
-      { label: 'Czasem dzielimy się pojedynczym tipem', value: 1 },
+      { label: 'Czasem dzielimy się pojedynczą wskazówką', value: 1 },
       { label: 'Mamy osoby, które pokazują dobre praktyki', value: 2 },
-      { label: 'Regularnie dzielimy use-case’y i szablony', value: 3 },
-      { label: 'Mamy aktywnych ambasadorów i mini-szkolenia', value: 4 }
+      { label: 'Regularnie dzielimy się przykładami zastosowań i wzorami', value: 3 },
+      { label: 'Mamy osoby wspierające zespół i krótkie szkolenia', value: 4 }
     ],
     axes: { z: 1 }
   },
