@@ -9,13 +9,13 @@ interface LevelContent {
 
 export const levelContent: Record<MaturityLevel, LevelContent> = {
   1: {
-    levelName: 'Poziom 1 — Accidental Users',
+    levelName: 'Poziom 1 — Początki',
     summary:
       'AI jest obecne, ale działa głównie „w tle”. Największa szansa to przejście z pasywnego użycia do świadomego wyboru narzędzia i kontroli jakości.',
     nextSteps: [
-      'Wprowadź 45-min szkolenie „AI basics + ryzyka danych” dla całego zespołu.',
-      'Wybierz 2 bezpieczne use-case’y (np. podsumowanie spotkań, draft e-maila) i opisz prostą instrukcję.',
-      'Dodaj zasadę „AI output zawsze wymaga szybkiej weryfikacji człowieka”.'
+      'Wprowadź 45-minutowe szkolenie: podstawy użycia AI i ryzyka związane z danymi.',
+      'Wybierz 2 bezpieczne zastosowania (np. podsumowanie spotkań, szkic e-maila) i opisz prostą instrukcję.',
+      'Dodaj zasadę: każdą odpowiedź AI człowiek szybko sprawdza przed użyciem.'
     ],
     pitfalls: [
       'Bezrefleksyjne kopiowanie odpowiedzi AI.',
@@ -24,13 +24,13 @@ export const levelContent: Record<MaturityLevel, LevelContent> = {
     ]
   },
   2: {
-    levelName: 'Poziom 2 — Basic Users',
+    levelName: 'Poziom 2 — Pierwsze nawyki',
     summary:
       'Zespół używa AI świadomie, ale głównie do pojedynczych zadań. To dobry etap na przejście z „szybciej” do „lepiej i systemowo”.',
     nextSteps: [
-      'Zaprojektuj 3 szablony promptów z kontekstem firmowym (ton marki, format, kryteria jakości).',
-      'Ustal „verification loop” dla treści i danych (fakty, źródła, liczby).',
-      'Wybierz 1 proces do pełniejszej integracji AI (np. oferta handlowa, analiza zapytań).'
+      'Przygotuj 3 wzory poleceń z kontekstem firmowym (styl marki, format, kryteria jakości).',
+      'Ustal stały sposób sprawdzania treści i danych (fakty, źródła, liczby).',
+      'Wybierz 1 proces, w którym AI będzie używane szerzej (np. oferta handlowa, analiza zapytań).'
     ],
     pitfalls: [
       'Zalew generycznych treści o niskiej jakości.',
@@ -39,13 +39,13 @@ export const levelContent: Record<MaturityLevel, LevelContent> = {
     ]
   },
   3: {
-    levelName: 'Poziom 3 — Advanced Layer',
+    levelName: 'Poziom 3 — Uporządkowane działania',
     summary:
       'Pojawiają się realne przewagi operacyjne. Teraz kluczowe jest utrwalenie standardów, skalowanie praktyk i połączenie ich ze strategią firmy.',
     nextSteps: [
-      'Zidentyfikuj i wesprzyj AI Championów (3A/3B) w każdym kluczowym dziale.',
-      'Ustal dashboard efektów: czas, jakość, oszczędności, adopcja.',
-      'Połącz praktyki operacyjne z governance (zasady danych, wybór narzędzi, odpowiedzialność).'
+      'Wskaż osoby, które dobrze pracują z AI (3A/3B), i wesprzyj je w każdym kluczowym dziale.',
+      'Wprowadź prostą tablicę wyników: czas, jakość, oszczędności i skala użycia.',
+      'Połącz codzienną pracę z jasnymi zasadami: dane, wybór narzędzi i odpowiedzialność.'
     ],
     pitfalls: [
       'Uzależnienie efektów od 1–2 osób.',
@@ -54,27 +54,27 @@ export const levelContent: Record<MaturityLevel, LevelContent> = {
     ]
   },
   4: {
-    levelName: 'Poziom 4 — AI Leaders',
+    levelName: 'Poziom 4 — Świadome przywództwo',
     summary:
-      'Firma myśli o AI systemowo: architektura, ryzyko, ROI i przewaga konkurencyjna. Priorytetem staje się utrzymanie równowagi między technologią i biznesem.',
+      'Firma myśli o AI całościowo: sposób działania, ryzyko, opłacalność i przewaga rynkowa. Priorytetem jest równowaga między technologią a celami biznesowymi.',
     nextSteps: [
-      'Wyrównaj mapę 4A/4B: połącz roadmapę techniczną z celami biznesowymi i finansowymi.',
-      'Wdroż regularny przegląd modeli, kosztów i ryzyk (security/compliance).',
-      'Zaplanij program redesignu ról i kompetencji pod kolejne 12 miesięcy.'
+      'Połącz profile 4A/4B: zgraj plan rozwoju technologii z celami biznesowymi i finansowymi.',
+      'Wprowadź regularny przegląd narzędzi, kosztów i ryzyk (bezpieczeństwo i zgodność).',
+      'Zaplanij program przebudowy ról i kompetencji na kolejne 12 miesięcy.'
     ],
     pitfalls: [
-      'Budowanie „science projects” bez wpływu na biznes.',
-      'Obietnice strategiczne bez wykonalności technicznej.',
+      'Budowanie projektów pokazowych bez realnego wpływu na wyniki firmy.',
+      'Duże obietnice bez możliwości sprawnego wdrożenia.',
       'Niedoszacowanie kosztów skali i utrzymania.'
     ]
   }
 };
 
 const profileLabels: Record<ReadinessResult['profileTag'], string> = {
-  '3A': 'Profil zbliżony do 3A (Power User)',
-  '3B': 'Profil zbliżony do 3B (Advocate)',
-  '4A': 'Profil zbliżony do 4A (Technical Architect)',
-  '4B': 'Profil zbliżony do 4B (Strategic Visionary)',
+  '3A': 'Profil 3A — mocna codzienna praktyka',
+  '3B': 'Profil 3B — mocne dzielenie się wiedzą',
+  '4A': 'Profil 4A — mocne uporządkowanie działań',
+  '4B': 'Profil 4B — mocne myślenie długoterminowe',
   Balanced: 'Profil zbalansowany'
 };
 
