@@ -1,0 +1,680 @@
+---
+import { readinessQuestions } from '../utils/aiReadinessScoring';
+import { levelContent } from '../content/ai-readiness-recommendations';
+
+const nonce: string | undefined = Astro.locals?.nonce;
+const questionBlocks = [
+  readinessQuestions.slice(0, 3),
+  readinessQuestions.slice(3, 6),
+  readinessQuestions.slice(6, 9)
+];
+---
+
+<section class="readiness-wrap" aria-labelledby="readiness-title">
+  <div class="header-block">
+    <p class="eyebrow">AI Readiness Pyramid</p>
+    <h1 id="readiness-title">Sprawdź gotowość AI swojej firmy w 5 minut</h1>
+    <p class="intro">
+      Krótka diagnoza oparta na frameworku Kunke Consulting. Otrzymasz wynik 0–100, poziom dojrzałości
+      oraz 3 konkretne działania na najbliższe 30 dni.
+    </p>
+    <p class="meta">~4–5 minut · 10 pytań · bez rejestracji</p>
+  </div>
+
+  <div class="wizard-card" id="ai-readiness-wizard">
+    <div class="progress-row" aria-live="polite">
+      <span id="step-indicator">Krok 1 z 6</span>
+      <div class="progress-bar" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" aria-label="Postęp formularza">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <div id="readiness-form">
+      <fieldset class="step is-active" data-step="1">
+        <legend>Zanim zaczniemy</legend>
+        <p>Ta diagnoza jest dla właścicieli firm i liderów zespołów. Odpowiedz szczerze, a wynik będzie bardziej użyteczny.</p>
+        <ul>
+          <li>Oceniamy praktykę, nie deklaracje.</li>
+          <li>Nie zapisujemy danych osobowych bez Twojej zgody.</li>
+          <li>Na końcu dostaniesz konkretne rekomendacje.</li>
+        </ul>
+      </fieldset>
+
+      {questionBlocks.map((block, blockIndex) => (
+        <fieldset class="step" data-step={String(blockIndex + 2)}>
+          <legend>Pytania {blockIndex * 3 + 1}–{blockIndex * 3 + 3}</legend>
+          <div class="question-grid">
+            {block.map((question, questionIndex) => (
+              <div class="question-card">
+                <p class="question-title">{blockIndex * 3 + questionIndex + 1}. {question.text}</p>
+                <div class="options" role="radiogroup" aria-label={question.text}>
+                  {question.options.map((option) => (
+                    <label class="option-row">
+                      <input type="radio" name={question.id} value={String(option.value)} />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </fieldset>
+      ))}
+
+      <fieldset class="step" data-step="5">
+        <legend>Twoja samoocena (kontrola pewności)</legend>
+        <p>Jak oceniasz aktualny poziom dojrzałości AI Twojej firmy?</p>
+        <div class="options" role="radiogroup" aria-label="Samoocena poziomu">
+          <label class="option-row"><input type="radio" name="self-level" value="1" /><span>Poziom 1 — Accidental Users</span></label>
+          <label class="option-row"><input type="radio" name="self-level" value="2" /><span>Poziom 2 — Basic Users</span></label>
+          <label class="option-row"><input type="radio" name="self-level" value="3" /><span>Poziom 3 — Advanced Layer</span></label>
+          <label class="option-row"><input type="radio" name="self-level" value="4" /><span>Poziom 4 — AI Leaders</span></label>
+        </div>
+      </fieldset>
+
+      <section class="step" data-step="6" aria-live="polite">
+        <h2>Twój wynik</h2>
+        <div class="result-score">
+          <p class="score-value"><span id="result-overall">0</span>/100</p>
+          <p id="result-level">Poziom —</p>
+          <p class="profile-chip" id="result-profile">Profil: —</p>
+        </div>
+
+        <div class="axis-grid">
+          <div><strong>Hands (X):</strong> <span id="axis-x">0</span>/100</div>
+          <div><strong>Head (Y):</strong> <span id="axis-y">0</span>/100</div>
+          <div><strong>Voice (Z):</strong> <span id="axis-z">0</span>/100</div>
+        </div>
+
+        <p id="confidence-note" class="confidence-note" hidden>
+          Uwaga: po porównaniu deklaracji z zachowaniami wynik został skorygowany, aby lepiej odzwierciedlać realny poziom praktyki.
+        </p>
+
+        <div class="result-block">
+          <h3>Gdzie jesteście dziś</h3>
+          <p id="result-summary"></p>
+        </div>
+
+        <div class="result-block">
+          <h3>Top 3 kolejne kroki</h3>
+          <ul id="result-steps"></ul>
+        </div>
+
+        <div class="result-block">
+          <h3>Typowe pułapki</h3>
+          <ul id="result-pitfalls"></ul>
+        </div>
+
+        <div class="copy-wrap">
+          <button class="secondary-btn" type="button" id="copy-summary">Kopiuj podsumowanie</button>
+          <p id="copy-status" aria-live="polite"></p>
+        </div>
+
+        <div class="lead-capture">
+          <h3>Chcesz pełny raport na e-mail? (opcjonalnie)</h3>
+          <p>Wyślemy podsumowanie wyniku + rekomendowane następne kroki. Możesz pominąć ten krok.</p>
+          <form id="email-gate-form" action="https://script.google.com/macros/s/AKfycbz5xjPMBICnaCIvsE52rFHLX57iYORLXleQMUMobIorOvifsaNj5_9LEGsnBdC13NNWdQ/exec" method="POST">
+            <label for="lead-email">Adres e-mail służbowy</label>
+            <input id="lead-email" type="email" name="WorkEmail" placeholder="ty@firma.com" />
+            <label class="consent-row">
+              <input type="checkbox" id="lead-consent" name="Consent" value="yes" />
+              <span>Wyrażam zgodę na kontakt w sprawie wyniku diagnozy AI i oferty konsultacji.</span>
+            </label>
+            <input type="hidden" name="Type" value="AI Readiness Score" />
+            <input type="hidden" name="Message" id="lead-message" />
+            <input type="hidden" name="Referrer" id="lead-referrer" />
+            <input type="hidden" name="UTM" id="lead-utm" />
+            <input type="hidden" name="FormSecret" value="kunke-2025" />
+            <input class="honeypot" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <button class="cta-btn" type="submit" id="lead-submit">Wyślij wynik na e-mail</button>
+            <p class="mini-legal">Administratorem danych jest Błażej Kunke Consulting. Dane wykorzystujemy tylko do kontaktu o wyniku i usuwamy na życzenie. <a href="/privacy-policy">Polityka prywatności</a>.</p>
+          </form>
+          <a class="booking-link" href="https://calendly.com/blazejkunke/30min" target="_blank" rel="noreferrer">Umów 20-min konsultację</a>
+        </div>
+      </section>
+
+      <div class="nav-row">
+        <button type="button" class="secondary-btn" id="prev-btn" disabled>Wstecz</button>
+        <button type="button" class="cta-btn" id="next-btn">Dalej</button>
+      </div>
+
+      <p class="error" id="form-error" role="alert"></p>
+    </div>
+  </div>
+
+  </section>
+
+<script is:inline nonce={nonce} define:vars={{ levelContent }}>
+  const TOTAL_STEPS = 6;
+  let currentStep = 1;
+
+  const form = document.getElementById('readiness-form');
+  const steps = Array.from(form.querySelectorAll('.step'));
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const errorBox = document.getElementById('form-error');
+  const progressFill = document.getElementById('progress-fill');
+  const stepIndicator = document.getElementById('step-indicator');
+  const progressBar = document.querySelector('.progress-bar');
+  const leadForm = document.getElementById('email-gate-form');
+
+  function updateStepUi() {
+    steps.forEach((step) => {
+      const isActive = Number(step.dataset.step) === currentStep;
+      step.classList.toggle('is-active', isActive);
+    });
+
+    const progress = (currentStep / TOTAL_STEPS) * 100;
+    progressFill.style.width = `${progress}%`;
+    stepIndicator.textContent = `Krok ${currentStep} z ${TOTAL_STEPS}`;
+    progressBar.setAttribute('aria-valuenow', String(currentStep));
+
+    prevBtn.disabled = currentStep === 1;
+    if (currentStep === TOTAL_STEPS) {
+      nextBtn.hidden = true;
+      prevBtn.hidden = true;
+    } else {
+      nextBtn.hidden = false;
+      prevBtn.hidden = false;
+      nextBtn.textContent = currentStep === TOTAL_STEPS - 1 ? 'Pokaż wynik' : 'Dalej';
+    }
+  }
+
+  function getCheckedValue(name) {
+    const checked = form.querySelector(`input[name="${name}"]:checked`);
+    return checked ? Number(checked.value) : null;
+  }
+
+  function validateStep(stepNumber) {
+    errorBox.textContent = '';
+
+    if (stepNumber === 1 || stepNumber === 6) {
+      return true;
+    }
+
+    const stepEl = form.querySelector(`.step[data-step="${stepNumber}"]`);
+    const radios = Array.from(stepEl.querySelectorAll('input[type="radio"]'));
+    const groups = [...new Set(radios.map((radio) => radio.name))];
+
+    const missingGroup = groups.find((group) => !stepEl.querySelector(`input[name="${group}"]:checked`));
+
+    if (missingGroup) {
+      errorBox.textContent = 'Proszę zaznaczyć wszystkie odpowiedzi, aby przejść dalej.';
+      return false;
+    }
+
+    return true;
+  }
+
+  function mapLevel(overall, axisX, axisY) {
+    if (overall < 25 || axisX < 20) {
+      return 1;
+    }
+
+    if (overall < 50) {
+      return 2;
+    }
+
+    if (overall < 75 || axisY < 70) {
+      return 3;
+    }
+
+    return 4;
+  }
+
+  function profileTag(axisX, axisY, axisZ) {
+    if (axisX >= 80 && axisY >= 75) {
+      return '4A';
+    }
+    if (axisY >= 80 && axisZ >= 70) {
+      return '4B';
+    }
+    if (axisX >= 70 && axisZ < 55) {
+      return '3A';
+    }
+    if (axisZ >= 65 && axisX >= 50) {
+      return '3B';
+    }
+    return 'Balanced';
+  }
+
+  function calculateResult() {
+    const answers = {
+      q1_frequency: getCheckedValue('q1_frequency') || 0,
+      q2_usage_pattern: getCheckedValue('q2_usage_pattern') || 0,
+      q3_prompting: getCheckedValue('q3_prompting') || 0,
+      q4_verification: getCheckedValue('q4_verification') || 0,
+      q5_integration: getCheckedValue('q5_integration') || 0,
+      q6_tools: getCheckedValue('q6_tools') || 0,
+      q7_enablement: getCheckedValue('q7_enablement') || 0,
+      q8_governance: getCheckedValue('q8_governance') || 0,
+      q9_strategy: getCheckedValue('q9_strategy') || 0
+    };
+
+    const axisX = Math.round(((answers.q2_usage_pattern + answers.q3_prompting + answers.q4_verification + answers.q5_integration + answers.q6_tools) / 20) * 100);
+    const axisY = Math.round((((answers.q1_frequency * 1 + answers.q4_verification * 0.5 + answers.q5_integration * 1 + answers.q8_governance * 1 + answers.q9_strategy * 1) / 18) * 100));
+    const axisZ = Math.round((((answers.q1_frequency * 0.5 + answers.q7_enablement * 1 + answers.q9_strategy * 0.5) / 8) * 100));
+
+    const overall = Math.round(axisX * 0.45 + axisY * 0.35 + axisZ * 0.2);
+    const computedLevel = mapLevel(overall, axisX, axisY);
+    const selfLevel = getCheckedValue('self-level') || computedLevel;
+    const confidenceAdjusted = selfLevel - computedLevel >= 2;
+    const displayedLevel = confidenceAdjusted ? Math.max(1, computedLevel - 1) : computedLevel;
+
+    return {
+      overall,
+      axisX,
+      axisY,
+      axisZ,
+      computedLevel,
+      displayedLevel,
+      confidenceAdjusted,
+      profile: profileTag(axisX, axisY, axisZ)
+    };
+  }
+
+  function renderList(targetId, items) {
+    const list = document.getElementById(targetId);
+    list.innerHTML = '';
+    items.forEach((item) => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      list.appendChild(li);
+    });
+  }
+
+  function profileLabel(profile) {
+    const labels = {
+      '3A': 'Profil zbliżony do 3A (Power User)',
+      '3B': 'Profil zbliżony do 3B (Advocate)',
+      '4A': 'Profil zbliżony do 4A (Technical Architect)',
+      '4B': 'Profil zbliżony do 4B (Strategic Visionary)',
+      Balanced: 'Profil zbalansowany'
+    };
+
+    return labels[profile] || labels.Balanced;
+  }
+
+  function renderResults() {
+    const result = calculateResult();
+    const level = levelContent[result.displayedLevel];
+
+    document.getElementById('result-overall').textContent = String(result.overall);
+    document.getElementById('result-level').textContent = `${level.levelName}`;
+    document.getElementById('result-profile').textContent = profileLabel(result.profile);
+    document.getElementById('axis-x').textContent = String(result.axisX);
+    document.getElementById('axis-y').textContent = String(result.axisY);
+    document.getElementById('axis-z').textContent = String(result.axisZ);
+    document.getElementById('result-summary').textContent = level.summary;
+
+    renderList('result-steps', level.nextSteps);
+    renderList('result-pitfalls', level.pitfalls);
+
+    const confidenceNote = document.getElementById('confidence-note');
+    confidenceNote.hidden = !result.confidenceAdjusted;
+
+    const summaryText = [
+      `AI Readiness Score: ${result.overall}/100`,
+      `Poziom: ${level.levelName}`,
+      `Hands/Head/Voice: ${result.axisX}/${result.axisY}/${result.axisZ}`,
+      `Profil: ${profileLabel(result.profile)}`,
+      'Top 3 kroki:',
+      ...level.nextSteps.map((item, index) => `${index + 1}. ${item}`)
+    ].join('\n');
+
+    const leadMessage = document.getElementById('lead-message');
+    const leadReferrer = document.getElementById('lead-referrer');
+    const leadUtm = document.getElementById('lead-utm');
+
+    leadMessage.value = summaryText;
+    leadReferrer.value = document.referrer || '';
+    leadUtm.value = window.location.search || '';
+
+    const copyButton = document.getElementById('copy-summary');
+    const copyStatus = document.getElementById('copy-status');
+
+    copyButton.onclick = async () => {
+      await navigator.clipboard.writeText(summaryText);
+      copyStatus.textContent = 'Skopiowano podsumowanie.';
+    };
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (currentStep > 1) {
+      currentStep -= 1;
+      updateStepUi();
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (!validateStep(currentStep)) {
+      return;
+    }
+
+    if (currentStep < TOTAL_STEPS) {
+      currentStep += 1;
+      if (currentStep === TOTAL_STEPS) {
+        renderResults();
+      }
+      updateStepUi();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+
+  leadForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const emailInput = document.getElementById('lead-email');
+    const consentInput = document.getElementById('lead-consent');
+    const submitButton = document.getElementById('lead-submit');
+
+    if (!emailInput.value) {
+      errorBox.textContent = 'Podaj adres e-mail, jeśli chcesz otrzymać raport.';
+      return;
+    }
+
+    if (!consentInput.checked) {
+      errorBox.textContent = 'Zaznacz zgodę na kontakt, aby wysłać raport.';
+      return;
+    }
+
+    errorBox.textContent = '';
+    submitButton.disabled = true;
+    submitButton.textContent = 'Wysyłanie…';
+
+    const formData = new FormData(leadForm);
+    const params = new URLSearchParams(formData);
+
+    fetch(leadForm.action, {
+      method: 'POST',
+      body: params,
+      mode: 'no-cors'
+    }).then(() => {
+      submitButton.textContent = 'Wysłano ✓';
+    }).catch(() => {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Wyślij wynik na e-mail';
+      errorBox.textContent = 'Nie udało się wysłać raportu. Spróbuj ponownie.';
+    });
+  });
+
+  updateStepUi();
+</script>
+
+<style>
+  .readiness-wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+  }
+
+  .header-block {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .eyebrow {
+    color: var(--color-secondary);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .intro {
+    max-width: 760px;
+    margin: 0 auto;
+    color: #355048;
+  }
+
+  .meta {
+    color: #607369;
+    font-size: 0.95rem;
+  }
+
+  .wizard-card {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 12px 28px rgba(10, 71, 49, 0.12);
+    padding: 22px;
+  }
+
+  .progress-row {
+    margin-bottom: 16px;
+  }
+
+  .progress-row span {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    border-radius: 999px;
+    background: #dce8e2;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 16.66%;
+    background: linear-gradient(90deg, #2a8c6a, #4a90e2);
+    transition: width 0.25s ease;
+  }
+
+  .step {
+    display: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .step.is-active {
+    display: block;
+  }
+
+  .step legend {
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 14px;
+  }
+
+  .question-grid {
+    display: grid;
+    gap: 14px;
+  }
+
+  .question-card {
+    border: 1px solid #e2ebe5;
+    border-radius: 10px;
+    padding: 14px;
+  }
+
+  .question-title {
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: #163d2f;
+  }
+
+  .options {
+    display: grid;
+    gap: 8px;
+  }
+
+  .option-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .option-row:hover {
+    background: #f1f7f4;
+  }
+
+  .option-row input {
+    margin-top: 2px;
+  }
+
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+    gap: 10px;
+  }
+
+  .secondary-btn {
+    border: 1px solid #bed3c8;
+    border-radius: 8px;
+    background: #fff;
+    color: var(--color-primary);
+    padding: 12px 20px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .secondary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .error {
+    color: #9c2f2f;
+    min-height: 22px;
+    margin: 10px 0 0;
+    font-weight: 600;
+  }
+
+  .result-score {
+    background: #f2f8f4;
+    border: 1px solid #dbe9df;
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .score-value {
+    font-size: 2rem;
+    margin: 0;
+    font-weight: 700;
+    color: #1d6e50;
+  }
+
+  .profile-chip {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #eaf3fd;
+    color: #2f5f96;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .axis-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 14px 0;
+  }
+
+  .axis-grid div {
+    background: #f8f8fa;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .confidence-note {
+    padding: 10px;
+    border-radius: 8px;
+    background: #fff8df;
+    color: #70570b;
+    border: 1px solid #f2e1a3;
+  }
+
+  .result-block {
+    border-top: 1px solid #e5ece8;
+    margin-top: 16px;
+    padding-top: 14px;
+  }
+
+  .copy-wrap {
+    margin: 18px 0;
+  }
+
+  .lead-capture {
+    margin-top: 22px;
+    background: #f8fbf9;
+    border: 1px solid #dfeae4;
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  #email-gate-form {
+    display: grid;
+    gap: 10px;
+  }
+
+  #email-gate-form input[type='email'] {
+    border: 1px solid #c9d8d0;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .consent-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 0.92rem;
+  }
+
+  .mini-legal {
+    font-size: 0.82rem;
+    color: #5b685f;
+    margin-top: 0;
+  }
+
+  .booking-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 700;
+    color: var(--color-secondary);
+    text-decoration: none;
+  }
+
+  .booking-link:hover {
+    text-decoration: underline;
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -10000px;
+    opacity: 0;
+  }
+
+  @media (max-width: 760px) {
+    .wizard-card {
+      padding: 16px;
+    }
+
+    .axis-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .nav-row {
+      flex-direction: column;
+    }
+
+    .nav-row button,
+    .copy-wrap button,
+    #email-gate-form .cta-btn {
+      width: 100%;
+    }
+  }
+</style>
