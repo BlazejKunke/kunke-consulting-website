@@ -142,7 +142,7 @@ const questionBlocks = [
     </div>
   </div>
 
-  <script type="application/json" id="level-content">{JSON.stringify(levelContent)}</script>
+  <script type="application/json" id="level-content" set:html={JSON.stringify(levelContent)}></script>
 </section>
 
 <script is:inline nonce={nonce}>
