@@ -32,6 +32,20 @@ import StudentReport from '../components/StudentReport.astro';
     color: #2c3e50;
     text-decoration: none;
   }
+  .hero-cta-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-secondary-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .hero-secondary-link:hover {
+    text-decoration: underline;
+  }
   footer {
     background: #f8f8fa;
     padding: 40px 0 0 0;
@@ -98,7 +112,10 @@ import StudentReport from '../components/StudentReport.astro';
 <section id="hero">
   <h1><span class="text-gradient">^Kunke Consulting</span></h1>
   <p>Praktyczne szkolenia i doradztwo AI dla biznesu.</p>
-  <a href="#ai-packages" class="cta-btn">AI dla firm</a>
+  <div class="hero-cta-group">
+    <a href="/ai-readiness-score" class="cta-btn">Sprawdź gotowość AI firmy w 5 minut</a>
+    <a href="#ai-packages" class="hero-secondary-link">Zobacz ofertę AI dla firm</a>
+  </div>
 </section>
 
 <!-- Experience Section -->
