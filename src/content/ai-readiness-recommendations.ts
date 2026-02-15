@@ -9,7 +9,7 @@ interface LevelContent {
 
 export const levelContent: Record<MaturityLevel, LevelContent> = {
   1: {
-    levelName: 'Poziom 1 — Początki',
+    levelName: 'Poziom 1 — Użytkownicy przypadkowi',
     summary:
       'AI jest obecne, ale działa głównie „w tle”. Największa szansa to przejście z pasywnego użycia do świadomego wyboru narzędzia i kontroli jakości.',
     nextSteps: [
@@ -24,7 +24,7 @@ export const levelContent: Record<MaturityLevel, LevelContent> = {
     ]
   },
   2: {
-    levelName: 'Poziom 2 — Pierwsze nawyki',
+    levelName: 'Poziom 2 — Poziom podstawowy',
     summary:
       'Zespół używa AI świadomie, ale głównie do pojedynczych zadań. To dobry etap na przejście z „szybciej” do „lepiej i systemowo”.',
     nextSteps: [
@@ -39,7 +39,7 @@ export const levelContent: Record<MaturityLevel, LevelContent> = {
     ]
   },
   3: {
-    levelName: 'Poziom 3 — Uporządkowane działania',
+    levelName: 'Poziom 3 — Poziom zaawansowany',
     summary:
       'Pojawiają się realne przewagi operacyjne. Teraz kluczowe jest utrwalenie standardów, skalowanie praktyk i połączenie ich ze strategią firmy.',
     nextSteps: [
@@ -54,7 +54,7 @@ export const levelContent: Record<MaturityLevel, LevelContent> = {
     ]
   },
   4: {
-    levelName: 'Poziom 4 — Świadome przywództwo',
+    levelName: 'Poziom 4 — Poziom ekspercki',
     summary:
       'Firma myśli o AI całościowo: sposób działania, ryzyko, opłacalność i przewaga rynkowa. Priorytetem jest równowaga między technologią a celami biznesowymi.',
     nextSteps: [
