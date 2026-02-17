@@ -109,7 +109,8 @@ export const buildHreflangUrls = (pathname: string, siteUrl: URL) => {
     const localeCode = code as LocaleCode;
 
     if (localeCode === currentLocale) {
-      const selfPath = localizedPath(basePath, currentLocale);
+      const existingLocalized = findExistingLocalizedPath(basePath, currentLocale);
+      const selfPath = existingLocalized ?? localizedPath(basePath, currentLocale);
       return [{ locale: localeCode, href: new URL(selfPath, siteUrl).href }];
     }
 
