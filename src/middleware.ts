@@ -10,6 +10,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   const res = await next();
 
+
   if (isDev) {
     // Local preview: allow Astro/Vite helper scripts and websocket connections
     const scriptSources = [

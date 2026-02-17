@@ -7,6 +7,7 @@ const posts = (await getCollection("blog")).sort(
 
 // Get the 3 most recent posts for the grid
 const recentPosts = posts.slice(0, 3);
+const canonicalUrl = "https://kunkeconsulting.pl/blog/";
 ---
 
 <html lang="pl">
@@ -20,6 +21,9 @@ const recentPosts = posts.slice(0, 3);
     <link rel="stylesheet" href="/styles/global.css" />
     <title>Blog | ^Kunke Consulting - Praktyczne szkolenia AI i doradztwo AI dla firm</title>
     <meta name="description" content="Blog ^Kunke Consulting - najnowsze artykuły o praktycznych szkoleniach AI i doradztwie AI dla firm" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="pl" href={canonicalUrl} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
   </head>
 
   <body>

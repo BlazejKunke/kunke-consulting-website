@@ -51,6 +51,86 @@
   ],
   "redirects": [
     {
+      "source": "/en/ai-workshop/",
+      "destination": "/en/",
+      "permanent": true
+    },
+    {
+      "source": "/nl/ai-workshop/",
+      "destination": "/nl/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/ai-workshop/",
+      "destination": "/uk/",
+      "permanent": true
+    },
+    {
+      "source": "/fr/ai-workshop/",
+      "destination": "/fr/",
+      "permanent": true
+    },
+    {
+      "source": "/en/szkolenia-ai/",
+      "destination": "/en/",
+      "permanent": true
+    },
+    {
+      "source": "/fr/szkolenia-ai/",
+      "destination": "/fr/",
+      "permanent": true
+    },
+    {
+      "source": "/nl/szkolenia-ai/",
+      "destination": "/nl/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/szkolenia-ai/",
+      "destination": "/uk/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/szkolenia-ai",
+      "destination": "/uk/",
+      "permanent": true
+    },
+    {
+      "source": "/nl/szkolenia-ai",
+      "destination": "/nl/",
+      "permanent": true
+    },
+    {
+      "source": "/fr/szkolenia-ai",
+      "destination": "/fr/",
+      "permanent": true
+    },
+    {
+      "source": "/en/szkolenia-ai",
+      "destination": "/en/",
+      "permanent": true
+    },
+    {
+      "source": "/fr/ai-workshop",
+      "destination": "/fr/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/ai-workshop",
+      "destination": "/uk/",
+      "permanent": true
+    },
+    {
+      "source": "/nl/ai-workshop",
+      "destination": "/nl/",
+      "permanent": true
+    },
+    {
+      "source": "/en/ai-workshop",
+      "destination": "/en/",
+      "permanent": true
+    },
+    {
       "source": "/ai-excel/:match*",
       "destination": "/szkolenia-ai",
       "permanent": true
