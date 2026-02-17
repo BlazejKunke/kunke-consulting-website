@@ -84,6 +84,29 @@ const normalizePath = (path: string): string => {
   return withoutTrailingSlash || '/';
 };
 
+const normalizeLocaleRootPath = (path: string): string => {
+  const localeRootMatch = path.match(/^\/(en|fr|nl|uk)\/?$/);
+  if (!localeRootMatch) {
+    return path;
+  }
+
+  return `/${localeRootMatch[1]}/`;
+};
+
+const normalizeHreflangPath = (path: string): string => {
+  const [pathAndQuery = '', hashFragment = ''] = path.split('#', 2);
+  const [rawPath = '', queryString = ''] = pathAndQuery.split('?', 2);
+
+  const withLeadingSlash = `/${rawPath}`;
+  const normalizedPath = withLeadingSlash.replace(/\/{2,}/g, '/');
+  const localeRootNormalizedPath = normalizeLocaleRootPath(normalizedPath);
+
+  const query = queryString ? `?${queryString}` : '';
+  const hash = hashFragment ? `#${hashFragment}` : '';
+
+  return `${localeRootNormalizedPath}${query}${hash}`;
+};
+
 const findExistingLocalizedPath = (basePath: string, locale: LocaleCode): string | undefined => {
   const routeMap = localizedRoutes[normalizePath(basePath)];
   if (!routeMap) return undefined;
@@ -111,7 +134,8 @@ export const buildHreflangUrls = (pathname: string, siteUrl: URL) => {
     if (localeCode === currentLocale) {
       const existingLocalized = findExistingLocalizedPath(basePath, currentLocale);
       const selfPath = existingLocalized ?? localizedPath(basePath, currentLocale);
-      return [{ locale: localeCode, href: new URL(selfPath, siteUrl).href }];
+      const normalizedSelfPath = normalizeHreflangPath(selfPath);
+      return [{ locale: localeCode, href: new URL(normalizedSelfPath, siteUrl).href }];
     }
 
     const existingLocalized = findExistingLocalizedPath(basePath, localeCode);
@@ -119,6 +143,7 @@ export const buildHreflangUrls = (pathname: string, siteUrl: URL) => {
       return [];
     }
 
-    return [{ locale: localeCode, href: new URL(existingLocalized, siteUrl).href }];
+    const normalizedPath = normalizeHreflangPath(existingLocalized);
+    return [{ locale: localeCode, href: new URL(normalizedPath, siteUrl).href }];
   });
 };
