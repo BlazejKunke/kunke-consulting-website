@@ -26,6 +26,18 @@ export const localeOgMap: Record<LocaleCode, string> = {
 
 export const defaultLocale: LocaleCode = 'pl';
 
+type LocalizedRouteMap = Partial<Record<LocaleCode, string>>;
+
+const localizedRoutes: Record<string, LocalizedRouteMap> = {
+  '/': {
+    pl: '/',
+    en: '/en/',
+    fr: '/fr/',
+    nl: '/nl/',
+    uk: '/uk/',
+  },
+};
+
 export const localePrefixes: Record<LocaleCode, string> = locales.reduce(
   (prefixes, locale) => {
     prefixes[locale.code] = locale.pathPrefix;
@@ -65,10 +77,47 @@ export const localizedPath = (basePath: string, locale: LocaleCode): string => {
   return `${prefix}${normalizedBase === '/' ? '' : normalizedBase}`;
 };
 
-export const buildAlternateUrls = (pathname: string, siteUrl: URL) => {
+const normalizePath = (path: string): string => {
+  if (!path || path === '/') return '/';
+  const withLeadingSlash = path.startsWith('/') ? path : `/${path}`;
+  const withoutTrailingSlash = withLeadingSlash.replace(/\/+$/, '');
+  return withoutTrailingSlash || '/';
+};
+
+const findExistingLocalizedPath = (basePath: string, locale: LocaleCode): string | undefined => {
+  const routeMap = localizedRoutes[normalizePath(basePath)];
+  if (!routeMap) return undefined;
+  return routeMap[locale];
+};
+
+export const buildLanguageSwitcherUrls = (pathname: string, siteUrl: URL) => {
   const basePath = basePathFromLocale(pathname);
   return locales.map(({ code }) => {
-    const localized = localizedPath(basePath, code as LocaleCode);
-    return { locale: code as LocaleCode, href: new URL(localized, siteUrl).href };
+    const localeCode = code as LocaleCode;
+    const existingLocalized = findExistingLocalizedPath(basePath, localeCode);
+    const fallbackPath = localizedPath('/', localeCode);
+    const localized = existingLocalized ?? fallbackPath;
+    return { locale: localeCode, href: new URL(localized, siteUrl).href };
+  });
+};
+
+export const buildHreflangUrls = (pathname: string, siteUrl: URL) => {
+  const basePath = basePathFromLocale(pathname);
+  const currentLocale = detectLocale(pathname);
+
+  return locales.flatMap(({ code }) => {
+    const localeCode = code as LocaleCode;
+
+    if (localeCode === currentLocale) {
+      const selfPath = localizedPath(basePath, currentLocale);
+      return [{ locale: localeCode, href: new URL(selfPath, siteUrl).href }];
+    }
+
+    const existingLocalized = findExistingLocalizedPath(basePath, localeCode);
+    if (!existingLocalized) {
+      return [];
+    }
+
+    return [{ locale: localeCode, href: new URL(existingLocalized, siteUrl).href }];
   });
 };

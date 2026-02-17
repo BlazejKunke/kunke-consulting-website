@@ -2,7 +2,7 @@
 // src/components/BaseLayoutEn.astro
 import CookieConsent from './CookieConsentEn.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { buildAlternateUrls, detectLocale, localeOgMap } from '../utils/locales';
+import { buildHreflangUrls, buildLanguageSwitcherUrls, defaultLocale, detectLocale, localeOgMap } from '../utils/locales';
 export interface Props {
   title: string;
   description?: string;
@@ -25,8 +25,9 @@ const absoluteOgImage = ogImage
 
 const canonicalUrl = Astro.url.href;
 const currentLocale = detectLocale(Astro.url.pathname);
-const alternateUrls = buildAlternateUrls(Astro.url.pathname, siteUrl);
-const xDefaultUrl = alternateUrls.find(({ locale }) => locale === 'en')?.href ?? canonicalUrl;
+const languageSwitcherUrls = buildLanguageSwitcherUrls(Astro.url.pathname, siteUrl);
+const hreflangUrls = buildHreflangUrls(Astro.url.pathname, siteUrl);
+const xDefaultUrl = languageSwitcherUrls.find(({ locale }) => locale === defaultLocale)?.href ?? canonicalUrl;
 const ogLocale = localeOgMap[currentLocale] ?? 'en_GB';
 ---
 
@@ -40,7 +41,7 @@ const ogLocale = localeOgMap[currentLocale] ?? 'en_GB';
   <meta name="description" content={description} />
 
   <link rel="canonical" href={canonicalUrl} />
-  {alternateUrls.map(({ locale, href }) => (
+  {hreflangUrls.map(({ locale, href }) => (
     <link rel="alternate" hreflang={locale} href={href} />
   ))}
   <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
@@ -162,7 +163,7 @@ const ogLocale = localeOgMap[currentLocale] ?? 'en_GB';
     <iframe class="gtm-noscript" src="https://www.googletagmanager.com/ns.html?id=GTM-MWRKLP2S"></iframe>
   </noscript>
 
-  <LanguageSwitcher currentLocale={currentLocale} alternateUrls={alternateUrls} />
+  <LanguageSwitcher currentLocale={currentLocale} alternateUrls={languageSwitcherUrls} />
 
   <slot />
   <CookieConsent />
