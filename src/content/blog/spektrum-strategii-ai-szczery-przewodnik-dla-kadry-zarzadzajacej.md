@@ -1,5 +1,5 @@
 ---
-title: "Spektrum strategii AI: Szczery przewodnik dla kadry zarządzającej"
+title: "Kompas AI dla firm: 7 strategii wprowadzenia sztucznej inteligencji"
 description: "Od całkowitej bierności po pełne zaangażowanie. Co oznaczają poszczególne podejścia i kiedy mają sens."
 date: 2026-03-01
 author: "Błażej Kunke"
@@ -7,7 +7,7 @@ tags: ["Strategia AI", "Zarządzanie", "Transformacja Cyfrowa", "Leadership"]
 heroImage: "/images/AI_strategy_2026.jpg"
 ---
 
-## Spektrum strategii AI: Szczery przewodnik dla kadry zarządzającej
+## Kompas AI dla firm: 7 strategii wprowadzenia sztucznej inteligencji
 
 ### Od całkowitej bierności po pełne zaangażowanie. Co oznaczają poszczególne podejścia i kiedy mają sens.
 
