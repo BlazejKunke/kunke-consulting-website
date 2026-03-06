@@ -1,60 +1,449 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import OMnie from '../components/OMnie.astro';
+
+const calendlyUrl = 'https://calendly.com/kunkeconsulting-info/30min';
+const contactEmail = 'info@kunkeconsulting.pl';
+const contactPhone = '+48722156925';
 ---
 
 <BaseLayout
-  title="Konsultacja AI dla firm | ^Kunke Consulting"
-  description="Landing page konsultacji AI dla firm — wersja robocza przed publikacją."
-  ogImage="/images/Kunke_Favicon.png"
-  noindex={true}
+  title="Konsultacja AI dla firm | Znajdź realne zastosowania AI | ^Kunke Consulting"
+  description="Konsultacja AI dla firm, które chcą zrozumieć, gdzie sztuczna inteligencja ma sens biznesowy. Konkretne rekomendacje, notatka i transkrypcja spotkania."
+  ogImage="/images/AI_strategy_2026.jpg"
 >
+  <section class="hero section-padding">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Konsultacja AI dla firm</p>
+        <h1>W 60 minut pokażę, gdzie AI ma sens w Twojej firmie — i gdzie nie warto zaczynać.</h1>
+        <p class="lead">
+          To konsultacja dla osób, które chcą podjąć dobre decyzje o AI bez presji szybkiego szkolenia
+          lub kosztownego wdrożenia.
+        </p>
+        <div class="cta-row">
+          <a href={calendlyUrl} class="btn btn-primary" target="_blank" rel="noopener noreferrer">Umów konsultację</a>
+          <a href={`mailto:${contactEmail}`} class="btn btn-secondary">Napisz: {contactEmail}</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2>Ta konsultacja pomoże Ci:</h2>
+        <ul>
+          <li>uporządkować pomysły na AI w kontekście celów biznesowych,</li>
+          <li>odróżnić realne szanse od „modnych tematów”,</li>
+          <li>zobaczyć pierwszy, rozsądny krok bez przepalania budżetu.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2>Dla kogo jest ta usługa</h2>
+      <div class="cards three-up">
+        <article class="card">
+          <h3>Dla firm, które słyszą o AI z każdej strony</h3>
+          <p>
+            i chcą spokojnie zweryfikować, co faktycznie ma sens w ich branży, procesach i zespole.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Dla zarządów i managerów</h3>
+          <p>
+            którzy potrzebują jasnych rekomendacji, zanim podejmą decyzję o szkoleniu, narzędziu albo projekcie.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Dla organizacji na etapie „przed wdrożeniem”</h3>
+          <p>
+            które chcą zacząć mądrze: od priorytetów biznesowych, ryzyk i potencjalnego zwrotu.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding section-soft">
+    <div class="container">
+      <h2>Co otrzymujesz po konsultacji</h2>
+      <div class="cards two-up">
+        <article class="card">
+          <h3>Notatka podsumowująca</h3>
+          <p>
+            Krótkie podsumowanie najważniejszych wniosków i rekomendowanych kolejnych kroków dla Twojej firmy.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Transkrypcja spotkania</h3>
+          <p>
+            Pełna transkrypcja rozmowy, abyś mógł/mogła wrócić do ustaleń i łatwo przekazać je zespołowi.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2>Jak wygląda przebieg współpracy</h2>
+      <ol class="steps">
+        <li>
+          <strong>Krótki briefing przed spotkaniem</strong>
+          <p>Po rezerwacji otrzymasz pytania, które pomogą mi przygotować konsultację pod Twoją sytuację.</p>
+        </li>
+        <li>
+          <strong>Konsultacja online 1:1</strong>
+          <p>Rozmawiamy o celach biznesowych, obecnych procesach i potencjalnych scenariuszach użycia AI.</p>
+        </li>
+        <li>
+          <strong>Podsumowanie i materiały po spotkaniu</strong>
+          <p>Dostajesz notatkę i transkrypcję, które porządkują decyzje i kolejne działania.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section-padding section-soft">
+    <div class="container price-wrap">
+      <h2>Cena konsultacji</h2>
+      <p class="price">Od 1399 zł + VAT</p>
+      <p class="price-note">Finalna wycena zależy od zakresu i specyfiki Twojej firmy.</p>
+    </div>
+  </section>
+
+  <section class="section-padding" id="bio">
+    <div class="container">
+      <h2>Prowadzący konsultację</h2>
+      <OMnie />
+    </div>
+  </section>
+
+  <section class="section-padding section-cta">
+    <div class="container cta-box">
+      <h2>Umów konsultację AI</h2>
+      <p>Wybierz dogodny termin w kalendarzu lub napisz do mnie bezpośrednio.</p>
+      <div class="cta-row center">
+        <a href={calendlyUrl} class="btn btn-primary" target="_blank" rel="noopener noreferrer">Przejdź do Calendly</a>
+        <a href={`mailto:${contactEmail}`} class="btn btn-secondary">{contactEmail}</a>
+        <a href={`tel:${contactPhone}`} class="btn btn-secondary">+48 722 156 925</a>
+      </div>
+      <p class="disclaimer">
+        <strong>Uwaga:</strong> testujemy nowe narzędzia i czasami nie jesteśmy w stanie szybko potwierdzić wizyty.
+        W razie wątpliwości prosimy o kontakt mailowy lub telefoniczny.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-wrapper">
+      <div class="footer-content">
+        <div class="footer-section contact-info-footer">
+          <h3>Contact</h3>
+          <p>^Kunke Consulting</p>
+          <p>
+            <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+          </p>
+          <p>
+            <a href="tel:+48722156925">m. +48 722 156 925</a>
+          </p>
+        </div>
+        <div class="footer-section legal-info">
+          <h3>^Kunke Consulting</h3>
+          <p><a href="/privacy-policy">Privacy Policy and Legal</a></p>
+          <p><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></p>
+        </div>
+        <div class="footer-section social-media">
+          <h3>Follow</h3>
+          <ul>
+            <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
+    </div>
+  </footer>
+
   <style>
-    .hero, .section { padding: 64px 20px; }
-    .hero { background: linear-gradient(135deg, #2d5bff 0%, #5d7bff 100%); color: #fff; }
-    .container { max-width: 960px; margin: 0 auto; }
-    .other-services { background: #f8f8fa; }
-    ul { padding-left: 1.2rem; }
+    .section-padding {
+      padding: 72px 20px;
+    }
+
+    .section-soft {
+      background: #f8f8fa;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, #f6f9ff 0%, #eef4ff 100%);
+      color: #13213f;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.9;
+      font-size: 0.85rem;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.2;
+    }
+
+    h2 {
+      margin: 0 0 24px;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      line-height: 1.25;
+    }
+
+    .lead {
+      margin: 0 0 28px;
+      max-width: 62ch;
+      font-size: 1.1rem;
+      color: #2d3f67;
+    }
+
+    .hero-card {
+      background: #ffffff;
+      border: 1px solid #dce6ff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 20px rgba(14, 32, 73, 0.08);
+    }
+
+    .hero-card h2 {
+      font-size: 1.35rem;
+      margin-bottom: 14px;
+    }
+
+    .hero-card ul {
+      margin: 0;
+      padding-left: 20px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .cards {
+      display: grid;
+      gap: 18px;
+    }
+
+    .three-up {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .two-up {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 8px 20px rgba(14, 32, 73, 0.08);
+      border: 1px solid #ebedf4;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: #4f5c73;
+      line-height: 1.55;
+    }
+
+    .steps {
+      margin: 0;
+      padding-left: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .steps li p {
+      margin: 8px 0 0;
+      color: #4f5c73;
+    }
+
+    .price-wrap {
+      text-align: center;
+    }
+
+    .price {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      color: #1f3f99;
+    }
+
+    .price-note {
+      margin-top: 12px;
+      color: #5b6477;
+    }
+
+    .cta-box {
+      text-align: center;
+      background: #f6f9ff;
+      color: #13213f;
+      border: 1px solid #dce6ff;
+      border-radius: 20px;
+      padding: 36px 24px;
+    }
+
+    .cta-box p {
+      color: #344469;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .cta-row.center {
+      justify-content: center;
+      margin: 24px 0 18px;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 12px 20px;
+      border: 1px solid transparent;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-primary {
+      background: #1f56e6;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: #1e2d55;
+      border-color: #dde3f2;
+    }
+
+    .disclaimer {
+      margin: 0 auto;
+      max-width: 72ch;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #445781;
+    }
+
+    footer {
+      background: #f8f8fa;
+      padding: 40px 0 0 0;
+      text-align: center;
+      width: 100%;
+    }
+
+    .footer-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .footer-section {
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section ul li {
+      margin: 0 0 8px 0;
+    }
+
+    .footer-section.social-media ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section.social-media ul li {
+      margin-bottom: 8px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+      padding: 20px 10px;
+      background: #ececf2;
+      font-size: 0.85em;
+      color: #555;
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    #bio :global(.experience) {
+      padding: 0;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .three-up,
+      .two-up {
+        grid-template-columns: 1fr;
+      }
+
+      .section-padding {
+        padding: 56px 20px;
+      }
+
+      .footer-bottom {
+        font-size: 0.75em;
+        padding: 24px 12px;
+      }
+    }
   </style>
-
-  <section class="hero">
-    <div class="container">
-      <h1>Konsultacja AI</h1>
-      <p>Landing konsultacyjny — wersja robocza (noindex).</p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2>Zakres konsultacji</h2>
-      <ul>
-        <li>Ocena gotowości organizacji do wdrożeń AI</li>
-        <li>Priorytetyzacja przypadków użycia</li>
-        <li>Rekomendacje narzędzi i kolejnych kroków</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2>Przebieg współpracy</h2>
-      <p>Krótki audyt, warsztat decyzyjny, plan działań na 30–90 dni.</p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2>Rezultaty</h2>
-      <p>Jasna mapa wdrożenia AI dopasowana do celów biznesowych i zasobów zespołu.</p>
-    </div>
-  </section>
-
-  <section class="section other-services">
-    <div class="container">
-      <h2>Pozostałe usługi</h2>
-      <ul>
-        <li><a href="/ai-dla-firm/">AI dla firm</a></li>
-        <li><a href="/projekty-ai/">Projekty AI</a></li>
-      </ul>
-    </div>
-  </section>
 </BaseLayout>
