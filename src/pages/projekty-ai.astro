@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Projekty AI i wdrożenia | ^Kunke Consulting"
+  description="Landing page wdrożeń AI i współpracy długofalowej — wersja robocza przed publikacją."
+  ogImage="/images/Kunke_Favicon.png"
+  noindex={true}
+>
+  <style>
+    .hero, .section { padding: 64px 20px; }
+    .hero { background: var(--color-primary); color: #fff; }
+    .container { max-width: 960px; margin: 0 auto; }
+    .other-services { background: #f8f8fa; }
+    ul { padding-left: 1.2rem; }
+  </style>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Projekty AI</h1>
+      <p>Wdrożenia i współpraca długofalowa — wersja robocza (noindex).</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Model współpracy</h2>
+      <ul>
+        <li>Discovery i wybór priorytetowych procesów</li>
+        <li>Projektowanie rozwiązania i pilotaż</li>
+        <li>Skalowanie oraz opieka powdrożeniowa</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Typowe obszary wdrożeń</h2>
+      <p>Obsługa klienta, automatyzacja dokumentów, wsparcie sprzedaży i pracy operacyjnej.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Efekt biznesowy</h2>
+      <p>Mierzalna oszczędność czasu, standaryzacja procesów i większa efektywność zespołów.</p>
+    </div>
+  </section>
+
+  <section class="section other-services">
+    <div class="container">
+      <h2>Pozostałe usługi</h2>
+      <ul>
+        <li><a href="/ai-dla-firm/">AI dla firm</a></li>
+        <li><a href="/konsultacja-ai/">Konsultacja AI</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
