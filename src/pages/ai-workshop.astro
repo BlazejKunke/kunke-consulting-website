@@ -2,893 +2,408 @@
 import BaseLayout from '../components/BaseLayout.astro';
 ---
 
-<BaseLayout 
-  title="Praktyczne Szkolenia AI dla Zespołów | Warsztaty AI dla Firm | ^Kunke Consulting"
-description="Jednodniowe warsztaty AI dla firm. Praktyczne szkolenia AI na miejscu - 8h interaktywnych zajęć dostosowanych do potrzeb Twojego zespołu. Od 6,000 PLN."
+<BaseLayout
+  title="Warsztaty AI dla firm | 2 dni, 10 godzin | ^Kunke Consulting"
+  description="Praktyczne warsztaty AI dla firm: 2 dni po 5 godzin, konkretne efekty dla zespołu, cena od 6000 zł + VAT."
   ogImage="/images/Kunke_Favicon.png"
 >
-
-<style>
-  /* Workshop Landing Page Styles */
-  .workshop-hero {
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-    color: var(--color-white);
-    padding: 80px 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .workshop-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(10, 71, 49, 0.1);
-    background-image: 
-      radial-gradient(circle at 25% 25%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-  }
-
-  .workshop-hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .workshop-hero h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-    color: #ffffff !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  }
-
-  .workshop-hero-subtitle {
-    font-size: 1.25rem;
-    margin-bottom: 2.5rem;
-    opacity: 0.95;
-    line-height: 1.4;
-  }
-
-  .hero-cta-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .cta-primary {
-    background: var(--color-accent-blue);
-    color: var(--color-white);
-    padding: 16px 32px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 12px;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
-  }
-
-  .cta-primary:hover {
-    background: #357abd;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(74, 144, 226, 0.4);
-  }
-
-  .cta-secondary {
-    background: transparent;
-    color: var(--color-white);
-    padding: 16px 32px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    border-radius: 12px;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s ease;
-  }
-
-  .cta-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--color-white);
-  }
-
-  /* Benefits Section */
-  .benefits-section {
-    padding: 80px 20px;
-    background: var(--color-white);
-    text-align: center;
-  }
-
-  .benefits-content {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  .benefits-section h2 {
-    font-size: 2.5rem;
-    color: var(--color-primary);
-    margin-bottom: 1rem;
-  }
-
-  .benefits-subtitle {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 3rem;
-    line-height: 1.5;
-  }
-
-  .benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .benefit-card {
-    background: var(--color-light-bg);
-    padding: 2rem;
-    border-radius: 12px;
-    border-left: 4px solid var(--color-accent-blue);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .benefit-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  }
-
-  .benefit-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-
-  .benefit-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--color-primary);
-    margin-bottom: 0.5rem;
-  }
-
-  .benefit-description {
-    color: #666;
-    line-height: 1.5;
-  }
-
-  /* Offer Section */
-  .offer-section {
-    padding: 80px 20px;
-    background: var(--color-light-bg);
-  }
-
-  .offer-content {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .offer-section h2 {
-    font-size: 2.5rem;
-    color: var(--color-primary);
-    margin-bottom: 2rem;
-  }
-
-  .offer-description {
-    font-size: 1.2rem;
-    color: #555;
-    margin-bottom: 3rem;
-    line-height: 1.6;
-  }
-
-  .offer-highlights {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
-    text-align: center;
-  }
-
-  .highlight-item {
-    padding: 1.5rem 1rem;
-    background: var(--color-white);
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
-
-  .highlight-number {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-accent-blue);
-    display: block;
-  }
-
-  .highlight-text {
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: 0.5rem;
-  }
-
-  /* Timeline Section */
-  .timeline-section {
-    padding: 80px 20px;
-    background: var(--color-white);
-  }
-
-  .timeline-content {
-    max-width: 1000px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .timeline-section h2 {
-    font-size: 2.5rem;
-    color: var(--color-primary);
-    margin-bottom: 3rem;
-  }
-
-  .timeline {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .timeline-step {
-    position: relative;
-    text-align: center;
-  }
-
-  .step-number {
-    width: 50px;
-    height: 50px;
-    background: var(--color-accent-blue);
-    color: var(--color-white);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin: 0 auto 1rem;
-  }
-
-  .step-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--color-primary);
-    margin-bottom: 0.5rem;
-  }
-
-  .step-description {
-    color: #666;
-    font-size: 0.9rem;
-    line-height: 1.4;
-  }
-
-  /* Proof Section */
-  .proof-section {
-    padding: 80px 20px;
-    background: var(--color-light-bg);
-    text-align: center;
-  }
-
-  .proof-content {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  .proof-section h2 {
-    font-size: 2.5rem;
-    color: var(--color-primary);
-    margin-bottom: 3rem;
-  }
-
-  .client-logos {
-    background: var(--color-white);
-    padding: 3rem 2rem;
-    border-radius: 12px;
-    margin-bottom: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .logo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 2rem;
-    align-items: center;
-    justify-items: center;
-    width: 100%;
-    max-width: 600px;
-  }
-
-  .client-logo {
-    max-height: 60px;
-    max-width: 120px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    filter: grayscale(100%) opacity(0.7);
-    transition: filter 0.3s ease;
-  }
-
-  .client-logo:hover {
-    filter: grayscale(0%) opacity(1);
-  }
-
-  .testimonials {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-  }
-
-  .testimonial {
-    background: var(--color-white);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
-
-  .testimonial-text {
-    font-style: italic;
-    color: #555;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-  }
-
-  .testimonial-author {
-    font-weight: 600;
-    color: var(--color-primary);
-  }
-
-  /* About Section */
-  .about-section {
-    padding: 80px 20px;
-    background: var(--color-white);
-  }
-
-  .about-content {
-    max-width: 800px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 200px;
-    gap: 3rem;
-    align-items: center;
-  }
-
-  .about-text h2 {
-    font-size: 2.5rem;
-    color: var(--color-primary);
-    margin-bottom: 1.5rem;
-  }
-
-  .about-description {
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-  }
-
-  .about-highlights {
-    list-style: none;
-    padding: 0;
-  }
-
-  .about-highlights li {
-    position: relative;
-    padding-left: 2rem;
-    margin-bottom: 0.5rem;
-    color: #555;
-  }
-
-  .about-highlights li::before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    color: var(--color-accent-blue);
-    font-weight: bold;
-  }
-
-  .about-image {
-    text-align: center;
-  }
-
-  .about-image img {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Pricing Section */
-  .pricing-section {
-    padding: 80px 20px;
-    background: var(--color-primary);
-    color: var(--color-white);
-    text-align: center;
-  }
-
-  .pricing-content {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .pricing-section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .pricing-subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    margin-bottom: 2rem;
-  }
-
-  .price-highlight {
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--color-accent-blue);
-    margin-bottom: 0.5rem;
-  }
-
-  .price-description {
-    opacity: 0.9;
-    margin-bottom: 2rem;
-  }
-
-  /* Contact Section */
-  .contact-section {
-    padding: 80px 20px;
-    background: var(--color-light-bg);
-  }
-
-  .contact-content {
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .contact-section h2 {
-    font-size: 2.5rem;
-    color: var(--color-primary);
-    margin-bottom: 1rem;
-  }
-
-  .contact-subtitle {
-    color: #666;
-    margin-bottom: 3rem;
-    line-height: 1.5;
-  }
-
-  /* Workshop Contact Form */
-  .workshop-contact-form {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 2rem;
-    background: var(--color-white);
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    display: grid;
-    gap: 1.5rem;
-  }
-
-  .workshop-contact-form label {
-    font-weight: 600;
-    color: var(--color-dark-text);
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  .workshop-contact-form input,
-  .workshop-contact-form textarea {
-    width: 100%;
-    padding: 12px 16px;
-    border: 2px solid #e1e1e1;
-    border-radius: 8px;
-    font: 1rem/1.4 "Inter", sans-serif;
-    box-sizing: border-box;
-    transition: border-color 0.2s;
-  }
-
-  .workshop-contact-form input:focus,
-  .workshop-contact-form textarea:focus {
-    border-color: var(--color-accent-blue);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
-  }
-
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .workshop-hero h1 {
-      font-size: 2.2rem;
+  <style>
+    .section {
+      padding: 72px 20px;
     }
 
-    .hero-cta-buttons {
-      flex-direction: column;
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .workshop-hero {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      color: var(--color-white);
+      text-align: center;
+      padding: 90px 20px;
+    }
+
+    .workshop-hero h1 {
+      font-size: 3rem;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.2;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 760px;
+      margin: 0 auto 28px;
+      opacity: 0.95;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .cta {
+      display: inline-block;
+      background: var(--color-accent-blue);
+      color: var(--color-white);
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 14px 24px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 6px 16px rgba(74, 144, 226, 0.35);
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(74, 144, 226, 0.45);
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      color: var(--color-primary);
+      margin-bottom: 14px;
+    }
+
+    .lead {
+      color: #58616e;
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    .effects-grid,
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--color-white);
+      border: 1px solid #e9edf3;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(17, 24, 39, 0.04);
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      color: var(--color-primary);
+    }
+
+    .card p {
+      color: #596170;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .alt-bg {
+      background: var(--color-light-bg);
+    }
+
+    .price-box {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .price {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--color-accent-blue);
+      margin: 6px 0;
+    }
+
+    .price-note {
+      opacity: 0.92;
+      margin: 0;
+    }
+
+    .bio-wrap {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 30px;
       align-items: center;
     }
 
-    .benefits-section h2,
-    .offer-section h2,
-    .timeline-section h2,
-    .proof-section h2,
-    .about-section h2,
-    .pricing-section h2,
-    .contact-section h2 {
-      font-size: 2rem;
+    .bio-list {
+      margin: 16px 0 0;
+      padding-left: 20px;
+      color: #596170;
+      line-height: 1.5;
     }
 
-    .about-content {
-      grid-template-columns: 1fr;
+    .bio-photo img {
+      width: 100%;
+      border-radius: 14px;
+      object-fit: cover;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .final-cta {
       text-align: center;
     }
 
-    .form-row {
-      grid-template-columns: 1fr;
+    .final-cta p {
+      font-size: 1.1rem;
+      color: #58616e;
+      margin-bottom: 22px;
     }
 
-    .timeline {
-      grid-template-columns: 1fr;
-    }
-
-    .offer-highlights {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 480px) {
-    .workshop-hero {
-      padding: 60px 20px;
-    }
-
-    .benefits-section,
-    .offer-section,
-    .timeline-section,
-    .proof-section,
-    .about-section,
-    .pricing-section,
-    .contact-section {
-      padding: 60px 20px;
-    }
-
-    .cta-primary,
-    .cta-secondary {
-      width: auto;
-      min-width: 200px;
-      max-width: 280px;
-      padding: 14px 24px;
-      font-size: 1rem;
+    .other-links {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+      color: #596170;
       text-align: center;
     }
 
-    .hero-cta-buttons {
+    .other-links a {
+      font-weight: 600;
+      margin: 0 8px;
+    }
+
+    footer {
+      background: #f8f8fa;
+      padding: 40px 0 0;
+      text-align: center;
+      width: 100%;
+    }
+
+    .footer-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
       justify-content: center;
+      gap: 40px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+      box-sizing: border-box;
     }
-  }
 
-  /* Footer Styles */
-  footer {
-    background: #f8f8fa;
-    padding: 40px 0 0 0;
-    text-align: center;
-    width: 100%;
-  }
-  .footer-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-  .footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 40px;
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  .footer-section {
-    min-width: 200px;
-    text-align: center;
-  }
-  .footer-section ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .footer-section ul li {
-    margin: 0 0 8px 0;
-  }
-  .footer-section.social-media ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-  }
-  .footer-section.social-media ul li {
-    margin-bottom: 8px;
-    width: 100%;
-    text-align: center;
-  }
-  .footer-bottom {
-    margin-top: 30px;
-    padding: 20px 10px;
-    background: #ececf2;
-    font-size: 0.85em;
-    color: #555;
-    width: 100%;
-    text-align: center;
-    box-sizing: border-box;
-  }
-  @media (max-width: 600px) {
+    .footer-section {
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section ul li {
+      margin: 0 0 8px;
+    }
+
+    .footer-section.social-media ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .footer-section.social-media ul li {
+      width: 100%;
+      text-align: center;
+    }
+
     .footer-bottom {
-      font-size: 0.75em;
-      padding: 24px 12px;
+      margin-top: 30px;
+      padding: 20px 10px;
+      background: #ececf2;
+      font-size: 0.85em;
+      color: #555;
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
     }
-  }
-</style>
 
-<!-- Hero Section -->
-<section class="workshop-hero">
-  <div class="workshop-hero-content">
-    <h1>Praktyczne szkolenia AI</h1>
-    <p class="workshop-hero-subtitle">Dowiedz się, jak AI może usprawnić pracę Twojego zespołu</p>
-    <div class="hero-cta-buttons">
-      <a href="https://calendly.com/kunkeconsulting-info/30min" class="cta-primary" target="_blank" rel="noopener noreferrer">Porozmawiajmy</a>
-    </div>
-  </div>
-</section>
+    @media (max-width: 768px) {
+      .workshop-hero h1 {
+        font-size: 2.2rem;
+      }
 
-<!-- Benefits Section -->
-<section class="benefits-section">
-  <div class="benefits-content">
-    <h2>Dlaczego menedżerowie wybierają szkolenia AI</h2>
-    <p class="benefits-subtitle">
-      Mierzalne rezultaty, które bezpośrednio wpływają na wyniki finansowe i produktywność zespołu
-    </p>
-    
-    <div class="benefits-grid">
-      <div class="benefit-card">
-        <div class="benefit-title">Oszczędź godziny pracy zespołu</div>
-        <div class="benefit-description">
-          Użyj istniejących narzędzi AI aby usprawnić efektywność pracy
-        </div>
-      </div>
-      
-      <div class="benefit-card">
-        <div class="benefit-title">Uruchom pilotaż AI</div>
-        <div class="benefit-description">
-          Wdróż praktyczne rozwiązania AI, które zespół może natychmiast wykorzystać
-        </div>
-      </div>
-      
-      <div class="benefit-card">
-        <div class="benefit-title">Podejmuj lepsze decyzje</div>
-        <div class="benefit-description">
-          Wykorzystaj analityczne informacje AI do szybszego podejmowania lepszych decyzji strategicznych
-        </div>
-      </div>
-      
-      <div class="benefit-card">
-        <div class="benefit-title">Zmniejsz koszty operacyjne</div>
-        <div class="benefit-description">
-          Zmniejsz koszty dzięki najnowszym narzędziom AI
-        </div>
-      </div>
-      
-      <div class="benefit-card">
-        <div class="benefit-title">Wzmocnij przewagę konkurencyjną</div>
-        <div class="benefit-description">
-          Wyprzedź konkurencję dzięki procesom opartym na AI i innowacyjnym rozwiązaniom
-        </div>
-      </div>
-      
-      <div class="benefit-card">
-        <div class="benefit-title">Bądź na bieżąco z AI</div>
-        <div class="benefit-description">
-          Świat AI zmienia się z tygodnia na tydzień, dzięki moim szkoleniom będziecie na bieżąco
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      h2 {
+        font-size: 1.8rem;
+      }
 
-<!-- Offer Section -->
-<section class="offer-section" id="offer">
-  <div class="offer-content">
-    <h2>Praktyczna AI dla Twojej Firmy</h2>
-    <p class="offer-description">
-      Intensywny, praktyczny warsztat prowadzony w Twoim biurze. Rozwiązania, które Twój zespół może natychmiast zastosować do swojej pracy.
-    </p>
-    
-    <div class="offer-highlights">
-      <div class="highlight-item">
-        <span class="highlight-number">8h</span>
-        <div class="highlight-text">Szkoleń i warsztatu</div>
-      </div>
-      <div class="highlight-item">
-        <span class="highlight-number">On-site</span>
-        <div class="highlight-text">W Twoim Biurze</div>
-      </div>
-      <div class="highlight-item">
-        <span class="highlight-number">100%</span>
-        <div class="highlight-text">Praktyczna Nauka</div>
-      </div>
-    </div>
-    
-    <p>
-      Każdy warsztat jest całkowicie dostosowany do Twojej branży, wielkości firmy i konkretnych potrzeb biznesowych. 
-      Pracujemy z Twoimi rzeczywistymi danymi i procesami, nie ogólnymi przykładami.
-    </p>
-  </div>
-</section>
+      .bio-wrap {
+        grid-template-columns: 1fr;
+      }
 
-<!-- Timeline Section -->
-<section class="timeline-section">
-  <div class="timeline-content">
-    <h2>Jak to działa</h2>
-    <div class="timeline">
-      <div class="timeline-step">
-        <div class="step-number">1</div>
-        <div class="step-title">Rozmowa rozpoznawcza</div>
-        <div class="step-description">
-          Bezpłatna 30-minutowa konsultacja w celu zrozumienia Twoich potrzeb i wyzwań
-        </div>
-      </div>
-      
-      <div class="timeline-step">
-        <div class="step-number">2</div>
-        <div class="step-title">Indywidualna propozycja</div>
-        <div class="step-description">
-          Dostosowana agenda warsztatów zaprojektowana specjalnie dla Twojego zespołu i celów
-        </div>
-      </div>
-      
-      <div class="timeline-step">
-        <div class="step-number">3</div>
-        <div class="step-title">Dwa dni warsztatowe</div>
-        <div class="step-description">
-          W sumie 8-godzin na intensywne szkolenie i workshop AI.
-        </div>
-      </div>
-      
-      <div class="timeline-step">
-        <div class="step-number">4</div>
-        <div class="step-title">Wsparcie</div>
-        <div class="step-description">
-          Możliwość dalszej współpracy i wsparcia projektów AI
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      .bio-photo {
+        max-width: 220px;
+        margin: 0 auto;
+      }
+    }
+  </style>
 
-<!-- Proof Section -->
-<section class="proof-section">
-  <div class="proof-content">
-    <h2>Współpracowałem z</h2>
-    
-    <div class="client-logos">
-      <div class="logo-grid">
-        <img src="/images/Logo_WAFimage.webp" alt="WAF" class="client-logo" loading="lazy" />
-        <img src="/images/Logo_Ozga_Company_logoimages.webp" alt="Ozga Company" class="client-logo" loading="lazy" />
-        <img src="/images/Logo_PDO_Company_logoimages.webp" alt="PDO Company" class="client-logo" loading="lazy" />
-        <img src="/images/LogoKunkeStickers.webp" alt="Kunke Stickers" class="client-logo" loading="lazy" />
-      </div>
-    </div>
-    
-    <div class="testimonials">
-      <div class="testimonial">
-        <div class="testimonial-text">
-          "Błażej Kunke – wielkie brawa za pełen profesjonalizm! Oprócz świetnego przekazania wiedzy, zadbałeś też o stworzenie przyjaznej atmosfery!"
-        </div>
-        <div class="testimonial-author">— Anna Majewska, SGB Leasing</div>
-      </div>
-      
-      <div class="testimonial">
-        <div class="testimonial-text">
-          "Dziękujemy za wspólny projekt"
-        </div>
-        <div class="testimonial-author">— Marta Ozga, CEO Ozga Group</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- About Section -->
-<section class="about-section">
-  <div class="about-content">
-    <div class="about-text">
-      <h2>Kilka słów o mnie</h2>
-      <p class="about-description">
-        Jestem pasjonatem uczenia umiejętności, które realnie ułatwiają codzienną pracę.
-        Ponad 10 lat w konsultingu, funduszach inwestycyjnych, w firmie rodzinnej i na uczelni
-        pozwoliło mi zdobyć wiedzę i perspektywę, którą teraz przekazuję innym.
-        Moją misją jest wspieranie ludzi i organizacji w pełnym wykorzystaniu ich potencjału poprzez
-        doradztwo oraz szkolenia dopasowane do indywidualnych potrzeb i celów.
+  <section class="workshop-hero">
+    <div class="container">
+      <h1>Warsztaty AI dla firm</h1>
+      <p class="subtitle">
+        Intensywne szkolenie dla zespołu: 2 dni po 5 godzin (łącznie 10 godzin),
+        oparte o realne zadania z Waszej codziennej pracy.
       </p>
-      
-      <ul class="about-highlights">
-        <li>Jestem ekonomistą, wykorzystuję doświadczenie z korporacji, by wspierać polskie firmy</li>
-        <li>Pracuję po polsku i angielsku</li>
-        <li>Skupiam się na praktycznych szkoleniach</li>
-      </ul>
-    </div>
-    
-    <div class="about-image">
-      <picture>
-        <source srcset="/images/Omnie.webp" type="image/webp" />
-        <img src="/images/Omnie.jpg" alt="Błażej Kunke - AI Trainer" loading="lazy" width="350" height="510" />
-      </picture>
-    </div>
-  </div>
-</section>
-
-<!-- Pricing Section -->
-<section class="pricing-section">
-  <div class="pricing-content">
-    <h2>Przejrzyste Ceny</h2>
-    <p class="pricing-subtitle">
-      Cena całego szkolenia
-    </p>
-    
-    <div class="price-highlight">Od 6,000 PLN</div>
-    <div class="price-description">
-      Ostateczna cena zależy od wielkości grupy, 
-      poziomu dostosowania i lokalizacji. Otrzymaj dokładną wycenę podczas bezpłatnej rozmowy rozpoznawczej.
-    </div>
-    
-    <a href="https://calendly.com/kunkeconsulting-info/30min" class="cta-primary" target="_blank" rel="noopener noreferrer">Otrzymaj Wycenę</a>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-wrapper">
-    <div class="footer-content">
-      <div class="footer-section contact-info-footer">
-        <h3>Contact</h3>
-        <p>^Kunke Consulting</p>
-        <p>
-          <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
-        </p>
-        <p>
-          <a href="tel:+48722156925">m. +48 722 156 925</a>
-        </p>
+      <div class="badge-row">
+        <span class="badge">2 dni</span>
+        <span class="badge">5 godzin dziennie</span>
+        <span class="badge">10 godzin łącznie</span>
+        <span class="badge">Warsztat dla zespołu</span>
       </div>
-      <div class="footer-section legal-info">
-        <h3>^Kunke Consulting</h3>
-        <p><a href="/privacy-policy">Privacy Policy and Legal</a></p>
-        <p><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></p>
+      <a class="cta" href="mailto:info@kunkeconsulting.pl">Napisz email: info@kunkeconsulting.pl</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Konkretne efekty dla zespołu</h2>
+      <p class="lead">
+        Warsztat jest zaprojektowany tak, aby uczestnicy wyszli z gotowymi sposobami użycia AI,
+        które można wdrożyć od razu po szkoleniu.
+      </p>
+      <div class="effects-grid">
+        <article class="card">
+          <h3>Szybsza codzienna praca</h3>
+          <p>Zespół poznaje schematy i prompty, które skracają czas realizacji powtarzalnych zadań.</p>
+        </article>
+        <article class="card">
+          <h3>Lepsza jakość materiałów</h3>
+          <p>Uczestnicy uczą się tworzyć lepsze maile, podsumowania, analizy i treści robocze z pomocą AI.</p>
+        </article>
+        <article class="card">
+          <h3>Wspólny standard pracy z AI</h3>
+          <p>Firma dostaje jednolite podejście do korzystania z narzędzi AI w zespole.</p>
+        </article>
       </div>
-      <div class="footer-section social-media">
-        <h3>Follow</h3>
-        <ul>
-          <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-          <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-          <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+    </div>
+  </section>
+
+  <section class="section alt-bg">
+    <div class="container">
+      <h2>Dla kogo jest usługa</h2>
+      <p class="lead">
+        Dla firm, które chcą przeszkolić zespół i szybko przejść od teorii do praktycznego użycia AI.
+      </p>
+      <div class="audience-grid">
+        <article class="card">
+          <h3>Zespoły operacyjne i administracyjne</h3>
+          <p>Jeśli zespół wykonuje dużo pracy biurowej, raportowej lub komunikacyjnej.</p>
+        </article>
+        <article class="card">
+          <h3>Działy sprzedaży i marketingu</h3>
+          <p>Jeśli potrzebujecie przyspieszyć przygotowanie ofert, research i materiałów.</p>
+        </article>
+        <article class="card">
+          <h3>Kadra menedżerska z zespołem</h3>
+          <p>Jeśli zależy Wam na tym, by cały zespół pracował efektywniej i spójnie.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="price-box">
+        <h2 style="color: #fff; margin-bottom: 4px;">Cena warsztatu</h2>
+        <p>Format usługi: 2 dni × 5 godzin (10 godzin łącznie)</p>
+        <div class="price">od 6000 zł + VAT</div>
+        <p class="price-note">Cena końcowa zależy od liczby uczestników i miejsca realizacji.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt-bg">
+    <div class="container bio-wrap">
+      <div>
+        <h2>Bio prowadzącego</h2>
+        <p class="lead">
+          Nazywam się Błażej Kunke i prowadzę praktyczne warsztaty AI dla firm.
+          Pracuję z zespołami, które chcą używać AI w codziennej pracy w sposób prosty,
+          skuteczny i dopasowany do realnych zadań.
+        </p>
+        <ul class="bio-list">
+          <li>Ponad 10 lat doświadczenia biznesowego i szkoleniowego.</li>
+          <li>Warsztaty prowadzone po polsku i angielsku.</li>
+          <li>Nacisk na praktykę, ćwiczenia i gotowe zastosowania po szkoleniu.</li>
         </ul>
       </div>
+      <div class="bio-photo">
+        <picture>
+          <source srcset="/images/Omnie.webp" type="image/webp" />
+          <img src="/images/Omnie.jpg" alt="Błażej Kunke - prowadzący warsztaty AI" loading="lazy" width="220" height="320" />
+        </picture>
+      </div>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
-  </div>
-</footer>
+  </section>
 
+  <section class="section">
+    <div class="container final-cta">
+      <h2>Zamów warsztat AI dla swojego zespołu</h2>
+      <p>Główne CTA: napisz nam email na adres info@kunkeconsulting.pl.</p>
+      <a class="cta" href="mailto:info@kunkeconsulting.pl">Napisz nam email: info@kunkeconsulting.pl</a>
+
+      <div class="other-links">
+        <strong>Szukasz czegoś innego?</strong><br />
+        <a href="/konsultacja-ai/">Konsultacja AI</a>
+        <a href="/projekty-ai/">Projekty AI</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-wrapper">
+      <div class="footer-content">
+        <div class="footer-section contact-info-footer">
+          <h3>Contact</h3>
+          <p>^Kunke Consulting</p>
+          <p><a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a></p>
+          <p><a href="tel:+48722156925">m. +48 722 156 925</a></p>
+        </div>
+        <div class="footer-section legal-info">
+          <h3>^Kunke Consulting</h3>
+          <p><a href="/privacy-policy">Privacy Policy and Legal</a></p>
+          <p><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></p>
+        </div>
+        <div class="footer-section social-media">
+          <h3>Follow</h3>
+          <ul>
+            <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
+    </div>
+  </footer>
 </BaseLayout>
