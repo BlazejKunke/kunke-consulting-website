@@ -3,73 +3,319 @@ import BaseLayout from '../components/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="AI dla firm | Wybór usługi | ^Kunke Consulting"
-  description="Wybierz format współpracy AI dla Twojej firmy: warsztaty, konsultacje lub wdrożenia długofalowe."
+  title="AI dla firm | Wybierz model współpracy | ^Kunke Consulting"
+  description="Pomagamy firmom w trzech modelach: konsultacja AI, warsztaty AI i projekty wdrożeniowe. Sprawdź, co będzie najlepszym krokiem dla Twojej organizacji."
   ogImage="/images/Kunke_Favicon.png"
-  noindex={true}
 >
   <style>
-    .hero, .section { padding: 64px 20px; }
-    .hero { background: var(--color-light-bg); text-align: center; }
-    .container { max-width: 1000px; margin: 0 auto; }
-    h1 { margin-bottom: 1rem; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 2rem; }
-    .card { background: #fff; border-radius: 12px; padding: 1.25rem; border: 1px solid #e7e7e7; }
-    .card h3 { margin-top: 0; }
-    .card a { font-weight: 700; }
-    .other-services { background: #f8f8fa; }
-    ul { padding-left: 1.2rem; }
+    .section {
+      padding: 64px 20px;
+    }
+
+    .hero {
+      padding: 80px 20px 48px;
+      background: linear-gradient(180deg, #f7fbff 0%, #ffffff 100%);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+      line-height: 1.2;
+    }
+
+    .lead {
+      max-width: 860px;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: #3e4a56;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      border: 1px solid #dfe7ef;
+      border-radius: 14px;
+      background: #fff;
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .card h2 {
+      font-size: 1.35rem;
+      margin: 0;
+      color: var(--color-primary);
+    }
+
+    .label {
+      font-weight: 700;
+      color: #1d2d3f;
+      margin-right: 0.3rem;
+    }
+
+    .card p {
+      margin: 0;
+      line-height: 1.5;
+      color: #465464;
+    }
+
+    .cta {
+      margin-top: auto;
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      background: var(--color-accent-blue);
+      color: #fff;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      text-align: center;
+      transition: background 0.2s ease;
+    }
+
+    .cta:hover {
+      background: #357abd;
+    }
+
+    .comparison {
+      background: #f6f9fc;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: minmax(130px, 180px) repeat(3, 1fr);
+      gap: 1px;
+      background: #d8e3ef;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 1.5rem;
+    }
+
+    .comparison-grid > div {
+      background: #fff;
+      padding: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .comparison-grid .heading {
+      font-weight: 700;
+      color: var(--color-primary);
+      background: #eef5fc;
+    }
+
+    .comparison-grid .row-title {
+      font-weight: 700;
+      color: #24384d;
+      background: #f9fbfd;
+    }
+
+    .start-box {
+      background: #eaf4ff;
+      border: 1px solid #cbe1fb;
+      border-radius: 14px;
+      padding: 1.3rem;
+      max-width: 760px;
+    }
+
+    .start-box h2 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+    }
+
+    footer {
+      background: #f8f8fa;
+      padding: 40px 0 0;
+      text-align: center;
+      width: 100%;
+    }
+
+    .footer-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .footer-section {
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section ul li {
+      margin: 0 0 8px;
+    }
+
+    .footer-section.social-media ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .footer-section.social-media ul li {
+      width: 100%;
+      text-align: center;
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+      padding: 20px 10px;
+      background: #ececf2;
+      font-size: 0.85em;
+      color: #555;
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 860px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison-grid .heading:first-child,
+      .comparison-grid .row-title {
+        background: #eef5fc;
+      }
+    }
   </style>
 
   <section class="hero">
     <div class="container">
-      <h1>AI dla firm</h1>
-      <p>Strona wyboru usługi AI — wersja robocza.</p>
+      <h1>AI dla firm: wybierz właściwy model współpracy</h1>
+      <p class="lead">
+        ^Kunke Consulting pomaga firmom wdrażać AI w trzech modelach współpracy: <strong>konsultacja</strong>,
+        <strong>warsztaty</strong> i <strong>projekty wdrożeniowe</strong>. Poniżej szybko sprawdzisz, która opcja najlepiej
+        pasuje do Twojej sytuacji.
+      </p>
+
       <div class="cards">
         <article class="card">
-          <h3>Warsztaty AI</h3>
-          <p>Praktyczne szkolenie zespołu i szybkie podniesienie kompetencji.</p>
-          <a href="/ai-workshop/">Przejdź do warsztatów</a>
+          <h2>Konsultacja AI</h2>
+          <p><span class="label">Dla kogo:</span>dla właścicieli, menedżerów i zespołów, które chcą podjąć dobrą decyzję przed inwestycją.</p>
+          <p><span class="label">Problem:</span>nie wiesz od czego zacząć, co ma sens biznesowy i gdzie AI da największy zwrot.</p>
+          <p><span class="label">Efekt:</span>jasne priorytety, rekomendacje i plan pierwszych kroków dopasowany do firmy.</p>
+          <a class="cta" href="/konsultacja-ai/">Przejdź do konsultacji AI</a>
         </article>
+
         <article class="card">
-          <h3>Konsultacja AI</h3>
-          <p>Wsparcie eksperckie w wyborze kierunku i priorytetów.</p>
-          <a href="/konsultacja-ai/">Przejdź do konsultacji</a>
+          <h2>Warsztaty AI</h2>
+          <p><span class="label">Dla kogo:</span>dla zespołów, które chcą szybko zdobyć praktyczne kompetencje i wspólny język pracy z AI.</p>
+          <p><span class="label">Problem:</span>niska pewność zespołu, chaos narzędziowy i brak konkretnych zastosowań w codziennej pracy.</p>
+          <p><span class="label">Efekt:</span>przeszkolony zespół, gotowe scenariusze użycia i plan wdrożenia wiedzy po warsztacie.</p>
+          <a class="cta" href="/ai-workshop/">Przejdź do warsztatów AI</a>
         </article>
+
         <article class="card">
-          <h3>Projekty AI</h3>
-          <p>Wdrożenia i współpraca długofalowa nastawiona na wynik.</p>
-          <a href="/projekty-ai/">Przejdź do projektów</a>
+          <h2>Projekty AI</h2>
+          <p><span class="label">Dla kogo:</span>dla firm gotowych przejść od pomysłów do realnego wdrożenia AI w procesach.</p>
+          <p><span class="label">Problem:</span>brak zasobów lub know-how, by zaprojektować i dowieźć skuteczny projekt AI end-to-end.</p>
+          <p><span class="label">Efekt:</span>wdrożone rozwiązanie AI, mierzalny rezultat biznesowy i wsparcie w skalowaniu.</p>
+          <a class="cta" href="/projekty-ai/">Przejdź do projektów AI</a>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section comparison">
+    <div class="container">
+      <h2>Która opcja jest dla Ciebie?</h2>
+      <div class="comparison-grid">
+        <div class="heading">Porównanie</div>
+        <div class="heading">Konsultacja AI</div>
+        <div class="heading">Warsztaty AI</div>
+        <div class="heading">Projekty AI</div>
+
+        <div class="row-title">Etap firmy</div>
+        <div>Początek działań z AI lub potrzeba uporządkowania kierunku.</div>
+        <div>Etap budowania kompetencji i przygotowania zespołu do działania.</div>
+        <div>Etap realizacji konkretnego wdrożenia o wysokim priorytecie.</div>
+
+        <div class="row-title">Cel</div>
+        <div>Podjąć dobrą decyzję i ustalić, co robić najpierw.</div>
+        <div>Podnieść praktyczne umiejętności i przyspieszyć adopcję AI.</div>
+        <div>Zbudować i wdrożyć rozwiązanie, które daje wynik biznesowy.</div>
+
+        <div class="row-title">Czas zaangażowania</div>
+        <div>Krótki: pojedyncza konsultacja lub krótka seria spotkań.</div>
+        <div>Średni: warsztat + praca zespołu po szkoleniu.</div>
+        <div>Dłuższy: współpraca projektowa od analizy do wdrożenia.</div>
+
+        <div class="row-title">Rodzaj rezultatu</div>
+        <div>Diagnoza, rekomendacje, plan działania.</div>
+        <div>Kompetencje zespołu, gotowe use case'y i standardy pracy.</div>
+        <div>Działające rozwiązanie AI z mierzalnym efektem.</div>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <h2>Dla kogo</h2>
-      <p>Firmy, które chcą dobrać odpowiedni model współpracy AI do etapu rozwoju organizacji.</p>
+      <div class="start-box">
+        <h2>Nie wiesz, od czego zacząć?</h2>
+        <p>
+          Najbezpieczniejszym pierwszym krokiem jest <strong>konsultacja AI</strong>. Pozwala szybko ocenić potencjał,
+          ograniczyć ryzyko i wybrać właściwy kierunek — zanim zainwestujesz więcej czasu i budżetu.
+        </p>
+        <a class="cta" href="/konsultacja-ai/">Umów konsultację AI</a>
+      </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <h2>Jak wybrać usługę</h2>
-      <ul>
-        <li>Warsztaty: gdy celem jest szybkie podniesienie kompetencji zespołu.</li>
-        <li>Konsultacja: gdy potrzebna jest diagnoza i plan działania.</li>
-        <li>Projekty: gdy chcesz wdrożyć AI i prowadzić współpracę długofalowo.</li>
-      </ul>
+  <footer>
+    <div class="footer-wrapper">
+      <div class="footer-content">
+        <div class="footer-section contact-info-footer">
+          <h3>Contact</h3>
+          <p>^Kunke Consulting</p>
+          <p><a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a></p>
+          <p><a href="tel:+48722156925">m. +48 722 156 925</a></p>
+        </div>
+        <div class="footer-section legal-info">
+          <h3>^Kunke Consulting</h3>
+          <p><a href="/privacy-policy">Privacy Policy and Legal</a></p>
+          <p><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></p>
+        </div>
+        <div class="footer-section social-media">
+          <h3>Follow</h3>
+          <ul>
+            <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </section>
-
-  <section class="section other-services">
-    <div class="container">
-      <h2>Pozostałe usługi</h2>
-      <ul>
-        <li><a href="/konsultacja-ai/">Konsultacja AI</a></li>
-        <li><a href="/projekty-ai/">Projekty AI</a></li>
-      </ul>
+    <div class="footer-bottom">
+      <p>© 2026 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
     </div>
-  </section>
+  </footer>
 </BaseLayout>
