@@ -14,7 +14,8 @@ const packages = [
       '90 minut online, albo stacjonarnie',
       'Możliwość nagrania spotkania'
     ],
-    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min',
+    href: '/konsultacja-ai/'
   },
   {
     id: 'grow',
@@ -31,7 +32,8 @@ const packages = [
       'Prezentacja PDF, Certyfikat'
     ],
     badge: 'AI dla firm',
-    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min',
+    href: '/ai-workshop/'
   },
   {
     id: 'flourish',
@@ -48,7 +50,8 @@ const packages = [
       'Wsparcie prawne AI',
       'Konsulting AI'
     ],
-    calendly: 'https://calendly.com/kunkeconsulting-info/30min'
+    calendly: 'https://calendly.com/kunkeconsulting-info/30min',
+    href: '/projekty-ai/'
   }
 ];
 ---
@@ -72,7 +75,7 @@ const packages = [
           <p class="price" set:html={pkg.price} />
 
           {pkg.calendly
-            ? <a href="/ai-workshop" class="cta">{pkg.id === 'plant' || pkg.id === 'grow' ? 'Dowiedz się więcej' : 'Porozmawiajmy'}</a>
+            ? <a href={pkg.href} class="cta">{pkg.id === 'plant' || pkg.id === 'grow' ? 'Dowiedz się więcej' : 'Porozmawiajmy'}</a>
             : <a href="#contact" class="cta secondary">Skontaktuj się</a>}
         </div>
       </article>
