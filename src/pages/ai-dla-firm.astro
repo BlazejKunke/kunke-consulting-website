@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="AI dla firm | Wybór usługi | ^Kunke Consulting"
+  description="Wybierz format współpracy AI dla Twojej firmy: warsztaty, konsultacje lub wdrożenia długofalowe."
+  ogImage="/images/Kunke_Favicon.png"
+  noindex={true}
+>
+  <style>
+    .hero, .section { padding: 64px 20px; }
+    .hero { background: var(--color-light-bg); text-align: center; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    h1 { margin-bottom: 1rem; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .card { background: #fff; border-radius: 12px; padding: 1.25rem; border: 1px solid #e7e7e7; }
+    .card h3 { margin-top: 0; }
+    .card a { font-weight: 700; }
+    .other-services { background: #f8f8fa; }
+    ul { padding-left: 1.2rem; }
+  </style>
+
+  <section class="hero">
+    <div class="container">
+      <h1>AI dla firm</h1>
+      <p>Strona wyboru usługi AI — wersja robocza.</p>
+      <div class="cards">
+        <article class="card">
+          <h3>Warsztaty AI</h3>
+          <p>Praktyczne szkolenie zespołu i szybkie podniesienie kompetencji.</p>
+          <a href="/ai-workshop/">Przejdź do warsztatów</a>
+        </article>
+        <article class="card">
+          <h3>Konsultacja AI</h3>
+          <p>Wsparcie eksperckie w wyborze kierunku i priorytetów.</p>
+          <a href="/konsultacja-ai/">Przejdź do konsultacji</a>
+        </article>
+        <article class="card">
+          <h3>Projekty AI</h3>
+          <p>Wdrożenia i współpraca długofalowa nastawiona na wynik.</p>
+          <a href="/projekty-ai/">Przejdź do projektów</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Dla kogo</h2>
+      <p>Firmy, które chcą dobrać odpowiedni model współpracy AI do etapu rozwoju organizacji.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Jak wybrać usługę</h2>
+      <ul>
+        <li>Warsztaty: gdy celem jest szybkie podniesienie kompetencji zespołu.</li>
+        <li>Konsultacja: gdy potrzebna jest diagnoza i plan działania.</li>
+        <li>Projekty: gdy chcesz wdrożyć AI i prowadzić współpracę długofalowo.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section other-services">
+    <div class="container">
+      <h2>Pozostałe usługi</h2>
+      <ul>
+        <li><a href="/konsultacja-ai/">Konsultacja AI</a></li>
+        <li><a href="/projekty-ai/">Projekty AI</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

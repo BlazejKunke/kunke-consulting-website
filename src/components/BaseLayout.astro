@@ -7,12 +7,14 @@ export interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  noindex?: boolean;
 }
 
 const {
   title,
   description = "Kunke Consulting: wdrożenia sztucznej inteligencji, automatyzacje procesów i doradztwo dla firm",
-  ogImage
+  ogImage,
+  noindex = false
 } = Astro.props;
 
 const nonce: string | undefined = Astro.locals?.nonce;
@@ -39,6 +41,7 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
 
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
 
   <link rel="canonical" href={canonicalUrl} />
   {hreflangUrls.map(({ locale, href }) => (

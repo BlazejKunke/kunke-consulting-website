@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Konsultacja AI dla firm | ^Kunke Consulting"
+  description="Landing page konsultacji AI dla firm — wersja robocza przed publikacją."
+  ogImage="/images/Kunke_Favicon.png"
+  noindex={true}
+>
+  <style>
+    .hero, .section { padding: 64px 20px; }
+    .hero { background: linear-gradient(135deg, #2d5bff 0%, #5d7bff 100%); color: #fff; }
+    .container { max-width: 960px; margin: 0 auto; }
+    .other-services { background: #f8f8fa; }
+    ul { padding-left: 1.2rem; }
+  </style>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Konsultacja AI</h1>
+      <p>Landing konsultacyjny — wersja robocza (noindex).</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Zakres konsultacji</h2>
+      <ul>
+        <li>Ocena gotowości organizacji do wdrożeń AI</li>
+        <li>Priorytetyzacja przypadków użycia</li>
+        <li>Rekomendacje narzędzi i kolejnych kroków</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Przebieg współpracy</h2>
+      <p>Krótki audyt, warsztat decyzyjny, plan działań na 30–90 dni.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Rezultaty</h2>
+      <p>Jasna mapa wdrożenia AI dopasowana do celów biznesowych i zasobów zespołu.</p>
+    </div>
+  </section>
+
+  <section class="section other-services">
+    <div class="container">
+      <h2>Pozostałe usługi</h2>
+      <ul>
+        <li><a href="/ai-dla-firm/">AI dla firm</a></li>
+        <li><a href="/projekty-ai/">Projekty AI</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
