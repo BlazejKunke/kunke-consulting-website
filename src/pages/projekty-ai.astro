@@ -1,60 +1,488 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+
+const contactEmail = 'info@kunkeconsulting.pl';
 ---
 
 <BaseLayout
-  title="Projekty AI i wdrożenia | ^Kunke Consulting"
-  description="Landing page wdrożeń AI i współpracy długofalowej — wersja robocza przed publikacją."
-  ogImage="/images/Kunke_Favicon.png"
-  noindex={true}
+  title="Projekty AI dla firm | Uporządkowane wdrożenia AI | ^Kunke Consulting"
+  description="Współpraca projektowa i wdrożeniowa dla firm, które chcą przejść od zainteresowania AI do uporządkowanych działań: od identyfikacji use case'ów przez pilotaż po dalsze wsparcie."
+  ogImage="/images/AI_strategy_2026.jpg"
 >
+  <section class="hero section-padding">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Projekty AI dla firm</p>
+        <h1>Od pomysłów na AI do uporządkowanego wdrożenia w organizacji.</h1>
+        <p class="lead">
+          Ta współpraca jest dla firm, które chcą podejść do AI praktycznie i odpowiedzialnie: od wyboru
+          sensownych zastosowań, przez pilotaż, po dalsze wsparcie doradcze i wdrożeniowe.
+        </p>
+        <a href={`mailto:${contactEmail}`} class="btn btn-primary">Napisz do mnie w sprawie projektu</a>
+      </div>
+      <article class="hero-card">
+        <h2>Kluczowe założenie współpracy</h2>
+        <p>
+          Nie chodzi o „sprzedawanie AI”. Chodzi o uporządkowanie decyzji, priorytetów i działań tak,
+          aby AI realnie wspierało pracę zespołów.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2>Kiedy szkolenie lub konsultacja to za mało</h2>
+      <div class="cards three-up">
+        <article class="card">
+          <h3>Pomysłów jest dużo, decyzji mało</h3>
+          <p>W organizacji pojawiają się różne inicjatywy AI, ale brakuje wspólnych priorytetów i planu.</p>
+        </article>
+        <article class="card">
+          <h3>Eksperymenty są rozproszone</h3>
+          <p>Różne działy testują narzędzia na własną rękę, bez spójnego podejścia i bez właściciela wdrożenia.</p>
+        </article>
+        <article class="card">
+          <h3>Nie wiadomo, od czego zacząć</h3>
+          <p>Firma czuje presję działania, ale nie ma pewności, które use case'y naprawdę warto testować.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding section-soft">
+    <div class="container">
+      <h2>Jakie problemy biznesowe rozwiązuje taka współpraca</h2>
+      <ul class="checklist">
+        <li>chaos wokół AI i brak wspólnego kierunku,</li>
+        <li>trudność z nadaniem priorytetów i oceną sensu use case'ów,</li>
+        <li>duża różnica między entuzjazmem wobec AI a realnym użyciem w pracy,</li>
+        <li>brak przełożenia AI na codzienne procesy zespołów,</li>
+        <li>ryzyko, że organizacja dużo mówi o AI, ale mało wdraża.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2>Jak może wyglądać projekt</h2>
+      <ol class="steps">
+        <li>
+          <strong>Przegląd pomysłów i use case'ów</strong>
+          <p>Porządkujemy inicjatywy i dopasowujemy je do celów biznesowych firmy.</p>
+        </li>
+        <li>
+          <strong>Warsztat priorytetyzujący</strong>
+          <p>Wybieramy obszary, które mają największy sens operacyjny i organizacyjny.</p>
+        </li>
+        <li>
+          <strong>Wybór 1–3 obszarów pilotażu</strong>
+          <p>Skupiamy się na działaniach możliwych do sprawdzenia w praktyce, a nie na szerokich deklaracjach.</p>
+        </li>
+        <li>
+          <strong>Wsparcie we wdrożeniu</strong>
+          <p>Pracujemy z liderami i zespołami, żeby AI wspierało realne zadania, także w powtarzalnych procesach.</p>
+        </li>
+        <li>
+          <strong>Uporządkowanie dalszych kroków</strong>
+          <p>Po pilotażu ustalamy, co rozwijać dalej, jak poukładać narzędzia i sposób pracy.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section-padding section-soft">
+    <div class="container">
+      <h2>Jak pracuję</h2>
+      <div class="cards two-up">
+        <article class="card">
+          <h3>Zewnętrzny partner, niezależna perspektywa</h3>
+          <p>
+            Wspieram organizację w podejmowaniu decyzji biznesowych, bez obietnic „magicznych narzędzi”.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Praktyka zamiast hype'u</h3>
+          <p>
+            Kluczowe są procesy, kontekst pracy i gotowość zespołów, bo skuteczność AI zależy od sposobu wdrożenia.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Dopasowanie do specyfiki firmy</h3>
+          <p>
+            Każdy projekt układam pod realia organizacji: od poziomu dojrzałości po sposób współpracy między działami.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Połączenie strategii i operacyjności</h3>
+          <p>
+            Łączę decyzje na poziomie kierowniczym z działaniami, które da się wdrożyć w codziennej pracy zespołów.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2>Dla kogo ta współpraca ma sens</h2>
+      <ul class="checklist">
+        <li>kancelarie prawne,</li>
+        <li>firmy usługowe,</li>
+        <li>firmy produkcyjne,</li>
+        <li>organizacje, które mają już pierwsze doświadczenia z AI lub czują rosnącą presję, by uporządkować temat,</li>
+        <li>liderzy, którzy nie chcą wdrażać AI na ślepo.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-padding section-soft">
+    <div class="container trust-box">
+      <h2>Dowody zaufania: współpraca z PragmatIQ</h2>
+      <p>
+        Przykładem takiej współpracy był projekt realizowany z zespołem PragmatIQ przez około 6 miesięcy,
+        obejmujący różne działy organizacji, m.in. finanse, księgowość, administrację, marketing oraz działy merytoryczne.
+      </p>
+      <p>
+        Celem było praktyczne wsparcie zespołów w powtarzalnych i czasochłonnych zadaniach oraz budowanie podejścia,
+        w którym skuteczność AI wynika z wdrożenia dopasowanego do kontekstu pracy.
+      </p>
+      <p>
+        Efektem prac był publicznie opisany raport dotyczący wykorzystania AI w organizacji:
+        <a href="https://pragmatiq.pl/aktualnosci/wydalismy-raport-ai-w-pragmatiq" target="_blank" rel="noopener noreferrer">
+          Wydaliśmy raport AI w PragmatIQ
+        </a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container narrow">
+      <h2>Nie jesteś pewien, czy potrzebujesz projektu?</h2>
+      <p>
+        Jeśli jesteś na wcześniejszym etapie i chcesz najpierw jednej rozmowy diagnostycznej,
+        zacznij od <a href="/konsultacja-ai/">konsultacji AI</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-padding section-soft">
+    <div class="container">
+      <h2>FAQ</h2>
+      <div class="faq-grid">
+        <article class="faq-item">
+          <h3>Czym to się różni od szkolenia?</h3>
+          <p>
+            Szkolenie przekazuje wiedzę i kompetencje. Projekt wdrożeniowy obejmuje dodatkowo priorytetyzację,
+            pilotaż i wsparcie w codziennym zastosowaniu AI w konkretnych procesach.
+          </p>
+        </article>
+        <article class="faq-item">
+          <h3>Czym to się różni od konsultacji?</h3>
+          <p>
+            Konsultacja to pojedyncza diagnoza i rekomendacje. Projekt oznacza pracę etapową przez dłuższy czas,
+            razem z zespołem i liderami.
+          </p>
+        </article>
+        <article class="faq-item">
+          <h3>Czy taki projekt musi być długi?</h3>
+          <p>
+            Nie zawsze. Zakres zależy od potrzeb, ale często sensowny horyzont to kilka miesięcy,
+            żeby rzetelnie przejść od analizy do pilotażu i dalszych decyzji.
+          </p>
+        </article>
+        <article class="faq-item">
+          <h3>Czy zaczynamy od pilotażu?</h3>
+          <p>
+            Zaczynamy od zbadania potrzeb i priorytetów. Dopiero potem wybieramy pilotaż,
+            który ma uzasadnienie biznesowe i organizacyjne.
+          </p>
+        </article>
+        <article class="faq-item">
+          <h3>Czy współpraca jest wyceniana indywidualnie?</h3>
+          <p>
+            Tak. Wycena zależy od zakresu, liczby działów, tempa pracy i poziomu wsparcia wdrożeniowego.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container cta-box">
+      <h2>Porozmawiajmy o projekcie AI w Twojej firmie</h2>
+      <p>
+        Jeśli chcesz uporządkować temat AI i przejść do konkretnych działań,
+        napisz do mnie. Odpowiem spokojnie i rzeczowo, bez agresywnej sprzedaży.
+      </p>
+      <a href={`mailto:${contactEmail}`} class="btn btn-primary">{contactEmail}</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-wrapper">
+      <div class="footer-content">
+        <div class="footer-section contact-info-footer">
+          <h3>Contact</h3>
+          <p>^Kunke Consulting</p>
+          <p>
+            <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+          </p>
+          <p>
+            <a href="tel:+48722156925">m. +48 722 156 925</a>
+          </p>
+        </div>
+        <div class="footer-section legal-info">
+          <h3>^Kunke Consulting</h3>
+          <p><a href="/privacy-policy">Privacy Policy and Legal</a></p>
+          <p><a href="/blog" target="_blank" rel="noopener noreferrer">Blog</a></p>
+        </div>
+        <div class="footer-section social-media">
+          <h3>Follow</h3>
+          <ul>
+            <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
+    </div>
+  </footer>
+
   <style>
-    .hero, .section { padding: 64px 20px; }
-    .hero { background: var(--color-primary); color: #fff; }
-    .container { max-width: 960px; margin: 0 auto; }
-    .other-services { background: #f8f8fa; }
-    ul { padding-left: 1.2rem; }
+    .section-padding {
+      padding: 72px 20px;
+    }
+
+    .section-soft {
+      background: #f7f9fc;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .narrow {
+      max-width: 900px;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, #f2f6ff 0%, #eaf1ff 100%);
+      color: #12213d;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 1.35fr 1fr;
+      align-items: stretch;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      color: #233d75;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 1.2;
+    }
+
+    h2 {
+      margin: 0 0 24px;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      line-height: 1.25;
+    }
+
+    .lead {
+      margin: 0 0 28px;
+      font-size: 1.08rem;
+      line-height: 1.6;
+      color: #34486f;
+      max-width: 62ch;
+    }
+
+    .hero-card,
+    .card,
+    .faq-item,
+    .trust-box {
+      background: #fff;
+      border: 1px solid #e7ebf4;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 24px rgba(15, 35, 76, 0.07);
+    }
+
+    .hero-card h2,
+    .card h3,
+    .faq-item h3 {
+      margin-top: 0;
+    }
+
+    .cards {
+      display: grid;
+      gap: 18px;
+    }
+
+    .three-up {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .two-up {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .checklist {
+      margin: 0;
+      padding-left: 22px;
+      display: grid;
+      gap: 12px;
+      line-height: 1.55;
+      color: #394864;
+      max-width: 90ch;
+    }
+
+    .steps {
+      margin: 0;
+      padding-left: 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .steps p,
+    .card p,
+    .faq-item p,
+    .trust-box p,
+    .cta-box p {
+      margin: 8px 0 0;
+      color: #44526d;
+      line-height: 1.6;
+    }
+
+    .faq-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cta-box {
+      background: #f4f8ff;
+      border: 1px solid #dfe7fb;
+      border-radius: 18px;
+      padding: 36px 24px;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0.78rem 1.2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #1e57d8;
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(30, 87, 216, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: #184ab8;
+    }
+
+    footer {
+      background-color: #f8f8f8;
+      color: #6b7280;
+      padding: 3rem 0 1rem;
+      font-size: 0.9rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .footer-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h3 {
+      color: #1f2937;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .footer-section p,
+    .footer-section li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section a {
+      color: #6b7280;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: #1f2937;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1rem;
+      border-top: 1px solid #e5e7eb;
+      color: #9ca3af;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .three-up,
+      .two-up,
+      .faq-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-padding {
+        padding: 56px 20px;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .footer-wrapper {
+        padding: 0 1.5rem;
+      }
+    }
   </style>
-
-  <section class="hero">
-    <div class="container">
-      <h1>Projekty AI</h1>
-      <p>Wdrożenia i współpraca długofalowa — wersja robocza (noindex).</p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2>Model współpracy</h2>
-      <ul>
-        <li>Discovery i wybór priorytetowych procesów</li>
-        <li>Projektowanie rozwiązania i pilotaż</li>
-        <li>Skalowanie oraz opieka powdrożeniowa</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2>Typowe obszary wdrożeń</h2>
-      <p>Obsługa klienta, automatyzacja dokumentów, wsparcie sprzedaży i pracy operacyjnej.</p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2>Efekt biznesowy</h2>
-      <p>Mierzalna oszczędność czasu, standaryzacja procesów i większa efektywność zespołów.</p>
-    </div>
-  </section>
-
-  <section class="section other-services">
-    <div class="container">
-      <h2>Pozostałe usługi</h2>
-      <ul>
-        <li><a href="/ai-dla-firm/">AI dla firm</a></li>
-        <li><a href="/konsultacja-ai/">Konsultacja AI</a></li>
-      </ul>
-    </div>
-  </section>
 </BaseLayout>
