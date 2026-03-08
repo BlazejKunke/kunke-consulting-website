@@ -51,6 +51,16 @@
   ],
   "redirects": [
     {
+      "source": "/us/",
+      "destination": "/en/",
+      "permanent": true
+    },
+    {
+      "source": "/us",
+      "destination": "/en/",
+      "permanent": true
+    },
+    {
       "source": "/en/ai-workshop/",
       "destination": "/en/",
       "permanent": true

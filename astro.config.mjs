@@ -28,6 +28,10 @@ export default defineConfig({
       status: 301,
       destination: '/szkolenia-ai'
     },
+    '/us': {
+      status: 301,
+      destination: '/en'
+    },
   },
   security: {
     checkOrigin: true

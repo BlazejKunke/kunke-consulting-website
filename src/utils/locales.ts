@@ -1,9 +1,9 @@
 export const locales = [
   { code: 'pl', label: 'Polski', pathPrefix: '' },
-  { code: 'en', label: 'United States', pathPrefix: '/en' },
+  { code: 'en', label: 'English (US & UK)', pathPrefix: '/en' },
   { code: 'fr', label: 'Français', pathPrefix: '/fr' },
   { code: 'nl', label: 'Nederlands', pathPrefix: '/nl' },
-  { code: 'uk', label: 'United Kingdom', pathPrefix: '/uk' },
+  { code: 'uk', label: 'United Kingdom (alias)', pathPrefix: '/uk' },
 ] as const;
 
 export type LocaleCode = typeof locales[number]['code'];
