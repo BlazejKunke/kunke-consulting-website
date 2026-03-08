@@ -3,7 +3,7 @@ export const locales = [
   { code: 'en', label: 'English (US & UK)', pathPrefix: '/en' },
   { code: 'fr', label: 'Français', pathPrefix: '/fr' },
   { code: 'nl', label: 'Nederlands', pathPrefix: '/nl' },
-  { code: 'uk', label: 'United Kingdom (alias)', pathPrefix: '/uk' },
+  { code: 'uk', label: 'United Kingdom (alias)', pathPrefix: '/uk', isAlias: true },
 ] as const;
 
 export type LocaleCode = typeof locales[number]['code'];
@@ -115,7 +115,7 @@ const findExistingLocalizedPath = (basePath: string, locale: LocaleCode): string
 
 export const buildLanguageSwitcherUrls = (pathname: string, siteUrl: URL) => {
   const basePath = basePathFromLocale(pathname);
-  return locales.map(({ code }) => {
+  return locales.filter(({ isAlias }) => !isAlias).map(({ code }) => {
     const localeCode = code as LocaleCode;
     const existingLocalized = findExistingLocalizedPath(basePath, localeCode);
     const fallbackPath = localizedPath('/', localeCode);
