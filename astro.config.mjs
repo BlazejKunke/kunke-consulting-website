@@ -2,6 +2,14 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+const sitemapExcludedPaths = [
+  '/thank-you',
+  '/AIDlaFirm',
+  '/aidlafirm',
+  '/ai-excel',
+  '/us',
+];
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://kunkeconsulting.pl',
@@ -11,16 +19,16 @@ export default defineConfig({
         defaultLocale: 'pl',
         locales: {
           pl: 'pl-PL',
-          en: 'en-GB',
+          en: 'en',
           fr: 'fr-FR',
           nl: 'nl-NL',
-          uk: 'uk-UA'
+          uk: 'en-GB'
         }
       },
       changefreq: 'weekly',
       priority: 0.7,
       lastmod: new Date(),
-      filter: (page) => !page.includes('/thank-you')
+      filter: (page) => !sitemapExcludedPaths.some((path) => page.includes(path))
     })
   ],
   redirects: {

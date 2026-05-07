@@ -1,2 +1,9 @@
+/sitemap.xml  /sitemap-index.xml  301!
+/AIDlaFirm  /ai-dla-firm/  301!
+/AIDlaFirm/  /ai-dla-firm/  301!
+/AIDlaFirm/*  /ai-dla-firm/:splat  301!
+/aidlafirm  /ai-dla-firm/  301!
+/aidlafirm/  /ai-dla-firm/  301!
+/aidlafirm/*  /ai-dla-firm/:splat  301!
 /us  /en  301!
 /podstawy-ai-talenty-webinar  /podstawy-ai-talenty-webinar/index.html  200

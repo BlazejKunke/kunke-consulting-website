@@ -2,7 +2,7 @@
 // src/components/BaseLayoutEn.astro
 import CookieConsent from './CookieConsentEn.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { buildHreflangUrls, buildLanguageSwitcherUrls, defaultLocale, detectLocale, localeOgMap } from '../utils/locales';
+import { buildHreflangUrls, buildLanguageSwitcherUrls, defaultLocale, detectLocale, localeHtmlLangMap, localeOgMap } from '../utils/locales';
 export interface Props {
   title: string;
   description?: string;
@@ -18,13 +18,14 @@ const {
 const nonce: string | undefined = Astro.locals?.nonce;
 
 // safer attr helper: Astro renders empty attrs if value is undefined, which is OK.
-const siteUrl = Astro.site;
+const siteUrl = Astro.site ?? new URL('https://kunkeconsulting.pl');
 const absoluteOgImage = ogImage
   ? new URL(ogImage, siteUrl).href
   : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 
 const canonicalUrl = Astro.url.href;
 const currentLocale = detectLocale(Astro.url.pathname);
+const htmlLang = localeHtmlLangMap[currentLocale] ?? currentLocale;
 const languageSwitcherUrls = buildLanguageSwitcherUrls(Astro.url.pathname, siteUrl);
 const hreflangUrls = buildHreflangUrls(Astro.url.pathname, siteUrl);
 const xDefaultUrl = languageSwitcherUrls.find(({ locale }) => locale === defaultLocale)?.href ?? canonicalUrl;
@@ -32,7 +33,7 @@ const ogLocale = localeOgMap[currentLocale] ?? 'en_GB';
 ---
 
 <!DOCTYPE html>
-<html lang={currentLocale}>
+<html lang={htmlLang}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -41,8 +42,8 @@ const ogLocale = localeOgMap[currentLocale] ?? 'en_GB';
   <meta name="description" content={description} />
 
   <link rel="canonical" href={canonicalUrl} />
-  {hreflangUrls.map(({ locale, href }) => (
-    <link rel="alternate" hreflang={locale} href={href} />
+  {hreflangUrls.map(({ hreflang, href }) => (
+    <link rel="alternate" hreflang={hreflang} href={href} />
   ))}
   <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
 

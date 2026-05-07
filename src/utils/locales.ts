@@ -1,9 +1,9 @@
 export const locales = [
   { code: 'pl', label: 'Polski', pathPrefix: '' },
-  { code: 'en', label: 'English (US & UK)', pathPrefix: '/en' },
+  { code: 'en', label: 'English', pathPrefix: '/en' },
   { code: 'fr', label: 'Français', pathPrefix: '/fr' },
   { code: 'nl', label: 'Nederlands', pathPrefix: '/nl' },
-  { code: 'uk', label: 'United Kingdom (alias)', pathPrefix: '/uk', isAlias: true },
+  { code: 'uk', label: 'United Kingdom', pathPrefix: '/uk' },
 ] as const;
 
 export type LocaleCode = typeof locales[number]['code'];
@@ -22,6 +22,22 @@ export const localeOgMap: Record<LocaleCode, string> = {
   fr: 'fr_FR',
   nl: 'nl_NL',
   uk: 'en_GB',
+};
+
+export const localeHtmlLangMap: Record<LocaleCode, string> = {
+  pl: 'pl',
+  en: 'en',
+  fr: 'fr',
+  nl: 'nl',
+  uk: 'en-GB',
+};
+
+export const localeHreflangMap: Record<LocaleCode, string> = {
+  pl: 'pl-PL',
+  en: 'en',
+  fr: 'fr-FR',
+  nl: 'nl-NL',
+  uk: 'en-GB',
 };
 
 export const defaultLocale: LocaleCode = 'pl';
@@ -115,7 +131,7 @@ const findExistingLocalizedPath = (basePath: string, locale: LocaleCode): string
 
 export const buildLanguageSwitcherUrls = (pathname: string, siteUrl: URL) => {
   const basePath = basePathFromLocale(pathname);
-  return locales.filter(({ isAlias }) => !isAlias).map(({ code }) => {
+  return locales.map(({ code }) => {
     const localeCode = code as LocaleCode;
     const existingLocalized = findExistingLocalizedPath(basePath, localeCode);
     const fallbackPath = localizedPath('/', localeCode);
@@ -135,7 +151,7 @@ export const buildHreflangUrls = (pathname: string, siteUrl: URL) => {
       const existingLocalized = findExistingLocalizedPath(basePath, currentLocale);
       const selfPath = existingLocalized ?? localizedPath(basePath, currentLocale);
       const normalizedSelfPath = normalizeHreflangPath(selfPath);
-      return [{ locale: localeCode, href: new URL(normalizedSelfPath, siteUrl).href }];
+      return [{ locale: localeCode, hreflang: localeHreflangMap[localeCode], href: new URL(normalizedSelfPath, siteUrl).href }];
     }
 
     const existingLocalized = findExistingLocalizedPath(basePath, localeCode);
@@ -144,6 +160,6 @@ export const buildHreflangUrls = (pathname: string, siteUrl: URL) => {
     }
 
     const normalizedPath = normalizeHreflangPath(existingLocalized);
-    return [{ locale: localeCode, href: new URL(normalizedPath, siteUrl).href }];
+    return [{ locale: localeCode, hreflang: localeHreflangMap[localeCode], href: new URL(normalizedPath, siteUrl).href }];
   });
 };
