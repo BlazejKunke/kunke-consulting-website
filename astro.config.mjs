@@ -32,6 +32,10 @@ export default defineConfig({
     })
   ],
   redirects: {
+    '/avaliability': {
+      status: 301,
+      destination: '/availability'
+    },
     '/ai-excel': {
       status: 301,
       destination: '/szkolenia-ai'
