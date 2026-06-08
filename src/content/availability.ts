@@ -18,7 +18,7 @@ export const availability = {
     '2026-07-20': 'available',
     '2026-07-21': 'available',
     '2026-07-22': 'available',
-    '2026-07-23': 'available',
+    '2026-07-23': 'unavailable',
     '2026-07-27': 'available',
     '2026-07-28': 'available',
     '2026-07-30': 'available',
