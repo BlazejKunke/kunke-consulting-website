@@ -1,0 +1,246 @@
+---
+import AvailabilityCalendar from '../components/AvailabilityCalendar.astro';
+import BaseLayout from '../components/BaseLayout.astro';
+import { availability } from '../content/availability';
+
+const updatedAt = new Intl.DateTimeFormat('pl-PL', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+}).format(new Date(`${availability.updatedAt}T00:00:00Z`));
+---
+
+<BaseLayout
+  title={`Dostępność ${availability.year} | ^Kunke Consulting`}
+  description={`Kalendarz dostępności Błażeja Kunke na ${availability.year} rok. Sprawdź dostępne, częściowo dostępne i zajęte terminy.`}
+>
+  <main>
+    <header class="availability-hero">
+      <a class="home-link" href="/" aria-label="Wróć na stronę główną">← ^Kunke Consulting</a>
+      <div class="hero-content">
+        <p class="eyebrow">Kalendarz {availability.year}</p>
+        <h1>Moja dostępność</h1>
+        <p class="intro">
+          Sprawdź orientacyjną dostępność na warsztaty, konsultacje i projekty. W sprawie
+          konkretnego terminu napisz lub zadzwoń — potwierdzę go bezpośrednio.
+        </p>
+        <p class="updated">Ostatnia aktualizacja: <time datetime={availability.updatedAt}>{updatedAt}</time></p>
+      </div>
+    </header>
+
+    <section class="calendar-section" aria-label="Kalendarz dostępności">
+      <AvailabilityCalendar />
+    </section>
+
+    <section class="contact-section">
+      <div>
+        <p class="eyebrow">Masz termin na myśli?</p>
+        <h2>Potwierdźmy go</h2>
+        <p>Kalendarz ma charakter orientacyjny. Napisz, aby zarezerwować konkretny dzień.</p>
+      </div>
+      <div class="contact-actions">
+        <a class="primary-action" href="mailto:info@kunkeconsulting.pl">Napisz e-mail</a>
+        <a class="secondary-action" href="tel:+48722156925">+48 722 156 925</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© {availability.year} ^Kunke Consulting</p>
+  </footer>
+</BaseLayout>
+
+<style>
+  main {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 85% 4%, rgba(212, 175, 55, 0.16), transparent 24rem),
+      linear-gradient(180deg, #f3f8f5 0%, #f8faf9 45%, #ffffff 100%);
+  }
+
+  .availability-hero {
+    position: relative;
+    padding: 1.25rem max(5vw, 1.25rem) 4.5rem;
+    overflow: hidden;
+    background: #083f2d;
+    color: #ffffff;
+  }
+
+  .availability-hero::after {
+    position: absolute;
+    right: -9rem;
+    bottom: -15rem;
+    width: 34rem;
+    height: 34rem;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4rem rgba(255, 255, 255, 0.035), 0 0 0 9rem rgba(255, 255, 255, 0.025);
+    content: '';
+  }
+
+  .home-link {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    color: #d8eee4;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .home-link:hover {
+    color: #ffffff;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 54rem;
+    margin: 5rem auto 0;
+    text-align: center;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.75rem;
+    color: #d4af37;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.045em;
+  }
+
+  .intro {
+    max-width: 45rem;
+    margin: 1.5rem auto 0;
+    color: #d8eee4;
+    font-size: clamp(1rem, 2vw, 1.18rem);
+    line-height: 1.75;
+  }
+
+  .updated {
+    display: inline-flex;
+    margin: 1.5rem 0 0;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    font-size: 0.82rem;
+  }
+
+  .calendar-section {
+    box-sizing: border-box;
+    width: min(94%, 82rem);
+    margin: 0 auto;
+    padding: 3.5rem 0 4.5rem;
+  }
+
+  .contact-section {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: min(90%, 68rem);
+    margin: 0 auto 4.5rem;
+    padding: 2.25rem;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 16px 45px rgba(10, 71, 49, 0.1);
+  }
+
+  .contact-section h2 {
+    margin: 0 0 0.5rem;
+    color: #0a4731;
+    font-size: clamp(1.65rem, 4vw, 2.35rem);
+    text-align: left;
+  }
+
+  .contact-section p:not(.eyebrow) {
+    max-width: 38rem;
+    margin: 0;
+    color: #52605a;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .primary-action,
+  .secondary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.9rem;
+    padding: 0 1.15rem;
+    border: 1px solid #0a4731;
+    border-radius: 10px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .primary-action {
+    background: #0a4731;
+    color: #ffffff;
+  }
+
+  .secondary-action {
+    background: #ffffff;
+    color: #0a4731;
+  }
+
+  .primary-action:hover,
+  .secondary-action:hover {
+    background: #d4af37;
+    border-color: #d4af37;
+    color: #083f2d;
+  }
+
+  footer {
+    padding: 1.5rem;
+    background: #062f22;
+    color: #c9ddd4;
+    text-align: center;
+  }
+
+  footer p {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 760px) {
+    .availability-hero {
+      padding-bottom: 3.5rem;
+    }
+
+    .hero-content {
+      margin-top: 3.5rem;
+    }
+
+    .calendar-section {
+      padding-top: 2.5rem;
+    }
+
+    .contact-section {
+      align-items: stretch;
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+
+    .contact-actions {
+      flex-direction: column;
+    }
+  }
+</style>

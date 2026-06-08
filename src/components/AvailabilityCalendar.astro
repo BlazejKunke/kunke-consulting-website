@@ -1,0 +1,272 @@
+---
+import { availability, type AvailabilityStatus } from '../content/availability';
+
+const monthNames = [
+  'styczeń',
+  'luty',
+  'marzec',
+  'kwiecień',
+  'maj',
+  'czerwiec',
+  'lipiec',
+  'sierpień',
+  'wrzesień',
+  'październik',
+  'listopad',
+  'grudzień',
+];
+
+const weekdayNames = ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Niedz'];
+const statusDetails: Record<AvailabilityStatus, { label: string; shortLabel: string }> = {
+  available: { label: 'Dostępny', shortLabel: 'Dostępny' },
+  'partially-available': { label: 'Częściowo dostępny', shortLabel: 'Częściowo' },
+  unavailable: { label: 'Niedostępny', shortLabel: 'Zajęty' },
+};
+
+const today = new Date();
+const todayUtc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+
+const pad = (value: number) => String(value).padStart(2, '0');
+
+const calendars = availability.months.map((month) => {
+  const monthIndex = month - 1;
+  const numberOfDays = new Date(Date.UTC(availability.year, month, 0)).getUTCDate();
+  const mondayBasedStartDay = (new Date(Date.UTC(availability.year, monthIndex, 1)).getUTCDay() + 6) % 7;
+  const days = Array.from({ length: numberOfDays }, (_, index) => {
+    const day = index + 1;
+    const dateKey = `${availability.year}-${pad(month)}-${pad(day)}`;
+    const status = availability.days[dateKey] ?? availability.defaultStatus;
+    const dayUtc = Date.UTC(availability.year, monthIndex, day);
+
+    return {
+      day,
+      dateKey,
+      status,
+      statusLabel: statusDetails[status].label,
+      shortStatusLabel: statusDetails[status].shortLabel,
+      isPast: dayUtc < todayUtc,
+      accessibleDate: new Intl.DateTimeFormat('pl-PL', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        timeZone: 'UTC',
+      }).format(new Date(dayUtc)),
+    };
+  });
+
+  return {
+    month,
+    name: monthNames[monthIndex],
+    leadingEmptyDays: Array.from({ length: mondayBasedStartDay }),
+    days,
+  };
+});
+---
+
+<div class="availability-calendar">
+  <div class="legend" aria-label="Legenda statusów dostępności">
+    {(Object.entries(statusDetails) as [AvailabilityStatus, { label: string; shortLabel: string }][]).map(
+      ([status, details]) => (
+        <div class="legend-item">
+          <span class={`status-dot status-${status}`} aria-hidden="true"></span>
+          <span>{details.label}</span>
+        </div>
+      ),
+    )}
+  </div>
+
+  <div class="months-grid">
+    {calendars.map((calendar) => (
+      <section class="month-card" aria-labelledby={`month-${calendar.month}`}>
+        <h2 id={`month-${calendar.month}`}>{calendar.name} {availability.year}</h2>
+
+        <div class="calendar-grid weekday-row" aria-hidden="true">
+          {weekdayNames.map((weekday) => <span>{weekday}</span>)}
+        </div>
+
+        <div class="calendar-grid days-grid">
+          {calendar.leadingEmptyDays.map(() => <span class="empty-day" aria-hidden="true"></span>)}
+          {calendar.days.map(({ day, status, statusLabel, shortStatusLabel, isPast, accessibleDate }) => (
+            <div
+              class:list={['day', `status-${status}`, { 'is-past': isPast }]}
+              aria-label={`${accessibleDate}: ${statusLabel}`}
+              title={`${accessibleDate}: ${statusLabel}`}
+            >
+              <span class="day-number">{day}</span>
+              <span class="day-status" aria-hidden="true">{shortStatusLabel}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</div>
+
+<style>
+  .availability-calendar {
+    width: 100%;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 1.5rem;
+    margin: 0 auto 2rem;
+    padding: 1rem 1.25rem;
+    max-width: 48rem;
+    background: #ffffff;
+    border: 1px solid #dfe8e3;
+    border-radius: 999px;
+    box-shadow: 0 8px 24px rgba(10, 71, 49, 0.07);
+  }
+
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #24332d;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .status-dot {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+  }
+
+  .months-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+    gap: 1.5rem;
+  }
+
+  .month-card {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1.35rem;
+    background: #ffffff;
+    border: 1px solid #e1e8e4;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(10, 71, 49, 0.08);
+  }
+
+  .month-card h2 {
+    margin: 0 0 1.1rem;
+    color: #0a4731;
+    font-size: 1.35rem;
+    text-align: left;
+    text-transform: capitalize;
+  }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.38rem;
+  }
+
+  .weekday-row {
+    margin-bottom: 0.5rem;
+    color: #5c6b65;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .day,
+  .empty-day {
+    min-width: 0;
+    aspect-ratio: 1 / 1;
+  }
+
+  .day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.22rem;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: #173027;
+    text-align: center;
+  }
+
+  .day-number {
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .day-status {
+    width: 100%;
+    margin-top: 0.25rem;
+    overflow: hidden;
+    font-size: 0.52rem;
+    font-weight: 700;
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .status-available {
+    background: #ccefdc;
+    border-color: #74c899;
+  }
+
+  .status-partially-available {
+    background: #fff0b8;
+    border-color: #e1bd42;
+  }
+
+  .status-unavailable {
+    background: #ffd1cf;
+    border-color: #de7772;
+  }
+
+  .day.is-past {
+    opacity: 0.48;
+    filter: saturate(0.65);
+  }
+
+  @media (max-width: 520px) {
+    .legend {
+      justify-content: flex-start;
+      border-radius: 16px;
+    }
+
+    .month-card {
+      padding: 1rem 0.75rem;
+    }
+
+    .calendar-grid {
+      gap: 0.25rem;
+    }
+
+    .day {
+      border-radius: 8px;
+    }
+
+    .day-number {
+      font-size: 0.82rem;
+    }
+
+    .day-status {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .month-card {
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .month-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(10, 71, 49, 0.11);
+    }
+  }
+</style>

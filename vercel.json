@@ -51,6 +51,11 @@
   ],
   "redirects": [
     {
+      "source": "/avaliability",
+      "destination": "/availability",
+      "permanent": true
+    },
+    {
       "source": "/us/",
       "destination": "/en/",
       "permanent": true
