@@ -64,6 +64,7 @@ const { currentLocale, alternateUrls } = Astro.props;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
     backdrop-filter: blur(6px);
     border: 1px solid rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
   }
 
   .language-button {
@@ -79,6 +80,7 @@ const { currentLocale, alternateUrls } = Astro.props;
     border-radius: 12px;
     transition: border-color 180ms ease, box-shadow 180ms ease;
     list-style: none;
+    box-sizing: border-box;
   }
 
   .language-menu[open] .language-button,
@@ -121,6 +123,7 @@ const { currentLocale, alternateUrls } = Astro.props;
     gap: 4px;
     padding: 8px 8px 12px;
     min-width: 220px;
+    box-sizing: border-box;
   }
 
   .language-option {

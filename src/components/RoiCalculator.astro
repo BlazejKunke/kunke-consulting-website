@@ -1,0 +1,581 @@
+---
+const nonce: string | undefined = Astro.locals?.nonce;
+---
+
+<section class="roi-page" aria-labelledby="roi-title">
+  <div class="roi-header">
+    <p class="roi-brand"><span aria-hidden="true">^</span>Kunke Consulting</p>
+    <h1 id="roi-title">Ile AI może realnie zaoszczędzić Twojej firmie?</h1>
+    <p class="roi-lede">
+      Krótki, uczciwy szacunek. Sześć pytań, dwa scenariusze: ostrożny i optymistyczny. To kalkulator orientacyjny,
+      nie obietnica, ale założenia są jawne i możesz je sprawdzić.
+    </p>
+  </div>
+
+  <div class="roi-tool" id="roi-calculator">
+    <div class="roi-inputs" aria-label="Dane do kalkulatora ROI AI">
+      <div class="roi-question">
+        <p class="roi-label">1. Rodzaj firmy</p>
+        <p class="roi-hint">Wpływa na to, jak dużo pracy da się wesprzeć AI.</p>
+        <div class="roi-options" id="roi-type" data-choice-group data-state-key="type" aria-label="Rodzaj firmy">
+          <button class="roi-option is-selected" type="button" data-v="prod" aria-pressed="true">Produkcyjna</button>
+          <button class="roi-option" type="button" data-v="serv" aria-pressed="false">Usługowa</button>
+          <button class="roi-option" type="button" data-v="soft" aria-pressed="false">Software / IT</button>
+        </div>
+      </div>
+
+      <div class="roi-question">
+        <label class="roi-label" for="roi-total">2. Liczba pracowników (łącznie)</label>
+        <input type="number" id="roi-total" min="1" max="100000" placeholder="np. 60" value="60" inputmode="numeric" />
+      </div>
+
+      <div class="roi-question">
+        <label class="roi-label" for="roi-office">3. Ilu z nich pracuje głównie przy komputerze?</label>
+        <p class="roi-hint">Praca biurowa: większość dnia przy komputerze lub smartfonie. Reszta to praca fizyczna / produkcja.</p>
+        <input type="number" id="roi-office" min="0" max="100000" placeholder="np. 20" value="20" inputmode="numeric" />
+      </div>
+
+      <div class="roi-question">
+        <p class="roi-label">4. Jak firma korzysta dziś z AI?</p>
+        <p class="roi-hint">Im mniej dziś, tym większy potencjał wzrostu.</p>
+        <div class="roi-option-list" id="roi-maturity" data-choice-group data-state-key="maturity" aria-label="Obecny poziom korzystania z AI">
+          <button class="roi-option is-selected" type="button" data-v="none" aria-pressed="true">Praktycznie nikt nie korzysta</button>
+          <button class="roi-option" type="button" data-v="few" aria-pressed="false">Kilku entuzjastów na własną rękę</button>
+          <button class="roi-option" type="button" data-v="some" aria-pressed="false">Część zespołów ma narzędzia, brak systemu</button>
+          <button class="roi-option" type="button" data-v="full" aria-pressed="false">Cała firma, z przeszkoleniem</button>
+        </div>
+      </div>
+
+      <div class="roi-question">
+        <p class="roi-label">5. Średnie wynagrodzenie brutto pracownika biurowego</p>
+        <p class="roi-hint">Potrzebne, żeby przeliczyć zaoszczędzony czas na złotówki.</p>
+        <div class="roi-options" id="roi-salary" data-choice-group data-state-key="salary" aria-label="Średnie wynagrodzenie brutto pracownika biurowego">
+          <button class="roi-option is-selected" type="button" data-v="a" aria-pressed="true">do 6 tys.</button>
+          <button class="roi-option" type="button" data-v="b" aria-pressed="false">6–10 tys.</button>
+          <button class="roi-option" type="button" data-v="c" aria-pressed="false">10–15 tys.</button>
+          <button class="roi-option" type="button" data-v="d" aria-pressed="false">15 tys.+</button>
+        </div>
+      </div>
+
+      <div class="roi-question">
+        <p class="roi-label">6. Które zadania zajmują dużo czasu w tygodniu?</p>
+        <p class="roi-hint">Zaznacz wszystkie, które pasują. Im więcej, tym większa część pracy nadaje się do wsparcia AI.</p>
+        <div class="roi-option-list" id="roi-tasks" aria-label="Czasochłonne zadania">
+          <button class="roi-option is-selected" type="button" data-v="comm" aria-pressed="true">E-mail i komunikacja</button>
+          <button class="roi-option is-selected" type="button" data-v="notes" aria-pressed="true">Spotkania i notatki</button>
+          <button class="roi-option is-selected" type="button" data-v="docs" aria-pressed="true">Dokumenty i raporty</button>
+          <button class="roi-option is-selected" type="button" data-v="research" aria-pressed="true">Research: klienci, konkurencja, prawo, administracja</button>
+          <button class="roi-option is-selected" type="button" data-v="sales" aria-pressed="true">Przygotowanie ofert (sprzedaż)</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="roi-result" aria-live="polite" aria-label="Wynik kalkulatora ROI AI">
+      <p class="roi-result-kicker">Szacowana roczna wartość</p>
+      <div class="roi-result-grid">
+        <div class="roi-result-metric">
+          <p>Scenariusz ostrożny</p>
+          <strong id="roi-cons">- <span>PLN / rok</span></strong>
+        </div>
+        <div class="roi-result-metric is-optimistic">
+          <p>Scenariusz optymistyczny</p>
+          <strong id="roi-opt">- <span>PLN / rok</span></strong>
+        </div>
+      </div>
+
+      <p class="roi-fte" id="roi-fte"></p>
+      <p class="roi-note" id="roi-softnote" hidden></p>
+      <a class="cta-btn roi-result-cta" href="#roi-next-step">Porozmawiajmy, jak to wykorzystać →</a>
+
+      <details class="roi-assumptions">
+        <summary>Jak to liczę? (założenia)</summary>
+        <ul>
+          <li>Koszt pracodawcy ≈ 1,2 × wynagrodzenie brutto, ok. 1840 godzin pracy rocznie na osobę.</li>
+          <li>Oszczędność czasu na zadaniach „biurowych”: ostrożnie 15%, optymistycznie 35%.</li>
+          <li>Jednorazowe szkolenie realnie zmienia sposób pracy <strong>części</strong>, nie wszystkich osób: ostrożnie ok. 40% pracowników biurowych, optymistycznie ok. 75% (reprezentanci wdrażają to dalej w zespołach).</li>
+          <li>Korekta o obecny poziom AI: mniejszy potencjał, jeśli już sporo wdrożone.</li>
+          <li>Wariant optymistyczny uwzględnia drobny efekt „spływania” usprawnień do produkcji.</li>
+        </ul>
+      </details>
+
+      <p class="roi-disclaimer">
+        To kalkulator orientacyjny dla polskiego MŚP, a nie obietnica wyniku. Pojedyncze szkolenie dociera do części zespołu,
+        a realne efekty bardzo się różnią. Różnica między scenariuszem ostrożnym a optymistycznym to dokładnie to, co zdobywa
+        się dobrym wdrożeniem, a trwała zmiana to projekt rozłożony w czasie, nie jednorazowe szkolenie.
+      </p>
+    </aside>
+  </div>
+
+  <div class="roi-next-step" id="roi-next-step">
+    <div>
+      <p class="roi-brand"><span aria-hidden="true">^</span>Kunke Consulting</p>
+      <h2>Porozmawiajmy o wyniku</h2>
+      <p>Jeśli liczby wyglądają interesująco, najlepiej przełożyć je na konkretne procesy, ryzyka i plan pierwszych działań.</p>
+    </div>
+    <div class="roi-actions">
+      <a class="cta-btn" href="https://calendly.com/kunkeconsulting-info/30min" target="_blank" rel="noreferrer">Umów 20-min konsultację</a>
+      <a class="roi-secondary-action" href="mailto:info@kunkeconsulting.pl?subject=Kalkulator%20ROI%20AI%20-%20rozmowa">Napisz e-mail</a>
+    </div>
+  </div>
+</section>
+
+<script is:inline nonce={nonce}>
+// @ts-nocheck
+(function() {
+  const root = document.getElementById('roi-calculator');
+  if (!root) return;
+
+  const WORK_HOURS_YEAR = 1840;
+  const EMPLOYER_MULT = 1.2;
+  const CONS_RATE = 0.15;
+  const OPT_RATE = 0.35;
+  const REACH_CONS = 0.40;
+  const REACH_OPT = 0.75;
+  const BLUE_HOURLY = 35;
+  const BLUE_HRS_SAVED_OPT = 25;
+
+  const salaryMonthly = { a: 5000, b: 8000, c: 12500, d: 18000 };
+  const maturityHeadroom = { none: 1.0, few: 0.8, some: 0.55, full: 0.3 };
+  const typeMult = { prod: 1.0, serv: 1.0, soft: 0.4 };
+
+  const state = {
+    type: 'prod',
+    maturity: 'none',
+    salary: 'a',
+    tasks: { comm: true, notes: true, docs: true, research: true, sales: true }
+  };
+
+  const totalInput = root.querySelector('#roi-total');
+  const officeInput = root.querySelector('#roi-office');
+  const consEl = root.querySelector('#roi-cons');
+  const optEl = root.querySelector('#roi-opt');
+  const fteEl = root.querySelector('#roi-fte');
+  const softEl = root.querySelector('#roi-softnote');
+
+  function setPressed(button, isPressed) {
+    button.classList.toggle('is-selected', isPressed);
+    button.setAttribute('aria-pressed', String(isPressed));
+  }
+
+  root.querySelectorAll('[data-choice-group]').forEach((group) => {
+    group.addEventListener('click', (event) => {
+      const button = event.target.closest('.roi-option');
+      if (!button) return;
+
+      group.querySelectorAll('.roi-option').forEach((option) => setPressed(option, false));
+      setPressed(button, true);
+      state[group.dataset.stateKey] = button.dataset.v;
+      render();
+    });
+  });
+
+  root.querySelector('#roi-tasks').addEventListener('click', (event) => {
+    const button = event.target.closest('.roi-option');
+    if (!button) return;
+
+    const key = button.dataset.v;
+    state.tasks[key] = !state.tasks[key];
+    setPressed(button, state.tasks[key]);
+    render();
+  });
+
+  [totalInput, officeInput].forEach((input) => input.addEventListener('input', render));
+
+  function fmt(value) {
+    return Math.round(value).toLocaleString('pl-PL');
+  }
+
+  function render() {
+    const total = parseFloat(totalInput.value) || 0;
+    let office = parseFloat(officeInput.value) || 0;
+    if (office > total) office = total;
+
+    const blue = Math.max(0, total - office);
+    const taskCount = Object.keys(state.tasks).filter((key) => state.tasks[key]).length;
+    const taskShare = Math.min(0.55, taskCount * 0.11);
+    const hourly = salaryMonthly[state.salary] * 12 * EMPLOYER_MULT / WORK_HOURS_YEAR;
+    const headroom = maturityHeadroom[state.maturity];
+    const companyTypeMultiplier = typeMult[state.type];
+
+    const consHours = office * WORK_HOURS_YEAR * taskShare * CONS_RATE * headroom * REACH_CONS;
+    const optHours = office * WORK_HOURS_YEAR * taskShare * OPT_RATE * headroom * REACH_OPT;
+
+    const cons = consHours * hourly * companyTypeMultiplier;
+    const optBlue = blue * BLUE_HRS_SAVED_OPT * headroom * BLUE_HOURLY * companyTypeMultiplier;
+    const opt = optHours * hourly * companyTypeMultiplier + optBlue;
+    const fteOpt = optHours / WORK_HOURS_YEAR;
+
+    if (office <= 0 || total <= 0 || taskCount === 0) {
+      consEl.innerHTML = '<span class="roi-empty">-</span> <span>PLN / rok</span>';
+      optEl.innerHTML = '<span class="roi-empty">-</span> <span>PLN / rok</span>';
+      fteEl.innerHTML = '<span class="roi-empty">Uzupełnij liczbę pracowników biurowych i zaznacz przynajmniej jedno zadanie.</span>';
+      softEl.hidden = true;
+      return;
+    }
+
+    consEl.innerHTML = fmt(cons) + ' <span>PLN / rok</span>';
+    optEl.innerHTML = fmt(opt) + ' <span>PLN / rok</span>';
+    fteEl.innerHTML = 'To odpowiednik ok. <strong>' + fteOpt.toFixed(1).replace('.', ',') +
+      '</strong> etatu uwolnionej mocy przerobowej rocznie (scenariusz optymistyczny).';
+
+    if (state.type === 'soft') {
+      softEl.hidden = false;
+      softEl.textContent = 'Specjalizuję się w pracy biurowej w firmach nietechnologicznych. Jeśli tworzysz software, prawdopodobnie jesteś już „AI-native”, więc moja realna wartość dodana jest mniejsza, a powyższe liczby są zaniżone celowo.';
+    } else {
+      softEl.hidden = true;
+    }
+  }
+
+  render();
+})();
+</script>
+
+<style>
+  .roi-page {
+    padding-top: 48px;
+    padding-bottom: 56px;
+    box-sizing: border-box;
+  }
+
+  .roi-header {
+    max-width: 760px;
+    margin: 0 auto 30px;
+    text-align: center;
+  }
+
+  .roi-brand {
+    margin: 0 0 8px;
+    color: var(--color-primary);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .roi-brand span {
+    color: #b8922d;
+  }
+
+  .roi-header h1 {
+    font-size: clamp(2rem, 4vw, 3.1rem);
+    line-height: 1.12;
+    margin-bottom: 16px;
+  }
+
+  .roi-lede {
+    margin: 0 auto;
+    color: #555;
+    font-size: 1.05rem;
+  }
+
+  .roi-tool {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+    gap: 28px;
+    align-items: start;
+  }
+
+  .roi-inputs,
+  .roi-result,
+  .roi-next-step {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .roi-inputs {
+    padding: 28px;
+  }
+
+  .roi-question + .roi-question {
+    margin-top: 26px;
+  }
+
+  .roi-label {
+    display: block;
+    margin: 0 0 6px;
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .roi-hint {
+    margin: 0 0 12px;
+    color: #666;
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .roi-inputs input[type="number"] {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: #f8f8fa;
+    color: var(--color-dark-text);
+    font: 1rem/1.4 "Inter", sans-serif;
+    box-sizing: border-box;
+  }
+
+  .roi-inputs input[type="number"]:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 34%, transparent);
+    outline: none;
+  }
+
+  .roi-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .roi-option-list {
+    display: grid;
+    gap: 8px;
+  }
+
+  .roi-option {
+    min-height: 42px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    background: #f8f8fa;
+    color: #555;
+    font: 600 0.92rem/1.3 "Inter", sans-serif;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.16s ease;
+  }
+
+  .roi-option:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+  }
+
+  .roi-option:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .roi-option.is-selected {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .roi-result {
+    position: sticky;
+    top: 24px;
+    padding: 28px;
+    background: #0a4731;
+    color: #faf9f6;
+    border-color: #0a4731;
+  }
+
+  .roi-result-kicker {
+    margin: 0 0 14px;
+    color: rgba(250, 249, 246, 0.68);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .roi-result-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border: 1px solid rgba(250, 249, 246, 0.16);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .roi-result-metric {
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .roi-result-metric + .roi-result-metric {
+    border-left: 1px solid rgba(250, 249, 246, 0.16);
+  }
+
+  .roi-result-metric.is-optimistic {
+    background: rgba(212, 175, 55, 0.16);
+  }
+
+  .roi-result-metric p {
+    margin: 0 0 10px;
+    color: rgba(250, 249, 246, 0.72);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .roi-result-metric strong {
+    display: block;
+    min-height: 72px;
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    line-height: 1.08;
+    color: #fff;
+  }
+
+  .roi-result-metric strong span {
+    display: block;
+    margin-top: 4px;
+    color: rgba(250, 249, 246, 0.72);
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .roi-fte,
+  .roi-note,
+  .roi-disclaimer {
+    border-radius: 8px;
+    line-height: 1.5;
+  }
+
+  .roi-fte {
+    margin: 16px 0 12px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(250, 249, 246, 0.92);
+  }
+
+  .roi-note {
+    margin: 0 0 12px;
+    padding: 12px 14px;
+    background: rgba(212, 175, 55, 0.15);
+    border-left: 3px solid #d4af37;
+    color: rgba(250, 249, 246, 0.92);
+  }
+
+  .roi-result-cta {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    margin-top: 6px;
+    background-image: linear-gradient(45deg, #d4af37 0%, #b8922d 100%);
+    color: #1d2421;
+  }
+
+  .roi-result-cta:hover {
+    background-image: linear-gradient(45deg, #e1bd46 0%, #c8a238 100%);
+  }
+
+  .roi-assumptions {
+    margin-top: 18px;
+    color: rgba(250, 249, 246, 0.86);
+    font-size: 0.9rem;
+  }
+
+  .roi-assumptions summary {
+    cursor: pointer;
+    color: #faf9f6;
+    font-weight: 700;
+  }
+
+  .roi-assumptions ul {
+    margin-top: 10px;
+  }
+
+  .roi-disclaimer {
+    margin: 16px 0 0;
+    color: rgba(250, 249, 246, 0.64);
+    font-size: 0.82rem;
+  }
+
+  .roi-empty {
+    opacity: 0.68;
+    font-style: italic;
+  }
+
+  .roi-next-step {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: center;
+    margin-top: 28px;
+    padding: 28px;
+  }
+
+  .roi-next-step h2 {
+    text-align: left;
+    margin-bottom: 8px;
+  }
+
+  .roi-next-step p {
+    margin: 0;
+    color: #555;
+  }
+
+  .roi-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  .roi-secondary-action {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    border: 1px solid var(--color-primary);
+    border-radius: 8px;
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .roi-secondary-action:hover {
+    background: rgba(10, 71, 49, 0.08);
+  }
+
+  @media (max-width: 920px) {
+    .roi-tool {
+      grid-template-columns: 1fr;
+    }
+
+    .roi-result {
+      position: static;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .roi-page {
+      width: min(94%, var(--page-max));
+      padding-top: 76px;
+    }
+
+    .roi-inputs,
+    .roi-result,
+    .roi-next-step {
+      padding: 20px;
+    }
+
+    .roi-result-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .roi-result-metric + .roi-result-metric {
+      border-top: 1px solid rgba(250, 249, 246, 0.16);
+      border-left: 0;
+    }
+
+    .roi-next-step {
+      display: block;
+    }
+
+    .roi-actions {
+      justify-content: stretch;
+      margin-top: 18px;
+    }
+
+    .roi-actions .cta-btn,
+    .roi-secondary-action {
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+    }
+  }
+</style>
