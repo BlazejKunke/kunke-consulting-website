@@ -16,6 +16,11 @@
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
 
+# Redesign preview: keep out of search and make updates visible quickly
+/new-page-1/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: public, max-age=0, must-revalidate
+
 # Special rules for assets with longer cache
 /images/*
   Cache-Control: public, max-age=31536000, immutable
