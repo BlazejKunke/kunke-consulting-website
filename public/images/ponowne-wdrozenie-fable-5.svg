@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Ponowne wdrożenie Fable 5</title>
+  <desc id="desc">Minimalistyczna grafika do wpisu blogowego o powrocie modelu Claude Fable 5.</desc>
+  <rect width="1200" height="630" fill="#f7f5f1"/>
+  <circle cx="1025" cy="115" r="145" fill="#ede8df"/>
+  <circle cx="160" cy="520" r="190" fill="#ebe7df"/>
+  <path d="M88 96h1024" stroke="#171717" stroke-width="4" stroke-linecap="round" opacity=".12"/>
+  <text x="600" y="92" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#171717">Ogłoszenia</text>
+  <text x="600" y="244" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="84" font-weight="800" fill="#111111">Ponowne wdrożenie</text>
+  <text x="600" y="338" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="96" font-weight="900" fill="#111111">Fable 5</text>
+  <text x="600" y="420" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="500" fill="#171717">1 lipca 2026</text>
+  <g transform="translate(244 476)">
+    <rect width="712" height="70" rx="35" fill="#111111"/>
+    <text x="356" y="45" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700" fill="#f7f5f1">Limity, przekierowania i test dla firm</text>
+  </g>
+  <text x="600" y="586" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#171717">^Kunke Consulting</text>
+</svg>
