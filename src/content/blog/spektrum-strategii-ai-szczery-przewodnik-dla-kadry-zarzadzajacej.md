@@ -119,5 +119,7 @@ Błędem nie jest wybór złej strategii, lecz brak jakiejkolwiek strategii. To 
 
 Ten model to punkt wyjścia. Każda firma jest inna, a właściwa strategia to taka, która pasuje do jej rzeczywistości.
 
+Jeśli chcesz przełożyć ten kompas na decyzje dla własnego zespołu, zacznij od [konsultacji AI dla firm](/konsultacja-ai/) i jednej rozmowy diagnostycznej o procesach, ryzykach oraz pierwszych krokach.
+
 Błażej Kunke, ^Kunke Consulting  
 Marzec 2026
