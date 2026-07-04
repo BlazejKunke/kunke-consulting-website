@@ -7,6 +7,7 @@ const sitemapExcludedPaths = [
   '/AIDlaFirm',
   '/aidlafirm',
   '/ai-excel',
+  '/new',
   '/us',
 ];
 
