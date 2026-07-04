@@ -9,8 +9,8 @@
   Permissions-Policy: geolocation=(), microphone=(), camera=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   
-  # Performance headers
-  Cache-Control: public, max-age=31536000, immutable
+  # HTML routes are extensionless in Astro, so keep pages revalidating.
+  Cache-Control: public, max-age=0, must-revalidate
 
 # Special rules for HTML files
 /*.html
