@@ -41,6 +41,10 @@ export default defineConfig({
       status: 301,
       destination: '/szkolenia-ai'
     },
+    '/new': {
+      status: 301,
+      destination: '/'
+    },
     '/us': {
       status: 301,
       destination: '/en'
