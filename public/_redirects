@@ -1,4 +1,6 @@
 /sitemap.xml  /sitemap-index.xml  301!
+/new  /  301!
+/new/  /  301!
 /AIDlaFirm  /ai-dla-firm/  301!
 /AIDlaFirm/  /ai-dla-firm/  301!
 /AIDlaFirm/*  /ai-dla-firm/:splat  301!
