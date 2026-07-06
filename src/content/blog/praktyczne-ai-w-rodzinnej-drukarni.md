@@ -4,7 +4,7 @@ description: "Dwa konkretne wdrożenia AI dla polskiej firmy produkcyjnej: anali
 date: 2026-07-06
 author: "Błażej Kunke"
 tags: ["AI", "MŚP", "Wdrożenia AI", "Sprzedaż", "Automatyzacja", "Kunke Poligrafia"]
-heroImage: "/images/praktyczne-ai-w-rodzinnej-drukarni.svg"
+heroImage: "/images/kunke-poligrafia.webp"
 ---
 
 Wokół sztucznej inteligencji narosło mnóstwo szumu, tymczasem większość małych i średnich firm w Polsce nie potrzebuje rewolucji. Potrzebuje dwóch, trzech konkretnych rzeczy, które realnie oszczędzają czas i przynoszą pieniądze.
