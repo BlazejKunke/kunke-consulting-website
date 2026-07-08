@@ -7,6 +7,31 @@ import ExperienceSection from '../../components/ExperienceSectionNl.astro';
 import WorkshopSection from '../../components/WorkshopSectionNl.astro';
 import AboutMe from '../../components/AboutMeNl.astro';
 import StudentReport from '../../components/StudentReportNl.astro';
+import TeamSection from '../../components/TeamSection.astro';
+
+const teamMembersNl = [
+  {
+    name: 'Błażej Kunke',
+    role: 'Oprichter, AI-trainer',
+    image: '/images/team/blazej-kunke-team.jpg',
+    webp: '/images/team/blazej-kunke-team.webp',
+    alt: 'Błażej Kunke, oprichter van ^Kunke Consulting',
+  },
+  {
+    name: 'Bartosz Mikulski',
+    role: 'Programmeur, IT-expert',
+    image: '/images/team/bartosz-mikulski-july-2026-team.jpg',
+    webp: '/images/team/bartosz-mikulski-july-2026-team.webp',
+    alt: 'Bartosz Mikulski, programmeur en IT-expert',
+  },
+  {
+    name: 'Jan Kunke',
+    role: 'Sales',
+    image: '/images/team/jan-kunke-team.jpg',
+    webp: '/images/team/jan-kunke-team.webp',
+    alt: 'Jan Kunke, sales specialist',
+  },
+];
 ---
 
 <BaseLayout
@@ -157,6 +182,15 @@ import StudentReport from '../../components/StudentReportNl.astro';
 
 <section id="about-me">
   <AboutMe />
+</section>
+
+<section id="team">
+  <TeamSection
+    kicker="Team"
+    heading="De mensen achter praktische AI-projecten"
+    intro="We combineren training, technologie en saleservaring, zodat AI echte bedrijfsprocessen ondersteunt en niet alleen in presentaties blijft."
+    members={teamMembersNl}
+  />
 </section>
 
 <section id="faq" style="padding: 60px 20px; background: #f8f8fa;">

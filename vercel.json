@@ -66,6 +66,26 @@
       "permanent": true
     },
     {
+      "source": "/zespol/",
+      "destination": "/#zespol",
+      "permanent": true
+    },
+    {
+      "source": "/zespol",
+      "destination": "/#zespol",
+      "permanent": true
+    },
+    {
+      "source": "/team/",
+      "destination": "/en/#team",
+      "permanent": true
+    },
+    {
+      "source": "/team",
+      "destination": "/en/#team",
+      "permanent": true
+    },
+    {
       "source": "/en/ai-workshop/",
       "destination": "/en/",
       "permanent": true

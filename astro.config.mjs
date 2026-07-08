@@ -9,6 +9,8 @@ const sitemapExcludedPaths = [
   '/ai-excel',
   '/new',
   '/us',
+  '/zespol',
+  '/team',
 ];
 
 // https://astro.build/config
@@ -48,6 +50,14 @@ export default defineConfig({
     '/us': {
       status: 301,
       destination: '/en'
+    },
+    '/zespol': {
+      status: 301,
+      destination: '/#zespol'
+    },
+    '/team': {
+      status: 301,
+      destination: '/en/#team'
     },
   },
   security: {

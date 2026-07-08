@@ -7,6 +7,31 @@ import ExperienceSection from '../../components/ExperienceSectionEn.astro';
 import WorkshopSection from '../../components/WorkshopSectionEn.astro';
 import AboutMe from '../../components/AboutMeEn.astro';
 import StudentReport from '../../components/StudentReportEn.astro';
+import TeamSection from '../../components/TeamSection.astro';
+
+const teamMembersUk = [
+  {
+    name: 'Błażej Kunke',
+    role: 'Founder, AI trainer',
+    image: '/images/team/blazej-kunke-team.jpg',
+    webp: '/images/team/blazej-kunke-team.webp',
+    alt: 'Błażej Kunke, founder of ^Kunke Consulting',
+  },
+  {
+    name: 'Bartosz Mikulski',
+    role: 'Programmer, IT expert',
+    image: '/images/team/bartosz-mikulski-july-2026-team.jpg',
+    webp: '/images/team/bartosz-mikulski-july-2026-team.webp',
+    alt: 'Bartosz Mikulski, programmer and IT expert',
+  },
+  {
+    name: 'Jan Kunke',
+    role: 'Sales',
+    image: '/images/team/jan-kunke-team.jpg',
+    webp: '/images/team/jan-kunke-team.webp',
+    alt: 'Jan Kunke, sales specialist',
+  },
+];
 ---
 
 <BaseLayout
@@ -194,6 +219,15 @@ import StudentReport from '../../components/StudentReportEn.astro';
 
   <section id="about-me">
     <AboutMe />
+  </section>
+
+  <section id="team">
+    <TeamSection
+      kicker="Team"
+      heading="The people behind practical AI projects"
+      intro="We combine training, technology, and sales experience so AI supports real company processes, not just slide decks."
+      members={teamMembersUk}
+    />
   </section>
 
   <section id="contact">

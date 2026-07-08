@@ -1,0 +1,177 @@
+---
+export interface TeamMemberCopy {
+  name: string;
+  role: string;
+  image: string;
+  webp: string;
+  alt: string;
+}
+
+export interface Props {
+  kicker?: string;
+  heading?: string;
+  intro?: string;
+  members?: TeamMemberCopy[];
+}
+
+const defaultMembers = [
+  {
+    name: 'Błażej Kunke',
+    role: 'Założyciel, trener AI',
+    image: '/images/team/blazej-kunke-team.jpg',
+    webp: '/images/team/blazej-kunke-team.webp',
+    alt: 'Błażej Kunke, założyciel ^Kunke Consulting',
+  },
+  {
+    name: 'Bartosz Mikulski',
+    role: 'Programista, ekspert IT',
+    image: '/images/team/bartosz-mikulski-july-2026-team.jpg',
+    webp: '/images/team/bartosz-mikulski-july-2026-team.webp',
+    alt: 'Bartosz Mikulski, programista i ekspert IT',
+  },
+  {
+    name: 'Jan Kunke',
+    role: 'Sprzedawca',
+    image: '/images/team/jan-kunke-team.jpg',
+    webp: '/images/team/jan-kunke-team.webp',
+    alt: 'Jan Kunke, sprzedawca',
+  },
+];
+
+const {
+  kicker = 'Zespół',
+  heading = 'Osoby, z którymi dowozimy praktyczne projekty AI',
+  intro = 'Łączymy szkolenia, technologię i sprzedaż, żeby AI pracowało w realnych procesach firmy, a nie tylko w prezentacji.',
+  members = defaultMembers,
+} = Astro.props;
+---
+
+<div class="team-section" aria-labelledby="team-heading">
+  <div class="team-intro">
+    <span class="team-kicker">{kicker}</span>
+    <h2 id="team-heading">{heading}</h2>
+    <p>{intro}</p>
+  </div>
+
+  <div class="team-grid">
+    {members.map((member) => (
+      <article class="team-card">
+        <picture class="team-photo">
+          <source srcset={member.webp} type="image/webp" />
+          <img src={member.image} alt={member.alt} width="720" height="900" loading="lazy" decoding="async" />
+        </picture>
+        <div class="team-card-copy">
+          <h3>{member.name}</h3>
+          <p>{member.role}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</div>
+
+<script>
+  function scrollToCurrentTeamHash() {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+
+    const target = document.getElementById(id);
+    if (target?.querySelector('.team-section')) {
+      target.scrollIntoView({ block: 'start' });
+    }
+  }
+
+  window.addEventListener('load', scrollToCurrentTeamHash);
+  window.addEventListener('hashchange', scrollToCurrentTeamHash);
+</script>
+
+<style>
+  .team-section {
+    padding: 22px 0 12px;
+  }
+
+  .team-intro {
+    max-width: 720px;
+    margin: 0 auto 32px;
+    text-align: center;
+  }
+
+  .team-kicker {
+    color: #0a4731;
+    display: inline-block;
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .team-intro h2 {
+    font-size: clamp(1.7rem, 3vw, 2.25rem);
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+
+  .team-intro p {
+    color: #4d5b55;
+    margin: 0 auto;
+    max-width: 620px;
+  }
+
+  .team-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .team-card {
+    background: #f8f8fa;
+    border: 1px solid #e7ebe8;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .team-photo {
+    aspect-ratio: 4 / 5;
+    background: #e9eeeb;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .team-photo img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .team-card-copy {
+    padding: 18px 18px 20px;
+  }
+
+  .team-card-copy h3 {
+    color: #0a4731;
+    font-size: 1.1rem;
+    line-height: 1.25;
+    margin: 0 0 6px;
+  }
+
+  .team-card-copy p {
+    color: #4d5b55;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  @media (max-width: 760px) {
+    .team-section {
+      padding: 16px 0 8px;
+    }
+
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
