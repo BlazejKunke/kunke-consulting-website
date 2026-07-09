@@ -49,5 +49,5 @@ Skontaktuj się ze mną, aby zaplanować warsztat AI dla swojej firmy.
 **Błażej Kunke**
 
 **info@kunkeconsulting.pl**  
-**www.kunkeconsulting.pl**  
+**[www.kunkeconsulting.pl](https://kunkeconsulting.pl/)**<br>
 **Tel.: +48 722 156 925**
