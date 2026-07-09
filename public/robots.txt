@@ -3,22 +3,29 @@
 
 User-agent: *
 Allow: /
+Disallow: /thank-you
+Crawl-delay: 1
 
 # AI search and user-requested retrieval
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /thank-you
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /thank-you
 
 User-agent: Claude-SearchBot
 Allow: /
+Disallow: /thank-you
 
 User-agent: Claude-User
 Allow: /
+Disallow: /thank-you
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /thank-you
 
 # Sitemap location
 Sitemap: https://kunkeconsulting.pl/sitemap-index.xml

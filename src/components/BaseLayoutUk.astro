@@ -38,7 +38,6 @@ const ogLocale = localeOgMap[currentLocale] ?? 'en_GB';
 
   <title>{title}</title>
   <meta name="description" content={description} />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
   <link rel="canonical" href={canonicalUrl} />
   {hreflangUrls.map(({ hreflang, href }) => (
@@ -65,6 +64,10 @@ const ogLocale = localeOgMap[currentLocale] ?? 'en_GB';
   <link rel="apple-touch-icon" sizes="180x180" href="/images/Kunke_Favicon.png" />
   <link rel="shortcut icon" href="/favicon.png" />
   <link rel="manifest" href="/site.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
 
   <script nonce={nonce}>
     window.dataLayer = window.dataLayer || [];
