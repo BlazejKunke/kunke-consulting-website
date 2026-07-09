@@ -22,7 +22,7 @@ const absoluteOgImage = ogImage
   ? new URL(ogImage, siteUrl).href
   : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 
-const canonicalUrl = Astro.url.href;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const currentLocale = detectLocale(Astro.url.pathname);
 const htmlLang = localeHtmlLangMap[currentLocale] ?? currentLocale;
 const languageSwitcherUrls = buildLanguageSwitcherUrls(Astro.url.pathname, siteUrl);
@@ -50,13 +50,13 @@ const ogLocale = localeOgMap[currentLocale] ?? 'nl_NL';
   <meta property="og:type" content="website" />
   <meta property="og:locale" content={ogLocale} />
   <meta property="og:site_name" content="Kunke Consulting" />
-  <meta property="og:url" content={Astro.url.href} />
+  <meta property="og:url" content={canonicalUrl} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={absoluteOgImage} />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content={Astro.url.href} />
+  <meta name="twitter:url" content={canonicalUrl} />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={absoluteOgImage} />
@@ -125,20 +125,14 @@ const ogLocale = localeOgMap[currentLocale] ?? 'nl_NL';
   <script type="application/ld+json" nonce={nonce}>
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "Organization",
     "name": "Kunke Consulting",
-    "image": "/images/Kunke_Favicon.png",
+    "logo": "https://kunkeconsulting.pl/images/Kunke_Favicon.png",
     "description": "Praktische AI-implementaties, procesautomatisering en strategisch AI-advies voor bedrijven in Nederland.",
     "url": "https://kunkeconsulting.pl",
     "telephone": "+48722156925",
     "email": "info@kunkeconsulting.pl",
-    "address": { "@type": "PostalAddress", "addressCountry": "PL", "addressLocality": "Poland" },
-    "geo": { "@type": "GeoCoordinates", "latitude": "52.2297", "longitude": "21.0122" },
-    "openingHoursSpecification": { "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-      "opens":"09:00","closes":"17:00"
-    },
-    "serviceArea": { "@type": "Country", "name": "Netherlands" },
+    "areaServed": { "@type": "Country", "name": "Netherlands" },
     "hasOfferCatalog": { "@type": "OfferCatalog", "name":"AI-implementaties en automatisering",
       "itemListElement":[
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"AI-implementaties voor bedrijven","description":"End-to-end implementatie van kunstmatige intelligentie afgestemd op bedrijfsprocessen","provider":{"@type":"Organization","name":"Kunke Consulting"}}},

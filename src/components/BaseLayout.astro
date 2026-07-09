@@ -25,7 +25,7 @@ const absoluteOgImage = ogImage
   ? new URL(ogImage, siteUrl).href
   : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 
-const canonicalUrl = Astro.url.href;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const currentLocale = detectLocale(Astro.url.pathname);
 const htmlLang = localeHtmlLangMap[currentLocale] ?? currentLocale;
 const languageSwitcherUrls = buildLanguageSwitcherUrls(Astro.url.pathname, siteUrl);
@@ -54,13 +54,13 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
   <meta property="og:type" content="website" />
   <meta property="og:locale" content={ogLocale} />
   <meta property="og:site_name" content="Kunke Consulting" />
-  <meta property="og:url" content={Astro.url.href} />
+  <meta property="og:url" content={canonicalUrl} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={absoluteOgImage} />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content={Astro.url.href} />
+  <meta name="twitter:url" content={canonicalUrl} />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={absoluteOgImage} />
@@ -177,12 +177,6 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
     "priceRange": "$$",
     "currenciesAccepted": "PLN, EUR",
     "paymentAccepted": "Bank Transfer, Invoice",
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "47",
-      "bestRating": "5"
-    },
     "knowsAbout": [
       "Artificial Intelligence",
       "Machine Learning",
