@@ -20,7 +20,7 @@ const absoluteOgImage = ogImage
   ? new URL(ogImage, siteUrl).href
   : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 
-const canonicalUrl = Astro.url.href;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const currentLocale = detectLocale(Astro.url.pathname);
 const htmlLang = localeHtmlLangMap[currentLocale] ?? currentLocale;
 const languageSwitcherUrls = buildLanguageSwitcherUrls(Astro.url.pathname, siteUrl);
@@ -37,6 +37,7 @@ const ogLocale = localeOgMap[currentLocale] ?? 'fr_FR';
 
   <title>{title}</title>
   <meta name="description" content={description} />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
   <link rel="canonical" href={canonicalUrl} />
   {hreflangUrls.map(({ hreflang, href }) => (
@@ -47,13 +48,13 @@ const ogLocale = localeOgMap[currentLocale] ?? 'fr_FR';
   <meta property="og:type" content="website" />
   <meta property="og:locale" content={ogLocale} />
   <meta property="og:site_name" content="Kunke Consulting" />
-  <meta property="og:url" content={Astro.url.href} />
+  <meta property="og:url" content={canonicalUrl} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={absoluteOgImage} />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content={Astro.url.href} />
+  <meta name="twitter:url" content={canonicalUrl} />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={absoluteOgImage} />
@@ -63,10 +64,6 @@ const ogLocale = localeOgMap[currentLocale] ?? 'fr_FR';
   <link rel="apple-touch-icon" sizes="180x180" href="/images/Kunke_Favicon.png" />
   <link rel="shortcut icon" href="/favicon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
 
   <script nonce={nonce}>
     window.dataLayer = window.dataLayer || [];
@@ -113,20 +110,14 @@ const ogLocale = localeOgMap[currentLocale] ?? 'fr_FR';
   <script type="application/ld+json" nonce={nonce}>
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "Organization",
     "name": "Kunke Consulting",
-    "image": "/images/Kunke_Favicon.png",
+    "logo": "https://kunkeconsulting.pl/images/Kunke_Favicon.png",
     "description": "Implémentations d'IA concrètes, automatisation des processus et conseil stratégique pour les entreprises en France et en Europe.",
     "url": "https://kunkeconsulting.pl",
     "telephone": "+48722156925",
     "email": "info@kunkeconsulting.pl",
-    "address": { "@type": "PostalAddress", "addressCountry": "FR", "addressLocality": "Paris" },
-    "geo": { "@type": "GeoCoordinates", "latitude": "48.8566", "longitude": "2.3522" },
-    "openingHoursSpecification": { "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-      "opens":"09:00","closes":"17:00"
-    },
-    "serviceArea": { "@type": "Country", "name": "France" },
+    "areaServed": { "@type": "Country", "name": "France" },
     "hasOfferCatalog": { "@type": "OfferCatalog", "name":"Programmes d'implémentation et d'automatisation IA",
       "itemListElement":[
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"Implémentations IA pour entreprises","description":"Déploiement de solutions d'intelligence artificielle adaptées aux processus métiers","provider":{"@type":"Organization","name":"Kunke Consulting"}}},

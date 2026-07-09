@@ -25,7 +25,7 @@ const absoluteOgImage = ogImage
   ? new URL(ogImage, siteUrl).href
   : new URL('/images/Kunke_Favicon.png', siteUrl).href;
 
-const canonicalUrl = Astro.url.href;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const currentLocale = detectLocale(Astro.url.pathname);
 const htmlLang = localeHtmlLangMap[currentLocale] ?? currentLocale;
 const languageSwitcherUrls = buildLanguageSwitcherUrls(Astro.url.pathname, siteUrl);
@@ -42,7 +42,12 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
 
   <title>{title}</title>
   <meta name="description" content={description} />
-  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  <meta
+    name="robots"
+    content={noindex
+      ? 'noindex, nofollow'
+      : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+  />
 
   <link rel="canonical" href={canonicalUrl} />
   {hreflangUrls.map(({ hreflang, href }) => (
@@ -54,13 +59,13 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
   <meta property="og:type" content="website" />
   <meta property="og:locale" content={ogLocale} />
   <meta property="og:site_name" content="Kunke Consulting" />
-  <meta property="og:url" content={Astro.url.href} />
+  <meta property="og:url" content={canonicalUrl} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={absoluteOgImage} />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content={Astro.url.href} />
+  <meta name="twitter:url" content={canonicalUrl} />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={absoluteOgImage} />
@@ -71,13 +76,6 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
   <link rel="apple-touch-icon" sizes="180x180" href="/images/Kunke_Favicon.png" />
   <link rel="shortcut icon" href="/favicon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-
-  <!-- Resource hints -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <!-- Load fonts WITHOUT inline onload handler -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
 
   <!-- Google Tag Manager (init dataLayer before loader for Consent Mode etc.) -->
   <script nonce={nonce}>
@@ -138,7 +136,7 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
     "alternateName": "^Kunke Consulting",
     "image": "https://kunkeconsulting.pl/images/Kunke_Favicon.png",
     "logo": "https://kunkeconsulting.pl/images/Kunke_Favicon.png",
-    "description": "Warsztaty i szkolenia AI dla średnich firm w Polsce i Europie. Praktyczne wdrożenia sztucznej inteligencji, automatyzacje procesów biznesowych i doradztwo AI dla zespołów 20-500 osób.",
+    "description": "Warsztaty, konsultacje i wdrożenia AI dla małych i średnich firm w Polsce i Europie. Praktyczne zastosowania sztucznej inteligencji, automatyzacja procesów i odpowiedzialna adopcja AI.",
     "url": "https://kunkeconsulting.pl",
     "telephone": "+48722156925",
     "email": "info@kunkeconsulting.pl",
@@ -163,6 +161,9 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
       "closes": "17:00"
     },
     "areaServed": [
+      { "@type": "AdministrativeArea", "name": "Wielkopolskie" },
+      { "@type": "City", "name": "Poznań" },
+      { "@type": "City", "name": "Inowrocław" },
       { "@type": "Country", "name": "Poland", "alternateName": "Polska" },
       { "@type": "Country", "name": "Germany", "alternateName": "Deutschland" },
       { "@type": "Country", "name": "Netherlands", "alternateName": "Nederland" },
@@ -177,12 +178,6 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
     "priceRange": "$$",
     "currenciesAccepted": "PLN, EUR",
     "paymentAccepted": "Bank Transfer, Invoice",
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "47",
-      "bestRating": "5"
-    },
     "knowsAbout": [
       "Artificial Intelligence",
       "Machine Learning",
@@ -203,7 +198,7 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
             "@type": "Service",
             "name": "Warsztaty AI dla firm",
             "alternateName": "AI Workshops for Business",
-            "description": "Praktyczne warsztaty sztucznej inteligencji dla zespołów firmowych. Szkolenie ChatGPT, automatyzacja procesów, AI w codziennej pracy. Dla średnich i dużych przedsiębiorstw.",
+            "description": "Praktyczne warsztaty sztucznej inteligencji dla zespołów firmowych. Narzędzia AI, automatyzacja procesów, bezpieczna praca z danymi i AI w codziennych zadaniach małych i średnich firm.",
             "provider": {"@type": "Organization", "name": "Kunke Consulting"},
             "serviceType": "AI Training",
             "areaServed": "Europe"
@@ -219,29 +214,41 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "Konsulting AI i wdrożenia",
-            "alternateName": "AI Consulting & Implementation",
-            "description": "Kompleksowe doradztwo AI dla firm: audyt procesów, polityka AI, zgodność z GDPR i AI Act, wdrożenie narzędzi AI. Idealne dla średnich przedsiębiorstw szukających transformacji cyfrowej.",
+            "name": "Konsultacja AI dla firm",
+            "alternateName": "AI Consultation for Business",
+            "description": "90-minutowa diagnoza potencjału, ryzyk i pierwszych kroków AI w firmie, zakończona konkretnymi rekomendacjami.",
             "provider": {"@type": "Organization", "name": "Kunke Consulting"},
-            "serviceType": "AI Consulting",
-            "areaServed": "Europe"
+            "serviceType": "AI Consultation",
+            "areaServed": "Poland"
           },
           "priceSpecification": {
             "@type": "PriceSpecification",
-            "price": "11000",
+            "price": "1399",
             "priceCurrency": "PLN",
-            "minPrice": "11000"
+            "minPrice": "1399"
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "Program transformacji AI",
-            "alternateName": "AI Transformation Program",
-            "description": "Zaawansowany program wdrożenia AI dla większych organizacji. Seria warsztatów dla 20-100 osób, polityki AI dla działów, konsultacje prawne, projektowanie automatyzacji.",
+            "name": "Projekty i wdrożenia AI",
+            "alternateName": "AI Projects & Implementation",
+            "description": "Dłuższa współpraca od identyfikacji zastosowań i pilotażu po wsparcie wdrożenia AI w konkretnych procesach firmy.",
             "provider": {"@type": "Organization", "name": "Kunke Consulting"},
-            "serviceType": "Digital Transformation",
+            "serviceType": "AI Implementation",
+            "areaServed": "Europe"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Prelekcje i wystąpienia o AI",
+            "alternateName": "AI Keynotes & Public Speaking",
+            "description": "Praktyczne wystąpienia o wykorzystaniu AI w biznesie dla konferencji, wydarzeń firmowych i zespołów zarządzających.",
+            "provider": {"@type": "Organization", "name": "Kunke Consulting"},
+            "serviceType": "Public Speaking",
             "areaServed": "Europe"
           }
         }

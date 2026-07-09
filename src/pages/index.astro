@@ -13,8 +13,8 @@ import SiteFooter from '../components/SiteFooter.astro';
 ---
 
 <BaseLayout
-  title="Szkolenia AI dla firm | ^Kunke Consulting | Warsztaty i wdrożenia AI w Polsce i Europie"
-  description="Warsztaty i szkolenia AI dla średnich przedsiębiorstw w Polsce i Europie. Praktyczne wdrożenia ChatGPT, automatyzacja procesów, doradztwo AI. Dla zespołów 20-500 osób. Średnia ocena 98%. Transformacja cyfrowa z gwarancją rezultatów."
+  title="Szkolenia i wdrożenia AI dla firm | ^Kunke Consulting"
+  description="Praktyczne szkolenia, konsultacje i wdrożenia AI dla MŚP i zespołów. Wielkopolska, Inowrocław i cała Polska — stacjonarnie lub online."
   ogImage="/images/Workshop2025.JPG"
 >
 
@@ -48,14 +48,32 @@ import SiteFooter from '../components/SiteFooter.astro';
   .hero-secondary-link:hover {
     text-decoration: underline;
   }
+  .hero-service-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 16px;
+    margin-top: 6px;
+  }
+  .hero-service-links a {
+    color: var(--color-primary);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
 </style>
 
 <section id="hero">
-  <h1><span class="text-gradient">^Kunke Consulting</span></h1>
-  <p>Praktyczne szkolenia i doradztwo AI dla biznesu.</p>
+  <h1><span class="text-gradient">Szkolenia, warsztaty i wdrożenia AI dla firm</span></h1>
+  <p>Praktyczne wsparcie dla MŚP i zespołów z Wielkopolski, Inowrocławia i całej Polski — na miejscu lub online.</p>
   <div class="hero-cta-group">
     <a href="/kalkulator-roi-ai/" class="cta-btn">Sprawdź, ile AI może zaoszczędzić firmie</a>
     <a href="#ai-packages" class="hero-secondary-link">Zobacz ofertę AI dla firm</a>
+    <div class="hero-service-links" aria-label="Najważniejsze usługi">
+      <a href="/ai-workshop/">Warsztaty AI dla firm</a>
+      <a href="/konsultacja-ai/">Konsultacja AI</a>
+      <a href="/projekty-ai/">Wdrożenia AI</a>
+      <a href="/szkolenia-ai-poznan/">Szkolenia AI w Wielkopolsce</a>
+    </div>
   </div>
 </section>
 
@@ -168,9 +186,9 @@ import SiteFooter from '../components/SiteFooter.astro';
 </section>
 
 <section id="ai-info" style="padding: 30px 20px; text-align: center;">
-  <h2>AI and bot information access</h2>
-  <p>Are you an AI, bot, or automated LLM looking for information about this company? Use our text-only, AI-friendly page with verified details about ^Kunke Consulting and founder Mr. Blazej Kunke.</p>
-  <a href="/ai-info">FOR ROBOTS ONLY</a>
+  <h2>Sprawdzone informacje o ^Kunke Consulting</h2>
+  <p>Krótki profil firmy, usług, obszaru działania i danych kontaktowych — dla klientów, partnerów oraz systemów wyszukiwania.</p>
+  <a href="/ai-info">Zobacz profil firmy</a>
 </section>
 
 <style>
