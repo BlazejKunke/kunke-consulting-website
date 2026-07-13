@@ -1,34 +1,35 @@
 ---
-// props could be used later for localisation; hard-coded for now
 const packages = [
   {
     id: 'plant',
-    title: 'AI consultation',
-    tagline: 'Quick diagnosis and first steps',
-    price: 'From £280 + VAT',
+    title: 'AI training for teams',
+    tagline: 'Introduce AI and gain an advantage',
+    price: 'From £1,200 + VAT',
     badge: null,
     bullets: [
-      'Assess the AI potential in your company',
-      'Identify first implementation areas',
-      'Recommend the right AI tools',
-      '90 minutes online or on-site',
-      'Optional meeting recording'
+      'Two tailored training days',
+      'Practical AI tools and playbooks',
+      'Prompt engineering',
+      'AI video, image and audio',
+      'Responsible AI: ethics, environment and law',
+      'Slide deck and certificates',
+      'A practical first step with AI'
     ],
     calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   },
   {
     id: 'grow',
-    title: 'AI training for companies',
-    tagline: 'Introduce AI and gain an advantage',
-    price: 'From £1,200 + VAT',
+    title: 'AI implementation',
+    tagline: 'A programme tailored to your organisation',
+    price: 'Pricing on request',
     bullets: [
-      'Two in-person training days',
-      'Practical AI tools',
-      'AI pilot programmes',
-      'AI ethics, environment, law',
-      'AI video, image, audio',
-      'Prompt engineering',
-      'Slide deck and certificate'
+      'Team and process needs assessment',
+      'AI strategy and priorities',
+      'Opportunity workshop',
+      'Mapping practical use cases',
+      'First AI assistants',
+      'Data, governance and AI Act risks',
+      'Pilot programme'
     ],
     badge: 'AI for business',
     calendly: 'https://calendly.com/kunkeconsulting-info/30min'
@@ -53,7 +54,7 @@ const packages = [
 ];
 ---
 <section id="ai-packages">
-  <h2>AI training and advisory</h2>
+  <h2>AI training, implementation and projects</h2>
 
   <div class="package-grid">
     {packages.map(pkg => (
@@ -71,9 +72,7 @@ const packages = [
           <div class="spacer" />
           <p class="price" set:html={pkg.price} />
 
-          {pkg.calendly
-            ? <a href="/ai-workshop" class="cta">{pkg.id === 'plant' || pkg.id === 'grow' ? 'Learn more' : 'Let’s talk'}</a>
-            : <a href="#contact" class="cta secondary">Get in touch</a>}
+          <a href={pkg.calendly} class="cta" target="_blank" rel="noopener noreferrer">Book a free 30-minute call</a>
         </div>
       </article>
     ))}

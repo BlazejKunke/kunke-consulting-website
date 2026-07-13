@@ -2,32 +2,34 @@
 const packages = [
   {
     id: 'plant',
-    title: 'AI-consultatie',
-    tagline: 'Snelle diagnose en eerste stappen',
-    price: 'Vanaf 325 EUR + btw',
+    title: 'AI-training voor teams',
+    tagline: 'Introduceer AI en creëer voorsprong',
+    price: 'Vanaf 1400 EUR + btw',
     badge: null,
     bullets: [
-      'Inzicht in het AI-potentieel binnen uw organisatie',
-      'Eerste implementatiegebieden bepalen',
-      'Aanbeveling van de juiste AI-tools',
-      '90 minuten online of op locatie',
-      'Optioneel opname van de sessie'
+      'Twee trainingsdagen op maat',
+      'Praktische AI-tools en werkwijzen',
+      'Prompt engineering',
+      'AI voor video, beeld en audio',
+      'Verantwoorde AI: ethiek, duurzaamheid en wetgeving',
+      'Presentatie en certificaten',
+      'Een praktische eerste stap met AI'
     ],
     calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   },
   {
     id: 'grow',
-    title: 'AI-training voor bedrijven',
-    tagline: 'Introduceer AI en creëer voorsprong',
-    price: 'Vanaf 1400 EUR + btw',
+    title: 'AI-implementatie',
+    tagline: 'Een programma op maat van uw organisatie',
+    price: 'Prijs op aanvraag',
     bullets: [
-      'Twee trainingsdagen op locatie',
-      'Praktische AI-tools',
-      'AI-pilotprogramma\'s',
-      'AI-ethiek, duurzaamheid en wetgeving',
-      'AI voor video, beeld en audio',
-      'Prompt engineering',
-      'Presentatie en certificaat'
+      'Analyse van team- en procesbehoeften',
+      'AI-strategie en prioriteiten',
+      'Workshop over kansen',
+      'Praktische use cases in kaart brengen',
+      'Eerste AI-assistenten',
+      'Risico’s rond data, governance en de AI Act',
+      'Pilotprogramma'
     ],
     badge: 'AI voor business',
     calendly: 'https://calendly.com/kunkeconsulting-info/30min'
@@ -52,7 +54,7 @@ const packages = [
 ];
 ---
 <section id="ai-packages">
-  <h2>AI-training en advies</h2>
+  <h2>AI-training, implementatie en projecten</h2>
 
   <div class="package-grid">
     {packages.map(pkg => (
@@ -70,9 +72,7 @@ const packages = [
           <div class="spacer" />
           <p class="price" set:html={pkg.price} />
 
-          {pkg.calendly
-            ? <a href="/ai-workshop" class="cta">{pkg.id === 'plant' || pkg.id === 'grow' ? 'Meer informatie' : 'Laten we praten'}</a>
-            : <a href="#contact" class="cta secondary">Neem contact op</a>}
+          <a href={pkg.calendly} class="cta" target="_blank" rel="noopener noreferrer">Plan een gratis gesprek van 30 minuten</a>
         </div>
       </article>
     ))}

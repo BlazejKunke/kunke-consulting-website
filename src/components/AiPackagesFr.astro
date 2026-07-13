@@ -2,32 +2,34 @@
 const packages = [
   {
     id: 'plant',
-    title: 'Consultation IA',
-    tagline: 'Diagnostic rapide et premières actions',
-    price: 'À partir de 325 € HT',
+    title: 'Formation IA pour les équipes',
+    tagline: 'Adoptez l’IA et gagnez en efficacité',
+    price: 'À partir de 1400 € HT',
     badge: null,
     bullets: [
-      "Évaluer le potentiel de l'IA dans votre organisation",
-      "Identifier les premiers cas d'usage",
-      "Recommander les bons outils IA",
-      '90 minutes en ligne ou sur site',
-      'Enregistrement du rendez-vous sur demande'
+      'Deux journées de formation sur mesure',
+      'Outils IA et méthodes pratiques',
+      'Prompt engineering',
+      'IA pour la vidéo, l’image et le son',
+      'IA responsable : éthique, environnement et droit',
+      'Support de présentation et certificats',
+      'Une première étape concrète avec l’IA'
     ],
     calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   },
   {
     id: 'grow',
-    title: 'Formation IA pour entreprises',
-    tagline: 'Acculturation rapide et avantage compétitif',
-    price: 'À partir de 1400 € HT',
+    title: 'Déploiement de l’IA',
+    tagline: 'Un programme adapté à votre organisation',
+    price: 'Tarifs sur devis',
     bullets: [
-      'Deux journées de formation en présentiel',
-      'Outils IA concrets pour vos équipes',
-      'Programmes pilotes IA',
-      'Éthique, environnement et cadre légal',
-      'IA pour la vidéo, l’image et le son',
-      'Prompt engineering',
-      'Support de présentation et certificat'
+      'Analyse des besoins des équipes et des processus',
+      'Stratégie IA et priorités',
+      'Atelier d’opportunités',
+      'Cartographie des cas d’usage',
+      'Premiers assistants IA',
+      'Risques liés aux données, à la gouvernance et à l’AI Act',
+      'Programme pilote'
     ],
     badge: 'IA pour les équipes',
     calendly: 'https://calendly.com/kunkeconsulting-info/30min'
@@ -52,7 +54,7 @@ const packages = [
 ];
 ---
 <section id="ai-packages">
-  <h2>Formations et conseil IA</h2>
+  <h2>Formation, déploiement et projets IA</h2>
 
   <div class="package-grid">
     {packages.map(pkg => (
@@ -70,9 +72,7 @@ const packages = [
           <div class="spacer" />
           <p class="price" set:html={pkg.price} />
 
-          {pkg.calendly
-            ? <a href="/ai-workshop" class="cta">{pkg.id === 'plant' || pkg.id === 'grow' ? 'Découvrir' : 'Échanger'}</a>
-            : <a href="#contact" class="cta secondary">Contactez-nous</a>}
+          <a href={pkg.calendly} class="cta" target="_blank" rel="noopener noreferrer">Réserver un échange gratuit de 30 min</a>
         </div>
       </article>
     ))}

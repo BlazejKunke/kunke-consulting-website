@@ -2,32 +2,34 @@
 const packages = [
   {
     id: 'plant',
-    title: 'AI consultation',
-    tagline: 'Fast diagnosis and first steps',
-    price: 'From £280 + VAT',
+    title: 'AI training for teams',
+    tagline: 'Introduce AI and gain an edge',
+    price: 'From £1,200 + VAT',
     badge: null,
     bullets: [
-      'Assess the AI potential in your organisation',
-      'Identify quick wins to pilot',
-      'Recommend trusted AI tools',
-      '90 minutes online or on-site in the UK',
-      'Optional meeting recording'
+      'Two tailored training days in the UK',
+      'Hands-on AI tools and playbooks',
+      'Prompt engineering',
+      'AI video, image and audio',
+      'Responsible AI: ethics, environment and law',
+      'Slide deck and certificates',
+      'A practical first step with AI'
     ],
     calendly: 'https://calendly.com/kunkeconsulting-info/30min'
   },
   {
     id: 'grow',
-    title: 'AI training for teams',
-    tagline: 'Introduce AI and gain an edge',
-    price: 'From £1,200 + VAT',
+    title: 'AI implementation',
+    tagline: 'A programme tailored to your organisation',
+    price: 'Pricing on request',
     bullets: [
-      'Two tailored training days in the UK',
-      'Hands-on AI tools and playbooks',
-      'AI pilot programmes',
-      'Responsible AI: ethics, environment, law',
-      'AI video, image, audio',
-      'Prompt engineering',
-      'Slide deck and certificate'
+      'Team and process needs assessment',
+      'AI strategy and priorities',
+      'Opportunity workshop',
+      'Mapping practical use cases',
+      'First AI assistants',
+      'Data, governance and AI Act risks',
+      'Pilot programme'
     ],
     badge: 'AI for business',
     calendly: 'https://calendly.com/kunkeconsulting-info/30min'
@@ -52,7 +54,7 @@ const packages = [
 ];
 ---
 <section id="ai-packages">
-  <h2>AI training and advisory in the UK</h2>
+  <h2>AI training, implementation and projects in the UK</h2>
 
   <div class="package-grid">
     {packages.map(pkg => (
@@ -70,9 +72,7 @@ const packages = [
           <div class="spacer" />
           <p class="price" set:html={pkg.price} />
 
-          {pkg.calendly
-            ? <a href="/ai-workshop" class="cta">{pkg.id === 'plant' || pkg.id === 'grow' ? 'Learn more' : 'Let’s talk'}</a>
-            : <a href="#contact" class="cta secondary">Get in touch</a>}
+          <a href={pkg.calendly} class="cta" target="_blank" rel="noopener noreferrer">Book a free 30-minute call</a>
         </div>
       </article>
     ))}
