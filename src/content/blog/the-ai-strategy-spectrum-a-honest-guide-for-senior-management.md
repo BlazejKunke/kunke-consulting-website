@@ -1,13 +1,14 @@
 ---
-title: "The AI Strategy Spectrum A Honest Guide for Senior Management"
+title: "The AI Strategy Spectrum: An Honest Guide for Senior Management"
 description: "From doing nothing to going all in, what each approach actually means, and when it makes sense."
 date: 2026-03-01
+language: en
 author: "Błażej Kunke"
 tags: ["AI Strategy", "Leadership", "Management", "Digital Transformation"]
 heroImage: "/images/AI_strategy_2026.jpg"
 ---
 
-# The AI Strategy Spectrum A Honest Guide for Senior Management
+# The AI Strategy Spectrum: An Honest Guide for Senior Management
 
 *From doing nothing to going all in, what each approach actually means, and when it makes sense.*
 
@@ -15,7 +16,7 @@ heroImage: "/images/AI_strategy_2026.jpg"
 
 The pressure on senior management to “do something about AI” is now unavoidable. Board members ask about it. Employees ask about it. The business press writes about it daily. Yet most frameworks on offer are binary: either you are transforming your company with AI, or you are falling behind. This is a false choice, and it is not particularly useful for a CEO or COO trying to make a real decision.
 
-This article takes a different approach. It maps the full spectrum of strategic postures available to senior management: from deliberate inaction to full organisational commitment, and makes the honest case for each one.
+This article takes a different approach. It maps the full spectrum of strategic postures available to senior management: from deliberate inaction to full organizational commitment, and makes the honest case for each one.
 
 One important framing note: the most dangerous position might not be choosing the wrong strategy. It might be drifting, unfocused, having no conscious position at all, while time passes and the competitive landscape shifts around you.
 
@@ -41,11 +42,11 @@ Additional scenarios where this holds: highly regulated industries where AI adop
 
 **What it looks like in practice:** a short internal communication: a memo, a meeting, an email, a slide in an all-hands with one core message: do not enter confidential company data into personal AI accounts. Possibly a brief note about which tools are approved or tolerated, and which are not.
 
-**Why this matters more than it sounds:** Shadow AI is already happening in your organisation. Employees are using ChatGPT, Gemini, Copilot, and others on personal accounts, often with company data, client information, and internal documents. This is not speculation—it is the default behaviour of a workforce that has access to powerful free tools and no guidance. A single clear directive costs almost nothing and reduces real legal, reputational, and data security exposure.
+**Why this matters more than it sounds:** Shadow AI is already happening in your organization. Employees are using ChatGPT, Gemini, Copilot, and others on personal accounts, often with company data, client information, and internal documents. This is not speculation—it is the default behavior of a workforce that has access to powerful free tools and no guidance. A single clear directive costs almost nothing and reduces real legal, reputational, and data security exposure.
 
-**Investment required:** Near zero. One meeting, one document, one communication. No dedicated headcount, no tool procurement, no training programme.
+**Investment required:** Near zero. One meeting, one document, one communication. No dedicated headcount, no tool procurement, no training program.
 
-**When it is defensible:** Smaller companies without the resources to go further; leadership teams that are not yet ready to commit more but recognise the baseline risk; organisations buying themselves time to form a clearer view before committing to anything more structured.
+**When it is defensible:** Smaller companies without the resources to go further; leadership teams that are not yet ready to commit more but recognize the baseline risk; organizations buying themselves time to form a clearer view before committing to anything more structured.
 
 **The ceiling:** This strategy does nothing to capture upside. It is purely defensive. That is fine—but management should be clear-eyed that this is what it is.
 
@@ -57,9 +58,9 @@ Additional scenarios where this holds: highly regulated industries where AI adop
 
 **The logic behind it:** Data security, regulatory compliance, fear of AI-generated errors reaching clients, or leadership that is genuinely uncertain and prefers caution over experimentation. In certain industries—healthcare, defence—the regulatory exposure is real and the caution is not unreasonable.
 
-**The honest problem:** In practice, the ban is largely unenforceable. Employees use AI on their phones, at home, before they arrive at work, and through integrations they may not even recognise as AI. A formal ban may suppress visible usage while doing nothing to reduce actual usage. Worse, it may push usage underground, making it harder to monitor and govern.
+**The honest problem:** In practice, the ban is largely unenforceable. Employees use AI on their phones, at home, before they arrive at work, and through integrations they may not even recognize as AI. A formal ban may suppress visible usage while doing nothing to reduce actual usage. Worse, it may push usage underground, making it harder to monitor and govern.
 
-**The distinction from Strategy B:** A ban is active and carries an enforcement expectation. Strategy B is passive guidance. They are different postures with different organisational implications.
+**The distinction from Strategy B:** A ban is active and carries an enforcement expectation. Strategy B is passive guidance. They are different postures with different organizational implications.
 
 **When it is defensible:** Genuinely regulated industries where legal exposure is real and documented. In most other contexts, a ban is difficult to enforce and may cost more in employee trust and goodwill than it saves in risk reduction.
 
@@ -89,13 +90,13 @@ Additional scenarios where this holds: highly regulated industries where AI adop
 
 The difference from Strategy D is intentionality. You are not hoping that someone finds something useful. You are designing the conditions under which useful things are found and then scaled.
 
-**Typical components:** An AI readiness assessment to understand where the organisation actually stands; department-level use case mapping to identify the highest-value starting points; tool selection and procurement; basic training and onboarding; a governance policy that covers data, quality control, and accountability.
+**Typical components:** An AI readiness assessment to understand where the organization actually stands; department-level use case mapping to identify the highest-value starting points; tool selection and procurement; basic training and onboarding; a governance policy that covers data, quality control, and accountability.
 
 **Investment required:** Moderate. This is where external consultants, structured workshops, and dedicated internal time become relevant. It is not cheap, but it is scoped and manageable.
 
 **What it produces:** Not just individual productivity gains, but institutional knowledge about where AI does and does not create value in your specific context. That knowledge compounds.
 
-**When it is the right call:** Companies with enough organisational stability to invest focused attention; teams of several dozen employees or more; leadership that has made a considered decision that AI is worth taking seriously, but wants to move deliberately rather than reactively.
+**When it is the right call:** Companies with enough organizational stability to invest focused attention; teams of several dozen employees or more; leadership that has made a considered decision that AI is worth taking seriously, but wants to move deliberately rather than reactively.
 
 **The honest risk:** Structured initiatives can become bureaucratic exercises if the wrong person owns them, or if the goal shifts from creating real value to demonstrating that an initiative exists.
 
@@ -105,7 +106,7 @@ The difference from Strategy D is intentionality. You are not hoping that someon
 
 **What it looks like in practice:** AI is embedded in the company’s strategic plan alongside other top priorities. There is a dedicated budget, an internal AI lead or team, a rollout that extends across departments, a governance framework, and likely some degree of custom tool development or deep integration with existing systems. Progress is tracked at the leadership level on a regular cadence.
 
-This is deliberate, managed transformation. It is ambitious, but it is grounded in conventional business logic: use cases are identified, ROI is measured, change management is taken seriously, and the organisation is brought along rather than shocked into compliance.
+This is deliberate, managed transformation. It is ambitious, but it is grounded in conventional business logic: use cases are identified, ROI is measured, change management is taken seriously, and the organization is brought along rather than shocked into compliance.
 
 The company is not betting everything on a single vision of the future. It is making a significant but calculated investment, with the ability to course-correct as the landscape evolves.
 
@@ -117,7 +118,7 @@ The company is not betting everything on a single vision of the future. It is ma
 
 *A fundamental bet on a specific vision of the near future.*
 
-**What it looks like in practice:** a radical, company-wide pivot in which AI is not one priority among others—it is the organising logic of the entire business. Hiring decisions, product decisions, process decisions, and resource allocation are all filtered through the lens of AI readiness. In the most extreme version, the company is restructuring its business model around AI capabilities, moving fast and accepting significant short-term disruption as the price of long-term positioning.
+**What it looks like in practice:** a radical, company-wide pivot in which AI is not one priority among others—it is the organizing logic of the entire business. Hiring decisions, product decisions, process decisions, and resource allocation are all filtered through the lens of AI readiness. In the most extreme version, the company is restructuring its business model around AI capabilities, moving fast and accepting significant short-term disruption as the price of long-term positioning.
 
 **The underlying belief:** Transformative AI—AGI, or superintelligence, or something close to it—is arriving within weeks, maybe months or a small number of years, and companies that have not fully repositioned themselves before that happens will not be competitive in the world that follows.
 
@@ -125,7 +126,7 @@ This is not a business strategy in the conventional sense. It is a bet on a spec
 
 **The honest case for it:** If that view of the future is correct, the companies that moved early and decisively will have structural advantages that latecomers will not be able to close. History has examples of exactly this dynamic: the companies that treated the internet as existential in the mid-1990s were often right, and the ones that waited paid for it.
 
-**The honest risk:** If the timeline is wrong—and timelines for transformative technology have historically been wrong more often than not—you have burned capital, exhausted people, and destabilised a functioning organisation in pursuit of something that did not arrive on schedule. The history of companies that pivoted too hard, too fast on a technology bet is also long. Ask investors during the dot-com bubble: they were right that the internet was the future, but not the present.
+**The honest risk:** If the timeline is wrong—and timelines for transformative technology have historically been wrong more often than not—you have burned capital, exhausted people, and destabilized a functioning organization in pursuit of something that did not arrive on schedule. The history of companies that pivoted too hard, too fast on a technology bet is also long. Ask investors during the dot-com bubble: they were right that the internet was the future, but not the present.
 
 **When it is defensible:** Rarely. More plausible for technology-native companies, startups with no legacy operations to protect, or leadership teams with genuine sector-specific evidence that disruption is not years away but months. For a manufacturing company in a stable niche, or a regional professional services firm, this strategy is almost certainly the wrong call. Knowing that honestly is itself a form of strategic clarity.
 
@@ -139,7 +140,7 @@ The most common and most costly failure mode is not choosing the wrong strategy.
 
 This framework is a starting point. Every company’s situation is different, and the right strategy is the one that fits your reality.
 
-I would welcome your perspective. Does this spectrum match what you are seeing in your own organisation? Is there a strategy I have missed, or one I have been too generous or too harsh on? The most useful frameworks are the ones that survive contact with real experience.
+I would welcome your perspective. Does this spectrum match what you are seeing in your own organization? Is there a strategy I have missed, or one I have been too generous or too harsh on? The most useful frameworks are the ones that survive contact with real experience.
 
 Feel free to challenge the framework. Tell me where I am wrong.
 

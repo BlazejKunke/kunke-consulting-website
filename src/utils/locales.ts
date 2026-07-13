@@ -3,7 +3,6 @@ export const locales = [
   { code: 'en', label: 'English', pathPrefix: '/en' },
   { code: 'fr', label: 'Français', pathPrefix: '/fr' },
   { code: 'nl', label: 'Nederlands', pathPrefix: '/nl' },
-  { code: 'uk', label: 'United Kingdom', pathPrefix: '/uk' },
 ] as const;
 
 export type LocaleCode = typeof locales[number]['code'];
@@ -21,7 +20,6 @@ export const localeOgMap: Record<LocaleCode, string> = {
   en: 'en_US',
   fr: 'fr_FR',
   nl: 'nl_NL',
-  uk: 'en_GB',
 };
 
 export const localeHtmlLangMap: Record<LocaleCode, string> = {
@@ -29,7 +27,6 @@ export const localeHtmlLangMap: Record<LocaleCode, string> = {
   en: 'en',
   fr: 'fr',
   nl: 'nl',
-  uk: 'en-GB',
 };
 
 export const localeHreflangMap: Record<LocaleCode, string> = {
@@ -37,7 +34,6 @@ export const localeHreflangMap: Record<LocaleCode, string> = {
   en: 'en',
   fr: 'fr-FR',
   nl: 'nl-NL',
-  uk: 'en-GB',
 };
 
 export const defaultLocale: LocaleCode = 'pl';
@@ -50,7 +46,6 @@ const localizedRoutes: Record<string, LocalizedRouteMap> = {
     en: '/en/',
     fr: '/fr/',
     nl: '/nl/',
-    uk: '/uk/',
   },
 };
 
@@ -101,7 +96,7 @@ const normalizePath = (path: string): string => {
 };
 
 const normalizeLocaleRootPath = (path: string): string => {
-  const localeRootMatch = path.match(/^\/(en|fr|nl|uk)\/?$/);
+  const localeRootMatch = path.match(/^\/(en|fr|nl)\/?$/);
   if (!localeRootMatch) {
     return path;
   }

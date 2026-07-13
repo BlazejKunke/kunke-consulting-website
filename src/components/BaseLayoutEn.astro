@@ -11,7 +11,7 @@ export interface Props {
 
 const {
   title,
-  description = "Kunke Consulting: practical AI implementations, automation programs, and advisory for companies.",
+  description = "Kunke Consulting: practical AI training, implementation programs, and advisory for international teams.",
   ogImage
 } = Astro.props;
 
@@ -29,7 +29,7 @@ const htmlLang = localeHtmlLangMap[currentLocale] ?? currentLocale;
 const languageSwitcherUrls = buildLanguageSwitcherUrls(Astro.url.pathname, siteUrl);
 const hreflangUrls = buildHreflangUrls(Astro.url.pathname, siteUrl);
 const xDefaultUrl = languageSwitcherUrls.find(({ locale }) => locale === defaultLocale)?.href ?? canonicalUrl;
-const ogLocale = localeOgMap[currentLocale] ?? 'en_GB';
+const ogLocale = localeOgMap[currentLocale] ?? 'en_US';
 ---
 
 <!DOCTYPE html>
@@ -132,11 +132,11 @@ const ogLocale = localeOgMap[currentLocale] ?? 'en_GB';
     "@type": "Organization",
     "name": "Kunke Consulting",
     "logo": "https://kunkeconsulting.pl/images/Kunke_Favicon.png",
-    "description": "Practical AI implementations for companies in Poland, including automation, adoption programs, and strategic AI advisory.",
+    "description": "Practical AI training, implementation programs, and strategic advisory for international teams.",
     "url": "https://kunkeconsulting.pl",
     "telephone": "+48722156925",
     "email": "info@kunkeconsulting.pl",
-    "areaServed": { "@type": "Country", "name": "Poland" },
+    "areaServed": "Worldwide",
     "hasOfferCatalog": { "@type": "OfferCatalog", "name":"AI implementation and automation services",
       "itemListElement":[
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"AI implementations for companies","description":"End-to-end delivery of artificial intelligence solutions tailored to business processes","provider":{"@type":"Organization","name":"Kunke Consulting"}}},

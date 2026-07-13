@@ -2,6 +2,7 @@
 title: "You Could Spot an AI Image in 2024. You Probably Cannot in 2026."
 description: "Why visual trust has changed: AI image models now generate photorealistic content that businesses can no longer reliably detect by eye."
 date: 2026-03-01
+language: en
 author: "Blazej Kunke"
 tags: ["AI", "Image Generation", "Trust", "Business"]
 heroImage: "/images/Blazej%20Kunke%202026.jpg"
@@ -27,7 +28,7 @@ For most business owners, the immediate reaction is to think about marketing. An
 
 But the more important implication is about trust. Visual evidence has long been one of the foundations of credibility. A photo of a product, a team, an event, a location. These carry weight precisely because they feel real. That weight is now in question.
 
-Consider what this means practically. A competitor's glowing customer testimonial with a photo. A supplier's factory images. A partner's team page. A candidate's LinkedIn profile photo. None of these can be taken at face value in the same way they once could. This is not a distant problem for media organisations. It is a present-day operational reality for any business that relies on digital communication.
+Consider what this means practically. A competitor's glowing customer testimonial with a photo. A supplier's factory images. A partner's team page. A candidate's LinkedIn profile photo. None of these can be taken at face value in the same way they once could. This is not a distant problem for media organizations. It is a present-day operational reality for any business that relies on digital communication.
 
 ## The Opportunity Side
 

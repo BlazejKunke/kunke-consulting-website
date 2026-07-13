@@ -2,6 +2,7 @@
 title: "Signal vs Noise In The Time of AI Hype"
 description: "Reflections on cultivating signal, avoiding burnout, and staying grounded while the AI hype cycle rages on."
 date: 2025-03-12
+language: en
 author: "Blazej Kunke"
 tags: ["AI", "Signal", "Noise", "Consulting", "Media"]
 ---

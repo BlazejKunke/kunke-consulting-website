@@ -1,9 +1,11 @@
 ---
 import { getCollection } from "astro:content";
 
-const posts = (await getCollection("blog")).sort(
+const posts = (await getCollection("blog"))
+  .filter((post) => post.data.language === "pl")
+  .sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+  );
 
 // Get the 3 most recent posts for the grid
 const recentPosts = posts.slice(0, 3);

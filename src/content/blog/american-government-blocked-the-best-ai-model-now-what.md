@@ -2,6 +2,7 @@
 title: "American Government Blocked the Best AI Model. Now What?"
 description: "Fable 5 and Mythos 5 disappeared overnight after a US export control directive. What the shutdown means for businesses, Europe, and AI strategy."
 date: 2026-06-13
+language: en
 author: "Blazej Kunke"
 tags: ["AI", "Anthropic", "Fable 5", "Mythos 5", "AI Strategy", "European AI"]
 heroImage: "/images/claude-fable-5-pierwszy-polski-test.svg"

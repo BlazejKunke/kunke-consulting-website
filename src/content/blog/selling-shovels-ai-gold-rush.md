@@ -2,6 +2,7 @@
 title: "Selling Shovels in the AI Gold Rush"
 description: "Why implementation expertise, not technology, is what SMEs actually need to capture the opportunities created by AI. A strategic framework from an AI consultant working with Polish and European businesses."
 date: 2026-02-06
+language: en
 author: "Blazej Kunke"
 tags: ["AI consulting", "SME", "AI implementation", "business strategy", "Claude Opus 4.6", "Chat GPT 5.2", "CODEX"]
 heroImage: "/images/GoldRush_Me.jpg"
