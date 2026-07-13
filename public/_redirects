@@ -8,6 +8,9 @@
 /aidlafirm/  /ai-dla-firm/  301!
 /aidlafirm/*  /ai-dla-firm/:splat  301!
 /us  /en  301!
+/uk  /en/  301!
+/uk/  /en/  301!
+/uk/*  /en/  301!
 /zespol  /#zespol  301!
 /zespol/  /#zespol  301!
 /team  /en/#team  301!

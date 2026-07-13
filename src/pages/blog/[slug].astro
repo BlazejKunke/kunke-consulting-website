@@ -20,6 +20,29 @@ const absoluteHeroImage = heroImage.startsWith('http')
   ? heroImage
   : `https://kunkeconsulting.pl${heroImage}`;
 const canonicalUrl = `https://kunkeconsulting.pl/blog/${slug}/`;
+const isEnglish = post.data.language === "en";
+const pageLanguage = isEnglish ? "en-US" : "pl";
+const hreflang = isEnglish ? "en" : "pl";
+const dateLocale = isEnglish ? "en-US" : "pl-PL";
+const homeUrl = isEnglish ? "/en/" : "/";
+const blogIndexUrl = isEnglish ? "/en/blog/" : "/blog/";
+const labels = isEnglish
+  ? {
+      home: "Home",
+      blog: "Blog",
+      about: "About this article",
+      company: "Practical AI training and implementation for international teams.",
+      more: "See more articles",
+      back: "← Back to all articles",
+    }
+  : {
+      home: "Strona główna",
+      blog: "Blog",
+      about: "O tym artykule",
+      company: "Ekspert w dziedzinie AI i automatyzacji biznesowej. Pomagamy firmom zwiększać efektywność poprzez nowoczesne technologie.",
+      more: "Zobacz więcej artykułów",
+      back: "← Powrót do wszystkich artykułów",
+    };
 
 // Breadcrumb structured data
 const breadcrumbSchema = {
@@ -29,14 +52,14 @@ const breadcrumbSchema = {
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "Strona główna",
-      "item": "https://kunkeconsulting.pl/"
+      "name": labels.home,
+      "item": `https://kunkeconsulting.pl${homeUrl}`
     },
     {
       "@type": "ListItem",
       "position": 2,
       "name": "Blog",
-      "item": "https://kunkeconsulting.pl/blog/"
+      "item": `https://kunkeconsulting.pl${blogIndexUrl}`
     },
     {
       "@type": "ListItem",
@@ -73,12 +96,12 @@ const articleSchema = {
     "@type": "WebPage",
     "@id": canonicalUrl
   },
-  "keywords": post.data.tags ? post.data.tags.join(", ") : "AI, sztuczna inteligencja, szkolenia AI"
+  "keywords": post.data.tags ? post.data.tags.join(", ") : (isEnglish ? "AI, artificial intelligence, AI training" : "AI, sztuczna inteligencja, szkolenia AI")
 };
 ---
 
 <!DOCTYPE html>
-<html lang="pl">
+<html lang={pageLanguage}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -92,7 +115,7 @@ const articleSchema = {
 
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" hreflang="pl" href={canonicalUrl} />
+    <link rel="alternate" hreflang={hreflang} href={canonicalUrl} />
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
     <!-- Open Graph / Facebook -->
@@ -102,7 +125,7 @@ const articleSchema = {
     <meta property="og:description" content={post.data.description} />
     <meta property="og:image" content={absoluteHeroImage} />
     <meta property="og:site_name" content="Kunke Consulting" />
-    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:locale" content={isEnglish ? "en_US" : "pl_PL"} />
     <meta property="article:published_time" content={post.data.date.toISOString()} />
     <meta property="article:author" content="Błażej Kunke" />
     {post.data.tags && post.data.tags.map((tag: string) => (
@@ -157,7 +180,7 @@ const articleSchema = {
           <h1 class="hero-title">{post.data.title}</h1>
           <div class="hero-meta">
             <time datetime={post.data.date.toISOString()}>
-              {post.data.date.toLocaleDateString('pl-PL', { 
+              {post.data.date.toLocaleDateString(dateLocale, {
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric' 
@@ -186,21 +209,21 @@ const articleSchema = {
         <!-- Sidebar for additional content -->
         <aside class="article-sidebar">
           <div class="sidebar-widget">
-            <h3>O tym artykule</h3>
+            <h3>{labels.about}</h3>
             <p class="article-description">{post.data.description}</p>
           </div>
           
           <div class="sidebar-widget">
             <h3>^Kunke Consulting</h3>
-            <p>Ekspert w dziedzinie AI i automatyzacji biznesowej. Pomagamy firmom zwiększać efektywność poprzez nowoczesne technologie.</p>
-            <a href="/blog/" class="sidebar-cta">Zobacz więcej artykułów</a>
+            <p>{labels.company}</p>
+            <a href={blogIndexUrl} class="sidebar-cta">{labels.more}</a>
           </div>
         </aside>
       </div>
 
       <!-- Navigation -->
       <nav class="article-nav mt-12 pt-8 border-t border-gray-200">
-        <a href="/blog/" class="back-link">← Powrót do wszystkich artykułów</a>
+        <a href={blogIndexUrl} class="back-link">{labels.back}</a>
       </nav>
     </main>
 
@@ -284,7 +307,7 @@ const articleSchema = {
           <div class="footer-section legal-info">
             <h3>^Kunke Consulting</h3>
             <p><a href="/privacy-policy/">Privacy Policy and Legal</a></p>
-            <p><a href="/blog/">Blog</a></p>
+            <p><a href={blogIndexUrl}>Blog</a></p>
           </div>
           <div class="footer-section social-media">
             <h3>Follow</h3>

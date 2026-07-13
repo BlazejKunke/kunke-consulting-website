@@ -11,6 +11,7 @@ const sitemapExcludedPaths = [
   '/us',
   '/zespol',
   '/team',
+  '/uk',
 ];
 
 // https://astro.build/config
@@ -22,10 +23,9 @@ export default defineConfig({
         defaultLocale: 'pl',
         locales: {
           pl: 'pl-PL',
-          en: 'en',
+          en: 'en-US',
           fr: 'fr-FR',
-          nl: 'nl-NL',
-          uk: 'en-GB'
+          nl: 'nl-NL'
         }
       },
       changefreq: 'weekly',
@@ -50,6 +50,10 @@ export default defineConfig({
     '/us': {
       status: 301,
       destination: '/en'
+    },
+    '/uk': {
+      status: 301,
+      destination: '/en/'
     },
     '/zespol': {
       status: 301,
