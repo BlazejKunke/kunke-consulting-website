@@ -1,5 +1,8 @@
 ---
 import { availability, type AvailabilityStatus } from '../content/availability';
+import { getDateKeyInTimeZone, isPastDate } from '../utils/availabilityDates';
+
+const nonce: string | undefined = Astro.locals?.nonce;
 
 const monthNames = [
   'styczeń',
@@ -23,8 +26,7 @@ const statusDetails: Record<AvailabilityStatus, { label: string; shortLabel: str
   unavailable: { label: 'Niedostępny', shortLabel: 'Zajęty' },
 };
 
-const today = new Date();
-const todayUtc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+const buildTodayKey = getDateKeyInTimeZone(new Date());
 
 const pad = (value: number) => String(value).padStart(2, '0');
 
@@ -35,8 +37,10 @@ const calendars = availability.months.map((month) => {
   const days = Array.from({ length: numberOfDays }, (_, index) => {
     const day = index + 1;
     const dateKey = `${availability.year}-${pad(month)}-${pad(day)}`;
-    const status = availability.days[dateKey] ?? availability.defaultStatus;
+    const configuredStatus = availability.days[dateKey] ?? availability.defaultStatus;
     const dayUtc = Date.UTC(availability.year, monthIndex, day);
+    const isPast = isPastDate(dateKey, buildTodayKey);
+    const status: AvailabilityStatus = isPast ? 'unavailable' : configuredStatus;
 
     return {
       day,
@@ -44,7 +48,7 @@ const calendars = availability.months.map((month) => {
       status,
       statusLabel: statusDetails[status].label,
       shortStatusLabel: statusDetails[status].shortLabel,
-      isPast: dayUtc < todayUtc,
+      isPast,
       accessibleDate: new Intl.DateTimeFormat('pl-PL', {
         day: 'numeric',
         month: 'long',
@@ -86,9 +90,11 @@ const calendars = availability.months.map((month) => {
 
         <div class="calendar-grid days-grid">
           {calendar.leadingEmptyDays.map(() => <span class="empty-day" aria-hidden="true"></span>)}
-          {calendar.days.map(({ day, status, statusLabel, shortStatusLabel, isPast, accessibleDate }) => (
+          {calendar.days.map(({ day, dateKey, status, statusLabel, shortStatusLabel, isPast, accessibleDate }) => (
             <div
               class:list={['day', `status-${status}`, { 'is-past': isPast }]}
+              data-date={dateKey}
+              data-date-label={accessibleDate}
               aria-label={`${accessibleDate}: ${statusLabel}`}
               title={`${accessibleDate}: ${statusLabel}`}
             >
@@ -101,6 +107,55 @@ const calendars = availability.months.map((month) => {
     ))}
   </div>
 </div>
+
+<script is:inline nonce={nonce}>
+  const availabilityTimeZone = 'Europe/Warsaw';
+
+  const getWarsawDateKey = (date) => {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      timeZone: availabilityTimeZone,
+    }).formatToParts(date);
+
+    const getPart = (type) => parts.find((part) => part.type === type)?.value;
+    return `${getPart('year')}-${getPart('month')}-${getPart('day')}`;
+  };
+
+  const markPastDatesUnavailable = () => {
+    const todayKey = getWarsawDateKey(new Date());
+
+    document.querySelectorAll('.availability-calendar .day[data-date]').forEach((day) => {
+      const dateKey = day.dataset.date;
+      const dateLabel = day.dataset.dateLabel;
+
+      if (!dateKey || !dateLabel || dateKey >= todayKey) {
+        return;
+      }
+
+      day.classList.remove('status-available', 'status-partially-available');
+      day.classList.add('status-unavailable', 'is-past');
+
+      const unavailableLabel = `${dateLabel}: Niedostępny`;
+      day.setAttribute('aria-label', unavailableLabel);
+      day.setAttribute('title', unavailableLabel);
+
+      const statusLabel = day.querySelector('.day-status');
+      if (statusLabel) {
+        statusLabel.textContent = 'Zajęty';
+      }
+    });
+  };
+
+  markPastDatesUnavailable();
+  window.setInterval(markPastDatesUnavailable, 60_000);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      markPastDatesUnavailable();
+    }
+  });
+</script>
 
 <style>
   .availability-calendar {
