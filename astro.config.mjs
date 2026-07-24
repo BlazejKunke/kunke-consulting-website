@@ -49,7 +49,7 @@ export default defineConfig({
     },
     '/us': {
       status: 301,
-      destination: '/en'
+      destination: '/en/'
     },
     '/uk': {
       status: 301,
