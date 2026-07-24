@@ -1,5 +1,6 @@
 ---
 title: "Praktyczne AI w rodzinnej drukarni: dwa wdrożenia, które można zrobić od razu"
+seoTitle: "AI w rodzinnej drukarni: dwa praktyczne wdrożenia AI"
 description: "Dwa konkretne wdrożenia AI dla polskiej firmy produkcyjnej: analiza danych sprzedażowych i odzyskiwanie zapomnianych klientów oraz agent AI do zarządzania skrzynką."
 date: 2026-07-06
 author: "Błażej Kunke"

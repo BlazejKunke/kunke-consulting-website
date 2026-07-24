@@ -1,5 +1,6 @@
 ---
 title: "Kunke Consulting at India AI Impact 2026 in Warsaw"
+seoTitle: "India AI Impact 2026 Event in Warsaw | Kunke Consulting"
 description: "A brief note on Błażej Kunke’s attendance at the India AI Impact 2026 event at the Embassy of India in Warsaw."
 date: 2026-01-12
 language: en

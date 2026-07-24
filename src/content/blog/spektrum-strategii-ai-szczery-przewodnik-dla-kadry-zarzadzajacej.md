@@ -1,5 +1,6 @@
 ---
 title: "Kompas AI dla firm: 7 strategii wprowadzenia sztucznej inteligencji"
+seoTitle: "Strategia AI dla firm: 7 podejść do wdrożenia | ^Kunke"
 description: "Od całkowitej bierności po pełne zaangażowanie. Co oznaczają poszczególne podejścia i kiedy mają sens."
 date: 2026-03-01
 author: "Błażej Kunke"

@@ -1,5 +1,6 @@
 ---
 title: "Jak AI zmienia branżę konsultingową - Konsulting AI dla firm"
+seoTitle: "Konsulting AI: jak AI zmienia branżę konsultingową"
 description: "Odkrywamy wpływ sztucznej inteligencji na strategie biznesowe. Konsulting AI, doradztwo AI dla biznesu, implementacja AI w firmie."
 date: 2025-01-20
 tags: ["AI", "Konsulting AI", "Doradztwo AI", "AI dla biznesu", "Implementacja AI", "Szkolenia AI"]

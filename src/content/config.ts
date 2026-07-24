@@ -5,6 +5,7 @@ const blog = defineCollection({
   schema: () =>
     z.object({
       title: z.string(),
+      seoTitle: z.string().optional(),
       description: z.string(),
       date: z.date(),
       language: z.enum(["pl", "en"]).default("pl"),

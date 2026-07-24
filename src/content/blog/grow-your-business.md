@@ -1,5 +1,6 @@
 ---
 title: "4 sposoby na rozwój Twojego biznesu"
+seoTitle: "Rozwój biznesu: 4 sprawdzone sposoby dla firm | ^Kunke"
 description: "Proste strategie dla zrównoważonego wzrostu."
 date: 2024-05-25
 tags: ["Rozwój", "Strategia", "Wskazówki"]

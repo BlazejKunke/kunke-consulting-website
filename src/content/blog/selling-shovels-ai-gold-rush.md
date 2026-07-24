@@ -1,5 +1,6 @@
 ---
 title: "Selling Shovels in the AI Gold Rush"
+seoTitle: "AI Implementation: Selling Shovels in the Gold Rush"
 description: "Why implementation expertise, not technology, is what SMEs actually need to capture the opportunities created by AI. A strategic framework from an AI consultant working with Polish and European businesses."
 date: 2026-02-06
 language: en

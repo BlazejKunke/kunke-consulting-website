@@ -1,5 +1,6 @@
 ---
 title: "You Could Spot an AI Image in 2024. You Probably Cannot in 2026."
+seoTitle: "AI Images in 2026: Why You Can No Longer Spot Them"
 description: "Why visual trust has changed: AI image models now generate photorealistic content that businesses can no longer reliably detect by eye."
 date: 2026-03-01
 language: en
