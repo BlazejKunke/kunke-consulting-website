@@ -110,7 +110,7 @@ const articleSchema = {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles/global.css" />
-    <title>{post.data.title} | Blog - ^Kunke Consulting</title>
+    <title>{post.data.seoTitle ?? `${post.data.title} | Blog - ^Kunke Consulting`}</title>
     <meta name="description" content={post.data.description} />
 
     <!-- Canonical URL -->

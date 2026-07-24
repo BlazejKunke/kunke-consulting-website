@@ -1,5 +1,6 @@
 ---
 title: "Amerykański rząd zablokował najlepszy model AI. I co teraz?"
+seoTitle: "Blokada modelu AI: co oznacza dla polskich firm? | ^Kunke"
 description: "Fable 5 i Mythos 5 zniknęły po amerykańskiej dyrektywie eksportowej. Co ta blokada oznacza dla firm, Europy i strategii AI?"
 date: 2026-06-13
 author: "Błażej Kunke"

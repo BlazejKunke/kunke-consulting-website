@@ -1,5 +1,6 @@
 ---
 title: "Warsztat 2025: Czego się spodziewać"
+seoTitle: "Warsztat AI 2025: czego może spodziewać się firma"
 description: "Podgląd naszego nadchodzącego warsztatu."
 date: 2025-01-10
 tags: ["Warsztat", "Wydarzenia", "2025"]

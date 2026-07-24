@@ -1,5 +1,6 @@
 ---
 title: "Signal vs Noise In The Time of AI Hype"
+seoTitle: "AI Hype: How to Separate Signal from Noise | ^Kunke"
 description: "Reflections on cultivating signal, avoiding burnout, and staying grounded while the AI hype cycle rages on."
 date: 2025-03-12
 language: en

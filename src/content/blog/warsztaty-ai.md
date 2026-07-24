@@ -1,5 +1,6 @@
 ---
 title: "Warsztaty AI - Praktyczne szkolenia sztucznej inteligencji dla firm"
+seoTitle: "Warsztaty AI dla firm: praktyczne szkolenie | ^Kunke"
 description: "Kompleksowe szkolenia AI i warsztaty sztucznej inteligencji dla polskich firm. Kursy AI online, szkolenia ChatGPT, AI w Excel. Szkolenia AI Poznań, Warszawa, Łódź."
 date: 2025-01-15
 tags: ["AI", "Warsztaty", "Szkolenia AI", "Szkolenia sztucznej inteligencji", "Kursy AI", "ChatGPT", "AI Excel", "Szkolenia AI Poznań"]
