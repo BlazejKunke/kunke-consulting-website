@@ -398,6 +398,7 @@ const faqs = [
       transform: rotate(-1deg) translateY(-3px);
     }
 
+    .kc-polaroid picture,
     .kc-polaroid img {
       display: block;
       width: 100%;
@@ -1319,14 +1320,19 @@ const faqs = [
       </div>
       <div class="kc-hero-side">
         <figure class="kc-polaroid">
-          <img
-            src="/images/BKunkeExp.jpg"
-            alt="Błażej Kunke, założyciel ^Kunke Consulting"
-            width="768"
-            height="1024"
-            fetchpriority="high"
-            decoding="async"
-          />
+          {/* 560px wide covers the 234px render box at 2x; the full-size
+              BKunkeExp.jpg is 60kB and only used by ExperienceSection. */}
+          <picture>
+            <source srcset="/images/blazej-kunke-hero.webp" type="image/webp" />
+            <img
+              src="/images/blazej-kunke-hero.jpg"
+              alt="Błażej Kunke, założyciel ^Kunke Consulting"
+              width="560"
+              height="747"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
           <figcaption>Błażej Kunke · Poznań</figcaption>
         </figure>
         <div class="kc-hero-notes">
