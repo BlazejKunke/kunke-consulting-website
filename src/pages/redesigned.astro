@@ -147,7 +147,7 @@ const faqs = [
       --kc-ink: #12201b;
       --kc-green: #0a4731;
       --kc-body: #3a4a43;
-      --kc-muted: #6b7b73;
+      --kc-muted: #52625a;
       --kc-card: #ffffff;
       --kc-rule-08: rgba(10, 71, 49, 0.08);
       --kc-rule-10: rgba(10, 71, 49, 0.1);
@@ -220,8 +220,8 @@ const faqs = [
 
     .kc-eyebrow {
       font-family: var(--kc-mono);
-      font-size: 11px;
-      letter-spacing: 0.14em;
+      font-size: 13px;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--kc-muted);
       margin: 0;
@@ -229,7 +229,7 @@ const faqs = [
 
     .kc-note {
       font-family: var(--kc-mono);
-      font-size: 12px;
+      font-size: 14px;
       line-height: 1.7;
       color: var(--kc-muted);
       border-left: 1px solid var(--kc-rule-18);
@@ -298,7 +298,7 @@ const faqs = [
       display: flex;
       gap: 26px;
       margin-left: auto;
-      font-size: 14px;
+      font-size: 16px;
     }
 
     .kc-nav-links a {
@@ -306,7 +306,7 @@ const faqs = [
     }
 
     .kc-nav .kc-btn {
-      font-size: 14px;
+      font-size: 15px;
       padding: 8px 16px;
     }
 
@@ -376,7 +376,7 @@ const faqs = [
     }
 
     .kc-hero-notes .kc-note {
-      font-size: 12px;
+      font-size: 14px;
       line-height: 1.6;
     }
 
@@ -412,7 +412,7 @@ const faqs = [
 
     .kc-polaroid figcaption {
       font-family: var(--kc-mono);
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 0.08em;
       text-align: center;
       color: var(--kc-muted);
@@ -445,7 +445,7 @@ const faqs = [
     }
 
     .kc-fact-small {
-      font-size: 13px;
+      font-size: 15px;
       line-height: 1.45;
       color: var(--kc-muted);
       margin: 6px 0 0;
@@ -495,7 +495,7 @@ const faqs = [
 
     .kc-step-label {
       font-family: var(--kc-mono);
-      font-size: 11px;
+      font-size: 13px;
       color: var(--kc-muted);
       margin: 0 0 12px;
     }
@@ -540,7 +540,7 @@ const faqs = [
 
     .kc-card-tag {
       font-family: var(--kc-mono);
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--kc-muted);
@@ -571,7 +571,7 @@ const faqs = [
     }
 
     .kc-card-items li {
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.45;
       color: var(--kc-body);
       padding-left: 16px;
@@ -595,7 +595,7 @@ const faqs = [
     }
 
     .kc-card-foot a {
-      font-size: 14px;
+      font-size: 15px;
       white-space: nowrap;
     }
 
@@ -764,7 +764,7 @@ const faqs = [
     }
 
     .kc-quote figcaption {
-      font-size: 13px;
+      font-size: 15px;
       color: var(--kc-muted);
     }
 
@@ -807,7 +807,7 @@ const faqs = [
     }
 
     .kc-team-role {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--kc-muted);
       margin: 0;
     }
@@ -853,7 +853,7 @@ const faqs = [
 
     .kc-faq-sign {
       font-family: var(--kc-mono);
-      font-size: 14px;
+      font-size: 16px;
       color: var(--kc-muted);
     }
 
@@ -906,7 +906,7 @@ const faqs = [
       display: flex;
       flex-direction: column;
       gap: 14px;
-      font-size: 15px;
+      font-size: 16px;
       color: var(--kc-body);
     }
 
@@ -933,7 +933,7 @@ const faqs = [
       align-items: center;
       gap: 24px;
       flex-wrap: wrap;
-      font-size: 13px;
+      font-size: 15px;
       color: var(--kc-muted);
     }
 
@@ -1054,6 +1054,20 @@ const faqs = [
 
     /* ---------- phone ---------- */
 
+    /* The 16px anchor labels stop fitting beside the brand and the CTA at
+       roughly 700px, which wraps the brand onto two lines, so the nav drops
+       to brand + CTA well before the phone breakpoint. */
+    @media (max-width: 768px) {
+      .kc-nav-links {
+        display: none;
+      }
+
+      /* With the anchor nav hidden, the CTA carries the right edge. */
+      .kc-nav .kc-btn {
+        margin-left: auto;
+      }
+    }
+
     @media (max-width: 600px) {
       :root {
         --kc-gut: 20px;
@@ -1061,11 +1075,6 @@ const faqs = [
 
       .kc-nav {
         gap: 12px;
-      }
-
-      /* Anchor nav is dropped on phones, as in the mobile design. */
-      .kc-nav-links {
-        display: none;
       }
 
       .kc-brand {
@@ -1086,7 +1095,7 @@ const faqs = [
       }
 
       .kc-eyebrow {
-        font-size: 10px;
+        font-size: 12px;
       }
 
       .kc-hero h1 {
@@ -1139,7 +1148,7 @@ const faqs = [
       }
 
       .kc-fact-small {
-        font-size: 12px;
+        font-size: 14px;
       }
 
       .kc-section {
@@ -1222,7 +1231,7 @@ const faqs = [
       }
 
       .kc-team-role {
-        font-size: 13px;
+        font-size: 15px;
       }
 
       .kc-faq-q {
