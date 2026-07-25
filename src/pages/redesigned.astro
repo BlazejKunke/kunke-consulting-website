@@ -17,7 +17,6 @@ const mailtoOffer = 'mailto:info@kunkeconsulting.pl?subject=Zapytanie:%20AI%20dl
 
 const heroNotes = [
   'Pracowałem 10 lat w korporacjach takich jak Franklin Templeton i McKinsey & Company',
-  'Warsztat: 2 dni × 5 h. Ćwiczenia na żywo, na danych zespołu.',
   'Pracuję po polsku i po angielsku, stacjonarnie i zdalnie.'
 ];
 
@@ -211,17 +210,6 @@ const faqs = [
       max-width: 100%;
     }
 
-    @keyframes kcRiseIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: none;
-      }
-    }
-
     /* ---------- primitives ---------- */
 
     .kc-wrap {
@@ -247,14 +235,6 @@ const faqs = [
       border-left: 1px solid var(--kc-rule-18);
       padding-left: 18px;
       margin: 0;
-    }
-
-    .kc-notes[hidden] {
-      display: none;
-    }
-
-    .kc-notes {
-      animation: kcRiseIn 400ms ease both;
     }
 
     .kc-btn {
@@ -325,26 +305,6 @@ const faqs = [
       color: var(--kc-body);
     }
 
-    .kc-toggle {
-      font-family: var(--kc-mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 7px 12px;
-      border: 1px solid var(--kc-rule-25);
-      border-radius: 999px;
-      background: transparent;
-      color: var(--kc-green);
-      cursor: pointer;
-      transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
-    }
-
-    .kc-toggle:hover {
-      background: var(--kc-green);
-      color: var(--kc-bg);
-      border-color: var(--kc-green);
-    }
-
     .kc-nav .kc-btn {
       font-size: 14px;
       padding: 8px 16px;
@@ -402,16 +362,60 @@ const faqs = [
       color: var(--kc-body);
     }
 
+    .kc-hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      padding-bottom: 8px;
+    }
+
     .kc-hero-notes {
       display: flex;
       flex-direction: column;
       gap: 18px;
-      padding-bottom: 8px;
     }
 
     .kc-hero-notes .kc-note {
       font-size: 12px;
       line-height: 1.6;
+    }
+
+    /* Polaroid: white frame, deep bottom lip, pinned slightly off-square. */
+    .kc-polaroid {
+      margin: 0;
+      align-self: center;
+      width: 100%;
+      max-width: 260px;
+      background: var(--kc-card);
+      padding: 13px 13px 0;
+      border-radius: 3px;
+      box-shadow: 0 1px 2px rgba(10, 71, 49, 0.12), 0 22px 44px -20px rgba(10, 71, 49, 0.4);
+      transform: rotate(-2.5deg);
+      transition: transform 300ms ease;
+    }
+
+    .kc-polaroid:hover {
+      transform: rotate(-1deg) translateY(-3px);
+    }
+
+    .kc-polaroid img {
+      display: block;
+      width: 100%;
+      /* `height: auto` so the width/height attributes don't beat the crop ratio. */
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: 50% 22%;
+      background: rgba(10, 71, 49, 0.06);
+    }
+
+    .kc-polaroid figcaption {
+      font-family: var(--kc-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-align: center;
+      color: var(--kc-muted);
+      padding: 13px 4px 17px;
     }
 
     /* ---------- facts band ---------- */
@@ -500,19 +504,6 @@ const faqs = [
       line-height: 1.6;
       color: var(--kc-body);
       margin: 0;
-    }
-
-    .kc-note-block {
-      margin-top: 36px;
-      max-width: 44em;
-    }
-
-    /* Notes that sit on their own, without the marginal rule. */
-    .kc-note-plain {
-      border-left: none;
-      padding-left: 0;
-      margin-top: 28px;
-      max-width: 52em;
     }
 
     /* ---------- offer ---------- */
@@ -738,15 +729,15 @@ const faqs = [
       text-wrap: pretty;
     }
 
-    .kc-about-body p:not(.kc-note):not(.kc-eyebrow) {
+    .kc-about-body p:not(.kc-eyebrow) {
       font-size: 17px;
       line-height: 1.65;
       color: var(--kc-body);
       margin: 0 0 18px;
     }
 
-    .kc-about-body p:not(.kc-note):not(.kc-eyebrow):last-of-type {
-      margin-bottom: 28px;
+    .kc-about-body p:not(.kc-eyebrow):last-of-type {
+      margin-bottom: 0;
     }
 
     /* ---------- quotes ---------- */
@@ -908,12 +899,6 @@ const faqs = [
     .kc-contact .kc-btn {
       font-size: 20px;
       padding: 17px 30px;
-    }
-
-    .kc-contact .kc-note {
-      margin-top: 28px;
-      border-left: none;
-      padding-left: 0;
     }
 
     .kc-contact-details {
@@ -1086,14 +1071,9 @@ const faqs = [
         font-size: 15px;
       }
 
-      .kc-toggle {
-        margin-left: auto;
-        font-size: 10px;
-        min-height: 44px;
-        padding: 0 14px;
-      }
-
+      /* With the anchor nav hidden, the CTA carries the right edge. */
       .kc-nav .kc-btn {
+        margin-left: auto;
         min-height: 44px;
         display: flex;
         align-items: center;
@@ -1137,9 +1117,14 @@ const faqs = [
         margin-top: 16px;
       }
 
-      .kc-hero-notes {
+      .kc-hero-side {
         margin-top: 28px;
+        gap: 28px;
         padding-bottom: 0;
+      }
+
+      .kc-polaroid {
+        max-width: 220px;
       }
 
       .kc-facts-grid {
@@ -1282,21 +1267,21 @@ const faqs = [
         scroll-behavior: auto;
       }
 
-      .kc-notes {
-        animation: none;
-      }
-
       .kc-card,
       .kc-btn,
-      .kc-toggle,
       .kc-faq-q,
       .kc-btn-light,
-      .kc-btn-ghost {
+      .kc-btn-ghost,
+      .kc-polaroid {
         transition: none;
       }
 
       .kc-card:hover {
         transform: none;
+      }
+
+      .kc-polaroid:hover {
+        transform: rotate(-2.5deg);
       }
     }
   </style>
@@ -1313,15 +1298,6 @@ const faqs = [
         <a href="#zespol">Zespół</a>
         <a href="#pytania">Pytania</a>
       </div>
-      <button
-        type="button"
-        class="kc-toggle"
-        id="kc-notes-toggle"
-        aria-pressed="true"
-        title="Pokaż przypisy i liczby na marginesie"
-      >
-        detale
-      </button>
       <a href="mailto:info@kunkeconsulting.pl" class="kc-btn">Napisz</a>
     </nav>
   </header>
@@ -1341,8 +1317,21 @@ const faqs = [
           <a href="#wdrozenie" class="kc-link-quiet">Zobacz, jak pracuję</a>
         </div>
       </div>
-      <div class="kc-notes kc-hero-notes" data-kc-notes>
-        {heroNotes.map((note) => <p class="kc-note">{note}</p>)}
+      <div class="kc-hero-side">
+        <figure class="kc-polaroid">
+          <img
+            src="/images/BKunkeExp.jpg"
+            alt="Błażej Kunke, założyciel ^Kunke Consulting"
+            width="768"
+            height="1024"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <figcaption>Błażej Kunke · Poznań</figcaption>
+        </figure>
+        <div class="kc-hero-notes">
+          {heroNotes.map((note) => <p class="kc-note">{note}</p>)}
+        </div>
       </div>
     </section>
 
@@ -1373,11 +1362,6 @@ const faqs = [
             ))
           }
         </div>
-        <div class="kc-notes" data-kc-notes>
-          <p class="kc-note kc-note-block">
-            Przypis: mierzymy realnie oszczędzony czas, nie entuzjazm.
-          </p>
-        </div>
       </div>
     </section>
 
@@ -1405,11 +1389,6 @@ const faqs = [
             </div>
           ))
         }
-      </div>
-      <div class="kc-notes" data-kc-notes>
-        <p class="kc-note kc-note-plain">
-          Jeżeli nie jesteś pewien: zacznijmy od jednego szkolenia.
-        </p>
       </div>
     </section>
 
@@ -1472,19 +1451,13 @@ const faqs = [
         <h2 id="kc-about-title">Zmiana już się dzieje. Dla Twojej firmy to szansa.</h2>
         <p>
           Po dziesięciu latach w globalnych korporacjach takich jak Franklin Templeton Investments,
-          McKinsey &amp; Company założyłem własne studio. Interesuje mnie to, jak technologia działa
-          naprawdę: co dzieje się pod interfejsem, gdzie są jej granice i co z tego wynika dla
-          zespołu w poniedziałek rano.
+          McKinsey &amp; Company założyłem ^Kunke Consulting. Interesuje mnie to, jak technologia
+          działa naprawdę, gdzie są jej granice i co z tego wynika dla moich klientów.
         </p>
         <p>
-          Dlatego nie sprzedaję automatyzacji wszystkiego. Obiecuję dokładnie tyle, ile potrafimy
-          dowieźć — i staram się dostarczyć więcej.
+          Dlatego nie sprzedaję automatyzacji wszystkiego. Obiecuję tyle, ile potrafimy dowieźć i
+          staram się dostarczyć więcej.
         </p>
-        <div class="kc-notes" data-kc-notes>
-          <p class="kc-note">
-            Przypis: kiedy używam słów „zawsze”, „nigdy” i „bezpłatnie”, mam je na myśli dosłownie.
-          </p>
-        </div>
       </div>
     </section>
 
@@ -1567,12 +1540,6 @@ const faqs = [
             Napisz jednym zdaniem, co chcesz usprawnić. Ja, albo mój brat odpowiemy osobiście.
           </h2>
           <a href={mailto} class="kc-btn">info@kunkeconsulting.pl</a>
-          <div class="kc-notes" data-kc-notes>
-            <p class="kc-note">
-              Przypis: pierwsza rozmowa jest bezpłatna i trwa 30 minut. Jeśli nie jestem właściwą
-              osobą, powiem to w jej trakcie.
-            </p>
-          </div>
         </div>
         <div class="kc-contact-details">
           <p class="kc-eyebrow">Kontakt</p>
@@ -1598,23 +1565,6 @@ const faqs = [
   </footer>
 
   <script>
-    // "detale" toggles the marginal notes; the design ships them visible.
-    const toggle = document.getElementById('kc-notes-toggle');
-    const noteGroups = Array.from(document.querySelectorAll('[data-kc-notes]'));
-
-    toggle?.addEventListener('click', () => {
-      const showing = toggle.getAttribute('aria-pressed') === 'true';
-      const next = !showing;
-      toggle.setAttribute('aria-pressed', String(next));
-      noteGroups.forEach((group) => {
-        if (next) {
-          group.removeAttribute('hidden');
-        } else {
-          group.setAttribute('hidden', '');
-        }
-      });
-    });
-
     // FAQ: single item open at a time, first one open on load.
     const questions = Array.from(document.querySelectorAll('.kc-faq-q'));
 
