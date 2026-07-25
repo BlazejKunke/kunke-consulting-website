@@ -1,480 +1,1715 @@
 ---
-import BaseLayout from '../../components/BaseLayoutEn.astro';
-import ContactForm from '../../components/ContactFormEn.astro';
-import AiPackages from '../../components/AiPackagesEn.astro';
-import Testimonials from '../../components/testimonialsEn.astro';
-import ExperienceSection from '../../components/ExperienceSectionEn.astro';
-import WorkshopSection from '../../components/WorkshopSectionEn.astro';
-import AboutMe from '../../components/AboutMeEn.astro';
-import StudentReport from '../../components/StudentReportEn.astro';
-import TeamSection from '../../components/TeamSection.astro';
+// English homepage — the same design, structure and copy as /redesigned,
+// translated. Like that page it intentionally does NOT use a shared layout: the
+// redesign carries its own type scale, palette and layout, which global.css
+// would override. The pieces a base layout would otherwise provide (hreflang,
+// Open Graph, GTM, JSON-LD, the cookie banner) are inlined below, and the
+// language switch lives in the nav and footer instead of the floating widget,
+// which would collide with the sticky header.
 
-const teamMembersEn = [
+import CookieConsent from '../../components/CookieConsentEn.astro';
+import { buildHreflangUrls, buildLanguageSwitcherUrls, defaultLocale } from '../../utils/locales';
+
+const nonce: string | undefined = Astro.locals?.nonce;
+
+const siteUrl = Astro.site ?? new URL('https://kunkeconsulting.pl');
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const hreflangUrls = buildHreflangUrls(Astro.url.pathname, siteUrl);
+const languageSwitcherUrls = buildLanguageSwitcherUrls(Astro.url.pathname, siteUrl);
+const xDefaultUrl = languageSwitcherUrls.find(({ locale }) => locale === defaultLocale)?.href ?? canonicalUrl;
+
+const pageTitle = 'Practical AI training and advisory for business | ^Kunke Consulting';
+const pageDescription =
+  'Practical AI training and implementation for mid-sized companies. We start with the work your team does today. Poznań, all of Poland, in person and remote.';
+const ogImage = new URL('/images/Workshop2025.JPG', siteUrl).href;
+
+const mailto = 'mailto:info@kunkeconsulting.pl?subject=AI%20enquiry';
+const mailtoOffer = 'mailto:info@kunkeconsulting.pl?subject=Enquiry:%20AI%20for%20my%20company';
+
+// The PragmatIQ case study exists as an English translation; the client's own
+// write-up is only published in Polish, hence the (PL) label on that link.
+const caseReport = '/Kunke%20Consulting%20Use%20Case%20AI%20in%20a%20Law%20Firm%20English%20Translation%202025.pdf';
+
+const heroNotes = [
+  'I spent 10 years in corporations such as Franklin Templeton and McKinsey & Company',
+  'I work in English and in Polish'
+];
+
+const facts = [
+  { big: 'In person', small: 'we believe in-person training, not online, gives the best results' },
+  { big: '30 workshops', small: 'on AI and modern tools, since March 2025' },
+  { big: '93%+', small: 'average rating in post-workshop surveys' },
+  { big: '10–250', small: 'the size of the teams I work with' }
+];
+
+const steps = [
   {
-    name: 'Błażej Kunke',
-    role: 'Founder, AI trainer',
-    image: '/images/team/blazej-kunke-team.jpg',
-    webp: '/images/team/blazej-kunke-team.webp',
-    alt: 'Błażej Kunke, founder of ^Kunke Consulting',
+    label: '01 — Diagnosis',
+    text: 'Conversations with departments, a review of processes, and a shortlist of the places with the highest return. No tools bought at this stage.'
   },
   {
-    name: 'Bartosz Mikulski',
-    role: 'AI Engineer',
-    image: '/images/team/bartosz-mikulski-july-2026-team.jpg',
-    webp: '/images/team/bartosz-mikulski-july-2026-team.webp',
-    alt: 'Bartosz Mikulski, AI engineer',
+    label: '02 — Skills',
+    text: 'Workshops built on your team’s real tasks. A skill they can use the next day, not next quarter.'
   },
   {
-    name: 'Jan Kunke',
-    role: 'Sales',
-    image: '/images/team/jan-kunke-july-2026-team.jpg',
-    webp: '/images/team/jan-kunke-july-2026-team.webp',
-    alt: 'Jan Kunke, sales specialist',
+    label: '03 — Pilot',
+    text: 'The first AI assistants in a single process, measured results, legal review (GDPR, AI Act). The decision to scale is made on data.'
+  }
+];
+
+const packages = [
+  {
+    tag: 'First step',
+    name: 'AI training',
+    blurb: 'Two days of workshops, after which your team uses AI in their own work.',
+    items: [
+      'Practical AI tools',
+      'Prompt engineering',
+      'Image, audio, video',
+      'Ethics, law, environment',
+      'PDF materials and a certificate'
+    ],
+    price: 'from PLN 6,000 + VAT'
   },
+  {
+    tag: 'Tailored programme',
+    name: 'AI implementation',
+    blurb: 'From a needs assessment to a pilot in selected processes.',
+    items: [
+      'Assessment of the team’s needs',
+      'Strategy and a map of use cases',
+      'The first AI assistants',
+      'Legal review (GDPR, AI Act)',
+      'Pilot and measurement of results'
+    ],
+    price: 'from PLN 24,000 + VAT'
+  },
+  {
+    tag: 'Ongoing partnership',
+    name: 'AI projects',
+    blurb: 'For companies that want to keep developing AI for longer than a single quarter.',
+    items: [
+      'AI assistants for teams',
+      'Recurring training',
+      'Engineering support',
+      'Legal support',
+      'Day-to-day advisory'
+    ],
+    price: 'individual quote'
+  }
+];
+
+const quotes = [
+  { text: 'Beyond passing on the knowledge brilliantly, you also made the atmosphere a friendly one.', who: 'Anna Majewska, SGB Leasing' },
+  {
+    text: 'The training will save me several dozen minutes a week. I would gladly take part in a more advanced one.',
+    who: 'Post-workshop survey, PDO Drukarnia'
+  },
+  { text: 'Thank you for the project we did together.', who: 'Marta Ozga, CEO Ozga Group' }
+];
+
+const team = [
+  { name: 'Błażej Kunke', role: 'Founder, AI trainer', img: '/images/team/blazej-kunke-team.jpg' },
+  { name: 'Bartosz Mikulski', role: 'AI Engineer', img: '/images/team/bartosz-mikulski-july-2026-team.jpg' },
+  { name: 'Jan Kunke', role: 'Sales', img: '/images/team/jan-kunke-july-2026-team.jpg' }
+];
+
+const faqs = [
+  {
+    q: 'Where do we start with AI in the company?',
+    a: 'With understanding your processes, not with buying tools. We diagnose where AI gives the biggest return and lay out a plan for the first steps, fitted to the company.'
+  },
+  {
+    q: 'How long is a workshop?',
+    a: 'Two days of five hours each as standard — ten hours of work on your team’s real tasks. I adjust the scope to the organisation.'
+  },
+  {
+    q: 'What about GDPR and the AI Act?',
+    a: 'Compliance is part of every implementation, and on legal matters I work with Justyna Surwiło-Rutkowska, an attorney-at-law and restructuring advisor with over ten years of experience.'
+  },
+  {
+    q: 'What results are realistic?',
+    a: 'Usually: less time on repetitive tasks, better quality of materials, decisions based on data. The concrete numbers from one implementation are in the PragmatIQ report.'
+  },
+  {
+    q: 'Is the training suitable for beginners?',
+    a: 'Yes. We start with the basics and move on to more advanced uses at the team’s pace. Certificates for participants on request.'
+  },
+  { q: 'The best croissants?', a: 'St. Martin’s croissants. We are from Poznań.' }
 ];
 ---
 
-<BaseLayout
-  title="AI Training and Implementation for Global Teams | ^Kunke"
-  description="Practical AI training and implementation programs for international teams. Live online worldwide, with team training from $1,500 USD."
-  ogImage="/images/Workshop2025.JPG"
->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-  #hero {
-    text-align: center;
-  }
-  #hero .hero-location {
-    font-weight: 600;
-    margin-top: 12px;
-    color: #1a3a6d;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
-  }
-  #hero .hero-availability {
-    margin-top: 6px;
-    color: #2c3e50;
-    font-size: 1rem;
-  }
-  .team-center {
-    text-align: center;
-  }
-  .contact-text {
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  .contact-center {
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  .contact-email {
-    color: #2c3e50;
-    text-decoration: none;
-  }
-  footer {
-    background: #f8f8fa;
-    padding: 40px 0 0 0;
-    text-align: center;
-    width: 100%;
-  }
-  .footer-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-  .footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 40px;
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  .footer-section {
-    min-width: 200px;
-    text-align: center;
-  }
-  .footer-section ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .footer-section ul li {
-    margin: 0 0 8px 0;
-  }
-  .footer-section.social-media ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-  }
-  .footer-section.social-media ul li {
-    margin-bottom: 8px;
-    width: 100%;
-    text-align: center;
-  }
-  .footer-bottom {
-    margin-top: 30px;
-    padding: 20px 10px;
-    background: #ececf2;
-    font-size: 0.85em;
-    color: #555;
-    width: 100%;
-    text-align: center;
-    box-sizing: border-box;
-  }
-  @media (max-width: 600px) {
-    .footer-bottom {
-      font-size: 0.75em;
-      padding: 24px 12px;
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <link rel="canonical" href={canonicalUrl} />
+  {hreflangUrls.map(({ hreflang, href }) => (
+    <link rel="alternate" hreflang={hreflang} href={href} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Kunke Consulting" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
+  <meta property="og:image" content={ogImage} />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={canonicalUrl} />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={pageDescription} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Kunke_Favicon.png" />
+  <link rel="shortcut icon" href="/favicon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Google Tag Manager (init dataLayer before loader for Consent Mode etc.) -->
+  <script nonce={nonce}>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'gtm.start': new Date().getTime(),
+      event: 'gtm.js'
+    });
+    (function(){
+      function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));
+        return match ? match[2] : null;
+      }
+      const consent = getCookie('cookie_consent') === 'granted' ? 'granted' : 'denied';
+      window.dataLayer.push({
+        event: 'default_consent_set',
+        consent: {
+          ad_storage: consent,
+          analytics_storage: consent,
+          wait_for_update: 500
+        }
+      });
+    })();
+  </script>
+  <script nonce={nonce}>
+    (function(w,d,s,l,i){
+      var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true; j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MWRKLP2S');
+  </script>
+  <!-- End GTM -->
+
+  <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Kunke Consulting',
+    logo: 'https://kunkeconsulting.pl/images/Kunke_Favicon.png',
+    description: 'Practical AI training and implementation for mid-sized companies, delivered in person and remotely.',
+    url: 'https://kunkeconsulting.pl/en/',
+    telephone: '+48722156925',
+    email: 'info@kunkeconsulting.pl',
+    address: { '@type': 'PostalAddress', addressLocality: 'Poznań', addressCountry: 'PL' },
+    areaServed: 'PL',
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'AI training and implementation services',
+      itemListElement: packages.map((pkg) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: pkg.name,
+          description: pkg.blurb,
+          provider: { '@type': 'Organization', name: 'Kunke Consulting' }
+        }
+      }))
+    },
+    sameAs: [
+      'https://www.linkedin.com/in/blazejkunke/',
+      'https://www.facebook.com/blazej.kunke',
+      'https://www.youtube.com/@BlazeAdventuresWorld'
+    ]
+  })} />
+
+  <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: { '@type': 'Answer', text: faq.a }
+    }))
+  })} />
+
+  <style is:global>
+    :root {
+      --kc-bg: #faf9f6;
+      --kc-ink: #12201b;
+      --kc-green: #0a4731;
+      --kc-body: #3a4a43;
+      --kc-muted: #6b7b73;
+      --kc-card: #ffffff;
+      --kc-rule-08: rgba(10, 71, 49, 0.08);
+      --kc-rule-10: rgba(10, 71, 49, 0.1);
+      --kc-rule-12: rgba(10, 71, 49, 0.12);
+      --kc-rule-14: rgba(10, 71, 49, 0.14);
+      --kc-rule-18: rgba(10, 71, 49, 0.18);
+      --kc-rule-20: rgba(10, 71, 49, 0.2);
+      --kc-rule-25: rgba(10, 71, 49, 0.25);
+      --kc-rule-42: rgba(10, 71, 49, 0.42);
+      --kc-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --kc-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+      --kc-wrap: 1120px;
+      --kc-gut: 32px;
     }
-  }
-</style>
 
-<section id="hero">
-  <p><span class="text-gradient">^Kunke Consulting</span></p>
-  <h1 class="text-gradient">Practical AI training and implementation for global teams</h1>
-  <p>We help organizations turn AI interest into useful skills, responsible pilots, and measurable improvements.</p>
-  <p class="hero-location"><span aria-hidden="true">🌍</span> Based in Europe. Working globally.</p>
-  <p class="hero-availability">Live online worldwide, with on-site delivery across Europe where practical.</p>
-  <a href="#ai-packages" class="cta-btn">Explore AI services</a>
-</section>
-
-<!-- Experience Section -->
-<section id="experience">
-  <ExperienceSection />
-</section>
-
-<!-- Workshop Section -->
-<section id="workshops">
-  <WorkshopSection />
-</section>
-
-<!-- Student Report Section -->
-<section id="student-report">
-  <StudentReport />
-</section>
-
-<!-- AI Packages Section -->
-<section id="ai-packages">
-  <AiPackages />
-</section>
-
-<!-- Testimonials Section -->
-<section id="testimonials">
-  <Testimonials />
-</section>
-
-<!-- About Me Section -->
-<section id="about-me">
-  <AboutMe />
-</section>
-
-<!-- Team Section -->
-<section id="team">
-  <TeamSection
-    kicker="Team"
-    heading="The people behind practical AI projects"
-    intro="We combine training, technology, and sales experience so AI supports real company processes, not just slide decks."
-    members={teamMembersEn}
-  />
-</section>
-
-<!-- FAQ Section -->
-<section id="faq" style="padding: 60px 20px; background: #f8f8fa;">
-  <h2 style="text-align: center; margin-bottom: 50px;">Frequently asked questions about AI training</h2>
-  <div style="max-width: 800px; margin: 0 auto;">
-    <div class="faq-accordion">
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <h3>Where should a company start with AI implementation?</h3>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>The most important first step is understanding the company’s specific needs and the opportunities AI can create. When we begin working with a new client, we assess their processes, identify where AI can deliver the greatest return, and prepare a first-step plan tailored to the company.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <h3>What does AI consulting for companies include?</h3>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>Our AI consulting includes a process audit, an AI implementation strategy, selection of the right tools, team training, and support with deploying AI solutions across the company.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <h3>What does an AI implementation project look like, and how long does it take?</h3>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>We begin by assessing needs and defining the strategy. We then map specific use cases, build the first AI assistants, and launch a pilot. The scope and timeline are agreed individually.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <h3>What about data security, GDPR, and the AI Act?</h3>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>We treat data security as a priority. Our implementation projects account for compliance with GDPR and the AI Act. When needed, we work with attorney Justyna Surwiło-Rutkowska, our legal expert, legal counsel, and restructuring advisor with more than 10 years of experience.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <h3>What results and ROI can a company realistically achieve?</h3>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>Results depend on the processes involved, but they usually include time saved on repetitive tasks, higher-quality materials, and better data-driven decisions. We describe a real example in our <a href="/Raport-AI-w-PragmatIQ.pdf">case study of an AI implementation at the PragmatIQ law firm in Poznań</a>.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <h3>How can AI help my company?</h3>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>AI is not just a tool for developers. It can also improve the everyday office work of sales, logistics, finance, and accounting teams. It helps automate repetitive tasks, accelerate reporting, produce more insightful analysis, and support better data-driven business decisions.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <h3>Where do you deliver AI training and projects?</h3>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>We are based in Poznań, but we work on-site across Poland and remotely with clients throughout Europe, in both Polish and English. We tailor the format to each team and its goals.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <h3>How long are the AI workshops?</h3>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>A standard workshop consists of two five-hour days, for a total of 10 hours, and is based on real tasks from the team’s everyday work. We tailor the scope to the organization’s needs.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <h3>Is the AI training suitable for beginners?</h3>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>Yes. Our corporate AI training is designed for different experience levels. We start with the fundamentals and gradually move to more advanced business applications of AI.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <h3>Will I receive a certificate after the AI training?</h3>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>Yes. We can provide a certificate of completion to every participant, along with access to selected training materials.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <h3>What is the difference between an AI agent and an AI assistant?</h3>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>An AI assistant responds to individual instructions under your control, while an AI agent independently plans and completes multi-step tasks using tools until it reaches the intended goal.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <h3>What are the best croissants?</h3>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>St. Martin’s croissants—we are from Poznań, after all.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<style>
-  .faq-accordion {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .faq-item {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.05);
-    border-left: 4px solid var(--color-primary);
-    overflow: hidden;
-    transition: box-shadow 0.2s ease;
-  }
-  .faq-item:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,.1);
-  }
-  .faq-question {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 25px;
-    text-align: left;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background-color 0.2s ease;
-  }
-  .faq-question:hover {
-    background-color: #f8f9fa;
-  }
-  .faq-question:focus {
-    outline: 2px solid var(--color-primary);
-    outline-offset: -2px;
-  }
-  .faq-question h3 {
-    color: var(--color-primary);
-    margin: 0;
-    font-size: 1.2rem;
-    flex-grow: 1;
-  }
-  .faq-icon {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--color-primary);
-    transition: transform 0.3s ease;
-    flex-shrink: 0;
-    margin-left: 20px;
-  }
-  .faq-item[data-expanded="true"] .faq-icon {
-    transform: rotate(45deg);
-  }
-  .faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-    padding: 0 25px;
-  }
-  .faq-item[data-expanded="true"] .faq-answer {
-    max-height: 200px;
-    padding: 15px 25px 25px 25px;
-  }
-  .faq-answer p {
-    margin: 0;
-    line-height: 1.6;
-    color: #555;
-  }
-  @media (max-width: 600px) {
-    .faq-question {
-      padding: 20px;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
     }
-    .faq-question h3 {
-      font-size: 1.1rem;
-    }
-    .faq-icon {
-      margin-left: 15px;
-    }
-    .faq-item[data-expanded="true"] .faq-answer {
-      padding: 15px 20px 20px 20px;
-    }
-  }
-</style>
 
-<section id="contact">
-  <h2>Contact</h2>
-  <p class="contact-text">Tell me briefly about your team and I will reply with suggested next steps.</p>
-  <div class="contact-info contact-center">
-    <p><strong>Email:</strong> <a href="mailto:info@kunkeconsulting.pl" class="contact-email">info@kunkeconsulting.pl</a></p>
-  </div>
-  <p class="contact-center">
-    Prefer to talk?
-    Call me at <a href="tel:+48722156925">+48 722 156 925</a>.
-  </p>
-  <!-- New Contact Form -->
-  <ContactForm />
-</section>
+    html {
+      scroll-behavior: smooth;
+      /* Sticky header shouldn't cover anchored section headings. */
+      scroll-padding-top: 88px;
+    }
 
-<footer>
-  <div class="footer-wrapper">
-    <div class="footer-content">
-      <div class="footer-section contact-info-footer">
-        <h3>Contact</h3>
-        <p>^Kunke Consulting</p>
+    body {
+      margin: 0;
+      background: var(--kc-bg);
+      color: var(--kc-ink);
+      font-family: var(--kc-sans);
+      letter-spacing: -0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--kc-green);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--kc-ink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    ::selection {
+      background: var(--kc-green);
+      color: var(--kc-bg);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--kc-green);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    /* ---------- primitives ---------- */
+
+    .kc-wrap {
+      max-width: var(--kc-wrap);
+      margin: 0 auto;
+      padding-inline: var(--kc-gut);
+    }
+
+    .kc-eyebrow {
+      font-family: var(--kc-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--kc-muted);
+      margin: 0;
+    }
+
+    .kc-note {
+      font-family: var(--kc-mono);
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--kc-muted);
+      border-left: 1px solid var(--kc-rule-18);
+      padding-left: 18px;
+      margin: 0;
+    }
+
+    .kc-btn {
+      display: inline-block;
+      border-radius: 999px;
+      background: var(--kc-green);
+      color: var(--kc-bg);
+      transition: background-color 200ms ease;
+    }
+
+    .kc-btn:hover {
+      background: var(--kc-ink);
+      color: var(--kc-bg);
+      text-decoration: none;
+    }
+
+    .kc-skip {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 100;
+      background: var(--kc-green);
+      color: var(--kc-bg);
+      padding: 12px 18px;
+      border-radius: 0 0 8px 0;
+    }
+
+    .kc-skip:focus {
+      left: 0;
+      color: var(--kc-bg);
+    }
+
+    /* ---------- header ---------- */
+
+    .kc-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(250, 249, 246, 0.88);
+      backdrop-filter: saturate(140%) blur(12px);
+      border-bottom: 1px solid var(--kc-rule-10);
+    }
+
+    .kc-nav {
+      max-width: var(--kc-wrap);
+      margin: 0 auto;
+      padding: 16px var(--kc-gut);
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .kc-brand {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--kc-green);
+    }
+
+    .kc-nav-links {
+      display: flex;
+      gap: 26px;
+      margin-left: auto;
+      font-size: 14px;
+    }
+
+    .kc-nav-links a {
+      color: var(--kc-body);
+    }
+
+    .kc-nav .kc-btn {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+
+    /* ---------- hero ---------- */
+
+    .kc-hero {
+      max-width: var(--kc-wrap);
+      margin: 0 auto;
+      padding: 120px var(--kc-gut) 96px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 64px;
+      align-items: end;
+    }
+
+    .kc-hero .kc-eyebrow {
+      margin-bottom: 28px;
+    }
+
+    .kc-hero h1 {
+      font-size: 68px;
+      line-height: 1.06;
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      margin: 0;
+      max-width: 15em;
+      text-wrap: pretty;
+    }
+
+    .kc-lead {
+      font-size: 21px;
+      line-height: 1.55;
+      color: var(--kc-body);
+      max-width: 30em;
+      margin: 32px 0 40px;
+      text-wrap: pretty;
+    }
+
+    .kc-hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .kc-hero-cta .kc-btn {
+      font-size: 16px;
+      padding: 15px 26px;
+    }
+
+    .kc-hero-cta .kc-link-quiet {
+      font-size: 16px;
+      color: var(--kc-body);
+    }
+
+    .kc-hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      padding-bottom: 8px;
+    }
+
+    .kc-hero-notes {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .kc-hero-notes .kc-note {
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* Polaroid: white frame, deep bottom lip, pinned slightly off-square. */
+    .kc-polaroid {
+      margin: 0;
+      align-self: center;
+      width: 100%;
+      max-width: 260px;
+      background: var(--kc-card);
+      padding: 13px 13px 0;
+      border-radius: 3px;
+      box-shadow: 0 1px 2px rgba(10, 71, 49, 0.12), 0 22px 44px -20px rgba(10, 71, 49, 0.4);
+      transform: rotate(-2.5deg);
+      transition: transform 300ms ease;
+    }
+
+    .kc-polaroid:hover {
+      transform: rotate(-1deg) translateY(-3px);
+    }
+
+    .kc-polaroid picture,
+    .kc-polaroid img {
+      display: block;
+      width: 100%;
+      /* `height: auto` so the width/height attributes don't beat the crop ratio. */
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: 50% 22%;
+      background: rgba(10, 71, 49, 0.06);
+    }
+
+    .kc-polaroid figcaption {
+      font-family: var(--kc-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-align: center;
+      color: var(--kc-muted);
+      padding: 13px 4px 17px;
+    }
+
+    /* ---------- facts band ---------- */
+
+    .kc-facts {
+      border-top: 1px solid var(--kc-rule-10);
+      border-bottom: 1px solid var(--kc-rule-10);
+      background: rgba(10, 71, 49, 0.02);
+    }
+
+    .kc-facts-grid {
+      max-width: var(--kc-wrap);
+      margin: 0 auto;
+      padding: 40px var(--kc-gut);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    .kc-fact-big {
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      margin: 0;
+      color: var(--kc-green);
+    }
+
+    .kc-fact-small {
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--kc-muted);
+      margin: 6px 0 0;
+    }
+
+    /* ---------- shared section shell ---------- */
+
+    .kc-section {
+      max-width: var(--kc-wrap);
+      margin: 0 auto;
+      padding: 112px var(--kc-gut) 0;
+    }
+
+    .kc-split {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 64px;
+    }
+
+    .kc-split > .kc-eyebrow {
+      margin-top: 8px;
+    }
+
+    .kc-h2 {
+      font-size: 40px;
+      line-height: 1.15;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      margin: 0;
+      max-width: 20em;
+      text-wrap: pretty;
+    }
+
+    /* ---------- process ---------- */
+
+    .kc-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 56px;
+    }
+
+    .kc-step {
+      border-top: 1px solid var(--kc-rule-20);
+      padding-top: 20px;
+    }
+
+    .kc-step-label {
+      font-family: var(--kc-mono);
+      font-size: 11px;
+      color: var(--kc-muted);
+      margin: 0 0 12px;
+    }
+
+    .kc-step-text {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--kc-body);
+      margin: 0;
+    }
+
+    /* ---------- offer ---------- */
+
+    .kc-offer-head {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 64px;
+      margin-bottom: 48px;
+    }
+
+    .kc-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .kc-card {
+      background: var(--kc-card);
+      border: 1px solid var(--kc-rule-12);
+      border-radius: 18px;
+      padding: 32px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: border-color 200ms ease, transform 200ms ease;
+    }
+
+    .kc-card:hover {
+      border-color: var(--kc-rule-42);
+      transform: translateY(-2px);
+    }
+
+    .kc-card-tag {
+      font-family: var(--kc-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--kc-muted);
+      margin: 0 0 14px;
+    }
+
+    .kc-card h3 {
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin: 0 0 8px;
+    }
+
+    .kc-card-blurb {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--kc-body);
+      margin: 0;
+    }
+
+    .kc-card-items {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-top: auto;
+      padding: 0;
+      list-style: none;
+    }
+
+    .kc-card-items li {
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--kc-body);
+      padding-left: 16px;
+      border-left: 1px solid var(--kc-rule-18);
+    }
+
+    .kc-card-foot {
+      border-top: 1px solid var(--kc-rule-12);
+      padding-top: 18px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .kc-price {
+      font-size: 17px;
+      font-weight: 500;
+      margin: 0;
+      color: var(--kc-green);
+    }
+
+    .kc-card-foot a {
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    /* ---------- case study ---------- */
+
+    .kc-case {
+      max-width: var(--kc-wrap);
+      margin: 112px auto 0;
+      padding-inline: var(--kc-gut);
+    }
+
+    .kc-case-panel {
+      background: var(--kc-green);
+      color: var(--kc-bg);
+      border-radius: 22px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+    }
+
+    .kc-case-body {
+      padding: 56px 48px;
+    }
+
+    .kc-case-body .kc-eyebrow {
+      color: rgba(250, 249, 246, 0.6);
+      margin-bottom: 24px;
+    }
+
+    .kc-case-body h2 {
+      font-size: 36px;
+      line-height: 1.15;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      margin: 0 0 20px;
+      max-width: 18em;
+      text-wrap: pretty;
+    }
+
+    .kc-case-body p {
+      font-size: 17px;
+      line-height: 1.6;
+      color: rgba(250, 249, 246, 0.78);
+      margin: 0 0 32px;
+      max-width: 32em;
+    }
+
+    .kc-case-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .kc-btn-light {
+      display: inline-block;
+      font-size: 15px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      background: var(--kc-bg);
+      color: var(--kc-green);
+      transition: background-color 200ms ease;
+    }
+
+    .kc-btn-light:hover {
+      background: #ffffff;
+      color: var(--kc-green);
+      text-decoration: none;
+    }
+
+    .kc-btn-ghost {
+      display: inline-block;
+      font-size: 15px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(250, 249, 246, 0.35);
+      color: var(--kc-bg);
+      transition: border-color 200ms ease;
+    }
+
+    .kc-btn-ghost:hover {
+      border-color: var(--kc-bg);
+      color: var(--kc-bg);
+      text-decoration: none;
+    }
+
+    .kc-case-media {
+      background: rgba(250, 249, 246, 0.06);
+      min-height: 340px;
+    }
+
+    .kc-case-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(92%);
+    }
+
+    /* ---------- about ---------- */
+
+    .kc-about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .kc-about-media {
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(10, 71, 49, 0.06);
+      aspect-ratio: 4 / 5;
+    }
+
+    .kc-about-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .kc-about-body .kc-eyebrow {
+      margin-bottom: 24px;
+    }
+
+    .kc-about-body h2 {
+      font-size: 36px;
+      line-height: 1.18;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      margin: 0 0 24px;
+      text-wrap: pretty;
+    }
+
+    .kc-about-body p:not(.kc-eyebrow) {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--kc-body);
+      margin: 0 0 18px;
+    }
+
+    .kc-about-body p:not(.kc-eyebrow):last-of-type {
+      margin-bottom: 0;
+    }
+
+    /* ---------- quotes ---------- */
+
+    .kc-quotes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .kc-quote {
+      border-top: 1px solid var(--kc-rule-20);
+      padding-top: 24px;
+      margin: 0;
+    }
+
+    .kc-quote p {
+      font-size: 17px;
+      line-height: 1.6;
+      margin: 0 0 20px;
+      color: var(--kc-ink);
+      text-wrap: pretty;
+    }
+
+    .kc-quote figcaption {
+      font-size: 13px;
+      color: var(--kc-muted);
+    }
+
+    /* ---------- team ---------- */
+
+    .kc-team-h2 {
+      font-size: 32px;
+      line-height: 1.2;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      margin: 0 0 40px;
+      max-width: 22em;
+    }
+
+    .kc-team {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .kc-team-photo {
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(10, 71, 49, 0.06);
+      aspect-ratio: 1 / 1;
+      margin-bottom: 16px;
+    }
+
+    .kc-team-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .kc-team-name {
+      font-size: 17px;
+      font-weight: 500;
+      margin: 0 0 4px;
+    }
+
+    .kc-team-role {
+      font-size: 14px;
+      color: var(--kc-muted);
+      margin: 0;
+    }
+
+    /* ---------- faq ---------- */
+
+    .kc-faq {
+      border-top: 1px solid var(--kc-rule-14);
+    }
+
+    .kc-faq-item {
+      border-bottom: 1px solid var(--kc-rule-14);
+    }
+
+    /* The heading only carries semantics; the button does the styling. */
+    .kc-faq-heading {
+      margin: 0;
+      font: inherit;
+    }
+
+    .kc-faq-q {
+      width: 100%;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+      text-align: left;
+      padding: 22px 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 19px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--kc-ink);
+      transition: color 200ms ease;
+    }
+
+    .kc-faq-q:hover {
+      color: var(--kc-green);
+    }
+
+    .kc-faq-sign {
+      font-family: var(--kc-mono);
+      font-size: 14px;
+      color: var(--kc-muted);
+    }
+
+    .kc-faq-a {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--kc-body);
+      margin: 0;
+      padding: 0 25% 26px 0;
+      max-width: 40em;
+    }
+
+    .kc-faq-a[hidden] {
+      display: none;
+    }
+
+    /* ---------- contact ---------- */
+
+    .kc-contact {
+      max-width: var(--kc-wrap);
+      margin: 112px auto 0;
+      padding: 0 var(--kc-gut) 96px;
+    }
+
+    .kc-contact-inner {
+      border-top: 1px solid var(--kc-rule-20);
+      padding-top: 56px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .kc-contact h2 {
+      font-size: 44px;
+      line-height: 1.1;
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      margin: 0 0 24px;
+      max-width: 18em;
+      text-wrap: pretty;
+    }
+
+    .kc-contact .kc-btn {
+      font-size: 20px;
+      padding: 17px 30px;
+    }
+
+    .kc-contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-size: 15px;
+      color: var(--kc-body);
+    }
+
+    .kc-contact-details p {
+      margin: 0;
+    }
+
+    .kc-contact-details a {
+      color: var(--kc-body);
+    }
+
+    /* ---------- footer ---------- */
+
+    .kc-footer {
+      border-top: 1px solid var(--kc-rule-10);
+      background: rgba(10, 71, 49, 0.02);
+    }
+
+    .kc-footer-inner {
+      max-width: var(--kc-wrap);
+      margin: 0 auto;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--kc-muted);
+    }
+
+    .kc-footer-inner p {
+      margin: 0;
+    }
+
+    .kc-footer-links {
+      display: flex;
+      gap: 20px;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+
+    .kc-footer-links a {
+      color: var(--kc-muted);
+    }
+
+    /* ---------- tablet ---------- */
+
+    @media (max-width: 900px) {
+      .kc-hero {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding-top: 72px;
+        padding-bottom: 64px;
+        align-items: start;
+      }
+
+      .kc-hero h1 {
+        font-size: 48px;
+      }
+
+      .kc-split,
+      .kc-offer-head {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .kc-section {
+        padding-top: 72px;
+      }
+
+      .kc-h2,
+      .kc-about-body h2,
+      .kc-case-body h2 {
+        font-size: 32px;
+      }
+
+      .kc-steps {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-top: 32px;
+      }
+
+      .kc-cards,
+      .kc-quotes,
+      .kc-team {
+        grid-template-columns: 1fr;
+      }
+
+      /* Four stats across is too tight here: the labels wrap unevenly. */
+      .kc-facts-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px 32px;
+      }
+
+      .kc-case {
+        margin-top: 72px;
+      }
+
+      .kc-case-panel {
+        grid-template-columns: 1fr;
+      }
+
+      /* Design puts the photo above the copy on narrow screens. */
+      .kc-case-media {
+        order: -1;
+        min-height: 0;
+      }
+
+      .kc-case-media img {
+        height: 180px;
+      }
+
+      .kc-case-body {
+        padding: 26px 24px 24px;
+      }
+
+      .kc-about {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .kc-about-media {
+        aspect-ratio: 4 / 3;
+      }
+
+      .kc-faq-a {
+        padding-right: 0;
+      }
+
+      .kc-contact {
+        margin-top: 72px;
+        padding-bottom: 64px;
+      }
+
+      .kc-contact-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding-top: 40px;
+      }
+
+      .kc-contact h2 {
+        font-size: 32px;
+      }
+    }
+
+    /* ---------- phone ---------- */
+
+    @media (max-width: 600px) {
+      :root {
+        --kc-gut: 20px;
+      }
+
+      .kc-nav {
+        gap: 12px;
+      }
+
+      /* Anchor nav is dropped on phones, as in the mobile design. */
+      .kc-nav-links {
+        display: none;
+      }
+
+      .kc-brand {
+        font-size: 15px;
+      }
+
+      /* With the anchor nav hidden, the CTA carries the right edge. */
+      .kc-nav .kc-btn {
+        margin-left: auto;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+      }
+
+      .kc-hero {
+        padding-top: 40px;
+        padding-bottom: 36px;
+      }
+
+      .kc-eyebrow {
+        font-size: 10px;
+      }
+
+      .kc-hero h1 {
+        font-size: 36px;
+        line-height: 1.08;
+      }
+
+      .kc-lead {
+        font-size: 17px;
+        margin: 20px 0 28px;
+      }
+
+      /* Full-width tap targets on phones. */
+      .kc-hero-cta {
+        display: block;
+      }
+
+      .kc-hero-cta .kc-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 0 20px;
+        text-align: center;
+      }
+
+      .kc-hero-cta .kc-link-quiet {
+        display: inline-block;
+        margin-top: 16px;
+      }
+
+      .kc-hero-side {
+        margin-top: 28px;
+        gap: 28px;
+        padding-bottom: 0;
+      }
+
+      .kc-polaroid {
+        max-width: 220px;
+      }
+
+      .kc-facts-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        padding-block: 28px;
+      }
+
+      .kc-fact-big {
+        font-size: 22px;
+      }
+
+      .kc-fact-small {
+        font-size: 12px;
+      }
+
+      .kc-section {
+        padding-top: 44px;
+      }
+
+      .kc-h2,
+      .kc-about-body h2,
+      .kc-case-body h2,
+      .kc-contact h2 {
+        font-size: 26px;
+      }
+
+      .kc-team-h2 {
+        font-size: 24px;
+        margin-bottom: 24px;
+      }
+
+      .kc-card {
+        border-radius: 16px;
+        padding: 22px 20px;
+        gap: 16px;
+      }
+
+      .kc-card h3 {
+        font-size: 20px;
+      }
+
+      .kc-card-foot a {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+      }
+
+      .kc-case {
+        margin-top: 44px;
+      }
+
+      .kc-case-panel {
+        border-radius: 20px;
+      }
+
+      .kc-case-cta {
+        display: block;
+      }
+
+      .kc-case-cta .kc-btn-light,
+      .kc-case-cta .kc-btn-ghost {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 20px;
+      }
+
+      .kc-case-cta .kc-btn-ghost {
+        margin-top: 12px;
+      }
+
+      /* Team collapses to a compact list, as in the mobile design. */
+      .kc-team {
+        gap: 16px;
+      }
+
+      .kc-team-member {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .kc-team-photo {
+        width: 68px;
+        flex-shrink: 0;
+        border-radius: 12px;
+        margin-bottom: 0;
+      }
+
+      .kc-team-name {
+        font-size: 16px;
+      }
+
+      .kc-team-role {
+        font-size: 13px;
+      }
+
+      .kc-faq-q {
+        font-size: 16px;
+        gap: 16px;
+        min-height: 56px;
+        padding: 16px 0;
+      }
+
+      .kc-faq-a {
+        font-size: 15px;
+        padding-bottom: 20px;
+      }
+
+      .kc-contact {
+        margin-top: 44px;
+      }
+
+      .kc-contact .kc-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        font-size: 16px;
+        padding: 0 20px;
+      }
+
+      .kc-footer-inner {
+        padding: 24px 20px 56px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .kc-footer-links {
+        margin-left: 0;
+        gap: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .kc-card,
+      .kc-btn,
+      .kc-faq-q,
+      .kc-btn-light,
+      .kc-btn-ghost,
+      .kc-polaroid {
+        transition: none;
+      }
+
+      .kc-card:hover {
+        transform: none;
+      }
+
+      .kc-polaroid:hover {
+        transform: rotate(-2.5deg);
+      }
+    }
+  </style>
+  <style nonce={nonce}>
+    .gtm-noscript { display: none; visibility: hidden; width: 0; height: 0; }
+  </style>
+</head>
+<body>
+  <noscript>
+    <iframe class="gtm-noscript" src="https://www.googletagmanager.com/ns.html?id=GTM-MWRKLP2S"></iframe>
+  </noscript>
+
+  <a class="kc-skip" href="#top">Skip to content</a>
+
+  <header class="kc-header">
+    <nav class="kc-nav" aria-label="Main navigation">
+      <a href="#top" class="kc-brand">^Kunke Consulting</a>
+      <div class="kc-nav-links">
+        <a href="#offer">Offer</a>
+        <a href="#implementation">Implementation</a>
+        <a href="#team">Team</a>
+        <a href="#faq">FAQ</a>
+        <a href="/" hreflang="pl" lang="pl">PL</a>
+      </div>
+      <a href="mailto:info@kunkeconsulting.pl" class="kc-btn">Email me</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="kc-hero">
+      <div>
+        <p class="kc-eyebrow">AI for your company · Poznań · Poland</p>
+        <h1>Practical AI training and advisory for business.</h1>
+        <p class="kc-lead">
+          Training and implementation for mid-sized companies. We start with the work your team does
+          today. We focus on practice. We train in person. We promise little and deliver a lot.
+        </p>
+        <div class="kc-hero-cta">
+          <a href={mailto} class="kc-btn">info@kunkeconsulting.pl</a>
+          <a href="#implementation" class="kc-link-quiet">See how I work</a>
+        </div>
+      </div>
+      <div class="kc-hero-side">
+        <figure class="kc-polaroid">
+          {/* 560px wide covers the 234px render box at 2x; the full-size
+              BKunkeExp.jpg is 60kB and only used by ExperienceSection. */}
+          <picture>
+            <source srcset="/images/blazej-kunke-hero.webp" type="image/webp" />
+            <img
+              src="/images/blazej-kunke-hero.jpg"
+              alt="Błażej Kunke, founder of ^Kunke Consulting"
+              width="560"
+              height="747"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+          <figcaption>Błażej Kunke · Poznań</figcaption>
+        </figure>
+        <div class="kc-hero-notes">
+          {heroNotes.map((note) => <p class="kc-note">{note}</p>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="kc-facts" aria-label="^Kunke Consulting in numbers">
+      <div class="kc-facts-grid">
+        {
+          facts.map((fact) => (
+            <div>
+              <p class="kc-fact-big">{fact.big}</p>
+              <p class="kc-fact-small">{fact.small}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="implementation" class="kc-section kc-split">
+      <p class="kc-eyebrow">How I work</p>
+      <div>
+        <h2 class="kc-h2">First I learn your process. Then I pick the tool.</h2>
+        <div class="kc-steps">
+          {
+            steps.map((step) => (
+              <div class="kc-step">
+                <p class="kc-step-label">{step.label}</p>
+                <p class="kc-step-text">{step.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="offer" class="kc-section">
+      <div class="kc-offer-head">
+        <p class="kc-eyebrow">Offer</p>
+        <h2 class="kc-h2">Three ways to start.</h2>
+      </div>
+      <div class="kc-cards">
+        {
+          packages.map((pkg) => (
+            <div class="kc-card">
+              <div>
+                <p class="kc-card-tag">{pkg.tag}</p>
+                <h3>{pkg.name}</h3>
+                <p class="kc-card-blurb">{pkg.blurb}</p>
+              </div>
+              <ul class="kc-card-items">
+                {pkg.items.map((item) => <li>{item}</li>)}
+              </ul>
+              <div class="kc-card-foot">
+                <p class="kc-price">{pkg.price}</p>
+                <a href={mailtoOffer} aria-label={`Ask about ${pkg.name}`}>Ask →</a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="kc-case" aria-labelledby="kc-case-title">
+      <div class="kc-case-panel">
+        <div class="kc-case-body">
+          <p class="kc-eyebrow">Case study · PDF, 15 pages</p>
+          <h2 id="kc-case-title">Six months of AI at the PragmatIQ law firm in Poznań</h2>
+          <p>
+            11 people, 8 projects, department by department: finance, accounting, administration,
+            marketing, the legal teams. Together with what stayed at the pilot stage, and why.
+          </p>
+          <div class="kc-case-cta">
+            <a href={caseReport} class="kc-btn-light">Download the report</a>
+            <a
+              href="https://pragmatiq.pl/aktualnosci/wydalismy-raport-ai-w-pragmatiq"
+              class="kc-btn-ghost"
+              rel="noopener"
+            >
+              The client’s perspective (PL)
+            </a>
+          </div>
+        </div>
+        <div class="kc-case-media">
+          <picture>
+            <source
+              srcset="/images/Workshop2025-mobile.webp 600w, /images/Workshop2025.webp 1200w"
+              sizes="(max-width: 900px) 100vw, 45vw"
+              type="image/webp"
+            />
+            <img
+              src="/images/Workshop2025.JPG"
+              alt="Participants of a practical AI workshop during a live exercise"
+              width="1740"
+              height="1305"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </div>
+      </div>
+    </section>
+
+    <section class="kc-section kc-about" aria-labelledby="kc-about-title">
+      <div class="kc-about-media">
+        <picture>
+          <source srcset="/images/Omnie.webp" type="image/webp" />
+          <img
+            src="/images/Omnie.jpg"
+            alt="Błażej Kunke, founder of ^Kunke Consulting"
+            width="702"
+            height="1024"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+      </div>
+      <div class="kc-about-body">
+        <p class="kc-eyebrow">About me</p>
+        <h2 id="kc-about-title">The change is already happening. For your company, it is an opportunity.</h2>
         <p>
-          <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
+          After ten years in global corporations such as Franklin Templeton Investments and
+          McKinsey &amp; Company, I founded ^Kunke Consulting. What interests me is how the
+          technology really works, where its limits are, and what that means for my clients.
         </p>
         <p>
-          <a href="tel:+48722156925">m. +48 722 156 925</a>
+          That is why I do not sell automating everything. I promise as much as we can deliver, and
+          I try to deliver more.
         </p>
       </div>
-      <div class="footer-section legal-info">
-        <h3>^Kunke Consulting</h3>
-        <p><a href="/privacy-policy/">Privacy Policy and Legal</a></p>
-        <p><a href="/en/blog/">English Blog</a></p>
+    </section>
+
+    <section class="kc-section" aria-label="Client testimonials">
+      <div class="kc-quotes">
+        {
+          quotes.map((quote) => (
+            <figure class="kc-quote">
+              <p>{quote.text}</p>
+              <figcaption>{quote.who}</figcaption>
+            </figure>
+          ))
+        }
       </div>
-      <div class="footer-section social-media">
-        <h3>Follow</h3>
-        <ul>
-          <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-          <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-          <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
-        </ul>
+    </section>
+
+    <section id="team" class="kc-section kc-split">
+      <p class="kc-eyebrow">Team</p>
+      <div>
+        <h2 class="kc-team-h2">A trainer, an engineer, a salesman.</h2>
+        <div class="kc-team">
+          {
+            team.map((person) => (
+              <div class="kc-team-member">
+                <div class="kc-team-photo">
+                  <picture>
+                    <source srcset={person.img.replace(/\.jpg$/, '.webp')} type="image/webp" />
+                    <img
+                      src={person.img}
+                      alt={`${person.name} — ${person.role}`}
+                      width="720"
+                      height="900"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                </div>
+                <div>
+                  <p class="kc-team-name">{person.name}</p>
+                  <p class="kc-team-role">{person.role}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="kc-section kc-split">
+      <p class="kc-eyebrow">Questions</p>
+      <div class="kc-faq">
+        {
+          faqs.map((faq, i) => (
+            <div class="kc-faq-item">
+              <h3 class="kc-faq-heading">
+                <button
+                  type="button"
+                  class="kc-faq-q"
+                  aria-expanded={i === 0 ? 'true' : 'false'}
+                  aria-controls={`kc-faq-a-${i}`}
+                  id={`kc-faq-q-${i}`}
+                >
+                  <span>{faq.q}</span>
+                  <span class="kc-faq-sign" aria-hidden="true">{i === 0 ? '–' : '+'}</span>
+                </button>
+              </h3>
+              <p class="kc-faq-a" id={`kc-faq-a-${i}`} role="region" aria-labelledby={`kc-faq-q-${i}`} hidden={i !== 0}>
+                {faq.a}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="kc-contact" aria-labelledby="kc-contact-title">
+      <div class="kc-contact-inner">
+        <div>
+          <h2 id="kc-contact-title">
+            Write one sentence about what you want to improve. My brother or I will answer personally.
+          </h2>
+          <a href={mailto} class="kc-btn">info@kunkeconsulting.pl</a>
+        </div>
+        <div class="kc-contact-details">
+          <p class="kc-eyebrow">Contact</p>
+          <p>^Kunke Consulting · Poznań</p>
+          <a href="tel:+48722156925">+48 722 156 925</a>
+          <a href="https://www.linkedin.com/in/blazejkunke/" rel="noopener">LinkedIn</a>
+          <a href="/en/blog/">Blog</a>
+          <a href="https://www.youtube.com/@BlazeAdventuresWorld" rel="noopener">YouTube</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="kc-footer">
+    <div class="kc-footer-inner">
+      <p>© 2026 ^Kunke Consulting</p>
+      <div class="kc-footer-links">
+        <a href="/privacy-policy/">Privacy policy</a>
+        <a href="/ai-info/">For robots</a>
+        <a href="/" hreflang="pl" lang="pl">PL</a>
       </div>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
-  </div>
-</footer>
+  </footer>
 
-<script>
-// @ts-nocheck
-  document.addEventListener('DOMContentLoaded', function() {
-    const faqItems = document.querySelectorAll('.faq-item');
+  <CookieConsent />
 
-    faqItems.forEach(item => {
-      const question = item.querySelector('.faq-question');
-      const answer = item.querySelector('.faq-answer');
+  <script>
+    // FAQ: single item open at a time, first one open on load.
+    const questions = Array.from(document.querySelectorAll('.kc-faq-q'));
 
-      question.addEventListener('click', function() {
-        const isExpanded = item.getAttribute('data-expanded') === 'true';
+    questions.forEach((question) => {
+      question.addEventListener('click', () => {
+        const wasOpen = question.getAttribute('aria-expanded') === 'true';
 
-        // Close all other items
-        faqItems.forEach(otherItem => {
-          if (otherItem !== item) {
-            otherItem.setAttribute('data-expanded', 'false');
-            otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        questions.forEach((other) => {
+          const answerId = other.getAttribute('aria-controls');
+          const answer = answerId ? document.getElementById(answerId) : null;
+          const sign = other.querySelector('.kc-faq-sign');
+          const open = other === question && !wasOpen;
+
+          other.setAttribute('aria-expanded', String(open));
+          if (sign) sign.textContent = open ? '–' : '+';
+          if (answer) {
+            if (open) {
+              answer.removeAttribute('hidden');
+            } else {
+              answer.setAttribute('hidden', '');
+            }
           }
         });
-
-        // Toggle current item
-        const newExpandedState = !isExpanded;
-        item.setAttribute('data-expanded', newExpandedState.toString());
-        question.setAttribute('aria-expanded', newExpandedState.toString());
-
-        // Adjust max-height for smooth animation
-        if (newExpandedState) {
-          answer.style.maxHeight = answer.scrollHeight + 'px';
-        } else {
-          answer.style.maxHeight = '0px';
-        }
-      });
-
-      // Keyboard navigation
-      question.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          question.click();
-        }
       });
     });
-  });
-</script>
-
-</BaseLayout>
+  </script>
+</body>
+</html>
