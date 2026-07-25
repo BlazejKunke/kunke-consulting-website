@@ -1054,6 +1054,20 @@ const faqs = [
 
     /* ---------- phone ---------- */
 
+    /* The 16px anchor labels stop fitting beside the brand and the CTA at
+       roughly 700px, which wraps the brand onto two lines, so the nav drops
+       to brand + CTA well before the phone breakpoint. */
+    @media (max-width: 768px) {
+      .kc-nav-links {
+        display: none;
+      }
+
+      /* With the anchor nav hidden, the CTA carries the right edge. */
+      .kc-nav .kc-btn {
+        margin-left: auto;
+      }
+    }
+
     @media (max-width: 600px) {
       :root {
         --kc-gut: 20px;
@@ -1061,11 +1075,6 @@ const faqs = [
 
       .kc-nav {
         gap: 12px;
-      }
-
-      /* Anchor nav is dropped on phones, as in the mobile design. */
-      .kc-nav-links {
-        display: none;
       }
 
       .kc-brand {
