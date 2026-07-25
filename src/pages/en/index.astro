@@ -72,7 +72,7 @@ const packages = [
     price: 'from PLN 6,000 + VAT'
   },
   {
-    tag: 'Tailored programme',
+    tag: 'Tailored program',
     name: 'AI implementation',
     blurb: 'From a needs assessment to a pilot in selected processes.',
     items: [
@@ -121,7 +121,7 @@ const faqs = [
   },
   {
     q: 'How long is a workshop?',
-    a: 'Two days of five hours each as standard — ten hours of work on your team’s real tasks. I adjust the scope to the organisation.'
+    a: 'Two days of five hours each as standard — ten hours of work on your team’s real tasks. I adjust the scope to the organization.'
   },
   {
     q: 'What about GDPR and the AI Act?',
@@ -1389,6 +1389,29 @@ const faqs = [
       .kc-polaroid:hover {
         transform: rotate(-2.5deg);
       }
+    }
+
+    /* ---------- cookie banner ---------- */
+
+    /* CookieConsentEn is styled with the design tokens in global.css, which
+       this page deliberately does not load. Redeclare them on the banner
+       itself — scoped rather than :root, because --kc-bg means the page
+       background here and the banner surface there. */
+    .cookie-consent {
+      --kc-bg: var(--kc-card);
+      --kc-text: var(--kc-ink);
+      --kc-border: var(--kc-rule-14);
+      --kc-brand: var(--kc-green);
+      --kc-brand-press: var(--kc-ink);
+      --kc-link: var(--kc-green);
+      --kc-btn-radius: 999px;
+      --kc-btn-h: 42px;
+      --kc-gap: 12px;
+      --kc-maxw: var(--kc-wrap);
+      --kc-shadow: 0 8px 24px rgba(10, 71, 49, 0.12);
+      --kc-anim: 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      font-family: var(--kc-sans);
+      letter-spacing: -0.01em;
     }
   </style>
   <style nonce={nonce}>
