@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 const sitemapExcludedPaths = [
   '/thank-you',
+  '/redesigned',
   '/AIDlaFirm',
   '/aidlafirm',
   '/ai-excel',
