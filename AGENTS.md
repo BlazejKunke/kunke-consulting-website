@@ -21,6 +21,9 @@
 
 ## English website
 
-- Maintain one global English version at `/en/`; `/uk/` redirects to it.
-- Use American English for global English copy.
-- Show AI team training from `$1,500 USD`; AI implementation and ongoing projects are priced on request unless Blaze explicitly changes this.
+- Maintain one English version at `/en/`; `/uk/` and `/us/` redirect to it.
+- Use American English for English copy.
+- `/en/` is an English translation of the Polish homepage, not a separate global offer. It mirrors `src/pages/redesigned.astro` — same design, section order and mailto-only contact — and its copy, pricing and positioning should track the Polish page. Blaze decided this in July 2026, replacing the earlier worldwide-English positioning.
+- Show prices in PLN, matching the Polish page. The earlier `$1,500 USD` / priced-on-request rule no longer applies.
+- The offer is in-person training based in Poznań, serving Poland. Keep metadata consistent with that (`areaServed: 'PL'`); do not restore a worldwide service area while the visible copy describes in-person delivery in Poland.
+- `src/pages/en/index.astro` is standalone: it does not use a shared layout or `global.css`, and carries its own hreflang, Open Graph, GTM, JSON-LD and cookie-banner tokens. Components that rely on `global.css` design tokens need those tokens redeclared on the page.
