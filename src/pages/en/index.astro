@@ -441,6 +441,42 @@ const faqs = [
       text-wrap: pretty;
     }
 
+    /* Typed headline: sizer and live text share one grid cell so the block
+       keeps the height of the longest variant while endings are rewritten. */
+    .kc-typed {
+      display: grid;
+    }
+
+    .kc-typed > span {
+      grid-area: 1 / 1;
+    }
+
+    .kc-typed-sizer {
+      visibility: hidden;
+    }
+
+    .kc-typed-caret {
+      display: inline-block;
+      width: 0.05em;
+      height: 0.78em;
+      margin-left: 0.05em;
+      background: var(--kc-green);
+      transform: translateY(0.06em);
+      animation: kc-caret-blink 1.1s steps(1) infinite;
+    }
+
+    @keyframes kc-caret-blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .kc-typed-caret {
+        display: none;
+      }
+    }
+
     .kc-lead {
       font-size: 21px;
       line-height: 1.55;
@@ -1452,7 +1488,15 @@ const faqs = [
     <section class="kc-hero">
       <div>
         <p class="kc-eyebrow">AI for your company · Poznań · Poland</p>
-        <h1>Practical AI training and advisory for business.</h1>
+        <h1 class="kc-typed" aria-label="Practical AI training and advisory for your business.">
+          <span class="kc-typed-sizer" aria-hidden="true"
+            >Practical AI training and advisory for your business.</span
+          >
+          <span aria-hidden="true"
+            >Practical AI training and advisory <span id="kc-typed-ending">for your business.</span><span
+              class="kc-typed-caret"></span></span
+          >
+        </h1>
         <p class="kc-lead">
           Training and implementation for mid-sized companies. We start with the work your team does
           today. We focus on practice. We train in person. We promise little and deliver a lot.
@@ -1717,6 +1761,45 @@ const faqs = [
   <CookieConsent />
 
   <script>
+    // Hero headline: the ending after "…and advisory" is typed out, held,
+    // erased and replaced. Skipped entirely for reduced-motion users, who
+    // keep the static first variant.
+    const typedEnding = document.getElementById('kc-typed-ending');
+
+    if (typedEnding && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const endings = ['for your business.', 'for your company.', 'for your team.'];
+      const TYPE_MS = 55;
+      const ERASE_MS = 30;
+      const HOLD_FULL_MS = 2800;
+      const HOLD_EMPTY_MS = 400;
+
+      let index = 0;
+
+      const schedule = (fn: () => void, ms: number) => window.setTimeout(fn, ms);
+
+      const erase = () => {
+        const current = typedEnding.textContent ?? '';
+        if (current.length > 0) {
+          typedEnding.textContent = current.slice(0, -1);
+          schedule(erase, ERASE_MS);
+        } else {
+          index = (index + 1) % endings.length;
+          schedule(() => type(0), HOLD_EMPTY_MS);
+        }
+      };
+
+      const type = (chars: number) => {
+        typedEnding.textContent = endings[index].slice(0, chars);
+        if (chars < endings[index].length) {
+          schedule(() => type(chars + 1), TYPE_MS);
+        } else {
+          schedule(erase, HOLD_FULL_MS);
+        }
+      };
+
+      schedule(erase, HOLD_FULL_MS);
+    }
+
     // FAQ: single item open at a time, first one open on load.
     const questions = Array.from(document.querySelectorAll('.kc-faq-q'));
 
