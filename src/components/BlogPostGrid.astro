@@ -1,0 +1,349 @@
+---
+// Filterable article grid for the blog index pages, per the Claude Design
+// project "Blog ^Kunke Consulting.dc.html": category chips over a three-column
+// grid ruled by hairlines, capped at nine cards behind a "show all" toggle.
+//
+// Filtering and expanding happen client-side over the full server-rendered
+// list, so every post stays in the HTML for crawlers and no-JS visitors. With
+// JS off the chips and the toggle are hidden and all posts show.
+
+import type { GridPost } from '../utils/blog';
+
+interface Props {
+  posts: GridPost[];
+  filters: Array<{ key: string; label: string }>;
+  heading: string;
+  showMoreLabel: string;
+  showLessLabel: string;
+  readLabel: string;
+  filtersLabel: string;
+  initialCount?: number;
+}
+
+const {
+  posts,
+  filters,
+  heading,
+  showMoreLabel,
+  showLessLabel,
+  readLabel,
+  filtersLabel,
+  initialCount = 9
+} = Astro.props;
+---
+
+<section class="kc-blog-list" aria-labelledby="kc-blog-list-title">
+  <div class="kc-blog-list-head">
+    <h2 id="kc-blog-list-title">{heading}</h2>
+    <div class="kc-chips" role="group" aria-label={filtersLabel} data-blog-chips hidden>
+      {
+        filters.map((filter, index) => (
+          <button
+            type="button"
+            class="kc-chip"
+            data-filter={filter.key}
+            aria-pressed={index === 0 ? 'true' : 'false'}
+          >
+            {filter.label}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="kc-blog-grid" data-blog-grid data-initial-count={initialCount}>
+    {
+      posts.map((post, index) => (
+        <a
+          class="kc-post"
+          href={post.href}
+          data-category={post.category}
+          data-index={index}
+        >
+          <div class="kc-post-meta">
+            <time datetime={post.isoDate}>{post.date}</time>
+            <span class="kc-post-cat">{post.categoryLabel}</span>
+          </div>
+          <div class="kc-post-media">
+            {post.image && (
+              <img src={post.image} alt="" loading="lazy" decoding="async" width="400" height="250" />
+            )}
+          </div>
+          <h3>{post.title}</h3>
+          <p>{post.excerpt}</p>
+          <span class="kc-post-read">
+            {readLabel} <span aria-hidden="true">&#8594;</span>
+          </span>
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="kc-blog-more">
+    <button
+      type="button"
+      class="kc-btn-ghost kc-more-btn"
+      data-blog-more
+      data-more-label={showMoreLabel}
+      data-less-label={showLessLabel}
+      hidden
+    >
+      {showMoreLabel}
+    </button>
+  </div>
+</section>
+
+<style is:global>
+  .kc-blog-list {
+    max-width: var(--kc-wrap);
+    margin: 0 auto;
+    padding: 56px var(--kc-gut) 0;
+  }
+
+  .kc-blog-list-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--kc-rule-14);
+    padding-bottom: 18px;
+  }
+
+  .kc-blog-list-head h2 {
+    margin: 0;
+    font-family: var(--kc-mono);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--kc-green);
+  }
+
+  .kc-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .kc-chip {
+    border: 1px solid var(--kc-rule-25);
+    background: transparent;
+    color: var(--kc-body);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+  }
+
+  .kc-chip:hover {
+    border-color: var(--kc-rule-42);
+  }
+
+  .kc-chip[aria-pressed='true'] {
+    background: var(--kc-green);
+    border-color: var(--kc-green);
+    color: var(--kc-bg);
+  }
+
+  .kc-blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-bottom: 1px solid var(--kc-rule-14);
+    border-right: 1px solid var(--kc-rule-14);
+  }
+
+  .kc-post {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 34px 30px 40px;
+    border-top: 1px solid var(--kc-rule-14);
+    border-left: 1px solid var(--kc-rule-14);
+    color: var(--kc-ink);
+    transition: background-color 200ms ease;
+  }
+
+  .kc-post:hover {
+    background: var(--kc-tint);
+    text-decoration: none;
+    color: var(--kc-ink);
+  }
+
+  .kc-post[hidden] {
+    display: none;
+  }
+
+  .kc-post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--kc-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--kc-muted);
+  }
+
+  .kc-post-cat {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--kc-green);
+  }
+
+  .kc-post-media {
+    height: 150px;
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: var(--kc-tint);
+    background-image: var(--kc-hatch);
+  }
+
+  .kc-post-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .kc-post h3 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    text-wrap: pretty;
+  }
+
+  .kc-post p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--kc-body);
+    text-wrap: pretty;
+  }
+
+  .kc-post-read {
+    margin-top: auto;
+    padding-top: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--kc-green);
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .kc-blog-empty {
+    padding: 56px 0;
+    text-align: center;
+    color: var(--kc-muted);
+    font-size: 16px;
+  }
+
+  .kc-blog-more {
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+  }
+
+  .kc-more-btn {
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 900px) {
+    .kc-blog-list {
+      padding-top: 40px;
+    }
+
+    .kc-blog-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .kc-blog-grid {
+      grid-template-columns: 1fr;
+      border-right: 0;
+    }
+
+    /* A left rule on a single column just reads as a stray line. */
+    .kc-post {
+      border-left: 0;
+      padding: 26px 0 32px;
+    }
+  }
+</style>
+
+<script>
+  // Chips filter by category; the grid shows `initialCount` posts until the
+  // toggle is pressed. Both controls are hidden for no-JS visitors and only
+  // revealed here.
+  const grid = document.querySelector<HTMLElement>('[data-blog-grid]');
+  const chipGroup = document.querySelector<HTMLElement>('[data-blog-chips]');
+  const moreBtn = document.querySelector<HTMLButtonElement>('[data-blog-more]');
+
+  if (grid) {
+    const posts = Array.from(grid.querySelectorAll<HTMLElement>('.kc-post'));
+    const chips = chipGroup ? Array.from(chipGroup.querySelectorAll<HTMLButtonElement>('.kc-chip')) : [];
+    const initialCount = Number(grid.dataset.initialCount ?? 9);
+
+    let activeFilter = 'all';
+    let expanded = false;
+
+    const render = () => {
+      let shown = 0;
+
+      posts.forEach((post) => {
+        const matches = activeFilter === 'all' || post.dataset.category === activeFilter;
+        const visible = matches && (expanded || shown < initialCount);
+        if (matches) shown += 1;
+        post.hidden = !visible;
+      });
+
+      chips.forEach((chip) => {
+        chip.setAttribute('aria-pressed', String(chip.dataset.filter === activeFilter));
+      });
+
+      if (moreBtn) {
+        const overflows = shown > initialCount;
+        moreBtn.hidden = !overflows;
+        moreBtn.textContent = expanded
+          ? (moreBtn.dataset.lessLabel ?? '')
+          : (moreBtn.dataset.moreLabel ?? '');
+      }
+    };
+
+    if (chipGroup && chips.length > 0) {
+      chipGroup.hidden = false;
+      chips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          activeFilter = chip.dataset.filter ?? 'all';
+          expanded = false;
+          render();
+        });
+      });
+    }
+
+    moreBtn?.addEventListener('click', () => {
+      expanded = !expanded;
+      render();
+      // Collapsing from the bottom of a long list would strand the reader
+      // below the fold, so bring the grid back into view.
+      if (!expanded) {
+        grid.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      }
+    });
+
+    render();
+  }
+</script>

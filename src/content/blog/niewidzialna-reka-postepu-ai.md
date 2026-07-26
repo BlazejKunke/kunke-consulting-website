@@ -2,6 +2,7 @@
 title: "Niewidzialna ręka postępu AI"
 description: "O niewidocznej pracy infrastrukturalnej konsultanta technologicznego i jej realnym wpływie na ludzi, firmy oraz gospodarkę."
 date: 2026-02-17
+category: "practice"
 author: "Błażej Kunke"
 tags: ["AI", "Konsulting", "Wpływ", "Produktywność", "Ekonomia"]
 heroImage: "/images/modern-professionals-1600Image.webp"

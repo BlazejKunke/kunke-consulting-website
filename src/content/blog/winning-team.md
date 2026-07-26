@@ -2,6 +2,7 @@
 title: "Budowanie zwycięskiego zespołu"
 description: "Kluczowe elementy skutecznej budowy zespołu."
 date: 2024-06-01
+category: "practice"
 tags: ["Zespół", "Przywództwo", "Sukces"]
 ---
 W erze szybkich zmian i rosnącej konkurencji, umiejętność budowania i prowadzenia efektywnego zespołu stała się kluczową kompetencją każdego lidera. Oto jak stworzyć zespół, który nie tylko osiąga cele, ale je przekracza.

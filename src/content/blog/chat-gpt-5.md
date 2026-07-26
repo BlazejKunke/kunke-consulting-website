@@ -2,6 +2,7 @@
 title: "Chat GPT 5"
 description: "Wrażenia po premierze ChatGPT-5 i kluczowe korzyści dla biznesu."
 date: 2025-08-07
+category: "tools"
 tags: ["AI", "ChatGPT-5", "OpenAI", "Biznes"]
 heroImage: "/images/LinkedIn_Aug072025.jpeg"
 ---

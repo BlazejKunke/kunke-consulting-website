@@ -23,7 +23,16 @@
 
 - Maintain one English version at `/en/`; `/uk/` and `/us/` redirect to it.
 - Use American English for English copy.
-- `/en/` is an English translation of the Polish homepage, not a separate global offer. It mirrors `src/pages/redesigned.astro` — same design, section order and mailto-only contact — and its copy, pricing and positioning should track the Polish page. Blaze decided this in July 2026, replacing the earlier worldwide-English positioning.
+- `/en/` is an English translation of the Polish homepage, not a separate global offer. It mirrors the Polish homepage `src/pages/index.astro` — same design, section order and mailto-only contact — and its copy, pricing and positioning should track the Polish page. Blaze decided this in July 2026, replacing the earlier worldwide-English positioning.
 - Show prices in PLN, matching the Polish page. The earlier `$1,500 USD` / priced-on-request rule no longer applies.
 - The offer is in-person training based in Poznań, serving Poland. Keep metadata consistent with that (`areaServed: 'PL'`); do not restore a worldwide service area while the visible copy describes in-person delivery in Poland.
 - `src/pages/en/index.astro` is standalone: it does not use a shared layout or `global.css`, and carries its own hreflang, Open Graph, GTM, JSON-LD and cookie-banner tokens. Components that rely on `global.css` design tokens need those tokens redeclared on the page.
+
+## Blog
+
+- The blog runs on the homepage design, imported from the Claude Design project "Blog ^Kunke Consulting.dc.html" in July 2026. Like the homepages it avoids `BaseLayout` and `global.css`, which would override the type scale.
+- `src/components/BlogShell.astro` owns the shared chrome: the `--kc-*` tokens, the sticky header, the one-line footer, the index hero and the featured card. Both blog indexes and the article template render through it, so a change there hits all of them.
+- `src/pages/blog/index.astro` (Polish) and `src/pages/en/blog/index.astro` (English) mirror each other — keep them in sync. Articles themselves are shared and live at `/blog/<slug>/` in both languages, rendered by `src/pages/blog/[slug].astro`.
+- Blaze chose homepage chrome over the design's own dark green PL/EN strip and four-column footer, so blog and homepage match. The design's newsletter block is left out until there is a list to sign people up to.
+- Posts carry a `category:` (`implementation` / `strategy` / `tools` / `practice`) that drives the index filter chips; `src/utils/blog.ts` maps it to Polish and English labels and falls back to a tag lookup when the field is missing.
+- Do not repeat the post title as an `# H1` in the markdown body — the title band already renders it, and a second H1 hurts SEO.
