@@ -28,6 +28,12 @@
 - The offer is in-person training based in Poznań, serving Poland. Keep metadata consistent with that (`areaServed: 'PL'`); do not restore a worldwide service area while the visible copy describes in-person delivery in Poland.
 - `src/pages/en/index.astro` is standalone: it does not use a shared layout or `global.css`, and carries its own hreflang, Open Graph, GTM, JSON-LD and cookie-banner tokens. Components that rely on `global.css` design tokens need those tokens redeclared on the page.
 
+## Retired languages
+
+- French and Dutch were retired in July 2026. `/fr/` and `/nl/` 301 to `/en/`; their pages and their sixteen dedicated components are deleted. Do not recreate them.
+- `src/utils/locales.ts` is the single source for hreflang alternates, the language switcher and the sitemap locales — the site now declares Polish and English only. Adding a language means adding it there, not just adding a page.
+- The French PDFs in `public/` (`Transformation-IA-PragmatIQ-Expertise-et-Performance.pdf`, `PytAInIQ-Report-French.pdf`) are deliberately kept and still downloadable, in case they were shared directly. They are no longer linked from any page.
+
 ## Blog
 
 - The blog runs on the homepage design, imported from the Claude Design project "Blog ^Kunke Consulting.dc.html" in July 2026. Like the homepages it avoids `BaseLayout` and `global.css`, which would override the type scale.

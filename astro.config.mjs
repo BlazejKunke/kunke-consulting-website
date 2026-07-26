@@ -13,6 +13,9 @@ const sitemapExcludedPaths = [
   '/zespol',
   '/team',
   '/uk',
+  // Retired July 2026; the redirect stubs must not resurface in the sitemap.
+  '/fr/',
+  '/nl/',
 ];
 
 // https://astro.build/config
@@ -24,9 +27,7 @@ export default defineConfig({
         defaultLocale: 'pl',
         locales: {
           pl: 'pl-PL',
-          en: 'en-US',
-          fr: 'fr-FR',
-          nl: 'nl-NL'
+          en: 'en-US'
         }
       },
       changefreq: 'weekly',
@@ -53,6 +54,16 @@ export default defineConfig({
       destination: '/'
     },
     '/us': {
+      status: 301,
+      destination: '/en/'
+    },
+    // French and Dutch retired July 2026. English is the closest page a
+    // visitor from either can still read, same as /uk/ and /us/.
+    '/fr': {
+      status: 301,
+      destination: '/en/'
+    },
+    '/nl': {
       status: 301,
       destination: '/en/'
     },
