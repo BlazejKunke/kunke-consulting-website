@@ -1,8 +1,9 @@
+// French and Dutch were retired in July 2026 — /fr/ and /nl/ now 301 to /en/.
+// Dropping them here is what removes their hreflang alternates, their entries
+// in the language switcher, and their sitemap locale declarations.
 export const locales = [
   { code: 'pl', label: 'Polski', pathPrefix: '' },
   { code: 'en', label: 'English', pathPrefix: '/en' },
-  { code: 'fr', label: 'Français', pathPrefix: '/fr' },
-  { code: 'nl', label: 'Nederlands', pathPrefix: '/nl' },
 ] as const;
 
 export type LocaleCode = typeof locales[number]['code'];
@@ -18,22 +19,16 @@ export const localeLabels = locales.reduce(
 export const localeOgMap: Record<LocaleCode, string> = {
   pl: 'pl_PL',
   en: 'en_US',
-  fr: 'fr_FR',
-  nl: 'nl_NL',
 };
 
 export const localeHtmlLangMap: Record<LocaleCode, string> = {
   pl: 'pl',
   en: 'en',
-  fr: 'fr',
-  nl: 'nl',
 };
 
 export const localeHreflangMap: Record<LocaleCode, string> = {
   pl: 'pl-PL',
   en: 'en',
-  fr: 'fr-FR',
-  nl: 'nl-NL',
 };
 
 export const defaultLocale: LocaleCode = 'pl';
@@ -44,8 +39,6 @@ const localizedRoutes: Record<string, LocalizedRouteMap> = {
   '/': {
     pl: '/',
     en: '/en/',
-    fr: '/fr/',
-    nl: '/nl/',
   },
 };
 
@@ -96,7 +89,7 @@ const normalizePath = (path: string): string => {
 };
 
 const normalizeLocaleRootPath = (path: string): string => {
-  const localeRootMatch = path.match(/^\/(en|fr|nl)\/?$/);
+  const localeRootMatch = path.match(/^\/(en)\/?$/);
   if (!localeRootMatch) {
     return path;
   }
