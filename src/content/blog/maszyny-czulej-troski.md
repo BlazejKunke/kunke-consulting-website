@@ -2,6 +2,7 @@
 title: "Maszyny czułej troski"
 description: "Pełne tłumaczenie eseju Daria Amodeia o tym, jak potężna AI może zmienić świat na lepsze, wraz z refleksją nad szansami i zagrożeniami."
 date: 2024-10-01
+category: "practice"
 tags: ["AI", "Esej", "Przyszłość", "Tłumaczenie"]
 coverImage: "/blog/maszyny-czulej-troski.jpg"
 author: "Dario Amodei"
@@ -9,9 +10,6 @@ translator: "Błażej Kunke, /klod/ Claude Sonet 4.5, ChatGPT5"
 reader: "Błażej Kunke"
 source: "https://www.darioamodei.com/"
 ---
-
-# Maszyny czułej troski
-
 **Jak AI może zmienić świat na lepsze**
 
 Autor: Dario Amodei, Anthropic  \

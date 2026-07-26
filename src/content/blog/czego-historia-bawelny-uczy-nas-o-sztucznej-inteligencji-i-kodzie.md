@@ -3,6 +3,7 @@ title: "Czego historia bawełny uczy nas o sztucznej inteligencji i kodzie"
 seoTitle: "AI i kod: czego uczy nas historia bawełny | ^Kunke"
 description: "Historia mechanizacji bawełny jako mapa do zrozumienia, jak AI najpierw wzmacnia, a potem reorganizuje pracę programistów i całych firm."
 date: 2026-03-06
+category: "strategy"
 author: "Błażej Kunke"
 tags: ["AI", "Kodowanie", "Historia", "Rewolucja przemysłowa", "Produktywność"]
 heroImage: "/images/Rewolucja przemysłowa 2026.jpg"

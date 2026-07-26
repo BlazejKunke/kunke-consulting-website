@@ -3,14 +3,12 @@ title: "Selling Shovels in the AI Gold Rush"
 seoTitle: "AI Implementation: Selling Shovels in the Gold Rush"
 description: "Why implementation expertise, not technology, is what SMEs actually need to capture the opportunities created by AI. A strategic framework from an AI consultant working with Polish and European businesses."
 date: 2026-02-06
+category: "strategy"
 language: en
 author: "Blazej Kunke"
 tags: ["AI consulting", "SME", "AI implementation", "business strategy", "Claude Opus 4.6", "Chat GPT 5.2", "CODEX"]
 heroImage: "/images/GoldRush_Me.jpg"
 ---
-
-# Selling Shovels in the AI Gold Rush
-
 There is a famous story from the California Gold Rush of 1849. While thousands of prospectors rushed west to pan for gold, the people who made the most reliable fortunes were the ones selling picks, shovels, and denim jeans. Levi Strauss did not dig for gold. He outfitted the people who did.
 
 I run a small AI consulting company. When I first described what I do to a friend, he smiled and said: "So you are selling shovels in the gold rush."

@@ -2,6 +2,7 @@
 title: "Wskazówki Excel dla konsultantów"
 description: "Zwiększ swoją produktywność dzięki tym trikom w Excel."
 date: 2024-05-22
+category: "practice"
 tags: ["Excel", "Produktywność", "Konsulting"]
 ---
 W erze nowoczesnych technologii Excel nadal pozostaje jednym z najważniejszych narzędzi w pracy konsultanta. Jego wszechstronność i funkcjonalność sprawiają, że jest niezastąpiony w codziennej pracy z danymi.

@@ -1,98 +1,183 @@
 ---
-import { getCollection } from "astro:content";
+// Polish blog index — the redesign imported from the Claude Design project
+// "Blog ^Kunke Consulting.dc.html", sharing the homepage's palette, type stack
+// and chrome via BlogShell.
 
-const posts = (await getCollection("blog"))
-  .filter((post) => post.data.language === "pl")
-  .sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-  );
+import { getCollection } from 'astro:content';
+import BlogShell from '../../components/BlogShell.astro';
+import BlogPostGrid from '../../components/BlogPostGrid.astro';
+import type { GridPost } from '../../utils/blog';
+import { blogCategories, categoryLabel, formatDate, readingTimeLabel, resolveCategory } from '../../utils/blog';
 
-// Get the 3 most recent posts for the grid
-const recentPosts = posts.slice(0, 3);
-const canonicalUrl = "https://kunkeconsulting.pl/blog/";
+const nonce: string | undefined = Astro.locals?.nonce;
+
+const posts = (await getCollection('blog'))
+  .filter((post) => post.data.language === 'pl')
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const [featured, ...rest] = posts;
+
+const toGridPost = (post: (typeof posts)[number]): GridPost => {
+  const category = resolveCategory(post.data);
+  return {
+    href: `/blog/${post.slug}/`,
+    title: post.data.title,
+    excerpt: post.data.description,
+    date: formatDate(post.data.date, 'pl'),
+    isoDate: post.data.date.toISOString(),
+    category,
+    categoryLabel: categoryLabel(category, 'pl'),
+    image: post.data.heroImage
+  };
+};
+
+const gridPosts = rest.map(toGridPost);
+
+const filters = [
+  { key: 'all', label: categoryLabel('all', 'pl') },
+  ...blogCategories
+    // Only offer a chip if something is behind it.
+    .filter((category) => gridPosts.some((post) => post.category === category))
+    .map((category) => ({ key: category, label: categoryLabel(category, 'pl') }))
+];
+
+const featuredCategory = featured ? resolveCategory(featured.data) : 'practice';
+
+const siteUrl = Astro.site ?? new URL('https://kunkeconsulting.pl');
+const canonicalUrl = 'https://kunkeconsulting.pl/blog/';
+const pageTitle = 'Blog o praktycznym AI dla firm | ^Kunke Consulting';
+const pageDescription =
+  'Notatki z wdrożeń AI, testy nowych modeli i wnioski z warsztatów. O tym, co realnie działa w polskich firmach, i o tym, co zostało w pilotażu.';
+const ogImage = new URL('/images/Workshop2025.JPG', siteUrl).href;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Strona główna', item: 'https://kunkeconsulting.pl/' },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: canonicalUrl }
+  ]
+};
+
+const blogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: '^Kunke Consulting Blog',
+  description: pageDescription,
+  url: canonicalUrl,
+  inLanguage: 'pl-PL',
+  publisher: { '@type': 'Organization', name: 'Kunke Consulting', url: 'https://kunkeconsulting.pl/' },
+  blogPost: posts.slice(0, 10).map((post) => ({
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.date.toISOString(),
+    url: `https://kunkeconsulting.pl/blog/${post.slug}/`,
+    author: { '@type': 'Person', name: 'Błażej Kunke' }
+  }))
+};
 ---
 
-<html lang="pl">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="/images/Kunke_Favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/global.css" />
-    <title>Blog o praktycznym AI dla firm | ^Kunke Consulting</title>
-    <meta name="description" content="Blog ^Kunke Consulting - najnowsze artykuły o praktycznych szkoleniach AI i doradztwie AI dla firm" />
-    <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" hreflang="pl" href={canonicalUrl} />
+<BlogShell
+  lang="pl"
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={canonicalUrl}
+  ogImage={ogImage}
+>
+  <Fragment slot="head">
+    <link rel="alternate" hreflang="pl-PL" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href="https://kunkeconsulting.pl/en/blog/" />
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
-  </head>
+    <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify(blogSchema)} />
+  </Fragment>
 
-  <body>
-    <!-- Header with breadcrumb and follow link -->
-    <header class="blog-header">
-      <nav class="breadcrumb">
-        <a href="/">Home</a> > <span>^Kunke Consulting BLOG</span>
-      </nav>
-      <a href="https://www.linkedin.com/in/blazejkunke/" class="follow-link" target="_blank" rel="noopener noreferrer">FOLLOW US</a>
-    </header>
+  <section class="kc-blog-hero">
+    <p class="kc-crumbs">
+      <a href="/">Strona główna</a>
+      <span class="kc-crumb-sep" aria-hidden="true">/</span>
+      <span aria-current="page">Blog</span>
+    </p>
+    <div class="kc-blog-hero-grid">
+      <h1>Blog o praktycznym AI dla firm</h1>
+      <p>
+        Notatki z wdrożeń, testy nowych modeli i wnioski z warsztatów. Piszę o tym, co realnie
+        działa w polskich firmach, i o tym, co zostało w pilotażu.
+      </p>
+    </div>
+  </section>
 
-    <!-- Main blog title section -->
-    <section class="blog-title-section">
-      <h1>^Kunke Consulting Blog</h1>
-      <p class="subtitle">Praktyczne szkolenia AI i doradztwo AI dla firm</p>
-    </section>
+  {
+    featured && (
+      <section class="kc-featured-wrap" aria-labelledby="kc-featured-title">
+        <a class="kc-featured" href={`/blog/${featured.slug}/`}>
+          <div class="kc-featured-body">
+            <div class="kc-featured-meta">
+              <span class="kc-featured-badge">Wyróżnione</span>
+              <span>
+                {formatDate(featured.data.date, 'pl')} · {readingTimeLabel(featured.body, 'pl')} ·{' '}
+                {categoryLabel(featuredCategory, 'pl')}
+              </span>
+            </div>
+            <h2 id="kc-featured-title">{featured.data.title}</h2>
+            <p>{featured.data.description}</p>
+            <span class="kc-featured-read">
+              Czytaj artykuł <span aria-hidden="true">&#8594;</span>
+            </span>
+          </div>
+          <div class="kc-featured-media">
+            {featured.data.heroImage && (
+              <img
+                src={featured.data.heroImage}
+                alt=""
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                width="600"
+                height="450"
+              />
+            )}
+          </div>
+        </a>
+      </section>
+    )
+  }
 
-    <!-- Hero workshop promotion -->
-    <section class="blog-hero">
-      <a href="/blog/warsztaty-ai/" class="hero-block">
-        <div class="hero-image">
-          <picture>
-            <source srcset="/images/ai-workshop-hero.webp" type="image/webp" />
-            <img src="/images/ai-workshop-hero.png" alt="Ilustracja warsztatów AI dla firm" loading="eager" decoding="async" width="600" height="400" />
-          </picture>
+  <BlogPostGrid
+    posts={gridPosts}
+    filters={filters}
+    heading="Wszystkie artykuły"
+    filtersLabel="Filtruj artykuły według kategorii"
+    showMoreLabel="Pokaż wszystkie artykuły"
+    showLessLabel="Pokaż mniej"
+    readLabel="Czytaj"
+  />
+
+  <section class="kc-cta" aria-labelledby="kc-blog-cta-title">
+    <div class="kc-cta-inner">
+      <div>
+        <p class="kc-eyebrow">Od teorii do wdrożenia</p>
+        <h2 id="kc-blog-cta-title">Chcesz przejść z czytania do robienia?</h2>
+        <p>
+          Szkolenie AI dla firm to naturalny pierwszy krok. Wdrożenie AI to program szyty na miarę
+          zespołu i procesów.
+        </p>
+        <div class="kc-cta-actions">
+          <a class="kc-btn" href="/ai-dla-firm/">Zobacz ofertę AI dla firm</a>
+          <a class="kc-btn-ghost" href="/kalkulator-roi-ai/">Kalkulator ROI z AI</a>
         </div>
-        <div class="hero-content">
-          <h2>Warsztaty AI</h2>
-          <p>Kompleksowe szkolenia AI dla polskich firm. Praktyczne narzędzia, które wdrożysz już jutro w swojej organizacji.</p>
-          <span class="hero-arrow">→</span>
-        </div>
-      </a>
-    </section>
-
-    <!-- Recent posts grid -->
-    <section class="blog-grid-section">
-      <div class="blog-posts-grid">
-        {recentPosts.map((post) => (
-          <article class="blog-post-card">
-            <a href={`/blog/${post.slug}/`}>
-              <div class="post-image">
-                <img src={post.data.heroImage || `/images/blog-placeholder-${Math.floor(Math.random() * 3) + 1}.jpg`} alt={post.data.title} loading="lazy" decoding="async" width="400" height="250" />
-              </div>
-              <h3>{post.data.title}</h3>
-            </a>
-          </article>
-        ))}
       </div>
-    </section>
-
-    <!-- All posts section -->
-    <section class="all-posts-section">
-      <h2>Wszystkie artykuły</h2>
-      <div class="all-posts-list">
-        {posts.map((post) => (
-          <article class="post-list-item">
-            <time>{post.data.date.toLocaleDateString('pl-PL')}</time>
-            <h3><a href={`/blog/${post.slug}/`}>{post.data.title}</a></h3>
-            <p>{post.data.description}</p>
-          </article>
-        ))}
+      <div class="kc-cta-media">
+        <img
+          src="/images/Workshop2025.JPG"
+          alt="Warsztat AI prowadzony przez ^Kunke Consulting"
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="450"
+        />
       </div>
-    </section>
-
-    <!-- Footer link -->
-    <footer class="blog-footer">
-      <a href="/">← Powrót do strony głównej</a>
-    </footer>
-  </body>
-</html>
+    </div>
+  </section>
+</BlogShell>

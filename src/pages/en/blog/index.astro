@@ -1,83 +1,182 @@
 ---
-import { getCollection } from "astro:content";
+// English blog index — mirrors src/pages/blog/index.astro on the redesign from
+// the Claude Design project "Blog ^Kunke Consulting.dc.html". Keep the two in
+// sync. Article pages themselves are shared and live under /blog/<slug>/.
 
-const posts = (await getCollection("blog"))
-  .filter((post) => post.data.language === "en")
+import { getCollection } from 'astro:content';
+import BlogShell from '../../../components/BlogShell.astro';
+import BlogPostGrid from '../../../components/BlogPostGrid.astro';
+import type { GridPost } from '../../../utils/blog';
+import { blogCategories, categoryLabel, formatDate, readingTimeLabel, resolveCategory } from '../../../utils/blog';
+
+const nonce: string | undefined = Astro.locals?.nonce;
+
+const posts = (await getCollection('blog'))
+  .filter((post) => post.data.language === 'en')
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const canonicalUrl = "https://kunkeconsulting.pl/en/blog/";
+const [featured, ...rest] = posts;
+
+const toGridPost = (post: (typeof posts)[number]): GridPost => {
+  const category = resolveCategory(post.data);
+  return {
+    href: `/blog/${post.slug}/`,
+    title: post.data.title,
+    excerpt: post.data.description,
+    date: formatDate(post.data.date, 'en'),
+    isoDate: post.data.date.toISOString(),
+    category,
+    categoryLabel: categoryLabel(category, 'en'),
+    image: post.data.heroImage
+  };
+};
+
+const gridPosts = rest.map(toGridPost);
+
+const filters = [
+  { key: 'all', label: categoryLabel('all', 'en') },
+  ...blogCategories
+    .filter((category) => gridPosts.some((post) => post.category === category))
+    .map((category) => ({ key: category, label: categoryLabel(category, 'en') }))
+];
+
+const featuredCategory = featured ? resolveCategory(featured.data) : 'practice';
+
+const siteUrl = Astro.site ?? new URL('https://kunkeconsulting.pl');
+const canonicalUrl = 'https://kunkeconsulting.pl/en/blog/';
+const pageTitle = 'Practical AI for business | ^Kunke Consulting Blog';
+const pageDescription =
+  'Field notes from AI rollouts, tests of new models, and lessons from workshops. What actually works inside companies, and what stayed stuck in a pilot.';
+const ogImage = new URL('/images/Workshop2025.JPG', siteUrl).href;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kunkeconsulting.pl/en/' },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: canonicalUrl }
+  ]
+};
+
+const blogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: '^Kunke Consulting Blog',
+  description: pageDescription,
+  url: canonicalUrl,
+  inLanguage: 'en-US',
+  publisher: { '@type': 'Organization', name: 'Kunke Consulting', url: 'https://kunkeconsulting.pl/' },
+  blogPost: posts.slice(0, 10).map((post) => ({
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.date.toISOString(),
+    url: `https://kunkeconsulting.pl/blog/${post.slug}/`,
+    author: { '@type': 'Person', name: 'Błażej Kunke' }
+  }))
+};
 ---
 
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/images/Kunke_Favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/styles/global.css" />
-    <title>Practical AI Insights | ^Kunke Consulting Blog</title>
-    <meta name="description" content="Practical articles on AI training, implementation, strategy, and responsible adoption for international teams." />
-    <link rel="canonical" href={canonicalUrl} />
+<BlogShell
+  lang="en"
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={canonicalUrl}
+  ogImage={ogImage}
+>
+  <Fragment slot="head">
     <link rel="alternate" hreflang="en" href={canonicalUrl} />
-    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
-    <style>
-      body { background: #f8f5ed; color: #17362e; }
-      .blog-shell { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
-      .blog-nav { display: flex; justify-content: space-between; align-items: center; padding: 28px 0; }
-      .blog-nav a { color: #17362e; font-weight: 700; text-decoration: none; }
-      .blog-hero { padding: 72px 0 52px; max-width: 760px; }
-      .eyebrow { color: #a4522d; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-      h1 { font-size: clamp(2.5rem, 6vw, 4.8rem); line-height: 1.02; margin: 14px 0 24px; }
-      .intro { font-size: 1.25rem; line-height: 1.7; color: #3f574f; }
-      .post-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; padding-bottom: 80px; }
-      .post-card { background: #fff; border: 1px solid rgba(23,54,46,.12); border-radius: 18px; overflow: hidden; box-shadow: 0 10px 30px rgba(23,54,46,.06); }
-      .post-card img { display: block; width: 100%; height: 230px; object-fit: cover; background: #e8e1d4; }
-      .post-content { padding: 28px; }
-      .post-content time { color: #7b3f24; font-size: .9rem; font-weight: 700; }
-      .post-content h2 { font-size: 1.45rem; margin: 12px 0; }
-      .post-content h2 a { color: #17362e; text-decoration: none; }
-      .post-content p { color: #52665f; line-height: 1.6; }
-      .read-more { display: inline-block; color: #a4522d; font-weight: 700; text-decoration: none; margin-top: 10px; }
-      .blog-footer { border-top: 1px solid rgba(23,54,46,.15); padding: 30px 0 50px; }
-      .blog-footer a { color: #17362e; font-weight: 700; text-decoration: none; }
-      @media (max-width: 720px) { .post-grid { grid-template-columns: 1fr; } .blog-hero { padding-top: 40px; } }
-    </style>
-  </head>
-  <body>
-    <div class="blog-shell">
-      <nav class="blog-nav" aria-label="Blog navigation">
-        <a href="/en/">^Kunke Consulting</a>
-        <a href="/en/#contact">Contact</a>
-      </nav>
+    <link rel="alternate" hreflang="pl-PL" href="https://kunkeconsulting.pl/blog/" />
+    <link rel="alternate" hreflang="x-default" href="https://kunkeconsulting.pl/blog/" />
+    <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify(blogSchema)} />
+  </Fragment>
 
-      <header class="blog-hero">
-        <p class="eyebrow">Practical AI insights</p>
-        <h1>Clear thinking about AI at work</h1>
-        <p class="intro">Field notes on AI strategy, implementation, and responsible adoption for leaders and teams working across borders.</p>
-      </header>
-
-      <main class="post-grid">
-        {posts.map((post) => (
-          <article class="post-card">
-            <a href={`/blog/${post.slug}/`} aria-label={`Read ${post.data.title}`}>
-              <img src={post.data.heroImage || "/images/Workshop2025.JPG"} alt="" loading="lazy" decoding="async" width="520" height="230" />
-            </a>
-            <div class="post-content">
-              <time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</time>
-              <h2><a href={`/blog/${post.slug}/`}>{post.data.title}</a></h2>
-              <p>{post.data.description}</p>
-              <a class="read-more" href={`/blog/${post.slug}/`}>Read article →</a>
-            </div>
-          </article>
-        ))}
-      </main>
-
-      <footer class="blog-footer">
-        <a href="/en/">← Back to the English homepage</a>
-      </footer>
+  <section class="kc-blog-hero">
+    <p class="kc-crumbs">
+      <a href="/en/">Home</a>
+      <span class="kc-crumb-sep" aria-hidden="true">/</span>
+      <span aria-current="page">Blog</span>
+    </p>
+    <div class="kc-blog-hero-grid">
+      <h1>Practical AI for business</h1>
+      <p>
+        Field notes from AI rollouts, tests of new models, and lessons from workshops. What actually
+        works inside companies, and what stayed stuck in a pilot.
+      </p>
     </div>
-  </body>
-</html>
+  </section>
+
+  {
+    featured && (
+      <section class="kc-featured-wrap" aria-labelledby="kc-featured-title">
+        <a class="kc-featured" href={`/blog/${featured.slug}/`}>
+          <div class="kc-featured-body">
+            <div class="kc-featured-meta">
+              <span class="kc-featured-badge">Featured</span>
+              <span>
+                {formatDate(featured.data.date, 'en')} · {readingTimeLabel(featured.body, 'en')} ·{' '}
+                {categoryLabel(featuredCategory, 'en')}
+              </span>
+            </div>
+            <h2 id="kc-featured-title">{featured.data.title}</h2>
+            <p>{featured.data.description}</p>
+            <span class="kc-featured-read">
+              Read the article <span aria-hidden="true">&#8594;</span>
+            </span>
+          </div>
+          <div class="kc-featured-media">
+            {featured.data.heroImage && (
+              <img
+                src={featured.data.heroImage}
+                alt=""
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                width="600"
+                height="450"
+              />
+            )}
+          </div>
+        </a>
+      </section>
+    )
+  }
+
+  <BlogPostGrid
+    posts={gridPosts}
+    filters={filters}
+    heading="All articles"
+    filtersLabel="Filter articles by category"
+    showMoreLabel="Show all articles"
+    showLessLabel="Show fewer"
+    readLabel="Read"
+  />
+
+  <section class="kc-cta" aria-labelledby="kc-blog-cta-title">
+    <div class="kc-cta-inner">
+      <div>
+        <p class="kc-eyebrow">From reading to doing</p>
+        <h2 id="kc-blog-cta-title">Ready to move from reading to doing?</h2>
+        <p>
+          An AI training session is the natural first step. An AI rollout is a program built around
+          your team and your processes.
+        </p>
+        <div class="kc-cta-actions">
+          <a class="kc-btn" href="/en/#offer">See the offer</a>
+          <a class="kc-btn-ghost" href="mailto:info@kunkeconsulting.pl">Email me</a>
+        </div>
+      </div>
+      <div class="kc-cta-media">
+        <img
+          src="/images/Workshop2025.JPG"
+          alt="An AI workshop run by ^Kunke Consulting"
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="450"
+        />
+      </div>
+    </div>
+  </section>
+</BlogShell>

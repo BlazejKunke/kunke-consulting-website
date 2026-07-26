@@ -3,6 +3,7 @@ title: "Fable 5 po polsku: dwa livestreamy dla początkujących"
 seoTitle: "Fable 5 po polsku: 2 livestreamy AI dla początkujących"
 description: "Zobacz nagrania dwóch polskojęzycznych livestreamów, podczas których testuję model Claude Fable 5 i pokazuję jego możliwości w praktyce."
 date: 2026-06-11
+category: "tools"
 author: "Błażej Kunke"
 tags: ["AI", "Claude Fable 5", "YouTube", "Livestream", "Dla początkujących"]
 heroImage: "https://i.ytimg.com/vi/V8IZXLCz0Iw/maxresdefault.jpg"

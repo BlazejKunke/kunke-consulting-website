@@ -48,6 +48,10 @@ export default defineConfig({
       status: 301,
       destination: '/'
     },
+    '/redesigned': {
+      status: 301,
+      destination: '/'
+    },
     '/us': {
       status: 301,
       destination: '/en/'

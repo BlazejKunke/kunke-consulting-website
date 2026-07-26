@@ -1,327 +1,713 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+// Article template, shared by Polish and English posts — the redesign imported
+// from the Claude Design project "Blog ^Kunke Consulting.dc.html". A dark green
+// title band, an overlapping hero image, a single measured column of prose, an
+// author card and a "read next" row, all on the homepage's design tokens.
 
-/* 1️⃣  Tell Astro all valid slugs ------------------------------------ */
+import { getCollection, getEntry } from 'astro:content';
+import BlogShell from '../../components/BlogShell.astro';
+import { categoryLabel, formatDate, readingTimeLabel, resolveCategory } from '../../utils/blog';
+
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");          // read every .md file
-  return posts.map((post) => ({
-    params: { slug: post.slug },                      // { slug: "excel-tips" }
-  }));
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.slug } }));
 }
 
-/* 2️⃣  For each request, load that one post -------------------------- */
+const nonce: string | undefined = Astro.locals?.nonce;
+
 const { slug } = Astro.params;
-const post = await getEntry("blog", slug as string);
+const post = await getEntry('blog', slug as string);
 if (!post) throw new Error(`Post "${slug}" not found`);
 
 const { Content } = await post.render();
-const heroImage = post.data.heroImage || "/images/Workshop2025.JPG";
-const absoluteHeroImage = heroImage.startsWith('http')
-  ? heroImage
-  : `https://kunkeconsulting.pl${heroImage}`;
+
+const isEnglish = post.data.language === 'en';
+const lang: 'pl' | 'en' = isEnglish ? 'en' : 'pl';
+const category = resolveCategory(post.data);
+
+const heroImage = post.data.heroImage;
+const absoluteHeroImage = heroImage
+  ? heroImage.startsWith('http')
+    ? heroImage
+    : `https://kunkeconsulting.pl${heroImage}`
+  : 'https://kunkeconsulting.pl/images/Workshop2025.JPG';
+
 const canonicalUrl = `https://kunkeconsulting.pl/blog/${slug}/`;
-const isEnglish = post.data.language === "en";
-const pageLanguage = isEnglish ? "en-US" : "pl";
-const hreflang = isEnglish ? "en" : "pl";
-const dateLocale = isEnglish ? "en-US" : "pl-PL";
-const homeUrl = isEnglish ? "/en/" : "/";
-const blogIndexUrl = isEnglish ? "/en/blog/" : "/blog/";
+const blogIndexUrl = isEnglish ? '/en/blog/' : '/blog/';
+const homeUrl = isEnglish ? '/en/' : '/';
+
 const labels = isEnglish
   ? {
-      home: "Home",
-      blog: "Blog",
-      about: "About this article",
-      company: "Practical AI training and implementation for international teams.",
-      more: "See more articles",
-      back: "← Back to all articles",
+      home: 'Home',
+      blog: 'Blog',
+      readNext: 'Read next',
+      authorBio:
+        'Founder of ^Kunke Consulting. After 10+ years at Franklin Templeton Investments and McKinsey & Company, he runs practical AI training and rollouts for companies in Poland and Europe.',
+      ctaEyebrow: 'From reading to doing',
+      ctaTitle: 'Ready to move from reading to doing?',
+      ctaBody:
+        'An AI training session is the natural first step. An AI rollout is a program built around your team and your processes.',
+      ctaPrimary: 'See the offer',
+      ctaPrimaryHref: '/en/#offer',
+      ctaSecondary: 'Email me',
+      ctaSecondaryHref: 'mailto:info@kunkeconsulting.pl',
+      ctaAlt: 'An AI workshop run by ^Kunke Consulting'
     }
   : {
-      home: "Strona główna",
-      blog: "Blog",
-      about: "O tym artykule",
-      company: "Ekspert w dziedzinie AI i automatyzacji biznesowej. Pomagamy firmom zwiększać efektywność poprzez nowoczesne technologie.",
-      more: "Zobacz więcej artykułów",
-      back: "← Powrót do wszystkich artykułów",
+      home: 'Strona główna',
+      blog: 'Blog',
+      readNext: 'Czytaj dalej',
+      authorBio:
+        'Założyciel ^Kunke Consulting. Po 10+ latach w Franklin Templeton Investments i McKinsey & Company prowadzi praktyczne szkolenia i wdrożenia AI w polskich firmach.',
+      ctaEyebrow: 'Od teorii do wdrożenia',
+      ctaTitle: 'Chcesz przejść z czytania do robienia?',
+      ctaBody:
+        'Szkolenie AI dla firm to naturalny pierwszy krok. Wdrożenie AI to program szyty na miarę zespołu i procesów.',
+      ctaPrimary: 'Zobacz ofertę AI dla firm',
+      ctaPrimaryHref: '/ai-dla-firm/',
+      ctaSecondary: 'Kalkulator ROI z AI',
+      ctaSecondaryHref: '/kalkulator-roi-ai/',
+      ctaAlt: 'Warsztat AI prowadzony przez ^Kunke Consulting'
     };
 
-// Breadcrumb structured data
+// Read next: same language, same category first, then the newest of the rest.
+const siblings = (await getCollection('blog'))
+  .filter((entry) => entry.slug !== post.slug && (entry.data.language ?? 'pl') === (post.data.language ?? 'pl'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const sameCategory = siblings.filter((entry) => resolveCategory(entry.data) === category);
+const related = [...sameCategory, ...siblings.filter((entry) => !sameCategory.includes(entry))].slice(0, 3);
+
 const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": labels.home,
-      "item": `https://kunkeconsulting.pl${homeUrl}`
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Blog",
-      "item": `https://kunkeconsulting.pl${blogIndexUrl}`
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": post.data.title,
-      "item": canonicalUrl
-    }
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: labels.home, item: `https://kunkeconsulting.pl${homeUrl}` },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `https://kunkeconsulting.pl${blogIndexUrl}` },
+    { '@type': 'ListItem', position: 3, name: post.data.title, item: canonicalUrl }
   ]
 };
 
-// Article structured data for blog posts
 const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": post.data.title,
-  "description": post.data.description,
-  "image": absoluteHeroImage,
-  "datePublished": post.data.date.toISOString(),
-  "dateModified": post.data.date.toISOString(),
-  "author": {
-    "@type": "Person",
-    "name": "Błażej Kunke",
-    "url": "https://www.linkedin.com/in/blazejkunke/"
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  image: absoluteHeroImage,
+  datePublished: post.data.date.toISOString(),
+  dateModified: post.data.date.toISOString(),
+  articleSection: categoryLabel(category, lang),
+  author: {
+    '@type': 'Person',
+    name: 'Błażej Kunke',
+    url: 'https://www.linkedin.com/in/blazejkunke/'
   },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Kunke Consulting",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://kunkeconsulting.pl/images/Kunke_Favicon.png"
-    }
+  publisher: {
+    '@type': 'Organization',
+    name: 'Kunke Consulting',
+    logo: { '@type': 'ImageObject', url: 'https://kunkeconsulting.pl/images/Kunke_Favicon.png' }
   },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": canonicalUrl
-  },
-  "keywords": post.data.tags ? post.data.tags.join(", ") : (isEnglish ? "AI, artificial intelligence, AI training" : "AI, sztuczna inteligencja, szkolenia AI")
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+  keywords: post.data.tags
+    ? post.data.tags.join(', ')
+    : isEnglish
+      ? 'AI, artificial intelligence, AI training'
+      : 'AI, sztuczna inteligencja, szkolenia AI'
 };
 ---
 
-<!DOCTYPE html>
-<html lang={pageLanguage}>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/images/Kunke_Favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/global.css" />
-    <title>{post.data.seoTitle ?? `${post.data.title} | Blog - ^Kunke Consulting`}</title>
-    <meta name="description" content={post.data.description} />
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" hreflang={hreflang} href={canonicalUrl} />
+<BlogShell
+  lang={lang}
+  title={post.data.seoTitle ?? `${post.data.title} | Blog - ^Kunke Consulting`}
+  description={post.data.description}
+  canonicalUrl={canonicalUrl}
+  ogImage={absoluteHeroImage}
+  ogType="article"
+>
+  <Fragment slot="head">
+    <link rel="alternate" hreflang={isEnglish ? 'en' : 'pl-PL'} href={canonicalUrl} />
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={post.data.title} />
-    <meta property="og:description" content={post.data.description} />
-    <meta property="og:image" content={absoluteHeroImage} />
-    <meta property="og:site_name" content="Kunke Consulting" />
-    <meta property="og:locale" content={isEnglish ? "en_US" : "pl_PL"} />
     <meta property="article:published_time" content={post.data.date.toISOString()} />
     <meta property="article:author" content="Błażej Kunke" />
-    {post.data.tags && post.data.tags.map((tag: string) => (
-      <meta property="article:tag" content={tag} />
-    ))}
+    <meta property="article:section" content={categoryLabel(category, lang)} />
+    {post.data.tags?.map((tag: string) => <meta property="article:tag" content={tag} />)}
+    <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify(articleSchema)} />
+  </Fragment>
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content={canonicalUrl} />
-    <meta name="twitter:title" content={post.data.title} />
-    <meta name="twitter:description" content={post.data.description} />
-    <meta name="twitter:image" content={absoluteHeroImage} />
-
-    <!-- Structured Data: Breadcrumbs -->
-    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-
-    <!-- Structured Data: Article -->
-    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-  </head>
-  <body>
-
-    <!-- Hero Image Section -->
-    <!-- 
-      HERO IMAGE RECOMMENDATIONS:
-      - Optimal size: 1200x600px (2:1 aspect ratio)
-      - Format: WebP with JPG fallback for best performance
-      - File size: Keep under 200KB for fast loading
-      - Content suggestions:
-        * Technology/AI themes: Modern office, people using laptops, data visualization
-        * Workshop themes: Professional meeting rooms, training sessions, collaborative work
-        * Brand themes: Your company colors and professional imagery
-      - Alternative text should describe the image content for accessibility
-      - Consider using a subtle overlay to ensure text readability
-    -->
-    <div class="hero-image-container">
-      <div class="hero-image-placeholder">
+  <header class="kc-article-head">
+    <div class="kc-article-head-inner">
+      <p class="kc-crumbs kc-crumbs-invert">
+        <a href={blogIndexUrl}>{labels.blog}</a>
+        <span class="kc-crumb-sep" aria-hidden="true">/</span>
+        <span>{categoryLabel(category, lang)}</span>
+      </p>
+      <h1>{post.data.title}</h1>
+      <p class="kc-article-standfirst">{post.data.description}</p>
+      <div class="kc-byline">
         <img
-          src={heroImage}
-          alt={`Hero image for ${post.data.title}`}
-          class="hero-image"
-          loading="eager"
+          class="kc-byline-avatar"
+          src="/images/blazej-kunke-hero.jpg"
+          alt=""
+          loading="lazy"
           decoding="async"
-          width="800"
-          height="400"
+          width="44"
+          height="44"
         />
-        <div class="hero-overlay"></div>
-      </div>
-      
-      <!-- Hero content overlay -->
-      <div class="hero-content-overlay">
-        <div class="hero-text-container">
-          <h1 class="hero-title">{post.data.title}</h1>
-          <div class="hero-meta">
-            <time datetime={post.data.date.toISOString()}>
-              {post.data.date.toLocaleDateString(dateLocale, {
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-              })}
-            </time>
-            {post.data.tags && (
-              <div class="hero-tags">
-                {post.data.tags.map((tag: string) => (
-                  <span class="hero-tag">{tag}</span>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
+        <span>
+          Błażej Kunke · <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date, lang)}</time>
+          · {readingTimeLabel(post.body, lang)}
+        </span>
       </div>
     </div>
+  </header>
 
-    <!-- Main content -->
-    <main class="article-main">
-      <div class="article-container">
-        <!-- Article content with improved layout -->
-        <article class="article-content">
-          <Content />
-        </article>
-        
-        <!-- Sidebar for additional content -->
-        <aside class="article-sidebar">
-          <div class="sidebar-widget">
-            <h3>{labels.about}</h3>
-            <p class="article-description">{post.data.description}</p>
-          </div>
-          
-          <div class="sidebar-widget">
-            <h3>^Kunke Consulting</h3>
-            <p>{labels.company}</p>
-            <a href={blogIndexUrl} class="sidebar-cta">{labels.more}</a>
-          </div>
-        </aside>
-      </div>
-
-      <!-- Navigation -->
-      <nav class="article-nav mt-12 pt-8 border-t border-gray-200">
-        <a href={blogIndexUrl} class="back-link">{labels.back}</a>
-      </nav>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-      <style>
-        footer {
-          background: #f8f8fa;
-          padding: 40px 0 0 0;
-          text-align: center;
-          width: 100%;
-        }
-        .footer-wrapper {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          width: 100%;
-        }
-        .footer-content {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 40px;
-          width: 100%;
-          max-width: 900px;
-          margin: 0 auto;
-        }
-        .footer-section {
-          min-width: 200px;
-          text-align: center;
-        }
-        .footer-section ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-        .footer-section ul li {
-          margin: 0 0 8px 0;
-        }
-        .footer-section.social-media ul {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 0;
-          margin: 0;
-        }
-        .footer-section.social-media ul li {
-          margin-bottom: 8px;
-          width: 100%;
-          text-align: center;
-        }
-        .footer-bottom {
-          margin-top: 30px;
-          padding: 20px 10px;
-          background: #ececf2;
-          font-size: 0.85em;
-          color: #555;
-          width: 100%;
-          text-align: center;
-          box-sizing: border-box;
-        }
-        @media (max-width: 600px) {
-          .footer-bottom {
-            font-size: 0.75em;
-            padding: 24px 12px;
-          }
-        }
-      </style>
-      <div class="footer-wrapper">
-        <div class="footer-content">
-          <div class="footer-section contact-info-footer">
-            <h3>Contact</h3>
-            <p>^Kunke Consulting</p>
-            <p>
-              <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>
-            </p>
-            <p>
-              <a href="tel:+48722156925">m. +48 722 156 925</a>
-            </p>
-          </div>
-          <div class="footer-section legal-info">
-            <h3>^Kunke Consulting</h3>
-            <p><a href="/privacy-policy/">Privacy Policy and Legal</a></p>
-            <p><a href={blogIndexUrl}>Blog</a></p>
-          </div>
-          <div class="footer-section social-media">
-            <h3>Follow</h3>
-            <ul>
-              <li><a href="https://www.linkedin.com/in/blazejkunke/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-              <li><a href="https://www.facebook.com/blazej.kunke" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-              <li><a href="https://www.youtube.com/@BlazeAdventuresWorld" target="_blank" rel="noopener noreferrer">YouTube</a></li>
-            </ul>
-          </div>
+  {
+    /* No hero image means no frame at all — an empty hatch block here is dead
+       space, unlike the grid cards where it keeps the rows even. */
+    heroImage && (
+      <div class="kc-article-hero">
+        <div class="kc-article-hero-frame">
+          <img
+            src={heroImage}
+            alt={post.data.title}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="900"
+            height="380"
+          />
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 ^Kunke Consulting. All product names, logos, and brands are property of their respective owners. Use of these names, logos, and brands does not imply endorsement.</p>
+    )
+  }
+
+  <article class="kc-prose">
+    <Content />
+  </article>
+
+  <section class="kc-author" aria-label="Błażej Kunke">
+    <div class="kc-author-card">
+      <img
+        class="kc-author-avatar"
+        src="/images/blazej-kunke-hero.jpg"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        width="84"
+        height="84"
+      />
+      <div>
+        <p class="kc-author-name">Błażej Kunke</p>
+        <p class="kc-author-bio">{labels.authorBio}</p>
       </div>
-    </footer>
-  </body>
-</html>
+    </div>
+  </section>
+
+  {
+    related.length > 0 && (
+      <section class="kc-related" aria-labelledby="kc-related-title">
+        <h2 id="kc-related-title">{labels.readNext}</h2>
+        <div class="kc-related-grid">
+          {related.map((entry) => (
+            <a class="kc-related-item" href={`/blog/${entry.slug}/`}>
+              <div class="kc-related-media">
+                {entry.data.heroImage && (
+                  <img
+                    src={entry.data.heroImage}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    width="360"
+                    height="130"
+                  />
+                )}
+              </div>
+              <span class="kc-related-date">{formatDate(entry.data.date, lang)}</span>
+              <h3>{entry.data.title}</h3>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section class="kc-cta" aria-labelledby="kc-article-cta-title">
+    <div class="kc-cta-inner">
+      <div>
+        <p class="kc-eyebrow">{labels.ctaEyebrow}</p>
+        <h2 id="kc-article-cta-title">{labels.ctaTitle}</h2>
+        <p>{labels.ctaBody}</p>
+        <div class="kc-cta-actions">
+          <a class="kc-btn" href={labels.ctaPrimaryHref}>{labels.ctaPrimary}</a>
+          <a class="kc-btn-ghost" href={labels.ctaSecondaryHref}>{labels.ctaSecondary}</a>
+        </div>
+      </div>
+      <div class="kc-cta-media">
+        <img
+          src="/images/Workshop2025.JPG"
+          alt={labels.ctaAlt}
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="450"
+        />
+      </div>
+    </div>
+  </section>
+</BlogShell>
+
+<style is:global>
+  /* ---------- article title band ---------- */
+
+  .kc-article-head {
+    background: var(--kc-green);
+    color: #fbfbf8;
+  }
+
+  .kc-article-head-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 72px var(--kc-gut) 64px;
+  }
+
+  .kc-crumbs-invert,
+  .kc-crumbs-invert a {
+    color: rgba(251, 251, 248, 0.72);
+  }
+
+  .kc-crumbs-invert a:hover {
+    color: #ffffff;
+  }
+
+  .kc-article-head h1 {
+    margin: 26px 0 22px;
+    font-size: 52px;
+    line-height: 1.05;
+    letter-spacing: -0.032em;
+    color: #ffffff;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  .kc-article-standfirst {
+    margin: 0 0 30px;
+    font-size: 19px;
+    line-height: 1.6;
+    opacity: 0.82;
+    max-width: 60ch;
+    text-wrap: pretty;
+  }
+
+  .kc-byline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 14px;
+    opacity: 0.88;
+  }
+
+  .kc-byline-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    object-fit: cover;
+    object-position: 50% 22%;
+    background: #0d5138;
+  }
+
+  /* ---------- overlapping hero image ---------- */
+
+  .kc-article-hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--kc-gut);
+  }
+
+  .kc-article-hero-frame {
+    height: 380px;
+    margin-top: -36px;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: var(--kc-tint);
+    background-image: var(--kc-hatch);
+    box-shadow: 0 24px 48px -28px rgba(10, 71, 49, 0.45);
+  }
+
+  .kc-article-hero-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------- prose ---------- */
+
+  .kc-prose {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px var(--kc-gut) 24px;
+    font-size: 19px;
+    line-height: 1.75;
+    color: #243b32;
+  }
+
+  .kc-prose > :first-child {
+    margin-top: 0;
+  }
+
+  .kc-prose p {
+    margin: 0 0 26px;
+    text-wrap: pretty;
+  }
+
+  /* The page h1 is the title band, so a body h1 is a mistake in the markdown.
+     Style it like an h2 rather than letting the browser default through. */
+  .kc-prose h1 {
+    margin: 44px 0 16px;
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: -0.022em;
+    color: var(--kc-green);
+    font-weight: 500;
+  }
+
+  .kc-prose h2 {
+    margin: 44px 0 16px;
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: -0.022em;
+    color: var(--kc-green);
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  .kc-prose h3 {
+    margin: 34px 0 12px;
+    font-size: 23px;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--kc-green);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  .kc-prose h4 {
+    margin: 28px 0 10px;
+    font-size: 19px;
+    color: var(--kc-green);
+    font-weight: 600;
+  }
+
+  .kc-prose ul,
+  .kc-prose ol {
+    margin: 0 0 26px;
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .kc-prose li::marker {
+    color: var(--kc-muted);
+  }
+
+  .kc-prose blockquote {
+    margin: 36px 0;
+    padding: 26px 30px;
+    border-radius: 18px;
+    background: #efede5;
+    font-size: 21px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: var(--kc-green);
+  }
+
+  .kc-prose blockquote p:last-child {
+    margin-bottom: 0;
+  }
+
+  .kc-prose a {
+    color: var(--kc-green);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--kc-rule-42);
+  }
+
+  .kc-prose a:hover {
+    text-decoration-color: var(--kc-green);
+  }
+
+  .kc-prose img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    margin: 32px 0;
+  }
+
+  .kc-prose hr {
+    border: 0;
+    border-top: 1px solid var(--kc-rule-14);
+    margin: 44px 0;
+  }
+
+  .kc-prose code {
+    font-family: var(--kc-mono);
+    font-size: 0.86em;
+    background: var(--kc-tint);
+    border-radius: 6px;
+    padding: 2px 6px;
+  }
+
+  .kc-prose pre {
+    background: var(--kc-green);
+    color: #fbfbf8;
+    border-radius: 16px;
+    padding: 22px 24px;
+    overflow-x: auto;
+    margin: 0 0 26px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .kc-prose pre code {
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  /* Wide tables scroll inside their own box rather than the page. */
+  .kc-prose table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 26px;
+    font-size: 16px;
+  }
+
+  .kc-prose th,
+  .kc-prose td {
+    border-bottom: 1px solid var(--kc-rule-14);
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .kc-prose th {
+    color: var(--kc-green);
+    font-weight: 600;
+  }
+
+  .kc-prose iframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: 0;
+    border-radius: 16px;
+    margin: 32px 0;
+  }
+
+  /* ---------- author card ---------- */
+
+  .kc-author {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 16px var(--kc-gut) 0;
+  }
+
+  .kc-author-card {
+    border: 1px solid var(--kc-rule-18);
+    border-radius: 20px;
+    padding: 28px;
+    display: flex;
+    gap: 22px;
+    align-items: center;
+  }
+
+  .kc-author-avatar {
+    width: 84px;
+    height: 84px;
+    flex: 0 0 84px;
+    border-radius: 16px;
+    object-fit: cover;
+    object-position: 50% 22%;
+    background-color: var(--kc-tint);
+    background-image: var(--kc-hatch);
+  }
+
+  .kc-author-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  .kc-author-bio {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--kc-body);
+    text-wrap: pretty;
+  }
+
+  /* ---------- read next ---------- */
+
+  .kc-related {
+    max-width: var(--kc-wrap);
+    margin: 0 auto;
+    padding: 72px var(--kc-gut) 0;
+  }
+
+  .kc-related h2 {
+    margin: 0 0 24px;
+    font-family: var(--kc-mono);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--kc-green);
+    border-bottom: 1px solid var(--kc-rule-14);
+    padding-bottom: 18px;
+  }
+
+  .kc-related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+
+  .kc-related-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--kc-ink);
+  }
+
+  .kc-related-item:hover {
+    text-decoration: none;
+  }
+
+  .kc-related-item:hover h3 {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .kc-related-media {
+    height: 130px;
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: var(--kc-tint);
+    background-image: var(--kc-hatch);
+  }
+
+  .kc-related-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .kc-related-date {
+    font-family: var(--kc-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--kc-muted);
+  }
+
+  .kc-related-item h3 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    text-wrap: pretty;
+  }
+
+  /* ---------- tablet ---------- */
+
+  @media (max-width: 900px) {
+    .kc-article-head-inner {
+      padding: 48px var(--kc-gut) 48px;
+    }
+
+    .kc-article-head h1 {
+      font-size: 38px;
+      margin-top: 20px;
+    }
+
+    .kc-article-standfirst {
+      font-size: 17px;
+    }
+
+    .kc-article-hero-frame {
+      height: 260px;
+    }
+
+    .kc-prose {
+      padding-top: 40px;
+      font-size: 18px;
+    }
+
+    .kc-prose h2 {
+      font-size: 26px;
+      margin-top: 36px;
+    }
+
+    .kc-related {
+      padding-top: 56px;
+    }
+
+    .kc-related-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .kc-related-media {
+      height: 180px;
+    }
+  }
+
+  /* ---------- phone ---------- */
+
+  @media (max-width: 600px) {
+    .kc-article-head-inner {
+      padding: 32px var(--kc-gut) 40px;
+    }
+
+    .kc-article-head h1 {
+      font-size: 30px;
+    }
+
+    .kc-article-standfirst {
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kc-article-hero-frame {
+      height: 190px;
+      margin-top: -24px;
+      border-radius: 16px;
+    }
+
+    .kc-prose {
+      padding-top: 32px;
+      font-size: 17px;
+    }
+
+    .kc-prose blockquote {
+      padding: 20px 22px;
+      font-size: 18px;
+    }
+
+    .kc-author-card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 22px;
+    }
+  }
+</style>

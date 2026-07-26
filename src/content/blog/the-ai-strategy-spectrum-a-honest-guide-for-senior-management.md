@@ -3,14 +3,12 @@ title: "The AI Strategy Spectrum: An Honest Guide for Senior Management"
 seoTitle: "AI Strategy: Seven Choices for Senior Management | ^Kunke"
 description: "From doing nothing to going all in, what each approach actually means, and when it makes sense."
 date: 2026-03-01
+category: "strategy"
 language: en
 author: "Błażej Kunke"
 tags: ["AI Strategy", "Leadership", "Management", "Digital Transformation"]
 heroImage: "/images/AI_strategy_2026.jpg"
 ---
-
-# The AI Strategy Spectrum: An Honest Guide for Senior Management
-
 *From doing nothing to going all in, what each approach actually means, and when it makes sense.*
 
 ## Introduction

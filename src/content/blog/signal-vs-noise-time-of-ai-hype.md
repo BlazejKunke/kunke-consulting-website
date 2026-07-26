@@ -3,13 +3,11 @@ title: "Signal vs Noise In The Time of AI Hype"
 seoTitle: "AI Hype: How to Separate Signal from Noise | ^Kunke"
 description: "Reflections on cultivating signal, avoiding burnout, and staying grounded while the AI hype cycle rages on."
 date: 2025-03-12
+category: "practice"
 language: en
 author: "Blazej Kunke"
 tags: ["AI", "Signal", "Noise", "Consulting", "Media"]
 ---
-
-# Signal vs Noise In The Time of AI Hype
-
 ## The Garden
 
 Managing my news feed is like growing a garden. I cannot control every seed that lands in the soil, but over the years I have learned to shape what grows there. Carefully subscribing to channels, commenting on the right topics, occasionally even engaging with content purely to train the algorithm, all of this bends the feed toward something useful. I have been doing this for years and the garden, most days, keeps me informed about the topics I have curated for myself.

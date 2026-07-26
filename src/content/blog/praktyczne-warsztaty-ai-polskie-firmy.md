@@ -3,6 +3,7 @@ title: "Jak praktyczne warsztaty AI przynoszą setki tysięcy złotych polskim f
 seoTitle: "Warsztaty AI: realne oszczędności dla polskich firm"
 description: "Studium realnych rezultatów z warsztatów AI pokazujące, jak zespoły w polskich firmach generują setki tysięcy złotych oszczędności dzięki praktycznym wdrożeniom."
 date: 2025-02-10
+category: "implementation"
 tags: ["AI", "Warsztaty", "ROI", "Automatyzacja", "Szkolenia"]
 heroImage: "/images/BlazejKunke_Warsaw_AIWorkshop_November.JPG"
 ---

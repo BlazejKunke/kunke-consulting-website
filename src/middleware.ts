@@ -46,7 +46,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
       "default-src 'self'",
       `script-src ${scriptSources.join(' ')}`,
       `style-src ${styleSources.join(' ')}`,
-      "img-src 'self' data: blob: https://www.google-analytics.com https://*.googletagmanager.com https://stats.g.doubleclick.net",
+      // i.ytimg.com: blog posts about livestreams use the YouTube thumbnail as
+      // their hero image.
+      "img-src 'self' data: blob: https://i.ytimg.com https://www.google-analytics.com https://*.googletagmanager.com https://stats.g.doubleclick.net",
       "font-src 'self' https://fonts.gstatic.com",
       `connect-src ${connectSources.join(' ')}`,
       `form-action ${formActionSources.join(' ')}`,
@@ -92,7 +94,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
       "font-src 'self' https://fonts.gstatic.com",
       `connect-src ${connectSources.join(' ')}`,
       `form-action ${formActionSources.join(' ')}`,
-      "img-src 'self' data: blob: https://www.google-analytics.com https://*.googletagmanager.com https://stats.g.doubleclick.net",
+      // i.ytimg.com: blog posts about livestreams use the YouTube thumbnail as
+      // their hero image.
+      "img-src 'self' data: blob: https://i.ytimg.com https://www.google-analytics.com https://*.googletagmanager.com https://stats.g.doubleclick.net",
       "frame-src https://www.googletagmanager.com",
       "worker-src 'self'",
       "upgrade-insecure-requests"

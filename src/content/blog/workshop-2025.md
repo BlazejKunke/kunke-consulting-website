@@ -3,6 +3,7 @@ title: "Warsztat 2025: Czego się spodziewać"
 seoTitle: "Warsztat AI 2025: czego może spodziewać się firma"
 description: "Podgląd naszego nadchodzącego warsztatu."
 date: 2025-01-10
+category: "practice"
 tags: ["Warsztat", "Wydarzenia", "2025"]
 ---
 Nasz warsztat 2025 to wyjątkowe wydarzenie, które łączy najnowsze trendy w technologii z praktycznym zastosowaniem w biznesie. Przygotowaliśmy dla Ciebie kompleksowy program, który obejmuje:
