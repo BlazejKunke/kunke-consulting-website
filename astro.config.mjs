@@ -43,7 +43,7 @@ export default defineConfig({
     },
     '/ai-excel': {
       status: 301,
-      destination: '/szkolenia-ai'
+      destination: '/'
     },
     '/new': {
       status: 301,

@@ -1,12 +1,36 @@
 /sitemap.xml  /sitemap-index.xml  301!
 /new  /  301!
 /new/  /  301!
-/AIDlaFirm  /ai-dla-firm/  301!
-/AIDlaFirm/  /ai-dla-firm/  301!
-/AIDlaFirm/*  /ai-dla-firm/:splat  301!
-/aidlafirm  /ai-dla-firm/  301!
-/aidlafirm/  /ai-dla-firm/  301!
-/aidlafirm/*  /ai-dla-firm/:splat  301!
+# Offline marketing shortlinks. They pointed at /ai-dla-firm/ until that page was
+# retired in July 2026; the homepage now carries the same offer.
+/AIDlaFirm  /  301!
+/AIDlaFirm/  /  301!
+/AIDlaFirm/*  /  301!
+/aidlafirm  /  301!
+/aidlafirm/  /  301!
+/aidlafirm/*  /  301!
+
+# Retired July 2026: eight thin, largely placeholder offer pages built on the old
+# design. Everything they claimed to sell is on the homepage, so they all land
+# there rather than at a nearest-match page that would repeat the same content.
+/szkolenia-ai  /  301!
+/szkolenia-ai/  /  301!
+/ai-dla-firm  /  301!
+/ai-dla-firm/  /  301!
+/ai-workshop  /  301!
+/ai-workshop/  /  301!
+/konsulting-ai  /  301!
+/konsulting-ai/  /  301!
+/szkolenia-ai-poznan  /  301!
+/szkolenia-ai-poznan/  /  301!
+/szkolenia-ai-online  /  301!
+/szkolenia-ai-online/  /  301!
+/podstawy-ai-talenty-webinar  /  301!
+/podstawy-ai-talenty-webinar/  /  301!
+/ai-dla-ucznia-i-studenta-2025  /  301!
+/ai-dla-ucznia-i-studenta-2025/  /  301!
+/ai-excel  /  301!
+/ai-excel/  /  301!
 /us  /en/  301!
 /uk  /en/  301!
 /uk/  /en/  301!
@@ -28,4 +52,3 @@
 /zespol/  /#zespol  301!
 /team  /en/#team  301!
 /team/  /en/#team  301!
-/podstawy-ai-talenty-webinar  /podstawy-ai-talenty-webinar/index.html  200
