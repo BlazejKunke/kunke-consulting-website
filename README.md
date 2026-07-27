@@ -1,71 +1,68 @@
-# Astro Starter Kit: Minimal
-# ^Kunke Consulting Website
+# ^Kunke Consulting
 
-This is the official website for ^Kunke Consulting, built with Astro. The site showcases consulting services, client testimonials, team information, blog articles, and contact options.
+The website for ^Kunke Consulting — **AI workshops and AI advisory for small and
+mid-sized companies**, based in Poznań and working across Poland in Polish and English.
 
-## 🌱 About ^Kunke Consulting
-
-^Kunke Consulting provides expert business and AI consulting services, workshops, and training. The website is designed to present offerings, share client success stories, and enable easy contact for new clients.
+Live at [kunkeconsulting.pl](https://kunkeconsulting.pl).
 
 ## Branding: the `^` symbol
 
-The caret (`^`) that prefixes names like "^Kunke Consulting" or the abbreviation "^KC" is an intentional part of the company's brand identity. It should always appear with the company name or acronym and is **not** a stray character or typographical error. Please retain the caret in all references to the brand across the website and documentation.
+The caret in "^Kunke Consulting" and the shorthand "^KC" is an intentional part of the
+brand identity. It is **not** a stray character or a typo. Keep it in every reference to
+the brand, in the site and in the documentation.
 
-## ✨ Features
+## What the site contains
 
-- Home page with service overview
-- Team and experience section
-- Blog with articles and tips
-- Workshop and training information
-- Contact form for inquiries
-- Client testimonials with ratings
+- **Homepage** in Polish (`/`) and English (`/en/`) — carries the entire offer: workshops, implementation and longer-term projects
+- **Blog** in both languages, with articles on practical AI adoption
+- **AI Readiness Score** and **ROI calculator** — interactive tools for prospective clients
+- **Availability calendar** — Blaze's current open dates
+- Privacy policy, certificate verification, and a plain-text company summary at `/ai-info/` written for AI assistants
 
-## 🛠️ Tech Stack
+Contact is by email throughout. There is no contact form.
 
-- [Astro](https://astro.build/) (static site generator)
-- TypeScript
-- Global CSS and component-scoped styles (primary stylesheet at `public/styles/global.css`)
-- Responsive design
+## Tech stack
 
----
-```sh
-npm create astro@latest -- --template minimal
-```
+- [Astro 5](https://astro.build/) — static site generation, no UI framework
+- TypeScript in strict mode
+- Astro Content Collections with Zod validation for the blog
+- Hosted on [Netlify](https://netlify.com), deployed automatically from `main`
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-## 🚀 Project Structure
+| Command | Action |
+| :------ | :----- |
+| `npm install` | Install dependencies |
+| `npm run dev` | Dev server at `localhost:4321` |
+| `npm run build` | Build to `./dist/` |
+| `npm run preview` | Preview the production build |
+| `npm run optimize-images` | Regenerate WebP versions of images in `public/images/` |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Project structure
 
 ```text
 /
 ├── public/
+│   ├── _redirects        # all production redirects (real 301s)
+│   ├── _headers          # security headers
+│   ├── images/
+│   └── styles/global.css # used by BaseLayout pages only
 ├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── pages/            # routes; index.astro and en/index.astro are standalone
+│   ├── components/       # BlogShell owns the blog chrome; BaseLayout the utility pages
+│   ├── content/blog/     # Markdown posts
+│   └── utils/locales.ts  # single source for languages and hreflang
+└── astro.config.mjs
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Two things to know before editing:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+**The homepages are standalone.** `src/pages/index.astro` and `src/pages/en/index.astro`
+carry their own styling and skip both `BaseLayout` and `global.css` on purpose. They
+mirror each other — change one, change the other.
 
-Any static assets, like images, can be placed in the `public/` directory.
+**Redirects go in `public/_redirects`.** Redirects declared in `astro.config.mjs` build
+as meta-refresh pages rather than real 301s, which search engines weight less.
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Further guidance for AI coding agents is in [CLAUDE.md](CLAUDE.md) and
+[AGENTS.md](AGENTS.md).

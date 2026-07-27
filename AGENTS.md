@@ -1,5 +1,13 @@
 # Instructions for Codex
 
+## What this business sells
+
+^Kunke Consulting sells two things: **AI workshops** (in-person, hands-on training for teams) and **AI advisory** (helping small and mid-sized companies find where AI fits, then implementing it). That is the entire public message — keep it simple and keep it to those two.
+
+Blaze occasionally takes other work, such as "Excel + AI" or "Intro to Excel", but does not promote it publicly. Do not add Excel training, spreadsheet services or any other side offering to the site, its metadata, its structured data or its copy. Earlier versions of this site did market Excel training; that positioning is retired and `/ai-excel` redirects to the homepage. Ask before reintroducing anything of the sort.
+
+The audience is Polish SMEs and their English-speaking equivalents.
+
 ## Communication
 
 - Błażej “Blaze” Kunke is a business and economics founder with basic practical technology knowledge, not a developer.
