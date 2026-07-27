@@ -12,12 +12,21 @@
 - Preserve the existing repository and deployment workflow. Netlify publishes the live site from GitHub `main`.
 - Reuse existing authorization before requesting a login or installation.
 - Normal Git access uses the HTTPS remote and credentials stored in the macOS Keychain. Try normal `git fetch` and `git push` first.
-- Prefer the connected Codex GitHub app for pull request creation, updates, checks, and merges.
 - The GitHub CLI is an optional fallback. Its login is separate from normal Git access; a signed-out CLI does not mean GitHub access is unavailable.
 - Never install GitHub tooling or request reauthorization solely because the optional CLI is unavailable or signed out.
-- Before publishing: inspect the diff, isolate the intended files, run the relevant build/checks, and present a preview when requested.
-- After approval: push a dedicated branch, use a pull request for meaningful site changes, wait for Netlify checks, merge, and verify the live public pages.
 - If GitHub reauthorization is truly unavoidable, use Blaze’s personal Chrome profile and explain the reason in plain language.
+
+### Ship straight to `main`
+
+Blaze decided this in July 2026, replacing the earlier branch-and-pull-request
+rule. He is the sole owner of this site, does not read code, and treats Git
+history as the safety net: a bad change gets reverted, not prevented.
+
+- When Blaze asks for a change, make it, commit it, and push it to `main`. Do not create a branch, open a pull request, or ask him to approve a diff.
+- Do not offer Netlify deploy previews or ask him to review anything before it goes live. He checks the live site like any other visitor.
+- Still run the build before pushing. Speed is the goal; shipping something that does not compile is not speed.
+- After pushing, wait for the Netlify deploy and verify the affected public URLs yourself, then report what you checked. This replaces his review — it does not get skipped.
+- Ask first only where reverting does not actually undo the damage: deleting things not recoverable from Git, anything touching the domain or DNS, or anything sending mail to real people. Ordinary page and content changes are never in this category.
 
 ## English website
 
