@@ -1,16 +1,41 @@
-# Security Headers for Netlify/Cloudflare Pages
+# Security headers for Netlify.
+#
+# THIS FILE IS THE ONLY THING THAT SETS HEADERS IN PRODUCTION. The site is a
+# static Astro build with no adapter, so `src/middleware.ts` never runs at
+# request time and anything it sets is discarded. If a header is not written
+# here, visitors do not get it.
 /*
   # Frame protection (replaces X-Frame-Options meta tag)
   X-Frame-Options: DENY
-  
+
   # Additional security headers
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  
+
+  # Content Security Policy. Currently REPORT-ONLY: the browser reports what it
+  # would have blocked and blocks nothing. Once the console is confirmed clean
+  # on every page, rename this header to Content-Security-Policy to enforce it.
+  #
+  # script-src allows 'unsafe-inline' deliberately. A static site cannot issue a
+  # per-request nonce, and pinning hashes of every inline script would silently
+  # break analytics the next time anyone edits one. The policy still blocks
+  # scripts from unlisted hosts, stops forms posting off-site, and pins where
+  # data can be sent -- which is where the real risk sits on a site with no
+  # user input and no database.
+  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://i.ytimg.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://stats.g.doubleclick.net; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net; frame-src https://www.googletagmanager.com; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests
+
   # HTML routes are extensionless in Astro, so keep pages revalidating.
   Cache-Control: public, max-age=0, must-revalidate
+
+# /verify.html fetches certificate data from Google Apps Script using JSONP,
+# which means it injects a <script> tag and executes whatever comes back. That
+# needs script.google.com in script-src, so this page gets its own, looser
+# policy rather than widening the site-wide one. If the verifier is ever
+# rewritten to use fetch() and JSON, delete this block.
+/verify.html
+  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://script.google.com https://script.googleusercontent.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.googletagmanager.com; upgrade-insecure-requests
 
 # Special rules for HTML files
 /*.html
