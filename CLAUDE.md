@@ -135,9 +135,14 @@ adding a page.
 ## Contact
 
 **There is no contact form.** The site is mailto-only, by Blaze's decision — every CTA
-opens an email to `info@kunkeconsulting.pl`. A `ContactForm.astro` with a Google Apps
-Script integration used to exist on the retired offer pages. Do not reintroduce a form
-without asking.
+opens an email to `info@kunkeconsulting.pl`. Do not reintroduce a form without asking.
+
+A `ContactForm.astro` wired to a Google Apps Script used to sit on the retired offer
+pages. It was deleted on 2026-07-27 once nothing rendered it, but the setup is written
+up in [`docs/contact-form-archive.md`](docs/contact-form-archive.md) — the endpoint, the
+field names, the honeypot, the `/thank-you` redirect, and the command to recover the
+original file from Git. Read that before ever rebuilding a form. Its endpoint and shared
+secret were public for years, so both need rotating rather than reusing.
 
 Social links are LinkedIn and YouTube. There is no Facebook link.
 

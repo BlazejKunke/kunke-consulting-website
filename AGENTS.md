@@ -45,6 +45,11 @@ history as the safety net: a bad change gets reverted, not prevented.
 - The offer is in-person training based in Poznań, serving Poland. Keep metadata consistent with that (`areaServed: 'PL'`); do not restore a worldwide service area while the visible copy describes in-person delivery in Poland.
 - `src/pages/en/index.astro` is standalone: it does not use a shared layout or `global.css`, and carries its own hreflang, Open Graph, GTM, JSON-LD and cookie-banner tokens. Components that rely on `global.css` design tokens need those tokens redeclared on the page.
 
+## Contact
+
+- The site is mailto-only. Every call to action opens an email to `info@kunkeconsulting.pl`. Blaze decided in July 2026 that email is enough; do not add a contact form without asking.
+- The old `ContactForm.astro` and its Google Apps Script wiring are documented in `docs/contact-form-archive.md`, including how to recover the file from Git. Its endpoint and shared secret were public, so rotate both if the form is ever revived.
+
 ## Retired languages
 
 - French and Dutch were retired in July 2026. `/fr/` and `/nl/` 301 to `/en/`; their pages and their sixteen dedicated components are deleted. Do not recreate them.
