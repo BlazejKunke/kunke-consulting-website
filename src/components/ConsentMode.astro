@@ -1,0 +1,92 @@
+---
+// Google Consent Mode v2 bootstrap, in "basic" mode.
+//
+// Basic mode means Google Tag Manager is NOT loaded until the visitor has
+// actively accepted. Nothing at all reaches Google before that -- no cookies,
+// no cookieless pings. The alternative ("advanced" mode) loads GTM straight
+// away in a restricted state and still sends anonymous pings pre-consent;
+// Blaze chose basic in July 2026 because it is the position he can defend to
+// the SMEs he sells advisory to.
+//
+// What was here before pushed { event: 'default_consent_set', consent: {...} }
+// into dataLayer. That is an ordinary custom event, not the consent command
+// Google listens for, so GTM never received a consent signal and fired
+// everything regardless. Verified on the live site: Analytics and Ads pinged
+// before the banner was touched, and kept pinging with cookie_consent=denied.
+//
+// This block MUST render before anything that could load GTM. The consent
+// defaults have to be in dataLayer before gtm.js reads it.
+---
+
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+
+  // gtag pushes the `arguments` object itself, NOT a plain object. That
+  // distinction is the whole fix -- it is how GTM recognises a consent
+  // command rather than a custom event. Do not "tidy" this into a push of
+  // an object literal.
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    functionality_storage: 'denied',
+    personalization_storage: 'denied',
+    security_storage: 'granted',
+    wait_for_update: 500
+  });
+
+  window.KC_CONSENT_COOKIE = 'cookie_consent';
+
+  window.kcGetConsent = function () {
+    var m = document.cookie.match(new RegExp('(^| )' + window.KC_CONSENT_COOKIE + '=([^;]+)'));
+    return m ? m[2] : null;
+  };
+
+  // Injects GTM exactly once. Called on load for returning visitors who have
+  // already accepted, and by the cookie banner the moment someone accepts.
+  window.kcLoadGtm = function () {
+    if (window.kcGtmLoaded) return;
+    window.kcGtmLoaded = true;
+
+    window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-MWRKLP2S';
+    var first = document.getElementsByTagName('script')[0];
+    first.parentNode.insertBefore(s, first);
+  };
+
+  window.kcGrantConsent = function () {
+    gtag('consent', 'update', {
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'granted',
+      analytics_storage: 'granted',
+      functionality_storage: 'granted',
+      personalization_storage: 'granted'
+    });
+    window.kcLoadGtm();
+  };
+
+  window.kcDenyConsent = function () {
+    gtag('consent', 'update', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'denied',
+      personalization_storage: 'denied'
+    });
+    // Deliberately does not load GTM.
+  };
+
+  // Returning visitor who already accepted.
+  if (window.kcGetConsent() === 'granted') {
+    window.kcGrantConsent();
+  }
+</script>

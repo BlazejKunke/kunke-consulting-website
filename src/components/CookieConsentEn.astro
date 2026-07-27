@@ -26,16 +26,16 @@
     const match = document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));
     return match ? match[2] : null;
   }
+  // Signals real Consent Mode via the helpers in ConsentMode.astro. On
+  // 'granted' that also loads GTM for the first time -- until this point no
+  // request has been made to Google at all.
   function update(status){
     setCookie(consentName, status, 365);
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'consent_update',
-      consent: {
-        ad_storage: status,
-        analytics_storage: status
-      }
-    });
+    if (status === 'granted') {
+      window.kcGrantConsent();
+    } else {
+      window.kcDenyConsent();
+    }
     banner.remove();
   }
   if (!getCookie(consentName)) {

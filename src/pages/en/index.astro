@@ -8,6 +8,7 @@
 // which would collide with the sticky header.
 
 import CookieConsent from '../../components/CookieConsentEn.astro';
+import ConsentMode from '../../components/ConsentMode.astro';
 import { buildHreflangUrls, buildLanguageSwitcherUrls, defaultLocale } from '../../utils/locales';
 
 
@@ -172,37 +173,8 @@ const faqs = [
   <link rel="shortcut icon" href="/favicon.png" />
   <link rel="manifest" href="/site.webmanifest" />
 
-  <!-- Google Tag Manager (init dataLayer before loader for Consent Mode etc.) -->
-  <script is:inline>
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      'gtm.start': new Date().getTime(),
-      event: 'gtm.js'
-    });
-    (function(){
-      function getCookie(name) {
-        const match = document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));
-        return match ? match[2] : null;
-      }
-      const consent = getCookie('cookie_consent') === 'granted' ? 'granted' : 'denied';
-      window.dataLayer.push({
-        event: 'default_consent_set',
-        consent: {
-          ad_storage: consent,
-          analytics_storage: consent,
-          wait_for_update: 500
-        }
-      });
-    })();
-  </script>
-  <script is:inline>
-    (function(w,d,s,l,i){
-      var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true; j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-      f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MWRKLP2S');
-  </script>
-  <!-- End GTM -->
+  <!-- Consent Mode v2. GTM loads only after the visitor accepts; see ConsentMode.astro -->
+  <ConsentMode />
 
   <script type="application/ld+json" set:html={JSON.stringify({
     '@context': 'https://schema.org',
@@ -1463,9 +1435,10 @@ const faqs = [
   </style>
 </head>
 <body>
-  <noscript>
-    <iframe class="gtm-noscript" src="https://www.googletagmanager.com/ns.html?id=GTM-MWRKLP2S"></iframe>
-  </noscript>
+  <!-- The GTM <noscript> iframe was removed in July 2026. It loaded GTM
+       unconditionally, and a visitor without JavaScript has no way to answer
+       the cookie banner, so it could only ever track people who had not
+       consented. There is no consent-respecting version of it. -->
 
   <a class="kc-skip" href="#top">Skip to content</a>
 
