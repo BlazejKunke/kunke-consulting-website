@@ -14,9 +14,12 @@
   Permissions-Policy: geolocation=(), microphone=(), camera=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
 
-  # Content Security Policy. Currently REPORT-ONLY: the browser reports what it
-  # would have blocked and blocks nothing. Once the console is confirmed clean
-  # on every page, rename this header to Content-Security-Policy to enforce it.
+  # Content Security Policy, ENFORCED. Verified in a real browser against every
+  # page family first -- standalone homepages, BaseLayout pages, blog, and the
+  # static verify.html -- with nothing blocked.
+  #
+  # To roll back in a hurry, rename this to Content-Security-Policy-Report-Only
+  # and push. That reverts to reporting without blocking, within one deploy.
   #
   # script-src allows 'unsafe-inline' deliberately. A static site cannot issue a
   # per-request nonce, and pinning hashes of every inline script would silently
@@ -31,7 +34,7 @@
   # endorsement. Those tags currently fire before the visitor consents, which
   # is a consent problem to fix in the GTM container, not with this header. If
   # the Ads tags are removed from GTM, drop both hosts from this line.
-  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://i.ytimg.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://stats.g.doubleclick.net; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net https://ad.doubleclick.net https://www.google.com; frame-src https://www.googletagmanager.com; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://i.ytimg.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://stats.g.doubleclick.net; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net https://ad.doubleclick.net https://www.google.com; frame-src https://www.googletagmanager.com; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests
 
   # HTML routes are extensionless in Astro, so keep pages revalidating.
   Cache-Control: public, max-age=0, must-revalidate
@@ -42,7 +45,7 @@
 # policy rather than widening the site-wide one. If the verifier is ever
 # rewritten to use fetch() and JSON, delete this block.
 /verify.html
-  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://script.google.com https://script.googleusercontent.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.googletagmanager.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://script.google.com https://script.googleusercontent.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.googletagmanager.com; upgrade-insecure-requests
 
 # Special rules for HTML files
 /*.html
