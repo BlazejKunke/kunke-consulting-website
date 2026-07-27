@@ -1,0 +1,49 @@
+# Builds the site on every push and pull request.
+#
+# This is the safety net for a repo that deploys straight to production from
+# main with no review step: if a change breaks the build, this fails and emails
+# you, rather than the breakage being discovered by a visitor. It does not block
+# the push -- Netlify still deploys in parallel -- but a red X on the commit is
+# the signal to look.
+name: Build check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # Guards the two things this repo has got wrong before. Both are cheap to
+      # check and expensive to notice late.
+      - name: Security headers must survive the build
+        run: |
+          test -f dist/_headers || { echo "::error::dist/_headers is missing - the site would deploy with no security headers"; exit 1; }
+          grep -q "^  Content-Security-Policy:" dist/_headers || { echo "::error::No enforced CSP in dist/_headers"; exit 1; }
+          echo "CSP present in build output"
+
+      # Deliberately narrow. /verify.html embeds a Google Apps Script URL on
+      # purpose -- it is a public, read-only certificate lookup -- so this does
+      # not flag Apps Script URLs in general. It flags the two things that were
+      # actually wrong: a shared secret shipped in HTML, where it is not secret,
+      # and the retired lead endpoint that leaked visitor emails.
+      - name: No form secrets or the retired lead endpoint
+        run: |
+          if grep -rlE "FormSecret|AKfycbz5xjPMBICnaCIvsE52rFHLX" dist/ 2>/dev/null; then
+            echo "::error::Found a FormSecret, or the retired lead-capture endpoint. Anything shipped in HTML is public and cannot be treated as a password - see docs/contact-form-archive.md."
+            exit 1
+          fi
+          echo "No form secrets or retired endpoints"
