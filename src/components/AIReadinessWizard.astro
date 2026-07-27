@@ -2,7 +2,6 @@
 import { readinessQuestions } from '../utils/aiReadinessScoring';
 import { levelContent } from '../content/ai-readiness-recommendations';
 
-const nonce: string | undefined = Astro.locals?.nonce;
 const questionBlocks = [
   readinessQuestions.slice(0, 3),
   readinessQuestions.slice(3, 6),
@@ -132,7 +131,7 @@ const questionBlocks = [
   <script type="application/json" id="level-content" set:html={JSON.stringify(levelContent)}></script>
 </section>
 
-<script is:inline nonce={nonce}>
+<script is:inline>
   const TOTAL_STEPS = 6;
   let currentStep = 1;
 

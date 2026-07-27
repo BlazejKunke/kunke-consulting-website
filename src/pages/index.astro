@@ -13,7 +13,6 @@
 import CookieConsent from '../components/CookieConsent.astro';
 import { buildHreflangUrls, buildLanguageSwitcherUrls, defaultLocale } from '../utils/locales';
 
-const nonce: string | undefined = Astro.locals?.nonce;
 
 const siteUrl = Astro.site ?? new URL('https://kunkeconsulting.pl');
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
@@ -173,7 +172,7 @@ const faqs = [
   <link rel="manifest" href="/site.webmanifest" />
 
   <!-- Google Tag Manager (init dataLayer before loader for Consent Mode etc.) -->
-  <script nonce={nonce}>
+  <script is:inline>
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       'gtm.start': new Date().getTime(),
@@ -195,7 +194,7 @@ const faqs = [
       });
     })();
   </script>
-  <script nonce={nonce}>
+  <script is:inline>
     (function(w,d,s,l,i){
       var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:'';
       j.async=true; j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
@@ -204,7 +203,7 @@ const faqs = [
   </script>
   <!-- End GTM -->
 
-  <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify({
+  <script type="application/ld+json" set:html={JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Kunke Consulting',
@@ -235,7 +234,7 @@ const faqs = [
     ]
   })} />
 
-  <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify({
+  <script type="application/ld+json" set:html={JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqs.map((faq) => ({
@@ -1458,7 +1457,7 @@ const faqs = [
       letter-spacing: -0.01em;
     }
   </style>
-  <style nonce={nonce}>
+  <style>
     .gtm-noscript { display: none; visibility: hidden; width: 0; height: 0; }
   </style>
 </head>

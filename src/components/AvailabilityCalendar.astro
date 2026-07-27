@@ -2,7 +2,6 @@
 import { availability, type AvailabilityStatus } from '../content/availability';
 import { getDateKeyInTimeZone, isPastDate } from '../utils/availabilityDates';
 
-const nonce: string | undefined = Astro.locals?.nonce;
 
 const monthNames = [
   'styczeń',
@@ -108,7 +107,7 @@ const calendars = availability.months.map((month) => {
   </div>
 </div>
 
-<script is:inline nonce={nonce}>
+<script is:inline>
   const availabilityTimeZone = 'Europe/Warsaw';
 
   const getWarsawDateKey = (date) => {

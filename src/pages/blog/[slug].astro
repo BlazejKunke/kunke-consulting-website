@@ -13,7 +13,6 @@ export async function getStaticPaths() {
   return posts.map((post) => ({ params: { slug: post.slug } }));
 }
 
-const nonce: string | undefined = Astro.locals?.nonce;
 
 const { slug } = Astro.params;
 const post = await getEntry('blog', slug as string);
@@ -131,8 +130,8 @@ const articleSchema = {
     <meta property="article:author" content="Błażej Kunke" />
     <meta property="article:section" content={categoryLabel(category, lang)} />
     {post.data.tags?.map((tag: string) => <meta property="article:tag" content={tag} />)}
-    <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify(breadcrumbSchema)} />
-    <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   </Fragment>
 
   <header class="kc-article-head">

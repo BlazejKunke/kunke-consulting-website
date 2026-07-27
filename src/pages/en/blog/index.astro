@@ -9,7 +9,6 @@ import BlogPostGrid from '../../../components/BlogPostGrid.astro';
 import type { GridPost } from '../../../utils/blog';
 import { blogCategories, categoryLabel, formatDate, readingTimeLabel, resolveCategory } from '../../../utils/blog';
 
-const nonce: string | undefined = Astro.locals?.nonce;
 
 const posts = (await getCollection('blog'))
   .filter((post) => post.data.language === 'en')
@@ -88,8 +87,8 @@ const blogSchema = {
     <link rel="alternate" hreflang="en" href={canonicalUrl} />
     <link rel="alternate" hreflang="pl-PL" href="https://kunkeconsulting.pl/blog/" />
     <link rel="alternate" hreflang="x-default" href="https://kunkeconsulting.pl/blog/" />
-    <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify(breadcrumbSchema)} />
-    <script type="application/ld+json" nonce={nonce} set:html={JSON.stringify(blogSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
   </Fragment>
 
   <section class="kc-blog-hero">

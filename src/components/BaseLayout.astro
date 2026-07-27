@@ -17,7 +17,6 @@ const {
   noindex = false
 } = Astro.props;
 
-const nonce: string | undefined = Astro.locals?.nonce;
 
 // safer attr helper: Astro renders empty attrs if value is undefined, which is OK.
 const siteUrl = Astro.site ?? new URL('https://kunkeconsulting.pl');
@@ -80,7 +79,7 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
 
   <!-- Google Tag Manager (init dataLayer before loader for Consent Mode etc.) -->
-  <script nonce={nonce}>
+  <script is:inline>
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       'gtm.start': new Date().getTime(),
@@ -102,7 +101,7 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
       });
     })();
   </script>
-  <script nonce={nonce}>
+  <script is:inline>
     (function(w,d,s,l,i){
       var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:'';
       j.async=true; j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
@@ -112,7 +111,7 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
   <!-- End GTM -->
 
   <!-- Critical CSS (nonce ok) -->
-  <style nonce={nonce}>
+  <style>
     /* … your CSS unchanged … */
 
     /* Move noscript iframe inline style to class to avoid style-src 'unsafe-inline' */
@@ -129,7 +128,7 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
   <noscript><link rel="stylesheet" href="/styles/global.css" /></noscript>
   
   <!-- JSON-LD: Organization & LocalBusiness -->
-  <script type="application/ld+json" nonce={nonce}>
+  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "ProfessionalService"],

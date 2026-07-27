@@ -1,5 +1,4 @@
 ---
-const nonce: string | undefined = Astro.locals?.nonce;
 ---
 
 <section class="roi-page" aria-labelledby="roi-title">
@@ -119,7 +118,7 @@ const nonce: string | undefined = Astro.locals?.nonce;
   </div>
 </section>
 
-<script is:inline nonce={nonce}>
+<script is:inline>
 // @ts-nocheck
 (function() {
   const root = document.getElementById('roi-calculator');

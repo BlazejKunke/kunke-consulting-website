@@ -127,10 +127,22 @@ adding a page.
 
 ### Security
 
-- CSP assembled in `src/middleware.ts`, with a per-request nonce from `src/utils/nonce.ts`
-- `checkOrigin` enabled in `astro.config.mjs`
-- Security headers in `public/_headers`
-- Inline scripts and styles need `nonce={nonce}`
+**Every security header, including the CSP, lives in `public/_headers`. That file is
+the only one that reaches visitors.** The build is static with no adapter, so
+`src/middleware.ts` runs at build time and the headers it sets are thrown away. It
+claimed to provide a CSP for months and never did; two AI security reviews read it and
+believed it. `src/middleware.ts` and `src/utils/nonce.ts` are dead and should be
+deleted. `checkOrigin` in `astro.config.mjs` is SSR-only and does nothing here.
+
+- The CSP is enforced, not report-only. To roll it back in a hurry, rename the header
+  to `Content-Security-Policy-Report-Only` in `public/_headers` and push
+- It allows `'unsafe-inline'` for scripts on purpose: a static site cannot issue a
+  per-request nonce, and pinning hashes would break analytics silently on the next
+  edit. Do **not** add `nonce={nonce}` to anything — nonces were removed in July 2026
+- Adding a third-party script or tag means adding its host to `_headers`, or the
+  browser will block it. This includes new tags added inside the GTM container
+- Inline `<script>` blocks that must stay inline need `is:inline`, otherwise Astro
+  bundles them as modules and the timing changes
 
 ## Contact
 
@@ -144,7 +156,15 @@ field names, the honeypot, the `/thank-you` redirect, and the command to recover
 original file from Git. Read that before ever rebuilding a form. Its endpoint and shared
 secret were public for years, so both need rotating rather than reusing.
 
-Social links are LinkedIn and YouTube. There is no Facebook link.
+A second form outlived the first: `/ai-readiness-score/` posted visitor emails to the
+same public Apps Script endpoint, with the same fake `FormSecret`, until it was removed
+on 2026-07-27. The tool now hands the visitor their result through a prefilled `mailto:`
+and stores nothing. **The site collects no personal data through any form.**
+
+Social links are LinkedIn, YouTube and — despite what this file said until July 2026 —
+Facebook, pointing at Błażej's personal profile from `SiteFooter.astro`,
+`thank-you.astro` and the `sameAs` arrays in both homepages and `BaseLayout`. Whether it
+belongs on a business site is Blaze's call, not a thing to change silently.
 
 ## Pages that are not marketing pages
 
