@@ -17,6 +17,13 @@
 /nl  /en/  301!
 /nl/  /en/  301!
 /nl/*  /en/  301!
+# The retired locales are caught by the wildcards above. /en/ is a live site, so
+# its two retired offer pages need naming individually. Ported from vercel.json,
+# which never ran on Netlify and left these 404ing.
+/en/ai-workshop  /en/  301!
+/en/ai-workshop/  /en/  301!
+/en/szkolenia-ai  /en/  301!
+/en/szkolenia-ai/  /en/  301!
 /zespol  /#zespol  301!
 /zespol/  /#zespol  301!
 /team  /en/#team  301!

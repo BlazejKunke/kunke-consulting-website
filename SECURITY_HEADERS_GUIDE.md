@@ -43,7 +43,13 @@ These headers remain as meta tags because they work correctly:
 
 ## 📁 Configuration Files Created
 
-### 1. **Netlify/Cloudflare Pages** (`public/_headers`)
+> **The site is hosted on Netlify.** `public/_headers` and `public/_redirects` are
+> the only files that actually run in production. The other platform recipes below
+> are kept for reference in case of a move — they are not active. A `vercel.json`
+> used to sit alongside them and was removed in July 2026: it had drifted into
+> holding redirect rules that silently never ran.
+
+### 1. **Netlify/Cloudflare Pages** (`public/_headers`) — active
 ```
 /*
   X-Frame-Options: DENY
@@ -61,33 +67,14 @@ These headers remain as meta tags because they work correctly:
 </IfModule>
 ```
 
-### 3. **Vercel** (`vercel.json`)
-```json
-{
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Frame-Options", "value": "DENY" }
-        // ... other headers
-      ]
-    }
-  ]
-}
-```
-
 ## 🚀 Deployment Instructions
 
-### For Netlify:
+### For Netlify (current host):
 1. ✅ `public/_headers` file is automatically recognized
 2. No additional configuration needed
 
 ### For Cloudflare Pages:
 1. ✅ `public/_headers` file is automatically recognized
-2. No additional configuration needed
-
-### For Vercel:
-1. ✅ `vercel.json` file is automatically recognized
 2. No additional configuration needed
 
 ### For Apache Hosting:
