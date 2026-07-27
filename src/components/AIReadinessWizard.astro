@@ -111,25 +111,12 @@ const questionBlocks = [
         </div>
 
         <div class="lead-capture">
-          <h3>Zastanawiasz się, co dalej? Chcesz usprawnić AI w swojej organizacji? (opcjonalnie)</h3>
-          <p>Skontaktujemy się z Tobą i pomożemy wskazać następne kroki.</p>
-          <form id="email-gate-form" action="https://script.google.com/macros/s/AKfycbz5xjPMBICnaCIvsE52rFHLX57iYORLXleQMUMobIorOvifsaNj5_9LEGsnBdC13NNWdQ/exec" method="POST">
-            <label for="lead-email">Adres e-mail służbowy</label>
-            <input id="lead-email" type="email" name="WorkEmail" placeholder="ty@firma.com" />
-            <label class="consent-row">
-              <input type="checkbox" id="lead-consent" name="Consent" value="yes" />
-              <span>Wyrażam zgodę na kontakt w sprawie wyniku diagnozy AI i oferty konsultacji.</span>
-            </label>
-            <input type="hidden" name="Type" value="AI Readiness Score" />
-            <input type="hidden" name="Message" id="lead-message" />
-            <input type="hidden" name="Referrer" id="lead-referrer" />
-            <input type="hidden" name="UTM" id="lead-utm" />
-            <input type="hidden" name="FormSecret" value="kunke-2025" />
-            <input class="honeypot" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
-            <button class="cta-btn" type="submit" id="lead-submit">Wyślij wynik na e-mail</button>
-            <p class="mini-legal">Administratorem danych jest Błażej Kunke Consulting. Dane wykorzystujemy tylko do kontaktu o wyniku i usuwamy na życzenie. <a href="/privacy-policy/" target="_blank" rel="noopener noreferrer">Polityka prywatności</a>.</p>
-          </form>
-          <a class="booking-link" href="https://calendly.com/kunkeconsulting-info/30min" target="_blank" rel="noreferrer">Umów 20-min konsultację</a>
+          <h3>Zastanawiasz się, co dalej? Chcesz usprawnić AI w swojej organizacji?</h3>
+          <p>Skopiuj podsumowanie powyżej i wyślij je do nas — pomożemy wskazać następne kroki. Twój wynik pozostaje w Twojej przeglądarce, nie zapisujemy go.</p>
+          <div class="lead-actions">
+            <a class="cta-btn" id="lead-mailto" href="mailto:info@kunkeconsulting.pl?subject=Diagnoza%20gotowo%C5%9Bci%20AI">Napisz do nas</a>
+            <a class="booking-link" href="https://calendly.com/kunkeconsulting-info/30min" target="_blank" rel="noreferrer">Umów 20-min konsultację</a>
+          </div>
         </div>
       </section>
 
@@ -158,7 +145,6 @@ const questionBlocks = [
   const stepIndicator = document.getElementById('step-indicator');
   const progressBar = document.querySelector('.progress-bar');
   const levelContent = JSON.parse(document.getElementById('level-content').textContent || '{}');
-  const leadForm = document.getElementById('email-gate-form');
 
   function updateStepUi() {
     steps.forEach((step) => {
@@ -324,13 +310,12 @@ const questionBlocks = [
       ...level.nextSteps.map((item, index) => `${index + 1}. ${item}`)
     ].join('\n');
 
-    const leadMessage = document.getElementById('lead-message');
-    const leadReferrer = document.getElementById('lead-referrer');
-    const leadUtm = document.getElementById('lead-utm');
-
-    leadMessage.value = summaryText;
-    leadReferrer.value = document.referrer || '';
-    leadUtm.value = window.location.search || '';
+    // The summary travels in the visitor's own mail client. Nothing is sent to us
+    // unless they choose to press send, and nothing is stored on our side.
+    const mailtoLink = document.getElementById('lead-mailto');
+    mailtoLink.href = 'mailto:info@kunkeconsulting.pl'
+      + '?subject=' + encodeURIComponent('Diagnoza gotowości AI')
+      + '&body=' + encodeURIComponent(summaryText + '\n\n');
 
     const copyButton = document.getElementById('copy-summary');
     const copyStatus = document.getElementById('copy-status');
@@ -363,41 +348,6 @@ const questionBlocks = [
     }
   });
 
-  leadForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const emailInput = document.getElementById('lead-email');
-    const consentInput = document.getElementById('lead-consent');
-    const submitButton = document.getElementById('lead-submit');
-
-    if (!emailInput.value) {
-      errorBox.textContent = 'Podaj adres e-mail, jeśli chcesz otrzymać raport.';
-      return;
-    }
-
-    if (!consentInput.checked) {
-      errorBox.textContent = 'Zaznacz zgodę na kontakt, aby wysłać raport.';
-      return;
-    }
-
-    errorBox.textContent = '';
-    submitButton.disabled = true;
-    submitButton.textContent = 'Wysyłanie…';
-
-    const formData = new FormData(leadForm);
-    const params = new URLSearchParams(formData);
-
-    fetch(leadForm.action, {
-      method: 'POST',
-      body: params,
-      mode: 'no-cors'
-    }).then(() => {
-      submitButton.textContent = 'Wysłano ✓';
-    }).catch(() => {
-      submitButton.disabled = false;
-      submitButton.textContent = 'Wyślij wynik na e-mail';
-      errorBox.textContent = 'Nie udało się wysłać raportu. Spróbuj ponownie.';
-    });
-  });
 
   updateStepUi();
 </script>
@@ -617,34 +567,15 @@ const questionBlocks = [
     padding: 16px;
   }
 
-  #email-gate-form {
-    display: grid;
-    gap: 10px;
-  }
-
-  #email-gate-form input[type='email'] {
-    border: 1px solid #c9d8d0;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 1rem;
-  }
-
-  .consent-row {
+  .lead-actions {
     display: flex;
-    gap: 8px;
-    align-items: flex-start;
-    font-size: 0.92rem;
-  }
-
-  .mini-legal {
-    font-size: 0.82rem;
-    color: #5b685f;
-    margin-top: 0;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
   }
 
   .booking-link {
     display: inline-block;
-    margin-top: 10px;
     font-weight: 700;
     color: var(--color-secondary);
     text-decoration: none;
@@ -652,12 +583,6 @@ const questionBlocks = [
 
   .booking-link:hover {
     text-decoration: underline;
-  }
-
-  .honeypot {
-    position: absolute;
-    left: -10000px;
-    opacity: 0;
   }
 
   @media (max-width: 760px) {
@@ -675,7 +600,7 @@ const questionBlocks = [
 
     .nav-row button,
     .copy-wrap button,
-    #email-gate-form .cta-btn {
+    .lead-actions .cta-btn {
       width: 100%;
     }
   }
