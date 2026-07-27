@@ -24,7 +24,14 @@
   # scripts from unlisted hosts, stops forms posting off-site, and pins where
   # data can be sent -- which is where the real risk sits on a site with no
   # user input and no database.
-  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://i.ytimg.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://stats.g.doubleclick.net; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net; frame-src https://www.googletagmanager.com; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests
+  #
+  # connect-src includes ad.doubleclick.net and www.google.com because the GTM
+  # container fires Google Ads conversion pings to both on the homepage. They
+  # are listed so the CSP describes what the site actually loads -- NOT as an
+  # endorsement. Those tags currently fire before the visitor consents, which
+  # is a consent problem to fix in the GTM container, not with this header. If
+  # the Ads tags are removed from GTM, drop both hosts from this line.
+  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://i.ytimg.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://stats.g.doubleclick.net; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net https://ad.doubleclick.net https://www.google.com; frame-src https://www.googletagmanager.com; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests
 
   # HTML routes are extensionless in Astro, so keep pages revalidating.
   Cache-Control: public, max-age=0, must-revalidate
