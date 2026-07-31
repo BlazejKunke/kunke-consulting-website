@@ -62,8 +62,28 @@ He is a founder, not a developer, and does not read code.
 - Make the change, commit it, push it to `main`. No feature branch, no pull request, no preview link, no "shall I proceed?" checkpoint
 - Always build before pushing
 - After pushing, wait for the deploy, check the affected live URLs yourself, and report what you verified in a short table. This replaces his review — it is not optional
-- Lead with the outcome in plain language. Skip the Git mechanics unless asked
 - Ask first only where reverting does not undo the damage: unrecoverable deletions, domain or DNS changes, or sending mail to real people
+
+### How to write to him
+
+**Short, plain, and about what happens next.** He asked for this explicitly on
+2026-07-31, after a set of answers that were long, technical and hard to act on. If a
+reply is more than a few short paragraphs, it is probably wrong for him.
+
+- **Lead with the outcome, in the first sentence.** What changed, what it means for the
+  business. Not what was investigated, not how it works
+- **Default to a paragraph.** Add a short table only for live-URL verification, where it
+  genuinely reads faster. Avoid stacked headings, nested bullets and long option surveys
+- **No mechanics unless asked** — no file paths, function names, Git commands, code or
+  config in the reply. Those belong in the commit message and in `docs/`, which is where
+  the detail from a task should go. He does not read code, and will not read a wall of it
+- **Say plainly when something is not worth much.** He asked "so my page shows higher on
+  Google?" about the hreflang work, and the honest answer was no — it clears warnings and
+  stops a recurring bug. That answer was more useful than a defence of the work
+- **End with the decision or the action, if there is one**, and make it one line. What he
+  should do, or what you need from him
+- Detail is available on request. Give the headline first and let him ask for more,
+  rather than pre-empting every question
 
 Redirects deserve particular care, because they fail invisibly: every page still loads
 while search engines quietly collect 404s. That is exactly the failure mode "revert it
