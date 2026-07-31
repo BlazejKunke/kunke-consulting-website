@@ -176,12 +176,21 @@ const faqs = [
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Kunke Consulting',
+    legalName: 'Błażej Kunke Consulting',
+    taxID: '9721222936',
     logo: 'https://kunkeconsulting.pl/images/Kunke_Favicon.png',
     description: 'Praktyczne szkolenia i wdrożenia AI dla średnich przedsiębiorstw, stacjonarnie i zdalnie.',
     url: 'https://kunkeconsulting.pl/',
     telephone: '+48722156925',
     email: 'info@kunkeconsulting.pl',
-    address: { '@type': 'PostalAddress', addressLocality: 'Poznań', addressCountry: 'PL' },
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'ul. Fosowa 13/1',
+      postalCode: '62-069',
+      addressLocality: 'Dąbrówka',
+      addressRegion: 'wielkopolskie',
+      addressCountry: 'PL'
+    },
     areaServed: 'PL',
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
@@ -1022,6 +1031,13 @@ const faqs = [
       margin: 0;
     }
 
+    /* Legal name sits directly under the brand name, as one block */
+    .kc-contact-legal {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
     .kc-contact-details a {
       color: var(--kc-body);
     }
@@ -1706,7 +1722,12 @@ const faqs = [
         </div>
         <div class="kc-contact-details">
           <p class="kc-eyebrow">Kontakt</p>
-          <p>^Kunke Consulting · Poznań</p>
+          <div class="kc-contact-legal">
+            <p>^Kunke Consulting</p>
+            <p>Błażej Kunke Consulting</p>
+          </div>
+          <p>ul. Fosowa 13/1, 62-069 Dąbrówka, pow. poznański</p>
+          <p>NIP: 9721222936</p>
           <a href="tel:+48722156925">+48 722 156 925</a>
           <a href="https://www.linkedin.com/in/blazejkunke/" rel="noopener">LinkedIn</a>
           <a href="/blog/">Blog</a>
