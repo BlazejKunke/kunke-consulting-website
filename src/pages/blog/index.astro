@@ -8,6 +8,7 @@ import BlogShell from '../../components/BlogShell.astro';
 import BlogPostGrid from '../../components/BlogPostGrid.astro';
 import type { GridPost } from '../../utils/blog';
 import { blogCategories, categoryLabel, formatDate, readingTimeLabel, resolveCategory } from '../../utils/blog';
+import { buildHreflangLinks } from '../../utils/locales';
 
 
 const posts = (await getCollection('blog'))
@@ -44,6 +45,7 @@ const featuredCategory = featured ? resolveCategory(featured.data) : 'practice';
 
 const siteUrl = Astro.site ?? new URL('https://kunkeconsulting.pl');
 const canonicalUrl = 'https://kunkeconsulting.pl/blog/';
+const hreflangLinks = buildHreflangLinks('/blog/', siteUrl);
 const pageTitle = 'Blog o praktycznym AI dla firm | ^Kunke Consulting';
 const pageDescription =
   'Notatki z wdrożeń AI, testy nowych modeli i wnioski z warsztatów. O tym, co realnie działa w polskich firmach, i o tym, co zostało w pilotażu.';
@@ -85,9 +87,9 @@ const blogSchema = {
   ogImage={ogImage}
 >
   <Fragment slot="head">
-    <link rel="alternate" hreflang="pl-PL" href={canonicalUrl} />
-    <link rel="alternate" hreflang="en" href="https://kunkeconsulting.pl/en/blog/" />
-    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+    {hreflangLinks.map(({ hreflang, href }) => (
+      <link rel="alternate" hreflang={hreflang} href={href} />
+    ))}
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
   </Fragment>
@@ -164,7 +166,7 @@ const blogSchema = {
         </p>
         <div class="kc-cta-actions">
           <a class="kc-btn" href="/#oferta">Zobacz ofertę AI dla firm</a>
-          <a class="kc-btn-ghost" href="/kalkulator-roi-ai/">Kalkulator ROI z AI</a>
+          <a class="kc-btn-ghost" href="mailto:info@kunkeconsulting.pl">Napisz do mnie</a>
         </div>
       </div>
       <div class="kc-cta-media">

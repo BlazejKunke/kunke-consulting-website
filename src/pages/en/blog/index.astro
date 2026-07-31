@@ -8,6 +8,7 @@ import BlogShell from '../../../components/BlogShell.astro';
 import BlogPostGrid from '../../../components/BlogPostGrid.astro';
 import type { GridPost } from '../../../utils/blog';
 import { blogCategories, categoryLabel, formatDate, readingTimeLabel, resolveCategory } from '../../../utils/blog';
+import { buildHreflangLinks } from '../../../utils/locales';
 
 
 const posts = (await getCollection('blog'))
@@ -43,6 +44,7 @@ const featuredCategory = featured ? resolveCategory(featured.data) : 'practice';
 
 const siteUrl = Astro.site ?? new URL('https://kunkeconsulting.pl');
 const canonicalUrl = 'https://kunkeconsulting.pl/en/blog/';
+const hreflangLinks = buildHreflangLinks('/en/blog/', siteUrl);
 const pageTitle = 'Practical AI for business | ^Kunke Consulting Blog';
 const pageDescription =
   'Field notes from AI rollouts, tests of new models, and lessons from workshops. What actually works inside companies, and what stayed stuck in a pilot.';
@@ -84,9 +86,9 @@ const blogSchema = {
   ogImage={ogImage}
 >
   <Fragment slot="head">
-    <link rel="alternate" hreflang="en" href={canonicalUrl} />
-    <link rel="alternate" hreflang="pl-PL" href="https://kunkeconsulting.pl/blog/" />
-    <link rel="alternate" hreflang="x-default" href="https://kunkeconsulting.pl/blog/" />
+    {hreflangLinks.map(({ hreflang, href }) => (
+      <link rel="alternate" hreflang={hreflang} href={href} />
+    ))}
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
   </Fragment>

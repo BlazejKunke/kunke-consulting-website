@@ -35,6 +35,13 @@ jobs:
           grep -q "^  Content-Security-Policy:" dist/_headers || { echo "::error::No enforced CSP in dist/_headers"; exit 1; }
           echo "CSP present in build output"
 
+      # The same hreflang bug has been fixed and lost four times (PRs #57, #74,
+      # #118, #121), because each fix patched pages rather than the rule that
+      # generates the tags. The rule now lives in src/utils/locales.ts; this
+      # checks the built output actually came out right.
+      - name: hreflang clusters must be reciprocal
+        run: node scripts/check-hreflang.mjs
+
       # Deliberately narrow. /verify.html embeds a Google Apps Script URL on
       # purpose -- it is a public, read-only certificate lookup -- so this does
       # not flag Apps Script URLs in general. It flags the two things that were

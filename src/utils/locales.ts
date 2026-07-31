@@ -26,8 +26,12 @@ export const localeHtmlLangMap: Record<LocaleCode, string> = {
   en: 'en',
 };
 
+// Bare codes, not region-qualified. The site targets Polish speakers and English
+// speakers, not residents of Poland and the United States — /uk/ and /us/ both
+// land on /en/, so declaring en-US would narrow it wrongly. astro.config.mjs
+// declares the same two codes for the sitemap; the pair must stay in step.
 export const localeHreflangMap: Record<LocaleCode, string> = {
-  pl: 'pl-PL',
+  pl: 'pl',
   en: 'en',
 };
 
@@ -35,10 +39,17 @@ export const defaultLocale: LocaleCode = 'pl';
 
 type LocalizedRouteMap = Partial<Record<LocaleCode, string>>;
 
+// The registry of pages that genuinely exist in more than one language. This is
+// the only thing that grants a page hreflang tags — see buildHreflangLinks.
+// Translating a page means adding it here; nothing else needs to change.
 const localizedRoutes: Record<string, LocalizedRouteMap> = {
   '/': {
     pl: '/',
     en: '/en/',
+  },
+  '/blog': {
+    pl: '/blog/',
+    en: '/en/blog/',
   },
 };
 
@@ -128,26 +139,54 @@ export const buildLanguageSwitcherUrls = (pathname: string, siteUrl: URL) => {
   });
 };
 
-export const buildHreflangUrls = (pathname: string, siteUrl: URL) => {
+export interface HreflangLink {
+  hreflang: string;
+  href: string;
+}
+
+/**
+ * The complete hreflang set for a page — alternates *and* x-default — or an
+ * empty array when the page has no translation.
+ *
+ * Two rules make this hard to break, and both matter more than they look:
+ *
+ * 1. The set is derived from `localizedRoutes` alone, never from the page doing
+ *    the asking. Every page in a group therefore emits a byte-identical list,
+ *    so each one points back at the others by construction. Reciprocity is not
+ *    something a future edit has to remember.
+ *
+ * 2. A page outside the registry gets nothing at all. Untranslated pages used
+ *    to emit a self-reference plus an x-default aimed at the homepage, which
+ *    quietly enrolled the homepage in a group it did not belong to. Google saw
+ *    a one-way claim and discarded the group — the "no return-tag" error that
+ *    was patched and lost four times (PRs #57, #74, #118, #121). The absence of
+ *    tags on /privacy-policy/ and friends is deliberate. Do not add them back.
+ *
+ * scripts/check-hreflang.mjs enforces both against the built output.
+ */
+export const buildHreflangLinks = (pathname: string, siteUrl: URL): HreflangLink[] => {
   const basePath = basePathFromLocale(pathname);
-  const currentLocale = detectLocale(pathname);
+  const routeMap = localizedRoutes[normalizePath(basePath)];
+  if (!routeMap) return [];
 
-  return locales.flatMap(({ code }) => {
+  const translated = locales.filter(({ code }) => routeMap[code as LocaleCode]);
+  if (translated.length < 2) return [];
+
+  const links: HreflangLink[] = translated.map(({ code }) => {
     const localeCode = code as LocaleCode;
-
-    if (localeCode === currentLocale) {
-      const existingLocalized = findExistingLocalizedPath(basePath, currentLocale);
-      const selfPath = existingLocalized ?? localizedPath(basePath, currentLocale);
-      const normalizedSelfPath = normalizeHreflangPath(selfPath);
-      return [{ locale: localeCode, hreflang: localeHreflangMap[localeCode], href: new URL(normalizedSelfPath, siteUrl).href }];
-    }
-
-    const existingLocalized = findExistingLocalizedPath(basePath, localeCode);
-    if (!existingLocalized) {
-      return [];
-    }
-
-    const normalizedPath = normalizeHreflangPath(existingLocalized);
-    return [{ locale: localeCode, hreflang: localeHreflangMap[localeCode], href: new URL(normalizedPath, siteUrl).href }];
+    const path = normalizeHreflangPath(routeMap[localeCode] as string);
+    return { hreflang: localeHreflangMap[localeCode], href: new URL(path, siteUrl).href };
   });
+
+  // x-default belongs to the group too, which is exactly why it must point at a
+  // member of it rather than at whatever page seems like a sensible fallback.
+  const defaultPath = routeMap[defaultLocale];
+  if (defaultPath) {
+    links.push({
+      hreflang: 'x-default',
+      href: new URL(normalizeHreflangPath(defaultPath), siteUrl).href,
+    });
+  }
+
+  return links;
 };

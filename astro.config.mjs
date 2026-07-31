@@ -23,11 +23,15 @@ export default defineConfig({
   site: 'https://kunkeconsulting.pl',
   integrations: [
     sitemap({
+      // These codes end up in the sitemap's own hreflang alternates, so they
+      // must match localeHreflangMap in src/utils/locales.ts. They said pl-PL
+      // and en-US while the HTML said pl-PL and en — three conventions across
+      // two files, for a site that targets languages rather than countries.
       i18n: {
         defaultLocale: 'pl',
         locales: {
-          pl: 'pl-PL',
-          en: 'en-US'
+          pl: 'pl',
+          en: 'en'
         }
       },
       changefreq: 'weekly',

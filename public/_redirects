@@ -35,6 +35,16 @@
 /projekty-ai/  /  301!
 /konsultacja-ai  /  301!
 /konsultacja-ai/  /  301!
+# Archived 2026-07-31: the two interactive lead magnets. Both were built on the
+# old design, so every link into them threw a visitor from the redesigned site
+# onto a page that looked like a different company. Parked rather than deleted —
+# one of them is likely to come back in the new design. See
+# docs/lead-magnets-archive.md before rebuilding either.
+/kalkulator-roi-ai  /  301!
+/kalkulator-roi-ai/  /  301!
+/ai-readiness-score  /  301!
+/ai-readiness-score/  /  301!
+
 /us  /en/  301!
 /uk  /en/  301!
 /uk/  /en/  301!

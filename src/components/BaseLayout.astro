@@ -3,7 +3,7 @@
 import CookieConsent from './CookieConsent.astro';
 import ConsentMode from './ConsentMode.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { buildHreflangUrls, buildLanguageSwitcherUrls, defaultLocale, detectLocale, localeHtmlLangMap, localeOgMap } from '../utils/locales';
+import { buildHreflangLinks, buildLanguageSwitcherUrls, detectLocale, localeHtmlLangMap, localeOgMap } from '../utils/locales';
 export interface Props {
   title: string;
   description?: string;
@@ -29,8 +29,8 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const currentLocale = detectLocale(Astro.url.pathname);
 const htmlLang = localeHtmlLangMap[currentLocale] ?? currentLocale;
 const languageSwitcherUrls = buildLanguageSwitcherUrls(Astro.url.pathname, siteUrl);
-const hreflangUrls = buildHreflangUrls(Astro.url.pathname, siteUrl);
-const xDefaultUrl = languageSwitcherUrls.find(({ locale }) => locale === defaultLocale)?.href ?? canonicalUrl;
+// Empty on every page this layout currently wraps — they are all Polish-only.
+const hreflangLinks = buildHreflangLinks(Astro.url.pathname, siteUrl);
 const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
 ---
 
@@ -45,10 +45,9 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
   {noindex && <meta name="robots" content="noindex, nofollow" />}
 
   <link rel="canonical" href={canonicalUrl} />
-  {hreflangUrls.map(({ hreflang, href }) => (
+  {hreflangLinks.map(({ hreflang, href }) => (
     <link rel="alternate" hreflang={hreflang} href={href} />
   ))}
-  <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
 
   <!-- OG/Twitter -->
   <meta property="og:type" content="website" />

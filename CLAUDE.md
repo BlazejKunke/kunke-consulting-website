@@ -89,10 +89,12 @@ Their design tokens are `--kc-*`, declared per page: background `#faf9f6`, ink
 Helvetica/Arial system stack with a monospace face for eyebrows and prices. Any
 component dropped into these pages needs those tokens redeclared locally.
 
-**`BaseLayout` pages** — `privacy-policy`, `thank-you`, `availability`,
-`kalkulator-roi-ai`, `ai-readiness-score`. These use `BaseLayout.astro`, which supplies
-`global.css`, Inter from Google Fonts, the CSP nonce, SEO meta and the language
-switcher. This is the older look; it survives on utility pages where it does not matter.
+**`BaseLayout` pages** — `privacy-policy`, `thank-you`, `availability`. These use
+`BaseLayout.astro`, which supplies `global.css`, Inter from Google Fonts, SEO meta and
+the language switcher. This is the older look; it survives on utility pages where it
+does not matter. It is not a place to put anything a visitor is meant to convert on —
+the two lead magnets were archived in July 2026 partly because being on this design sent
+people from the redesigned site to a page that looked like a different company.
 
 **Blog** — `src/components/BlogShell.astro` owns the shared blog chrome: the `--kc-*`
 tokens, the sticky header, the footer, the index hero and the featured card. Both blog
@@ -124,6 +126,30 @@ filter chips and the tag fallback for posts without a `category`.
 `src/utils/locales.ts` is the single source for hreflang alternates, the language
 switcher and the sitemap locales. Adding a language means editing that file, not just
 adding a page.
+
+**hreflang: a page gets tags only if it is registered as translated.** The
+`localizedRoutes` map in `locales.ts` lists the pages that genuinely exist in more than
+one language — today just `/` and `/blog/`. `buildHreflangLinks` builds the whole set,
+x-default included, from that map alone, so every page in a group emits an identical
+list and points back at the others by construction. A page outside the map gets nothing.
+
+That absence is deliberate. Untranslated pages used to emit a self-reference plus an
+x-default aimed at the homepage, which enrolled the homepage in a group it was not part
+of; Google saw a one-way claim and discarded the group. Ahrefs reported it as "missing
+reciprocal hreflang". It was fixed and lost four times (PRs #57, #74, #118, #121)
+because each fix patched the flagged pages instead of the rule.
+
+- Do **not** hand-write `<link rel="alternate" hreflang=...>` in a page. Register the
+  pair in `locales.ts` instead
+- Language codes are bare `pl` and `en`, in the HTML and in the sitemap i18n config in
+  `astro.config.mjs`. The site targets languages, not countries — `/uk/` and `/us/` both
+  land on `/en/`. Keep the two files in step
+- `scripts/check-hreflang.mjs` reads `dist/` and fails on a broken cluster, an
+  unreciprocated claim, an out-of-group x-default or an unexpected code. It runs in CI;
+  run it locally with `npm run check:hreflang` after a build
+- Blog posts emit no hreflang. Some PL/EN pairs are genuine translations, but nothing in
+  the frontmatter records that. Linking them needs a new content field, not hand-written
+  tags
 
 ### Security
 
@@ -158,8 +184,8 @@ secret were public for years, so both need rotating rather than reusing.
 
 A second form outlived the first: `/ai-readiness-score/` posted visitor emails to the
 same public Apps Script endpoint, with the same fake `FormSecret`, until it was removed
-on 2026-07-27. The tool now hands the visitor their result through a prefilled `mailto:`
-and stores nothing. **The site collects no personal data through any form.**
+on 2026-07-27. That page was archived four days later. **The site collects no personal
+data through any form.**
 
 Social links are LinkedIn, YouTube and — despite what this file said until July 2026 —
 Facebook, pointing at Błażej's personal profile from `SiteFooter.astro`,
@@ -171,7 +197,16 @@ belongs on a business site is Blaze's call, not a thing to change silently.
 - `/ai-info/` — plain structured text about the company, written for AI assistants and search systems rather than humans. No styling by design
 - `/verify.html` — certificate verification, a static file in `public/`. Left on the old design deliberately; low priority
 - `/availability/` — Blaze's live availability calendar, driven by `src/content/availability.ts`
-- `/kalkulator-roi-ai/` and `/ai-readiness-score/` — interactive lead tools
+
+**There are no interactive lead tools.** `/kalkulator-roi-ai/` and `/ai-readiness-score/`
+were archived on 2026-07-31 and 301 to the homepage. Both were on the old design, so
+every link into them threw a visitor from the redesigned site onto a page that looked
+like a different company; the readiness test also had zero inbound internal links and
+was reachable only by typing the URL. Blaze expects to rebuild **one** of them in the
+new design — the ROI calculator is the better-built candidate, but the analytics should
+decide. [`docs/lead-magnets-archive.md`](docs/lead-magnets-archive.md) holds the ROI
+model's constants, both tools' history and the commands to recover the code from Git.
+Read it before rebuilding either, and do not simply restore the old files.
 
 ## History worth knowing
 

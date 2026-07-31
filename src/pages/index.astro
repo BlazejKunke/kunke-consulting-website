@@ -12,14 +12,12 @@
 
 import CookieConsent from '../components/CookieConsent.astro';
 import ConsentMode from '../components/ConsentMode.astro';
-import { buildHreflangUrls, buildLanguageSwitcherUrls, defaultLocale } from '../utils/locales';
+import { buildHreflangLinks } from '../utils/locales';
 
 
 const siteUrl = Astro.site ?? new URL('https://kunkeconsulting.pl');
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
-const hreflangUrls = buildHreflangUrls(Astro.url.pathname, siteUrl);
-const languageSwitcherUrls = buildLanguageSwitcherUrls(Astro.url.pathname, siteUrl);
-const xDefaultUrl = languageSwitcherUrls.find(({ locale }) => locale === defaultLocale)?.href ?? canonicalUrl;
+const hreflangLinks = buildHreflangLinks(Astro.url.pathname, siteUrl);
 
 const pageTitle = 'Szkolenia i doradztwo AI dla firm | ^Kunke Consulting';
 const pageDescription =
@@ -147,10 +145,9 @@ const faqs = [
   <title>{pageTitle}</title>
   <meta name="description" content={pageDescription} />
   <link rel="canonical" href={canonicalUrl} />
-  {hreflangUrls.map(({ hreflang, href }) => (
+  {hreflangLinks.map(({ hreflang, href }) => (
     <link rel="alternate" hreflang={hreflang} href={href} />
   ))}
-  <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
 
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pl_PL" />
