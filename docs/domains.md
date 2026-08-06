@@ -39,30 +39,40 @@ https://www.kunkeconsulting.com/*   https://kunkeconsulting.pl/:splat  301!
 Those are host-scoped: they match only when the request arrives on the `.com`, so
 they cannot touch `.pl` traffic. They are inert until the two steps below are done.
 
-### The two remaining steps (dashboard work, not code)
+### How it was set up — done 2026-08-06
 
-**1. Netlify — attach the domain.** Site → Domain management → Add a domain →
-`kunkeconsulting.com`, then again for `www.kunkeconsulting.com`. Both go in as
-*domain aliases*. Do **not** set either as the primary domain; `kunkeconsulting.pl`
-must stay primary or the redirect runs backwards.
+**1. Netlify — attach the domain.** `kunkeconsulting.com` and
+`www.kunkeconsulting.com` were added under Domain management as *domain aliases*.
+Neither is primary, and neither should ever be made primary: `kunkeconsulting.pl`
+staying primary is what keeps the redirect pointing the right way.
 
-**2. Porkbun — point the DNS at Netlify.** Delete Porkbun's default parking records
-first (the apex `A` records at `207.207.210.x`, plus any URL-forwarding entry — a
-fresh Porkbun domain forwards to an `l.ink` parking page). Then:
+**2. Porkbun — point the DNS at Netlify.** A fresh Porkbun domain arrives with URL
+forwarding to an `l.ink` parking page, plus parking `A` records at `207.207.210.x`
+for `@` and the `*` wildcard. Deleting the forwarding entry removed those `A`
+records automatically — the forwarding feature owns them — so there was nothing left
+to clear by hand. Then:
 
 ```
 ALIAS  (host blank / @)  apex-loadbalancer.netlify.com
 CNAME  www               kunkeconsulting.netlify.app
 ```
 
-Porkbun supports `ALIAS` at the apex, which is preferable to a hard-coded `A`
-record: if Netlify ever changes the load balancer IP, an ALIAS follows and an `A`
-record silently breaks.
+Porkbun does offer `ALIAS` ("CNAME flattening record"), which is preferable to a
+hard-coded `A` record at `75.2.60.5`: if Netlify ever moves the load balancer, an
+ALIAS follows and an `A` record silently breaks.
 
-DNS propagates in minutes to a couple of hours. Netlify issues the Let's Encrypt
-certificate covering the `.com` only *after* the DNS resolves to it, so HTTPS on the
-`.com` will fail until that lands. If the certificate has not appeared after an hour,
-Netlify's Domain management panel has a "Renew certificate" button that forces it.
+Netlify picked up the DNS and issued the certificate on its own about six minutes
+later, without needing the "Renew certificate" button. If a future change does stall,
+that button is in Domain management under HTTPS — but a failed renewal should be left
+alone rather than retried repeatedly, since Let's Encrypt rate-limits failures.
+
+A useful trick for testing before DNS moves: `curl --resolve` forces a hostname to an
+IP, so the alias and the redirect rules can be checked against Netlify directly while
+the domain still points somewhere else.
+
+```bash
+curl -skI https://kunkeconsulting.com/ --resolve kunkeconsulting.com:443:75.2.60.5
+```
 
 ### Verifying
 
@@ -93,6 +103,12 @@ the path is being carried across, not swallowed.
 - **Porkbun's own URL forwarding is the fallback**, not the plan. It works without
   Netlify involvement, but it hands off at Porkbun's edge rather than issuing a clean
   301 from the site's own infrastructure, and it is one more place to remember.
-- **Email is separate.** Nothing here creates or forwards `@kunkeconsulting.com`
-  mail. Porkbun offers free email forwarding if an address on the `.com` is ever
-  wanted; the site's only contact address remains `info@kunkeconsulting.pl`.
+- **Email is separate, and `@kunkeconsulting.com` currently bounces.** Porkbun left
+  its own `MX` records (`fwd1`/`fwd2.porkbun.com`) and an SPF `TXT` in place, so mail
+  to the `.com` enters Porkbun's forwarding service with no destination configured.
+  Those records were deliberately not deleted — they are what a forwarding address
+  would need. Setting one up is a Porkbun-side change and touches nothing here. The
+  site's only contact address remains `info@kunkeconsulting.pl`.
+- **The `_acme-challenge` TXT records at Porkbun are Porkbun's, not Netlify's.**
+  They belong to the free certificate Porkbun issues for its own forwarding, and are
+  unrelated to the Let's Encrypt certificate Netlify serves. Harmless; leave them.
