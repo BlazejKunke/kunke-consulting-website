@@ -1,3 +1,17 @@
+# kunkeconsulting.com, registered 2026-08-06 at Porkbun as a defensive catch. The
+# .pl stays the only public address; the .com exists to hand its visitors over.
+# Netlify auto-redirects a domain's own apex to its own www and back, but never
+# between two different domains, so this pair has to be spelled out. Path-
+# preserving, so a .com link to any page lands on the same page on the .pl.
+#
+# These rules are inert until two things are true: the .com is attached to this
+# Netlify site as a domain alias, and Porkbun's DNS points at Netlify. Until then
+# they match nothing. Host-scoped, so they cannot affect kunkeconsulting.pl.
+http://kunkeconsulting.com/*  https://kunkeconsulting.pl/:splat  301!
+https://kunkeconsulting.com/*  https://kunkeconsulting.pl/:splat  301!
+http://www.kunkeconsulting.com/*  https://kunkeconsulting.pl/:splat  301!
+https://www.kunkeconsulting.com/*  https://kunkeconsulting.pl/:splat  301!
+
 /sitemap.xml  /sitemap-index.xml  301!
 /new  /  301!
 /new/  /  301!
