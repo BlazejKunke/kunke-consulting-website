@@ -58,7 +58,10 @@
 /Raport-AI-w-PragmatIQ.pdf
   Link: <https://kunkeconsulting.pl/Raport-AI-w-PragmatIQ.pdf>; rel="canonical"
 
-/Kunke Consulting Use Case AI in a Law Firm English Translation 2025.pdf
+# The path is percent-encoded because this file is whitespace-delimited: spelt
+# with real spaces the rule parses as garbage and silently matches nothing.
+# Verified live -- an unencoded version of this block returned no Link header.
+/Kunke%20Consulting%20Use%20Case%20AI%20in%20a%20Law%20Firm%20English%20Translation%202025.pdf
   Link: <https://kunkeconsulting.pl/Kunke%20Consulting%20Use%20Case%20AI%20in%20a%20Law%20Firm%20English%20Translation%202025.pdf>; rel="canonical"
 
 # Special rules for HTML files
