@@ -89,7 +89,10 @@ export const localizedPath = (basePath: string, locale: LocaleCode): string => {
   const normalizedBase = basePath.startsWith('/') ? basePath : `/${basePath}`;
   const prefix = localePrefixes[locale];
   if (!prefix) return normalizedBase;
-  return `${prefix}${normalizedBase === '/' ? '' : normalizedBase}`;
+  // The locale root keeps its trailing slash. Without it this returned `/en`,
+  // which Netlify 301s to `/en/` -- so the language switcher on every
+  // BaseLayout page sent visitors and crawlers through a needless hop.
+  return normalizedBase === '/' ? `${prefix}/` : `${prefix}${normalizedBase}`;
 };
 
 const normalizePath = (path: string): string => {

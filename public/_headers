@@ -47,6 +47,20 @@
 /verify.html
   Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://script.google.com https://script.googleusercontent.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.googletagmanager.com; upgrade-insecure-requests
 
+# Canonical URLs for the two case-study PDFs linked from the homepages. A PDF
+# has nowhere to put <link rel="canonical">, so the only way to declare one is
+# this HTTP header. Google flagged Raport-AI-w-PragmatIQ.pdf as "Duplicate
+# without user-selected canonical" on 2026-08-05 for exactly that reason -- it
+# judged the file a duplicate and found nothing telling it which copy was the
+# original. The English use case is listed too so it cannot repeat the alert.
+#
+# Any future PDF linked from a page needs its own block here.
+/Raport-AI-w-PragmatIQ.pdf
+  Link: <https://kunkeconsulting.pl/Raport-AI-w-PragmatIQ.pdf>; rel="canonical"
+
+/Kunke Consulting Use Case AI in a Law Firm English Translation 2025.pdf
+  Link: <https://kunkeconsulting.pl/Kunke%20Consulting%20Use%20Case%20AI%20in%20a%20Law%20Firm%20English%20Translation%202025.pdf>; rel="canonical"
+
 # Special rules for HTML files
 /*.html
   Cache-Control: public, max-age=0, must-revalidate

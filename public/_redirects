@@ -12,9 +12,27 @@ https://kunkeconsulting.com/*  https://kunkeconsulting.pl/:splat  301!
 http://www.kunkeconsulting.com/*  https://kunkeconsulting.pl/:splat  301!
 https://www.kunkeconsulting.com/*  https://kunkeconsulting.pl/:splat  301!
 
+# Netlify serves every site at its own <site>.netlify.app address as well as at
+# the custom domain, so the entire site was also live and crawlable at
+# kunkeconsulting.netlify.app. Its pages canonical back to the .pl, so Google
+# was not indexing them, but a second public copy of the site is worth closing
+# off. Deploy previews use deploy-preview-N--kunkeconsulting.netlify.app, a
+# different host, so they are unaffected.
+http://kunkeconsulting.netlify.app/*  https://kunkeconsulting.pl/:splat  301!
+https://kunkeconsulting.netlify.app/*  https://kunkeconsulting.pl/:splat  301!
+
 /sitemap.xml  /sitemap-index.xml  301!
 /new  /  301!
 /new/  /  301!
+# The last two astro.config redirects that had no rule here. Astro builds those
+# as meta-refresh stub pages served with a 200; only this file issues a real
+# 301. Both stubs carry noindex so nothing was indexed, but they were the only
+# two redirects on the site that were not real ones. Pointed straight at the
+# slashed destination so neither lands on a second hop.
+/avaliability  /availability/  301!
+/avaliability/  /availability/  301!
+/redesigned  /  301!
+/redesigned/  /  301!
 # Offline marketing shortlinks. They pointed at /ai-dla-firm/ until that page was
 # retired in July 2026; the homepage now carries the same offer.
 /AIDlaFirm  /  301!
