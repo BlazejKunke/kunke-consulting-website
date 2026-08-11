@@ -432,6 +432,12 @@ const faqs = [
       visibility: hidden;
     }
 
+    /* The rotating ending always starts its own line, so the static words above
+       it never reflow while a variant is typed or erased. */
+    .kc-typed-var {
+      display: block;
+    }
+
     .kc-typed-caret {
       display: inline-block;
       width: 0.05em;
@@ -1475,11 +1481,13 @@ const faqs = [
         <p class="kc-eyebrow">AI for your company · Poznań · Poland</p>
         <h1 class="kc-typed" aria-label="Practical AI training and advisory for your business.">
           <span class="kc-typed-sizer" aria-hidden="true"
-            >Practical AI training and advisory for your business.</span
+            >Practical AI training and advisory for your<span class="kc-typed-var">business.</span
+            ></span
           >
           <span aria-hidden="true"
-            >Practical AI training and advisory <span id="kc-typed-ending">for your business.</span><span
-              class="kc-typed-caret"></span></span
+            >Practical AI training and advisory for your<span class="kc-typed-var"
+              ><span id="kc-typed-ending">business.</span><span class="kc-typed-caret"></span></span
+            ></span
           >
         </h1>
         <p class="kc-lead">
@@ -1530,7 +1538,7 @@ const faqs = [
     <section id="implementation" class="kc-section kc-split">
       <p class="kc-eyebrow">How I work</p>
       <div>
-        <h2 class="kc-h2">First I learn your process. Then I pick the tool.</h2>
+        <h2 class="kc-h2">First I learn your process.<br />Then I pick the tool.</h2>
         <div class="kc-steps">
           {
             steps.map((step) => (
@@ -1757,7 +1765,7 @@ const faqs = [
     const typedEnding = document.getElementById('kc-typed-ending');
 
     if (typedEnding && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const endings = ['for your business.', 'for your company.', 'for your team.'];
+      const endings = ['business.', 'company.', 'team.'];
       const TYPE_MS = 55;
       const ERASE_MS = 30;
       const HOLD_FULL_MS = 2800;
