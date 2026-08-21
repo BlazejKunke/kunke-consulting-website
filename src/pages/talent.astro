@@ -1,0 +1,543 @@
+---
+// /talent — the recruiting page. Built from the "DAYLIGHT" concept in the
+// Claude Design project (KC Talent Page.dc.html), which is the only one of the
+// four concepts drawn in the ^KC palette; the other three (phosphor terminal,
+// retro-OS, teletext) are dark experiments and were not carried over.
+//
+// Like both homepages this is a standalone page: no BaseLayout, no global.css,
+// which would override the type scale. The --kc-* tokens are redeclared below.
+// It is deliberately not registered in locales.ts, so it emits no hreflang —
+// there is no Polish counterpart.
+
+import CookieConsent from '../components/CookieConsentEn.astro';
+import ConsentMode from '../components/ConsentMode.astro';
+
+const siteUrl = Astro.site ?? new URL('https://kunkeconsulting.pl');
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+
+const pageTitle = 'Talent | ^Kunke Consulting';
+const pageDescription =
+  'No job advert, no openings. We meet unusually curious people first and shape the role around what they are actually good at. Poznań, Poland.';
+const ogImage = new URL('/images/Workshop2025.JPG', siteUrl).href;
+
+const mailto = 'mailto:info@kunkeconsulting.pl?subject=TALENT';
+
+const stats = [
+  { big: '40+', small: 'practical AI trainings delivered' },
+  { big: '94%+', small: 'average post-training rating' },
+  { big: 'SME', small: 'mid-sized Polish companies' },
+  { big: '0', small: 'predefined openings' }
+];
+
+const traits = [
+  {
+    file: 'curiosity.md',
+    text: 'You take things apart to see how they work. Sometimes they go back together.'
+  },
+  {
+    file: 'initiative.sh',
+    text: 'You don’t wait for a ticket. A problem bothers you until it’s fixed.'
+  },
+  {
+    file: 'constructive_disagreement.log',
+    text: 'You can tell us we’re wrong, with arguments, and stay friends afterwards.'
+  },
+  {
+    file: 'genuine_ai_interest.txt',
+    text: 'Not the hype. The practical kind: what does this actually change for a 90-person factory in Wielkopolska?'
+  }
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <link rel="canonical" href={canonicalUrl} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Kunke Consulting" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
+  <meta property="og:image" content={ogImage} />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={canonicalUrl} />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={pageDescription} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Kunke_Favicon.png" />
+  <link rel="shortcut icon" href="/favicon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <ConsentMode />
+
+  <style is:global>
+    :root {
+      --kc-bg: #faf9f6;
+      --kc-ink: #12201b;
+      --kc-green: #0a4731;
+      --kc-body: #3a4a43;
+      --kc-muted: #52625a;
+      --kc-card: #ffffff;
+      --kc-rule-10: rgba(10, 71, 49, 0.1);
+      --kc-rule-12: rgba(10, 71, 49, 0.12);
+      --kc-rule-18: rgba(10, 71, 49, 0.18);
+      --kc-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --kc-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+      --kc-wrap: 1120px;
+      --kc-gut: 32px;
+    }
+
+    *,
+    *::before,
+    *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+    body {
+      margin: 0;
+      background: var(--kc-bg);
+      color: var(--kc-ink);
+      font-family: var(--kc-sans);
+      letter-spacing: -0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--kc-green); text-decoration: none; }
+    a:hover { color: var(--kc-ink); text-decoration: underline; text-underline-offset: 3px; }
+    ::selection { background: var(--kc-green); color: var(--kc-bg); }
+    :focus-visible { outline: 2px solid var(--kc-green); outline-offset: 3px; border-radius: 4px; }
+
+    .kc-skip {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 100;
+      background: var(--kc-green);
+      color: var(--kc-bg);
+      padding: 12px 18px;
+      border-radius: 0 0 8px 0;
+    }
+    .kc-skip:focus { left: 0; color: var(--kc-bg); }
+
+    .kc-wrap { max-width: var(--kc-wrap); margin: 0 auto; padding-inline: var(--kc-gut); }
+
+    .kc-eyebrow {
+      font-family: var(--kc-mono);
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--kc-green);
+    }
+
+    .kc-btn {
+      display: inline-block;
+      background: var(--kc-green);
+      color: var(--kc-bg);
+      padding: 14px 26px;
+      border-radius: 2px;
+      font-size: 17px;
+    }
+    .kc-btn:hover { background: #0d5c3e; color: var(--kc-bg); text-decoration: none; }
+
+    /* ---------- header ---------- */
+
+    .kc-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(250, 249, 246, 0.88);
+      backdrop-filter: saturate(140%) blur(12px);
+      border-bottom: 1px solid var(--kc-rule-10);
+    }
+
+    .kc-nav {
+      max-width: var(--kc-wrap);
+      margin: 0 auto;
+      padding: 16px var(--kc-gut);
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .kc-brand { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: var(--kc-green); }
+    .kc-path { font-family: var(--kc-mono); font-size: 13px; color: var(--kc-muted); }
+    .kc-nav .kc-btn { margin-left: auto; font-size: 15px; padding: 9px 18px; }
+
+    /* ---------- hero ---------- */
+
+    .kc-hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 56px;
+      align-items: start;
+      padding-block: 80px 72px;
+    }
+
+    .kc-hero h1 {
+      margin: 24px 0 0;
+      font-size: 54px;
+      line-height: 1.1;
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      text-wrap: pretty;
+    }
+
+    .kc-typed {
+      margin-top: 20px;
+      min-height: 2.7em;
+      font-family: var(--kc-mono);
+      font-size: 32px;
+      line-height: 1.32;
+      color: var(--kc-green);
+      letter-spacing: -0.02em;
+    }
+    .kc-typed .kc-prompt { color: var(--kc-muted); }
+
+    .kc-caret {
+      display: inline-block;
+      width: 0.5em;
+      height: 1em;
+      background: var(--kc-green);
+      vertical-align: -0.14em;
+      animation: kc-blink 1s step-end infinite;
+    }
+
+    @keyframes kc-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .kc-caret { animation: none; }
+    }
+
+    .kc-lede {
+      margin: 26px 0 0;
+      font-size: 19px;
+      line-height: 1.65;
+      color: var(--kc-body);
+      max-width: 34em;
+      text-wrap: pretty;
+    }
+
+    .kc-term {
+      background: #0d1210;
+      border-radius: 4px;
+      padding: 26px 28px;
+      font-family: var(--kc-mono);
+      font-size: 14px;
+      line-height: 1.85;
+      color: #9fe8a8;
+    }
+    .kc-term .kc-term-cmd { color: #5a7a63; }
+    .kc-term .kc-term-cmd + .kc-term-cmd { margin-top: 12px; }
+    .kc-term p { margin: 0; }
+    .kc-term a { color: #9fe8a8; text-decoration: underline; }
+    .kc-term a:hover { color: #fafaf5; }
+    .kc-term .kc-caret { background: #9fe8a8; width: 0.6em; height: 0.95em; margin-left: 6px; }
+
+    /* ---------- stats ---------- */
+
+    .kc-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--kc-rule-12);
+      border-bottom: 1px solid var(--kc-rule-12);
+    }
+    .kc-stat { padding: 28px 32px; border-right: 1px solid var(--kc-rule-12); }
+    .kc-stat:last-child { border-right: 0; }
+    .kc-stat-big { font-size: 30px; font-weight: 600; color: var(--kc-green); letter-spacing: -0.03em; }
+    .kc-stat-small { font-size: 15px; color: var(--kc-muted); margin-top: 4px; line-height: 1.45; }
+
+    /* ---------- what we do ---------- */
+
+    .kc-what {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 56px;
+      padding-block: 72px;
+    }
+    .kc-what h2 {
+      margin: 14px 0 0;
+      font-size: 34px;
+      line-height: 1.2;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      text-wrap: pretty;
+    }
+    .kc-what p {
+      margin: 0 0 18px;
+      font-size: 18px;
+      line-height: 1.75;
+      color: var(--kc-body);
+      max-width: 36em;
+      text-wrap: pretty;
+    }
+    .kc-what p:last-child { margin-bottom: 0; }
+
+    /* ---------- who we want ---------- */
+
+    .kc-who { background: var(--kc-green); color: var(--kc-bg); padding-block: 72px; }
+    .kc-who .kc-eyebrow { color: #9cd9a0; }
+
+    .kc-traits {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: rgba(250, 249, 246, 0.16);
+      margin-top: 26px;
+    }
+    .kc-trait { background: var(--kc-green); padding: 28px 30px; }
+    .kc-trait-file { font-family: var(--kc-mono); font-size: 15px; color: #9cd9a0; }
+    .kc-trait-text { font-size: 17px; line-height: 1.65; margin-top: 8px; color: #dfe9e2; text-wrap: pretty; }
+
+    .kc-who-note {
+      margin: 32px 0 0;
+      font-size: 18px;
+      line-height: 1.7;
+      color: #cfe0d6;
+      max-width: 44em;
+      text-wrap: pretty;
+    }
+
+    /* ---------- apply ---------- */
+
+    .kc-apply { padding-block: 72px; }
+    .kc-apply-inner { max-width: 42em; }
+    .kc-apply h2 {
+      margin: 14px 0 8px;
+      font-size: 34px;
+      line-height: 1.2;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+    .kc-apply .kc-typed { font-size: 28px; min-height: 2.4em; margin-top: 0; }
+    .kc-apply p { margin: 14px 0 26px; font-size: 18px; line-height: 1.7; color: var(--kc-body); }
+
+    /* ---------- footer ---------- */
+
+    .kc-footer { border-top: 1px solid var(--kc-rule-10); background: rgba(10, 71, 49, 0.02); }
+    .kc-footer-inner {
+      max-width: var(--kc-wrap);
+      margin: 0 auto;
+      padding: 28px var(--kc-gut);
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-family: var(--kc-mono);
+      font-size: 13px;
+      color: var(--kc-muted);
+    }
+    .kc-footer-inner p { margin: 0; }
+    .kc-footer-links { display: flex; gap: 20px; margin-left: auto; flex-wrap: wrap; }
+    .kc-footer-links a { color: var(--kc-muted); }
+
+    /* ---------- tablet ---------- */
+
+    @media (max-width: 900px) {
+      .kc-hero { grid-template-columns: 1fr; gap: 36px; padding-block: 56px 48px; }
+      .kc-hero h1 { font-size: 40px; }
+      .kc-typed { font-size: 24px; }
+      .kc-what { grid-template-columns: 1fr; gap: 24px; padding-block: 56px; }
+      .kc-stats { grid-template-columns: repeat(2, 1fr); }
+      .kc-stat:nth-child(2) { border-right: 0; }
+      .kc-stat:nth-child(-n + 2) { border-bottom: 1px solid var(--kc-rule-12); }
+    }
+
+    /* ---------- phone ---------- */
+
+    @media (max-width: 640px) {
+      :root { --kc-gut: 20px; }
+      .kc-hero h1 { font-size: 32px; }
+      .kc-typed { font-size: 19px; min-height: 3.2em; }
+      .kc-apply .kc-typed { font-size: 19px; }
+      .kc-lede, .kc-what p, .kc-who-note, .kc-apply p { font-size: 17px; }
+      .kc-what h2, .kc-apply h2 { font-size: 27px; }
+      .kc-traits { grid-template-columns: 1fr; }
+      .kc-path { display: none; }
+      .kc-footer-links { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <a class="kc-skip" href="#top">Skip to content</a>
+
+  <header class="kc-header">
+    <nav class="kc-nav" aria-label="Main navigation">
+      <a href="/en/" class="kc-brand">^Kunke Consulting</a>
+      <span class="kc-path">/talent</span>
+      <a href={mailto} class="kc-btn">Apply</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="kc-wrap kc-hero">
+      <div>
+        <div class="kc-eyebrow">Talent · Poznań · Poland</div>
+        <h1>We are looking for exceptional talent that will</h1>
+        <p class="kc-typed">
+          <span class="kc-prompt">&gt;&nbsp;</span><span id="kc-typed-hero">bring AI to Polish SMEs, for real for real</span><span class="kc-caret" aria-hidden="true"></span>
+        </p>
+        <p class="kc-lede">
+          There is no job advert on this page. We meet unusually curious people first, then shape
+          the role around what they are actually good at.
+        </p>
+      </div>
+      <div class="kc-term">
+        <p class="kc-term-cmd">visitor@kunke:~$ whoami</p>
+        <p>a curious human. good start.</p>
+        <p class="kc-term-cmd">visitor@kunke:~$ ls ./roles/</p>
+        <p>directory empty — by design</p>
+        <p class="kc-term-cmd">visitor@kunke:~$ ./apply</p>
+        <p>
+          mail <a href={mailto}>info@kunkeconsulting.pl</a><br />
+          subject: TALENT<span class="kc-caret" aria-hidden="true"></span>
+        </p>
+      </div>
+    </section>
+
+    <div class="kc-wrap">
+      <div class="kc-stats">
+        {stats.map((stat) => (
+          <div class="kc-stat">
+            <div class="kc-stat-big">{stat.big}</div>
+            <div class="kc-stat-small">{stat.small}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <section class="kc-wrap kc-what">
+      <div>
+        <div class="kc-eyebrow">What we do</div>
+        <h2>We make AI boringly useful for Polish companies.</h2>
+      </div>
+      <div>
+        <p>
+          Workshops on the work a team already does today. First AI assistants in one real process.
+          Uncomfortable questions in boardrooms, answered with evidence rather than slides. We
+          promise little and deliver more.
+        </p>
+        <p>
+          Poznań-based, working across Poland, in Polish and English. The more interesting half of
+          what we do gets explained in person — over coffee, on a need-to-know basis.
+        </p>
+      </div>
+    </section>
+
+    <section class="kc-who">
+      <div class="kc-wrap">
+        <div class="kc-eyebrow">Who we are looking for</div>
+        <div class="kc-traits">
+          {traits.map((trait) => (
+            <div class="kc-trait">
+              <div class="kc-trait-file">{trait.file}</div>
+              <div class="kc-trait-text">{trait.text}</div>
+            </div>
+          ))}
+        </div>
+        <p class="kc-who-note">
+          Students and people early in their careers are explicitly welcome. We care about how you
+          think, not how long you have been employed.
+        </p>
+      </div>
+    </section>
+
+    <section class="kc-wrap kc-apply">
+      <div class="kc-apply-inner">
+        <div class="kc-eyebrow">Say hello</div>
+        <h2>Introduce yourself with</h2>
+        <p class="kc-typed"><span id="kc-typed-apply">a few sentences.</span><span class="kc-caret" aria-hidden="true"></span></p>
+        <p>
+          No CV template needed. Tell us one thing you built, one thing you broke, and one question
+          about AI you can’t stop thinking about.
+        </p>
+        <a href={mailto} class="kc-btn">Apply</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="kc-footer">
+    <div class="kc-footer-inner">
+      <p>^Kunke Consulting · ul. Fosowa 13/1, Dąbrówka, pow. poznański</p>
+      <div class="kc-footer-links">
+        <a href="/en/">Home</a>
+        <a href="/privacy-policy/">Privacy policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <CookieConsent />
+
+  <script>
+    // Two typewriter lines: the hero ending and the "introduce yourself with"
+    // line. Reduced-motion visitors keep the static first variant of each.
+    const cycles = [
+      {
+        el: document.getElementById('kc-typed-hero'),
+        phrases: [
+          'bring AI to Polish SMEs, for real for real',
+          'talk with senior management about AI vision',
+          'help Maciej write his first prompt',
+          'disagree with us. constructively.',
+          'ship things people actually use'
+        ]
+      },
+      {
+        el: document.getElementById('kc-typed-apply'),
+        phrases: [
+          'a few sentences.',
+          'a GitHub link.',
+          'a drawing in Paint.',
+          'a voice note.',
+          'one very good question.'
+        ]
+      }
+    ];
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const TYPE_MS = 55;
+      const ERASE_MS = 28;
+      const HOLD_FULL_MS = 2600;
+      const HOLD_EMPTY_MS = 400;
+
+      cycles.forEach(({ el, phrases }) => {
+        if (!el) return;
+
+        let index = 0;
+
+        const erase = () => {
+          const current = el.textContent ?? '';
+          if (current.length > 0) {
+            el.textContent = current.slice(0, -1);
+            window.setTimeout(erase, ERASE_MS);
+          } else {
+            index = (index + 1) % phrases.length;
+            window.setTimeout(() => type(0), HOLD_EMPTY_MS);
+          }
+        };
+
+        const type = (chars: number) => {
+          el.textContent = phrases[index].slice(0, chars);
+          if (chars < phrases[index].length) {
+            window.setTimeout(() => type(chars + 1), TYPE_MS);
+          } else {
+            window.setTimeout(erase, HOLD_FULL_MS);
+          }
+        };
+
+        window.setTimeout(erase, HOLD_FULL_MS);
+      });
+    }
+  </script>
+</body>
+</html>
