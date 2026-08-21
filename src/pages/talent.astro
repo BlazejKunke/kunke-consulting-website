@@ -20,8 +20,6 @@ const pageDescription =
   'No job advert, no openings. We meet unusually curious people first and shape the role around what they are actually good at. Poznań, Poland.';
 const ogImage = new URL('/images/Workshop2025.JPG', siteUrl).href;
 
-const mailto = 'mailto:info@kunkeconsulting.pl?subject=TALENT';
-
 const stats = [
   { big: '40+', small: 'practical AI trainings delivered' },
   { big: '94%+', small: 'average post-training rating' },
@@ -140,15 +138,56 @@ const traits = [
       color: var(--kc-green);
     }
 
-    .kc-btn {
+    /* Recruiting is paused, so Apply is present but inert: it still reads as
+       the page's CTA, it just does not go anywhere. */
+    .kc-btn-off {
       display: inline-block;
-      background: var(--kc-green);
-      color: var(--kc-bg);
-      padding: 14px 26px;
+      background: transparent;
+      color: var(--kc-muted);
+      border: 1px solid var(--kc-rule-18);
+      padding: 13px 25px;
       border-radius: 2px;
       font-size: 17px;
+      cursor: not-allowed;
     }
-    .kc-btn:hover { background: #0d5c3e; color: var(--kc-bg); text-decoration: none; }
+
+    /* ---------- notice band ---------- */
+
+    /* Amber from the teletext concept in the design project. The text is ink
+       on amber rather than amber on cream: yellow type on the #faf9f6 ground
+       fails contrast badly at any size. */
+    .kc-notice {
+      background: #e6c15a;
+      color: #12201b;
+      border-bottom: 1px solid rgba(18, 32, 27, 0.18);
+    }
+
+    .kc-notice-inner {
+      max-width: var(--kc-wrap);
+      margin: 0 auto;
+      padding: 20px var(--kc-gut);
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .kc-notice-tag {
+      font-family: var(--kc-mono);
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(18, 32, 27, 0.72);
+    }
+
+    .kc-notice-text {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.25;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      text-wrap: pretty;
+    }
 
     /* ---------- header ---------- */
 
@@ -172,7 +211,7 @@ const traits = [
 
     .kc-brand { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: var(--kc-green); }
     .kc-path { font-family: var(--kc-mono); font-size: 13px; color: var(--kc-muted); }
-    .kc-nav .kc-btn { margin-left: auto; font-size: 15px; padding: 9px 18px; }
+    .kc-nav .kc-btn-off { margin-left: auto; font-size: 15px; padding: 8px 17px; }
 
     /* ---------- hero ---------- */
 
@@ -240,8 +279,6 @@ const traits = [
     .kc-term .kc-term-cmd { color: #5a7a63; }
     .kc-term .kc-term-cmd + .kc-term-cmd { margin-top: 12px; }
     .kc-term p { margin: 0; }
-    .kc-term a { color: #9fe8a8; text-decoration: underline; }
-    .kc-term a:hover { color: #fafaf5; }
     .kc-term .kc-caret { background: #9fe8a8; width: 0.6em; height: 0.95em; margin-left: 6px; }
 
     /* ---------- stats ---------- */
@@ -344,6 +381,7 @@ const traits = [
     /* ---------- tablet ---------- */
 
     @media (max-width: 900px) {
+      .kc-notice-text { font-size: 23px; }
       .kc-hero { grid-template-columns: 1fr; gap: 36px; padding-block: 56px 48px; }
       .kc-hero h1 { font-size: 40px; }
       .kc-typed { font-size: 24px; }
@@ -357,6 +395,8 @@ const traits = [
 
     @media (max-width: 640px) {
       :root { --kc-gut: 20px; }
+      .kc-notice-inner { padding-block: 16px; gap: 8px; }
+      .kc-notice-text { font-size: 20px; }
       .kc-hero h1 { font-size: 32px; }
       .kc-typed { font-size: 19px; min-height: 3.2em; }
       .kc-apply .kc-typed { font-size: 19px; }
@@ -375,11 +415,18 @@ const traits = [
     <nav class="kc-nav" aria-label="Main navigation">
       <a href="/en/" class="kc-brand">^Kunke Consulting</a>
       <span class="kc-path">/talent</span>
-      <a href={mailto} class="kc-btn">Apply</a>
+      <span class="kc-btn-off" aria-disabled="true">Apply — paused</span>
     </nav>
   </header>
 
   <main id="top">
+    <div class="kc-notice" role="status">
+      <div class="kc-notice-inner">
+        <span class="kc-notice-tag">On hold</span>
+        <p class="kc-notice-text">Recruiting is temporarily on hold. There is nothing to apply for right now — this page will reopen.</p>
+      </div>
+    </div>
+
     <section class="kc-wrap kc-hero">
       <div>
         <div class="kc-eyebrow">Talent · Poznań · Poland</div>
@@ -399,7 +446,7 @@ const traits = [
         <p>directory empty — by design</p>
         <p class="kc-term-cmd">visitor@kunke:~$ ./apply</p>
         <p>
-          mail <a href={mailto}>info@kunkeconsulting.pl</a><br />
+          mail info@kunkeconsulting.pl<br />
           subject: TALENT<span class="kc-caret" aria-hidden="true"></span>
         </p>
       </div>
@@ -461,7 +508,7 @@ const traits = [
           No CV template needed. Tell us one thing you built, one thing you broke, and one question
           about AI you can’t stop thinking about.
         </p>
-        <a href={mailto} class="kc-btn">Apply</a>
+        <span class="kc-btn-off" aria-disabled="true">Apply — paused</span>
       </div>
     </section>
   </main>
