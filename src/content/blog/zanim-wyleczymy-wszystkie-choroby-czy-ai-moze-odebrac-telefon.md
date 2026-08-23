@@ -37,8 +37,8 @@ Ochrona zdrowia, szczególnie w Europie, to nie jest miejsce na beztroskie wdra�
 
 Jakiś czas temu, na jednym ze śniadań AI w Poznaniu organizowanych przez [Annę Proch](https://www.linkedin.com/in/annaproch/), poznałem eksperta AI, który opowiadał o podobnym projekcie dla szpitali w Hiszpanii, więc cieszę się, że to już się dzieje.
 
-Nie piszę tego, żeby naiwnie krytykować czy moralnie oceniać ludzi pracujących w szpitalach — wręcz przeciwnie — mają mój ogromny szacunek i wdzięczność. Ale ja, może trochę AI-pilled, widzę tu wyraźną szansę, żeby AI zrobiło realną, pozytywną różnicę.
+Nie piszę tego, żeby naiwnie krytykować czy moralnie oceniać ludzi pracujących w szpitalach. Wręcz przeciwnie, mają mój ogromny szacunek i wdzięczność. Ale ja, może trochę AI-pilled, widzę tu wyraźną szansę, żeby AI zrobiło realną, pozytywną różnicę.
 
-Czasami, rozmawiając o AI, skupiamy się na "leczeniu raka" albo "AGI" — a tymczasem prawdziwe, namacalne, zmieniające życie doświadczenie to dobrze zaprojektowany, wielojęzyczny voice-bot w Twoim szpitalu.
+Czasami, rozmawiając o AI, skupiamy się na "leczeniu raka" albo "AGI", a tymczasem prawdziwe, namacalne, zmieniające życie doświadczenie to dobrze zaprojektowany, wielojęzyczny voice-bot w Twoim szpitalu.
 
 Dajcie znać, czy podzielacie moją perspektywę.

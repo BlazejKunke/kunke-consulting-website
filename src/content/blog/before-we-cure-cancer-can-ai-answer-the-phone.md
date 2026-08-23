@@ -37,8 +37,8 @@ Healthcare, especially in Europe, is not a place for casual AI deployment: priva
 
 Some time ago, during one of the AI-breakfast events in Poznań, organized by [Anna Proch](https://www.linkedin.com/in/annaproch/), I met an AI expert who was talking about a similar project for hospitals in Spain, so I'm glad that this is happening.
 
-I'm not writing this to provide my naive critique, or moral condemnation of some inpatient people working in hospitals — on the contrary — they have my utmost respect and gratitude. But I, maybe AI-pilled, see this as a clear chance where AI could make a positive difference.
+I'm not writing this to provide my naive critique, or moral condemnation of some inpatient people working in hospitals. On the contrary, they have my utmost respect and gratitude. But I, maybe AI-pilled, see this as a clear chance where AI could make a positive difference.
 
-Sometimes, when talking about AI, we tend to focus on "curing the cancers" or "AGI" — but the real, tangible, life-changing experience is a well designed, multilingual voice bot at your local hospital.
+Sometimes, when talking about AI, we tend to focus on "curing the cancers" or "AGI", but the real, tangible, life-changing experience is a well designed, multilingual voice bot at your local hospital.
 
 Do let me know if you share this perspective.
