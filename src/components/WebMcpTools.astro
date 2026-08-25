@@ -1,0 +1,24 @@
+---
+// WebMCP (Site Tools): exposes get_services, recommend_service and
+// prepare_inquiry to an AI agent running in the visitor's browser.
+//
+// Renders nothing. No markup, no styles, no DOM changes — which is why it is
+// safe on the standalone homepages, where a component that expected
+// global.css tokens would render unstyled.
+//
+// In a browser without WebMCP the module loads, finds no
+// `document.modelContext.registerTool`, and returns. The page is identical.
+---
+
+<script>
+  import { normalizeLanguage } from '../utils/webmcp';
+  import { registerWebMcpTools } from '../utils/webmcpTools';
+
+  try {
+    // The page already declares its language on <html lang>, so the tools
+    // answer in the language the visitor is reading.
+    registerWebMcpTools(document, normalizeLanguage(document.documentElement.lang));
+  } catch {
+    // A marketing page must never break over an optional browser capability.
+  }
+</script>

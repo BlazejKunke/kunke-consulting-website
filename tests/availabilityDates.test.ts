@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { getDateKeyInTimeZone, isPastDate } from '../src/utils/availabilityDates';
+import { getDateKeyInTimeZone, isPastDate } from '../src/utils/availabilityDates.ts';
 
 test('uses the Warsaw calendar date around midnight', () => {
   assert.equal(getDateKeyInTimeZone(new Date('2026-07-19T21:59:59Z')), '2026-07-19');
