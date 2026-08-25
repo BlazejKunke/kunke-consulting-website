@@ -34,8 +34,7 @@ npm run build    # production build to ./dist/
 npm run preview  # preview the production build
 ```
 
-There is no test command. `tests/availabilityDates.test.ts` exists but no runner is
-configured, so it does not execute.
+`npm test` runs `node --test` with type stripping over `tests/*.test.ts`.
 
 ## Hosting and deploys
 
@@ -125,6 +124,19 @@ It follows the standalone pattern, not `BaseLayout`.
 
 Do not assume a shared layout. Check which family the target page belongs to first — a
 component relying on `global.css` tokens will render unstyled on a standalone page.
+
+### WebMCP (Site Tools)
+
+Both homepages register three read-only tools for AI agents running in the
+visitor's browser — `get_services`, `recommend_service`, `prepare_inquiry`. They
+render nothing and change nothing visually, and a browser without
+`document.modelContext` gets no tools and no behaviour change.
+
+`src/utils/webmcp.ts` repeats the homepage `packages` arrays **verbatim, prices
+included**. Change a package name, bullet or price on either homepage and you
+must change it there too, or an agent will quote a number the page does not
+show. `npm test` pins all six price strings and fails if only one side moves.
+[`docs/webmcp.md`](docs/webmcp.md) has the rest.
 
 ### Content collections
 
