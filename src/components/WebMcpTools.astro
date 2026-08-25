@@ -11,14 +11,21 @@
 ---
 
 <script>
-  import { normalizeLanguage } from '../utils/webmcp';
-  import { registerWebMcpTools } from '../utils/webmcpTools';
+  import { normalizeLanguage } from '../utils/webmcp.ts';
+  import { registerWebMcpTools } from '../utils/webmcpTools.ts';
 
   try {
     // The page already declares its language on <html lang>, so the tools
     // answer in the language the visitor is reading.
-    registerWebMcpTools(document, normalizeLanguage(document.documentElement.lang));
-  } catch {
-    // A marketing page must never break over an optional browser capability.
+    registerWebMcpTools(document, normalizeLanguage(document.documentElement.lang), {
+      // A rejected registration means a bad schema or a browser that changed
+      // the API under us. Visitors get silence either way, but whoever is
+      // running `npm run dev` should see it rather than guess.
+      onError: import.meta.env.DEV
+        ? (name, cause) => console.warn(`[webmcp] ${name} failed to register`, cause)
+        : undefined,
+    });
+  } catch (cause) {
+    if (import.meta.env.DEV) console.warn('[webmcp] registration failed', cause);
   }
 </script>

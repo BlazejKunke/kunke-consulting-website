@@ -22,14 +22,47 @@ Tools](https://learn.chatgpt.com/docs/webmcp).
 the mail client, write to storage, or call the network — the visitor's own click
 on the link is what starts an email, exactly as the site's existing CTAs do. It
 is annotated `readOnlyHint: true` because that is accurate, and its description
-says so to the agent as well.
+says so to the agent as well. It also carries `untrustedContentHint: true`,
+because its body echoes the visitor's own `notes` back.
+
+WebMCP's `ToolAnnotations` dictionary defines those two members and nothing
+else. MCP's wider set — `openWorldHint`, `idempotentHint` — is not part of this
+spec; a test fails if one reappears.
+
+## Response budget
+
+Chrome's security guidance sets a **1.5K character limit per individual tool
+output**. Every answer here is one compact object, not a human-readable string
+plus a duplicate structured copy, and `MAX_RESPONSE_CHARS` in
+`src/utils/webmcp.ts` is asserted over every reachable input combination in the
+tests. `get_services` is the tight one at roughly 1,450 characters, so new copy
+in the catalogue will fail the suite before it ships.
+
+`prepare_inquiry` is the only tool whose size a caller controls. Percent-encoding
+a Polish letter into the `mailto:` URL costs six characters, so a note inside its
+own 160-character cap could still burst the budget; the composer shrinks the note
+until the whole response fits. Free text is the only field it is safe to lose.
+
+## Invalid input is an error, not a guess
+
+Required enum arguments — `company_size`, `ai_maturity`, `objective` on
+`recommend_service`, and `service` on `prepare_inquiry` — return
+`{ error: 'invalid_input', field, allowed, message }` when they are missing or
+unrecognised. The first version guessed instead, which meant a call with no
+arguments at all produced a confident-looking recommendation for a company that
+had described nothing, and an enquiry about a package nobody had chosen. That is
+the one failure mode that turns a helpful tool into a misleading one.
+
+Optional arguments stay lenient: an unusable `language` or `team_size` is
+dropped, which cannot mislead anyone.
 
 ## Files
 
 - `src/utils/webmcp.ts` — the service catalogue, the recommendation ladder and
   the enquiry composer. Pure functions, no DOM, no globals
 - `src/utils/webmcpTools.ts` — the three tool descriptors (JSON Schema inputs,
-  annotations) and `registerWebMcpTools`, which is the feature-detection guard
+  validation, annotations) and `registerWebMcpTools`, which is the
+  feature-detection guard
 - `src/components/WebMcpTools.astro` — renders no markup; its module script
   calls the guard once on load. Included on `src/pages/index.astro` and
   `src/pages/en/index.astro`
@@ -71,11 +104,15 @@ inputs narrow:
   `compliance` | `ongoing_support`
 - `service`: the three package ids
 - `team_size`: integer 1–500
-- `notes`: 300 characters, newlines folded before it reaches the `mailto:` URL
+- `notes`: 160 characters, newlines folded before it reaches the `mailto:` URL
 
 Schemas are `additionalProperties: false`, and the handlers re-check every value
-against the same lists anyway — a model can send whatever it likes, and an
-unrecognised value falls back rather than throwing.
+against the same lists anyway: a model can send whatever it likes, and the
+schema is a hint to it, not a guarantee to us.
+
+Tool `title` is localized per page, because that is what a browser shows in its
+own UI. Descriptions stay in English on both pages — they are read by the model,
+not displayed.
 
 ## Testing
 
@@ -93,3 +130,16 @@ sitting unrun since July 2025 because no runner was configured.
   not. Worth revisiting if agent traffic shows up in analytics
 - No declarative (HTML form annotation) tools. There are no forms on the site
 - No cross-origin exposure (`exposedTo` / `fromOrigins`). Nothing needs it
+- No end-to-end test against a real agent. No shipping browser exposes
+  `document.modelContext` yet, so the live proof so far is a stubbed
+  `modelContext` executed against the deployed bundle. Redo it for real once
+  ChatGPT's site-tools setting or Chrome's origin trial is reachable
+
+## Review history
+
+Reviewed by OpenAI Codex on 2026-08-26. It was right about all five of its
+findings: silent fallbacks on required inputs, responses roughly twice the
+Chrome budget, the missing `untrustedContentHint`, English titles on the Polish
+page, and swallowed registration errors. All five are fixed above. Its one
+retracted claim, a PLN 1,399 price, was a stale browser cache; that string
+appears nowhere in the repository.
