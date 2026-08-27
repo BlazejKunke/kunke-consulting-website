@@ -7,6 +7,7 @@ category: "practice"
 language: en
 author: "Blazej Kunke"
 tags: ["AI", "AI training", "workshops", "Poland", "practical AI"]
+heroImage: "/images/500-people-trained-50-sessions.png"
 ---
 
 When I founded ^Kunke Consulting, I brought with me years of corporate experience, a track record of teaching students at the Poznań University of Economics and Business, and a hunch that this knowledge and this energy could be useful to someone.

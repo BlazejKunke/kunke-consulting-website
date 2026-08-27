@@ -7,6 +7,7 @@ category: "practice"
 language: pl
 author: "Błażej Kunke"
 tags: ["AI", "szkolenia AI", "warsztaty", "Poznań", "praktyczne AI"]
+heroImage: "/images/500-osob-50-sesji.png"
 ---
 
 Gdy zakładałem ^Kunke Consulting, miałem za sobą lata pracy w korporacjach, doświadczenie prowadzenia zajęć ze studentami na Uniwersytecie Ekonomicznym w Poznaniu i przeczucie, że ta wiedza i ta energia mogą się komuś przydać.
