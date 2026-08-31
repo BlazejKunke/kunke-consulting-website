@@ -1197,6 +1197,35 @@ const faqs = [
       .kc-nav .kc-btn {
         margin-left: auto;
       }
+
+      /* A phone screen is mostly header if the bar stays as opaque as it is
+         on a desktop: at 88% the CTA scrolling underneath it turns into a
+         blurred smudge. Half-opacity plus a stronger blur keeps the bar
+         legible while the content under it stays readable, and the rule
+         appears only once the page has moved, so the top of the hero is a
+         clean sheet. Chosen from a four-way comparison on 2026-08-31. */
+      .kc-header {
+        background: rgba(250, 249, 246, 0.52);
+        backdrop-filter: saturate(180%) blur(18px);
+        -webkit-backdrop-filter: saturate(180%) blur(18px);
+        border-bottom-color: transparent;
+        transition:
+          background-color 200ms ease,
+          border-color 200ms ease;
+      }
+
+      .kc-header[data-scrolled='true'] {
+        border-bottom-color: rgba(10, 71, 49, 0.08);
+      }
+
+      /* Reclaims 12px of screen to go with the transparency. */
+      .kc-nav {
+        padding-block: 10px;
+      }
+
+      html {
+        scroll-padding-top: 72px;
+      }
     }
 
     @media (max-width: 600px) {
@@ -1799,6 +1828,33 @@ const faqs = [
       };
 
       schedule(erase, HOLD_FULL_MS);
+    }
+
+    // The mobile header is half transparent and drops its rule until the
+    // page moves, so it needs to know whether it has scrolled. Desktop
+    // ignores the attribute entirely.
+    const header = document.querySelector('.kc-header');
+
+    if (header) {
+      let ticking = false;
+
+      const syncHeader = () => {
+        header.setAttribute('data-scrolled', String(window.scrollY > 4));
+        ticking = false;
+      };
+
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (!ticking) {
+            ticking = true;
+            window.requestAnimationFrame(syncHeader);
+          }
+        },
+        { passive: true }
+      );
+
+      syncHeader();
     }
 
     // FAQ: single item open at a time, first one open on load.
