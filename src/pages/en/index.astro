@@ -98,13 +98,36 @@ const packages = [
   }
 ];
 
-const quotes = [
-  { text: 'Beyond passing on the knowledge brilliantly, you also made the atmosphere a friendly one.', who: 'Anna Majewska, SGB Leasing' },
+type Quote = {
+  text: string;
+  name: string;
+  role: string;
+  // Optional client logo, shown in the card footer. Drop a file in
+  // public/images/ and add it here — nothing else needs to change.
+  logo?: { src: string; alt: string };
+};
+
+const quotes: Quote[] = [
+  {
+    text: 'I can wholeheartedly recommend working with Błażej.',
+    name: 'Piotr Górzycki',
+    role: 'Managing Director, LAMILUX Polska'
+  },
+  {
+    text: 'Beyond passing on the knowledge brilliantly, you also made the atmosphere a friendly one.',
+    name: 'Anna Majewska',
+    role: 'SGB Leasing'
+  },
   {
     text: 'The training will save me several dozen minutes a week. I would gladly take part in a more advanced one.',
-    who: 'Post-workshop survey, PDO Drukarnia'
+    name: 'Post-workshop survey',
+    role: 'PDO Drukarnia'
   },
-  { text: 'Thank you for the project we did together.', who: 'Marta Ozga, CEO Ozga Group' }
+  {
+    text: 'Thank you for the project we did together.',
+    name: 'Marta Ozga',
+    role: 'CEO, Ozga Group'
+  }
 ];
 
 const team = [
@@ -866,31 +889,153 @@ const faqs = [
       margin-bottom: 0;
     }
 
-    /* ---------- quotes ---------- */
+    /* ---------- testimonials rail ---------- */
 
-    .kc-quotes {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+    .kc-voices {
+      max-width: var(--kc-wrap);
+      margin: 0 auto;
+      padding: 112px 0 0;
     }
 
-    .kc-quote {
-      border-top: 1px solid var(--kc-rule-20);
-      padding-top: 24px;
-      margin: 0;
+    .kc-voices-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 32px;
+      padding-inline: var(--kc-gut);
+      margin-bottom: 40px;
     }
 
-    .kc-quote p {
+    .kc-voices-head .kc-eyebrow {
+      margin-bottom: 14px;
+    }
+
+    .kc-voices-nav {
+      display: flex;
+      gap: 8px;
+      flex: none;
+    }
+
+    .kc-voices-arrow {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid var(--kc-rule-20);
+      background: transparent;
+      color: var(--kc-green);
       font-size: 17px;
-      line-height: 1.6;
-      margin: 0 0 20px;
+      line-height: 1;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease,
+        opacity 0.18s ease;
+    }
+
+    .kc-voices-arrow:hover:not(:disabled) {
+      background: var(--kc-green);
+      border-color: var(--kc-green);
+      color: var(--kc-bg);
+    }
+
+    .kc-voices-arrow:disabled {
+      opacity: 0.28;
+      cursor: default;
+    }
+
+    /* The rail is the scroll container: it bleeds to the page gutter so the
+       next card peeks in and signals that there is more to the side. */
+    .kc-voices-rail {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scroll-padding-left: var(--kc-gut);
+      padding: 2px var(--kc-gut) 6px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .kc-voices-rail::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Fades the clipped card at the right edge, so the rail reads as "there is
+       more to the side" rather than as a card cut off by the layout. Dropped
+       once the rail is scrolled to the end. */
+    .kc-voices-rail {
+      -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 72px), transparent 100%);
+      mask-image: linear-gradient(to right, #000 calc(100% - 72px), transparent 100%);
+    }
+
+    .kc-voices-rail[data-at-end] {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .kc-voice {
+      flex: 0 0 min(380px, 78vw);
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 32px;
+      background: var(--kc-card);
+      border: 1px solid var(--kc-rule-10);
+      border-radius: 14px;
+    }
+
+    .kc-voice-mark {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 46px;
+      line-height: 0.8;
+      color: var(--kc-rule-25);
+      margin: 0 0 16px;
+    }
+
+    .kc-voice-text {
+      flex: 1;
+      font-size: 21px;
+      line-height: 1.45;
+      letter-spacing: -0.01em;
       color: var(--kc-ink);
+      margin: 0 0 28px;
       text-wrap: pretty;
     }
 
-    .kc-quote figcaption {
+    .kc-voice figcaption {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-top: 1px solid var(--kc-rule-10);
+      padding-top: 20px;
+    }
+
+    .kc-voice-who {
+      display: block;
       font-size: 15px;
+      font-weight: 500;
+      color: var(--kc-ink);
+    }
+
+    .kc-voice-role {
+      display: block;
+      font-size: 14px;
+      line-height: 1.35;
       color: var(--kc-muted);
+      margin-top: 3px;
+    }
+
+    .kc-voice-logo {
+      margin-left: auto;
+      flex: none;
+      height: 26px;
+      width: auto;
+      opacity: 0.7;
     }
 
     /* ---------- team ---------- */
@@ -1121,8 +1266,16 @@ const faqs = [
         margin-top: 32px;
       }
 
+      .kc-voices {
+        padding-top: 72px;
+      }
+
+      /* Touch scrolling carries the rail here; the arrows would just take room. */
+      .kc-voices-nav {
+        display: none;
+      }
+
       .kc-cards,
-      .kc-quotes,
       .kc-team {
         grid-template-columns: 1fr;
       }
@@ -1321,6 +1474,29 @@ const faqs = [
       .kc-case-body h2,
       .kc-contact h2 {
         font-size: 26px;
+      }
+
+      .kc-voices {
+        padding-top: 44px;
+      }
+
+      .kc-voices-head {
+        margin-bottom: 28px;
+      }
+
+      .kc-voice {
+        flex-basis: min(340px, 84vw);
+        padding: 26px 24px;
+      }
+
+      .kc-voice-mark {
+        font-size: 38px;
+        margin-bottom: 12px;
+      }
+
+      .kc-voice-text {
+        font-size: 18px;
+        margin-bottom: 22px;
       }
 
       .kc-team-h2 {
@@ -1609,6 +1785,64 @@ const faqs = [
       </div>
     </section>
 
+    <section class="kc-voices" aria-labelledby="kc-voices-title">
+      <div class="kc-voices-head">
+        <div>
+          <p class="kc-eyebrow">Testimonials</p>
+          <h2 id="kc-voices-title" class="kc-h2">What clients say.</h2>
+        </div>
+        <div class="kc-voices-nav">
+          <button
+            type="button"
+            class="kc-voices-arrow"
+            data-voices-prev
+            aria-label="Previous testimonial"
+          >
+            &#8592;
+          </button>
+          <button
+            type="button"
+            class="kc-voices-arrow"
+            data-voices-next
+            aria-label="Next testimonial"
+          >
+            &#8594;
+          </button>
+        </div>
+      </div>
+      <div
+        class="kc-voices-rail"
+        data-voices-rail
+        tabindex="0"
+        role="group"
+        aria-label="Client testimonials, scrolled horizontally"
+      >
+        {
+          quotes.map((quote) => (
+            <figure class="kc-voice">
+              <p class="kc-voice-mark" aria-hidden="true">&#8220;</p>
+              <p class="kc-voice-text">{quote.text}</p>
+              <figcaption>
+                <span>
+                  <span class="kc-voice-who">{quote.name}</span>
+                  <span class="kc-voice-role">{quote.role}</span>
+                </span>
+                {quote.logo && (
+                  <img
+                    class="kc-voice-logo"
+                    src={quote.logo.src}
+                    alt={quote.logo.alt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </section>
+
     <section class="kc-case" aria-labelledby="kc-case-title">
       <div class="kc-case-panel">
         <div class="kc-case-body">
@@ -1675,19 +1909,6 @@ const faqs = [
           That is why I do not sell automating everything. I promise as much as we can deliver, and
           I try to deliver more.
         </p>
-      </div>
-    </section>
-
-    <section class="kc-section" aria-label="Client testimonials">
-      <div class="kc-quotes">
-        {
-          quotes.map((quote) => (
-            <figure class="kc-quote">
-              <p>{quote.text}</p>
-              <figcaption>{quote.who}</figcaption>
-            </figure>
-          ))
-        }
       </div>
     </section>
 
@@ -1881,6 +2102,38 @@ const faqs = [
         });
       });
     });
+
+    // Testimonial rail: arrow buttons for mouse users. The rail is a native
+    // scroll container, so touch, trackpad and keyboard already work without
+    // this — the buttons only add a click target and disable at the ends.
+    const voicesRail = document.querySelector('[data-voices-rail]');
+    const voicesPrev = document.querySelector('[data-voices-prev]');
+    const voicesNext = document.querySelector('[data-voices-next]');
+
+    if (voicesRail && voicesPrev && voicesNext) {
+      const voicesStep = () => {
+        const card = voicesRail.querySelector('.kc-voice');
+        return card ? card.getBoundingClientRect().width + 20 : voicesRail.clientWidth;
+      };
+
+      const syncVoices = () => {
+        const max = voicesRail.scrollWidth - voicesRail.clientWidth - 2;
+        const atEnd = voicesRail.scrollLeft >= max;
+        voicesPrev.disabled = voicesRail.scrollLeft <= 2;
+        voicesNext.disabled = atEnd;
+        voicesRail.toggleAttribute('data-at-end', atEnd);
+      };
+
+      voicesPrev.addEventListener('click', () => {
+        voicesRail.scrollBy({ left: -voicesStep(), behavior: 'smooth' });
+      });
+      voicesNext.addEventListener('click', () => {
+        voicesRail.scrollBy({ left: voicesStep(), behavior: 'smooth' });
+      });
+      voicesRail.addEventListener('scroll', syncVoices, { passive: true });
+      window.addEventListener('resize', syncVoices);
+      syncVoices();
+    }
   </script>
 </body>
 </html>
