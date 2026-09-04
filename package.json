@@ -9,7 +9,8 @@
     "test": "node --test --experimental-strip-types tests/*.test.ts",
     "check:hreflang": "node scripts/check-hreflang.mjs",
     "astro": "astro",
-    "optimize-images": "node scripts/optimize-images.mjs"
+    "optimize-images": "node scripts/optimize-images.mjs",
+    "game": "node game/serve.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

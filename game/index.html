@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FCFBF7'/%3E%3Cpath d='M6 22 L14 14 L20 20 L26 10' stroke='%231F5C3A' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<title>Metro — build a underground railway for a city that does not deserve one</title>
+<style>
+  :root {
+    --bg: #FCFBF7;
+    --ink: #14203A;
+    --navy: #1B2A7A;
+    --chip: #DFE1F6;
+    --chip-hover: #CFD2F0;
+    --chip-active: #9AA0D0;
+    --panel: rgba(255,255,255,0.92);
+    --shadow: 0 2px 10px rgba(28,32,74,0.10), 0 1px 2px rgba(28,32,74,0.08);
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; overflow: hidden; background: var(--bg); }
+  body { font-family: var(--sans); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  canvas#map { position: fixed; inset: 0; display: block; touch-action: none; cursor: grab; }
+  canvas#map.building { cursor: crosshair; }
+  canvas#map.panning { cursor: grabbing; }
+
+  .btn {
+    width: 44px; height: 44px; border-radius: 50%; border: 0;
+    background: var(--chip); color: var(--navy);
+    display: grid; place-items: center; cursor: pointer;
+    box-shadow: var(--shadow); transition: background .12s, transform .12s;
+  }
+  .btn:hover { background: var(--chip-hover); }
+  .btn:active { transform: scale(.94); }
+  .btn.on { background: var(--chip-active); color: #fff; }
+  .btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+
+  .pill {
+    background: #fff; border-radius: 14px; box-shadow: var(--shadow);
+    padding: 10px 12px; display: flex; align-items: center; gap: 10px;
+  }
+
+  /* ---- top left: city name ---- */
+  #cityPill { position: fixed; top: 14px; left: 14px; z-index: 5; }
+  #cityName { font-weight: 800; font-size: 20px; letter-spacing: -0.01em; }
+  #cityName .star { color: #D93A2B; }
+  .mini { width: 30px; height: 30px; border-radius: 50%; border: 0; background: var(--chip); color: var(--navy); cursor: pointer; display: grid; place-items: center; }
+  .mini:hover { background: var(--chip-hover); }
+  .mini svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---- top centre: toolbar ---- */
+  #toolbar { position: fixed; top: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 5; }
+
+  /* ---- top right: money ---- */
+  #stats { position: fixed; top: 14px; right: 14px; z-index: 5; display: flex; gap: 10px; align-items: stretch; }
+  #money { font-family: var(--mono); font-weight: 700; font-size: 20px; }
+  .stat { display: flex; flex-direction: column; gap: 1px; }
+  .stat .k { font-size: 9.5px; letter-spacing: .09em; text-transform: uppercase; color: #6E7590; font-weight: 700; }
+  .stat .v { font-family: var(--mono); font-weight: 700; font-size: 14px; }
+
+  /* ---- clock ---- */
+  #clock { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); z-index: 5; gap: 14px; }
+  #date { font-weight: 700; font-size: 13px; }
+  #time { font-family: var(--mono); font-weight: 800; font-size: 22px; letter-spacing: -.02em; }
+  #speeds { display: flex; gap: 5px; }
+  .sp { min-width: 32px; height: 30px; border-radius: 9px; border: 0; background: var(--chip); color: var(--navy); font-family: var(--mono); font-weight: 700; font-size: 12px; cursor: pointer; }
+  .sp:hover { background: var(--chip-hover); }
+  .sp.on { background: var(--chip-active); color: #fff; }
+
+  /* ---- right: lines ---- */
+  #panel {
+    position: fixed; top: 132px; right: 66px; width: 296px; max-height: calc(100vh - 200px);
+    overflow-y: auto; z-index: 5; display: flex; flex-direction: column; gap: 8px;
+    scrollbar-width: thin;
+  }
+  .card { background: var(--panel); border-radius: 14px; box-shadow: var(--shadow); padding: 11px 12px; }
+  .lineRow { display: flex; align-items: center; gap: 9px; }
+  .swatch { width: 15px; height: 15px; border-radius: 4px; flex: none; }
+  .lineName { font-weight: 700; font-size: 13.5px; flex: 1; cursor: text; line-height: 1.2; }
+  .lineName:hover { text-decoration: underline dotted; }
+  .lineMeta { font-family: var(--mono); font-size: 10.5px; color: #6E7590; margin-top: 5px; letter-spacing: -.01em; }
+  .lineBtns { display: flex; gap: 5px; margin-top: 8px; flex-wrap: wrap; }
+  .tb { border: 0; border-radius: 8px; background: var(--chip); color: var(--navy); font: 600 11.5px var(--sans); padding: 5px 9px; cursor: pointer; }
+  .tb:hover { background: var(--chip-hover); }
+  .tb.on { background: var(--chip-active); color: #fff; }
+  .tb:disabled { opacity: .38; cursor: not-allowed; }
+  .tb.wide { flex: 1; text-align: center; }
+  .trainCtl { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+  .trainCtl .n { font-family: var(--mono); font-weight: 700; font-size: 13px; min-width: 18px; text-align: center; }
+  .rnd { width: 26px; height: 26px; border-radius: 8px; border: 0; background: var(--chip); color: var(--navy); font-weight: 800; cursor: pointer; font-size: 14px; line-height: 1; }
+  .rnd:hover { background: var(--chip-hover); }
+  h3.cardTitle { margin: 0 0 8px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #6E7590; }
+
+  /* ---- bottom left: minimap ---- */
+  #minimapWrap { position: fixed; left: 14px; bottom: 14px; z-index: 5; background: rgba(223,225,246,0.6); border-radius: 12px; padding: 6px; box-shadow: var(--shadow); }
+  #minimap { display: block; border-radius: 8px; cursor: pointer; }
+
+  /* ---- zoom ---- */
+  #zoomBox { position: fixed; right: 12px; top: 50%; transform: translateY(-50%); z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  #zoom { -webkit-appearance: none; appearance: none; writing-mode: vertical-lr; direction: rtl; width: 8px; height: 130px; background: var(--chip); border-radius: 6px; outline: none; cursor: pointer; }
+  #zoom::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 14px; border-radius: 4px; background: var(--chip-active); cursor: grab; }
+  #zoom::-moz-range-thumb { width: 20px; height: 14px; border: 0; border-radius: 4px; background: var(--chip-active); cursor: grab; }
+
+  /* ---- ticker ---- */
+  #ticker {
+    position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 5;
+    max-width: min(620px, 60vw); font-size: 12.5px; font-weight: 600; color: #3D4460;
+    background: var(--panel); border-radius: 12px; padding: 9px 14px; box-shadow: var(--shadow);
+    text-align: center; line-height: 1.35;
+  }
+
+  /* ---- build bar ---- */
+  #buildBar {
+    position: fixed; left: 50%; bottom: 70px; transform: translateX(-50%); z-index: 6;
+    display: none; align-items: center; gap: 12px;
+    background: #1B2A7A; color: #fff; border-radius: 14px; padding: 10px 14px; box-shadow: var(--shadow);
+    font-size: 12.5px; font-weight: 600;
+  }
+  #buildBar.on { display: flex; }
+  #buildBar .k { opacity: .7; font-weight: 600; }
+  #buildBar button { border: 0; border-radius: 9px; background: rgba(255,255,255,.16); color: #fff; font: 700 12px var(--sans); padding: 6px 11px; cursor: pointer; }
+  #buildBar button:hover { background: rgba(255,255,255,.28); }
+
+  #costTag {
+    position: fixed; z-index: 7; pointer-events: none; display: none;
+    background: #14203A; color: #fff; border-radius: 8px; padding: 5px 8px;
+    font: 600 11px var(--mono); white-space: nowrap; box-shadow: var(--shadow);
+  }
+  #costTag.bad { background: #D93A2B; }
+
+  /* ---- daily report ---- */
+  #report { position: fixed; left: 14px; top: 50%; transform: translateY(-50%); width: 268px; z-index: 6; display: none; }
+  #report.on { display: block; }
+  #report .rh { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #6E7590; font-weight: 700; }
+  #report .rd { font-weight: 800; font-size: 14px; margin: 2px 0 8px; }
+  #report .hl { background: var(--bg); border-left: 3px solid var(--chip-active); border-radius: 6px; padding: 8px 10px; font-weight: 700; font-size: 11.5px; line-height: 1.35; margin-bottom: 9px; }
+  #report .row { display: flex; justify-content: space-between; font-size: 11.5px; padding: 1.5px 0; }
+  #report .row .v { font-family: var(--mono); font-weight: 700; }
+  #report .row.tot { border-top: 2px solid var(--chip); margin-top: 5px; padding-top: 5px; font-weight: 800; }
+  #report .x { position: absolute; top: 8px; right: 8px; border: 0; background: none; color: #9AA0B4; cursor: pointer; font-size: 15px; line-height: 1; }
+
+  /* ---- station inspector ---- */
+  #inspect { position: fixed; z-index: 7; width: 244px; display: none; }
+  #inspect .nm { font-weight: 800; font-size: 15px; line-height: 1.2; margin-bottom: 2px; }
+  #inspect .sub { font-size: 11px; color: #6E7590; margin-bottom: 8px; }
+  #inspect .row { display: flex; justify-content: space-between; font-size: 11.5px; padding: 2px 0; }
+  #inspect .row .v { font-family: var(--mono); font-weight: 700; }
+
+  /* ---- modals ---- */
+  .scrim { position: fixed; inset: 0; background: rgba(20,32,58,.34); z-index: 20; display: none; place-items: center; padding: 20px; }
+  .scrim.on { display: grid; }
+  .modal { background: #fff; border-radius: 18px; box-shadow: 0 18px 50px rgba(20,32,58,.28); padding: 22px; width: min(520px, 92vw); max-height: 86vh; overflow-y: auto; }
+  .modal h2 { margin: 0 0 4px; font-size: 19px; letter-spacing: -.01em; }
+  .modal p.lede { margin: 0 0 16px; color: #5B6280; font-size: 13px; line-height: 1.5; }
+  .modal input[type=text] { width: 100%; border: 2px solid var(--chip); border-radius: 10px; padding: 10px 12px; font: 700 15px var(--sans); color: var(--ink); outline: none; }
+  .modal input[type=text]:focus { border-color: var(--chip-active); }
+  .modalBtns { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+  .pbtn { border: 0; border-radius: 10px; padding: 9px 15px; font: 700 13px var(--sans); cursor: pointer; background: var(--chip); color: var(--navy); }
+  .pbtn.primary { background: var(--navy); color: #fff; }
+  .pbtn:hover { filter: brightness(1.06); }
+  .repGrid { display: grid; grid-template-columns: 1fr auto; gap: 5px 14px; font-size: 13px; margin: 12px 0; }
+  .repGrid .v { font-family: var(--mono); font-weight: 700; text-align: right; }
+  .repGrid .tot { border-top: 2px solid var(--chip); padding-top: 7px; margin-top: 3px; font-weight: 800; }
+  .headline { background: var(--bg); border-left: 4px solid var(--chip-active); border-radius: 8px; padding: 11px 13px; font-weight: 700; font-size: 13px; line-height: 1.4; margin: 4px 0 12px; }
+  .help h4 { margin: 16px 0 5px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: #6E7590; }
+  .help ul { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.65; color: #3D4460; }
+  .help kbd { font: 700 11px var(--mono); background: var(--chip); border-radius: 5px; padding: 1px 5px; }
+</style>
+</head>
+<body>
+<canvas id="map"></canvas>
+
+<div id="cityPill" class="pill">
+  <span id="cityName">—</span>
+  <button class="mini" id="renameCity" title="Rename the city">
+    <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+  </button>
+</div>
+
+<div id="toolbar">
+  <button class="btn on" id="tAreas" title="Show districts (A)"><svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></button>
+  <button class="btn" id="tDemand" title="Show where people want to travel (D)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/></svg></button>
+  <button class="btn on" id="tLabels" title="Show station names (N)"><svg viewBox="0 0 24 24"><path d="M4 7V5h16v2"/><path d="M9 19h6"/><path d="M12 5v14"/></svg></button>
+  <button class="btn" id="tSave" title="Save (S)"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg></button>
+  <button class="btn" id="tNew" title="New city"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+  <button class="btn" id="tHelp" title="How to play (?)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4"/><path d="M12 17.5h.01"/></svg></button>
+</div>
+
+<div id="stats">
+  <div class="pill"><div class="stat"><span class="k">Balance</span><span class="v" id="money">—</span></div></div>
+  <div class="pill">
+    <div class="stat"><span class="k">Today</span><span class="v" id="takings">—</span></div>
+    <div class="stat"><span class="k">Journeys</span><span class="v" id="paxToday">—</span></div>
+    <div class="stat"><span class="k">Happy</span><span class="v" id="sat">—</span></div>
+  </div>
+</div>
+
+<div id="clock" class="pill">
+  <div><div id="date">—</div></div>
+  <div id="time">00:00</div>
+  <div id="speeds">
+    <button class="sp on" data-s="0" title="Pause (Space)">II</button>
+    <button class="sp" data-s="1">1x</button>
+    <button class="sp" data-s="2">2x</button>
+    <button class="sp" data-s="3">4x</button>
+    <button class="sp" data-s="4">8x</button>
+  </div>
+</div>
+
+<div id="panel"></div>
+
+<div id="zoomBox">
+  <button class="mini" id="zoomIn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+  <input type="range" id="zoom" min="0" max="1000" value="300">
+  <button class="mini" id="zoomOut"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+  <button class="mini" id="zoomFit" title="Fit the whole city"><svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
+</div>
+
+<div id="minimapWrap"><canvas id="minimap" width="190" height="127"></canvas></div>
+
+<div id="ticker">—</div>
+
+<div id="buildBar">
+  <span id="buildLabel">Building</span>
+  <span class="k" id="buildHint">click the map to add a station, click an existing station to connect it</span>
+  <button id="buildUndo">Undo last</button>
+  <button id="buildDone">Done</button>
+</div>
+
+<div id="report" class="card"></div>
+<div id="costTag"></div>
+<div id="inspect" class="card"></div>
+
+<div class="scrim" id="scrim"><div class="modal" id="modal"></div></div>
+
+<script src="data/names.js"></script>
+<script src="src/config.js"></script>
+<script src="src/rng.js"></script>
+<script src="src/city.js"></script>
+<script src="src/network.js"></script>
+<script src="src/sim.js"></script>
+<script src="src/render.js"></script>
+<script src="src/ui.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
