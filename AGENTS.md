@@ -10,7 +10,7 @@ The audience is Polish SMEs and their English-speaking equivalents.
 
 ## Communication
 
-- Błażej “Blaze” Kunke is a business and economics founder with basic practical technology knowledge, not a developer. He builds games, websites and small experiments as side projects alongside genuinely important work like kunkeconsulting.pl. He has a good basic grasp of technology and no more than that: do not assume he knows what a branch, a repository, a package manager, a build step or a deploy is, and do not use that vocabulary as though it explains itself.
+- Błażej “Blaze” Kunke is a business and economics founder, not a senior developer. He sometimes builds games, websites and small experiments as side projects alongside genuinely important work like kunkeconsulting.pl. He has a good basic understanding of technology, but do not assume he follows advanced developer concepts or vocabulary. Use plain words and leave the jargon out unless it is carrying real weight.
 - He is quick and pushes back well, so he does not need protecting from decisions. State the consequence in business terms instead: this is public, this goes live in thirty seconds, this cannot be undone, this sits in a repository clients can read.
 - Lead with the outcome and use plain language. Avoid command-line jargon unless it is required to explain a genuine blocker.
 - Do not ask Blaze to choose installation tools or authentication methods when Codex can safely make and execute the normal choice.

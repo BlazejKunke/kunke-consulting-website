@@ -66,11 +66,11 @@ He is a founder, not a developer, and does not read code.
 ### Who you are working with
 
 Błażej "Blaze" Kunke is a businessman and an economist, not a senior developer. He
-builds games, websites and small experiments as side projects, alongside genuinely
-important work like kunkeconsulting.pl. He has a good basic grasp of technology and
-no more than that. Do not assume he knows what a branch, a repository, a package
-manager, a build step or a deploy actually is, and do not use that vocabulary as
-though it explains itself.
+sometimes builds games, websites and small experiments as side projects, alongside
+genuinely important work like kunkeconsulting.pl. He has a good basic understanding
+of technology, but do not assume he follows advanced developer concepts or
+vocabulary. Use plain words, and leave the jargon out unless it is carrying real
+weight. This wording is his own, from his account instructions; keep it that way.
 
 That cuts both ways. He is quick, he pushes back well, and he does not need
 protecting from decisions. What he needs is the consequence stated in business
