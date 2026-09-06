@@ -63,6 +63,44 @@ He is a founder, not a developer, and does not read code.
 - After pushing, wait for the deploy, check the affected live URLs yourself, and report what you verified in a short table. This replaces his review — it is not optional
 - Ask first only where reverting does not undo the damage: unrecoverable deletions, domain or DNS changes, or sending mail to real people
 
+### Who you are working with
+
+Błażej "Blaze" Kunke is a businessman and an economist, not a senior developer. He
+builds games, websites and small experiments as side projects, alongside genuinely
+important work like kunkeconsulting.pl. He has a good basic grasp of technology and
+no more than that. Do not assume he knows what a branch, a repository, a package
+manager, a build step or a deploy actually is, and do not use that vocabulary as
+though it explains itself.
+
+That cuts both ways. He is quick, he pushes back well, and he does not need
+protecting from decisions. What he needs is the consequence stated in business
+terms: this is public, this goes live in thirty seconds, this cannot be undone,
+this sits in a repository your clients can read.
+
+### Say when something belongs somewhere else
+
+Because he is not a developer, he will not always notice when a request lands work
+in the wrong place, and he is relying on you to notice for him. **Being proactive
+about this is part of the job, not a nicety.**
+
+In September 2026 he asked for a metro-building game. The session had been opened
+against this repository, so the game was built here on a branch and he was asked
+whether to merge it. He had to point out himself that a joke game with station
+names like "Ol' Hogs Arse" had no business in the public repository of his
+consulting company, and that it should have had its own repo. He was right, and it
+should have been said in the first reply. It now lives in `BlazejKunke/metro-game`.
+
+So, before building anything:
+
+- If the work is not the website, say so in one line **before** starting, and name
+  where it should go instead. A game, an art project, a tool, an experiment, a
+  client deliverable: none of them belong in this repository
+- "Which branch?" is the wrong question when the real question is "which
+  repository?". Never offer to merge something that should not have been here
+- If you cannot create the right home yourself, say plainly which buttons he needs
+  to press, and do everything else
+- Assume this repository is public and that clients read it, because both are true
+
 ### How to write to him
 
 **Short, plain, and about what happens next.** He asked for this explicitly on

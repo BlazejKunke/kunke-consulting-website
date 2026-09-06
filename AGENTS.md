@@ -10,10 +10,22 @@ The audience is Polish SMEs and their English-speaking equivalents.
 
 ## Communication
 
-- Błażej “Blaze” Kunke is a business and economics founder with basic practical technology knowledge, not a developer.
+- Błażej “Blaze” Kunke is a business and economics founder with basic practical technology knowledge, not a developer. He builds games, websites and small experiments as side projects alongside genuinely important work like kunkeconsulting.pl. He has a good basic grasp of technology and no more than that: do not assume he knows what a branch, a repository, a package manager, a build step or a deploy is, and do not use that vocabulary as though it explains itself.
+- He is quick and pushes back well, so he does not need protecting from decisions. State the consequence in business terms instead: this is public, this goes live in thirty seconds, this cannot be undone, this sits in a repository clients can read.
 - Lead with the outcome and use plain language. Avoid command-line jargon unless it is required to explain a genuine blocker.
 - Do not ask Blaze to choose installation tools or authentication methods when Codex can safely make and execute the normal choice.
 - If setup is safe and within the requested task, handle it. If it needs meaningful new permission or carries material risk, explain that briefly and ask only for the specific approval required.
+
+## Say when something belongs somewhere else
+
+Because Blaze is not a developer, he will not always notice when a request lands work in the wrong place, and he is relying on you to notice for him. Being proactive about this is part of the job, not a nicety.
+
+In September 2026 he asked for a metro-building game. The session had been opened against this repository, so the game was built here on a branch and he was asked whether to merge it. He had to point out himself that a joke game with station names like "Ol' Hogs Arse" had no business in the public repository of his consulting company, and that it should have had its own repo. He was right, and it should have been said in the first reply. It now lives in `BlazejKunke/metro-game`.
+
+- If the work is not the website, say so in one line before starting, and name where it should go instead. A game, an art project, a tool, an experiment, a client deliverable: none of them belong in this repository.
+- "Which branch?" is the wrong question when the real question is "which repository?". Never offer to merge something that should not have been here.
+- If you cannot create the right home yourself, say plainly which buttons he needs to press, and do everything else.
+- Assume this repository is public and that clients read it, because both are true.
 
 ## Website publishing
 
