@@ -28,9 +28,20 @@ const absoluteOgImage = ogImage
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const currentLocale = detectLocale(Astro.url.pathname);
 const htmlLang = localeHtmlLangMap[currentLocale] ?? currentLocale;
-const languageSwitcherUrls = buildLanguageSwitcherUrls(Astro.url.pathname, siteUrl);
-// Empty on every page this layout currently wraps — they are all Polish-only.
-const hreflangLinks = buildHreflangLinks(Astro.url.pathname, siteUrl);
+const isAvailabilityPage = Astro.url.pathname === '/availability/' || Astro.url.pathname === '/en/availability/' || Astro.url.pathname === '/availability' || Astro.url.pathname === '/en/availability';
+const languageSwitcherUrls = isAvailabilityPage
+  ? [
+      { locale: 'pl' as const, href: new URL('/availability/', siteUrl).href },
+      { locale: 'en' as const, href: new URL('/en/availability/', siteUrl).href },
+    ]
+  : buildLanguageSwitcherUrls(Astro.url.pathname, siteUrl);
+const hreflangLinks = isAvailabilityPage
+  ? [
+      { hreflang: 'pl', href: new URL('/availability/', siteUrl).href },
+      { hreflang: 'en', href: new URL('/en/availability/', siteUrl).href },
+      { hreflang: 'x-default', href: new URL('/availability/', siteUrl).href },
+    ]
+  : buildHreflangLinks(Astro.url.pathname, siteUrl);
 const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
 ---
 
