@@ -2,8 +2,10 @@
 import { availability, type AvailabilityStatus } from '../content/availability';
 import { getDateKeyInTimeZone, isPastDate } from '../utils/availabilityDates';
 
+interface Props { locale?: 'pl' | 'en'; }
+const { locale = 'pl' } = Astro.props;
 
-const monthNames = [
+const monthNames = locale === 'en' ? [
   'styczeń',
   'luty',
   'marzec',
@@ -19,7 +21,11 @@ const monthNames = [
 ];
 
 const weekdayNames = ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Niedz'];
-const statusDetails: Record<AvailabilityStatus, { label: string; shortLabel: string }> = {
+const statusDetails: Record<AvailabilityStatus, { label: string; shortLabel: string }> = locale === 'en' ? {
+  available: { label: 'Available', shortLabel: 'Available' },
+  'partially-available': { label: 'Partially available', shortLabel: 'Partial' },
+  unavailable: { label: 'Unavailable', shortLabel: 'Busy' },
+} : {
   available: { label: 'Dostępny', shortLabel: 'Dostępny' },
   'partially-available': { label: 'Częściowo dostępny', shortLabel: 'Częściowo' },
   unavailable: { label: 'Niedostępny', shortLabel: 'Zajęty' },
@@ -48,7 +54,7 @@ const calendars = availability.months.map((month) => {
       statusLabel: statusDetails[status].label,
       shortStatusLabel: statusDetails[status].shortLabel,
       isPast,
-      accessibleDate: new Intl.DateTimeFormat('pl-PL', {
+      accessibleDate: new Intl.DateTimeFormat(locale === 'en' ? 'en-GB' : 'pl-PL', {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
@@ -67,7 +73,7 @@ const calendars = availability.months.map((month) => {
 ---
 
 <div class="availability-calendar">
-  <div class="legend" aria-label="Legenda statusów dostępności">
+  <div class="legend" aria-label={locale === "en" ? "Availability status legend" : "Legenda statusów dostępności"}>
     {(Object.entries(statusDetails) as [AvailabilityStatus, { label: string; shortLabel: string }][]).map(
       ([status, details]) => (
         <div class="legend-item">
@@ -136,13 +142,13 @@ const calendars = availability.months.map((month) => {
       day.classList.remove('status-available', 'status-partially-available');
       day.classList.add('status-unavailable', 'is-past');
 
-      const unavailableLabel = `${dateLabel}: Niedostępny`;
+      const unavailableLabel = `${dateLabel}: ${locale === 'en' ? 'Unavailable' : 'Niedostępny'}`;
       day.setAttribute('aria-label', unavailableLabel);
       day.setAttribute('title', unavailableLabel);
 
       const statusLabel = day.querySelector('.day-status');
       if (statusLabel) {
-        statusLabel.textContent = 'Zajęty';
+        statusLabel.textContent = locale === 'en' ? 'Busy' : 'Zajęty';
       }
     });
   };
