@@ -6,6 +6,19 @@ interface Props { locale?: 'pl' | 'en'; }
 const { locale = 'pl' } = Astro.props;
 
 const monthNames = locale === 'en' ? [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+] : [
   'styczeń',
   'luty',
   'marzec',
@@ -20,7 +33,10 @@ const monthNames = locale === 'en' ? [
   'grudzień',
 ];
 
-const weekdayNames = ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Niedz'];
+const weekdayNames = locale === 'en'
+  ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  : ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Niedz'];
+
 const statusDetails: Record<AvailabilityStatus, { label: string; shortLabel: string }> = locale === 'en' ? {
   available: { label: 'Available', shortLabel: 'Available' },
   'partially-available': { label: 'Partially available', shortLabel: 'Partial' },
