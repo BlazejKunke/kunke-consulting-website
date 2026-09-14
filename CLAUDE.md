@@ -263,6 +263,20 @@ same public Apps Script endpoint, with the same fake `FormSecret`, until it was 
 on 2026-07-27. That page was archived four days later. **The site collects no personal
 data through any form.**
 
+**But the backend outlived both forms.** Checked on 2026-09-15, that Apps Script web app
+is still deployed and still answers without a sign-in, so anyone holding the URL — which
+was public here for years — can still reach it. Deleting a form does not disable its
+backend. It is not in `blazej.kunke@gmail.com`, so it has to be archived from the account
+that owns it (most likely `info@kunkeconsulting.pl`), and the spreadsheet behind it still
+holds real submissions. Steps are in
+[`docs/contact-form-archive.md`](docs/contact-form-archive.md); this is Blaze's to do,
+since it needs that Google account.
+
+`/verify.html` is the opposite case and must be left alone. Its Apps Script endpoint is
+deliberately public, and it behaves: it takes one credential code, returns only that
+certificate's course name and dates, exposes no personal data and cannot enumerate. Do
+not "clean it up" alongside the contact-form one — they are different deployments.
+
 Social links are LinkedIn, YouTube and — despite what this file said until July 2026 —
 Facebook, pointing at Błażej's personal profile from `SiteFooter.astro`,
 `thank-you.astro` and the `sameAs` arrays in both homepages and `BaseLayout`. Whether it

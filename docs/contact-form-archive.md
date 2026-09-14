@@ -4,25 +4,59 @@ The site has been **mailto-only** since July 2026. Blaze decided email was enoug
 the pages that carried the form were retired in the same clean-up. `ContactForm.astro`
 was deleted on 2026-07-27 because nothing rendered it any more.
 
-This file exists so the Apps Script setup is not lost. Nothing here is live.
+This file exists so the Apps Script setup is not lost. The form is gone from the site,
+but **the Apps Script behind it is still running** — see the next section.
 
-## Before reusing any of this — rotate the secrets
+## Status: the endpoint is LIVE and must be shut down
 
-Both values below sat in the HTML of a public website and in a public GitHub repo, so
-they were never actually secret. If the form is ever revived:
+**Checked 2026-09-15. The deployment is still running.** An earlier version of this
+file guessed it "may well be dead already". That guess was wrong, and it is worth
+saying plainly why it mattered: removing the form from the site removed the *caller*,
+not the *backend*. The web app kept serving.
+
+What the check found:
+
+- A `GET` to the `/exec` URL returns the deployment's own page, so the script executes
+- It answers **without any sign-in**, so the web app is deployed as accessible to anyone
+- Therefore it is reachable, and presumably still writable, by anyone who has the URL —
+  and the URL sat in this public repo and in the site's HTML for years
+
+The `FormSecret` (`kunke-2025`) is **not** a credential and there is nothing to revoke
+in it. It was a fixed string shipped in public HTML, so it never authenticated anything
+and offers no protection now. Do not mistake it for a secret that needs rotating.
+
+### What has to happen, in the Google account that owns the script
+
+The deployment is **not** in `blazej.kunke@gmail.com` — that Drive holds no matching
+Apps Script project, so it belongs to another account, most likely
+`info@kunkeconsulting.pl`. It can only be closed from there:
+
+1. Open [script.google.com](https://script.google.com) signed in as that account
+2. Find the project behind deployment `AKfycbz5xj…` (full id in Git history, see below)
+3. **Deploy → Manage deployments → Archive** it, or delete the project outright
+4. Confirm it actually stopped, with `npm run check:legacy-endpoint`. That script
+   GETs the URL and fails while the deployment still answers. It is deliberately not
+   in CI — a check that goes red on every commit until someone acts just trains people
+   to ignore red builds
+5. Open the spreadsheet it wrote to, and deal with what is in it — the form collected
+   names, work email addresses and free-text messages, so retained rows are personal
+   data under GDPR. Delete what is not needed, and check the file's sharing is not set
+   to "anyone with the link"
+
+### If the form is ever revived
 
 - Deploy a **new** Apps Script web app and use its new URL
-- Replace the `FormSecret` value, or drop it for something real
-
-The endpoint may well be dead already; a deleted or redeployed Apps Script stops
-accepting posts.
+- Drop `FormSecret` entirely, or replace it with something that is actually secret —
+  which means something the browser never sees
 
 ## How it worked
 
 A plain HTML `<form>` POSTing to a Google Apps Script web app, which appended rows to a
 spreadsheet. No backend, no dependencies.
 
-- **Endpoint:** `https://script.google.com/macros/s/AKfycbz5xjPMBICnaCIvsE52rFHLX57iYORLXleQMUMobIorOvifsaNj5_9LEGsnBdC13NNWdQ/exec`
+- **Endpoint:** deployment `AKfycbz5xj…`, truncated on purpose. It is still live, so
+  this file no longer carries a working copy-pasteable URL. The full string is in Git
+  history (`git log -S AKfycbz5xj --all`) if you need it to identify the deployment
 - **Method:** `POST`, body as `URLSearchParams`, `mode: 'no-cors'`
 
 `no-cors` matters: Apps Script does not return CORS headers, so the browser cannot read
