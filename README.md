@@ -23,7 +23,7 @@ Contact is by email throughout. There is no contact form.
 
 ## Tech stack
 
-- [Astro 5](https://astro.build/) — static site generation, no UI framework
+- [Astro 7](https://astro.build/) — static site generation, no UI framework
 - TypeScript in strict mode
 - Astro Content Collections with Zod validation for the blog
 - Hosted on [Netlify](https://netlify.com), deployed automatically from `main`

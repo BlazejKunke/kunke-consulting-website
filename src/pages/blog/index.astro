@@ -20,7 +20,7 @@ const [featured, ...rest] = posts;
 const toGridPost = (post: (typeof posts)[number]): GridPost => {
   const category = resolveCategory(post.data);
   return {
-    href: `/blog/${post.slug}/`,
+    href: `/blog/${post.id}/`,
     title: post.data.title,
     excerpt: post.data.description,
     date: formatDate(post.data.date, 'pl'),
@@ -73,7 +73,7 @@ const blogSchema = {
     headline: post.data.title,
     description: post.data.description,
     datePublished: post.data.date.toISOString(),
-    url: `https://kunkeconsulting.pl/blog/${post.slug}/`,
+    url: `https://kunkeconsulting.pl/blog/${post.id}/`,
     author: { '@type': 'Person', name: 'Błażej Kunke' }
   }))
 };
@@ -112,12 +112,12 @@ const blogSchema = {
   {
     featured && (
       <section class="kc-featured-wrap" aria-labelledby="kc-featured-title">
-        <a class="kc-featured" href={`/blog/${featured.slug}/`}>
+        <a class="kc-featured" href={`/blog/${featured.id}/`}>
           <div class="kc-featured-body">
             <div class="kc-featured-meta">
               <span class="kc-featured-badge">Wyróżnione</span>
               <span>
-                {formatDate(featured.data.date, 'pl')} · {readingTimeLabel(featured.body, 'pl')} ·{' '}
+                {formatDate(featured.data.date, 'pl')} · {readingTimeLabel(featured.body ?? '', 'pl')} ·{' '}
                 {categoryLabel(featuredCategory, 'pl')}
               </span>
             </div>

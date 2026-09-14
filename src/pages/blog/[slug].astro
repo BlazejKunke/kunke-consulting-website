@@ -4,13 +4,13 @@
 // title band, an overlapping hero image, a single measured column of prose, an
 // author card and a "read next" row, all on the homepage's design tokens.
 
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import BlogShell from '../../components/BlogShell.astro';
 import { categoryLabel, formatDate, readingTimeLabel, resolveCategory } from '../../utils/blog';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  return posts.map((post) => ({ params: { slug: post.slug } }));
+  return posts.map((post) => ({ params: { slug: post.id } }));
 }
 
 
@@ -18,7 +18,7 @@ const { slug } = Astro.params;
 const post = await getEntry('blog', slug as string);
 if (!post) throw new Error(`Post "${slug}" not found`);
 
-const { Content } = await post.render();
+const { Content } = await render(post);
 
 const isEnglish = post.data.language === 'en';
 const lang: 'pl' | 'en' = isEnglish ? 'en' : 'pl';
@@ -71,7 +71,7 @@ const labels = isEnglish
 
 // Read next: same language, same category first, then the newest of the rest.
 const siblings = (await getCollection('blog'))
-  .filter((entry) => entry.slug !== post.slug && (entry.data.language ?? 'pl') === (post.data.language ?? 'pl'))
+  .filter((entry) => entry.id !== post.id && (entry.data.language ?? 'pl') === (post.data.language ?? 'pl'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const sameCategory = siblings.filter((entry) => resolveCategory(entry.data) === category);
@@ -161,7 +161,7 @@ const articleSchema = {
         />
         <span>
           Błażej Kunke · <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date, lang)}</time>
-          · {readingTimeLabel(post.body, lang)}
+          · {readingTimeLabel(post.body ?? '', lang)}
         </span>
       </div>
     </div>
@@ -215,7 +215,7 @@ const articleSchema = {
         <h2 id="kc-related-title">{labels.readNext}</h2>
         <div class="kc-related-grid">
           {related.map((entry) => (
-            <a class="kc-related-item" href={`/blog/${entry.slug}/`}>
+            <a class="kc-related-item" href={`/blog/${entry.id}/`}>
               <div class="kc-related-media">
                 {entry.data.heroImage && (
                   <img

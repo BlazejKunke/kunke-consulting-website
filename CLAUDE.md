@@ -128,7 +128,7 @@ later" does not protect against.
 
 ## Architecture
 
-Astro 5 static site, TypeScript in strict mode, no UI framework.
+Astro 7 static site, TypeScript in strict mode, no UI framework.
 
 ### Two page families
 
@@ -179,11 +179,17 @@ show. `npm test` pins all six price strings and fails if only one side moves.
 ### Content collections
 
 Blog posts live in `src/content/blog/` as Markdown, validated by Zod in
-`src/content/config.ts`:
+`src/content.config.ts`:
 
 - Required: `title`, `description`, `date`
 - Optional: `seoTitle`, `author`, `tags`, `category`, `heroImage`
 - `language` is `"pl"` or `"en"`, defaulting to `"pl"`
+
+Collections use Astro's content layer: the collection declares a `glob` loader, and
+an entry is keyed by **`id`**, not the old `slug`. For these flat `.md` files `id` is
+the filename without its extension, which is the value `/blog/<slug>/` is built from —
+so renaming a file changes a live URL. Render a post with `render(entry)` imported from
+`astro:content`; `entry.render()` no longer exists.
 
 Routing is via `src/pages/blog/[slug].astro`. `src/utils/blog.ts` handles the index
 filter chips and the tag fallback for posts without a `category`.
