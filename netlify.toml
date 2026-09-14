@@ -1,0 +1,7 @@
+[[context.production.plugins]]
+package = "./plugins/indexnow"
+
+  [context.production.plugins.inputs]
+  siteUrl = "https://kunkeconsulting.pl"
+  sitemapUrl = "https://kunkeconsulting.pl/sitemap-index.xml"
+  key = "044a4c96024e35c1f37f67ebc74c9aaf"

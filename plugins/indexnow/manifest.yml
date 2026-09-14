@@ -1,0 +1,8 @@
+name: kunke-indexnow
+inputs:
+  - name: siteUrl
+    description: Canonical production site origin
+  - name: sitemapUrl
+    description: Production sitemap or sitemap-index URL
+  - name: key
+    description: Public IndexNow verification key
