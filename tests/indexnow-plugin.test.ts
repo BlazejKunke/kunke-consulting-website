@@ -5,7 +5,7 @@ import {
   collectCanonicalUrls,
   extractLocations,
   notifyIndexNow
-} from '../plugins/indexnow/index.js';
+} from '../plugins/indexnow/lib.js';
 
 const siteUrl = 'https://kunkeconsulting.pl';
 const sitemapUrl = `${siteUrl}/sitemap-index.xml`;
