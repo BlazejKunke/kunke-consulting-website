@@ -194,6 +194,45 @@ const faqs = [
   <link rel="shortcut icon" href="/favicon.png" />
   <link rel="manifest" href="/site.webmanifest" />
 
+  <!-- ---------- dark mode ----------
+       Newsreader carries the headings in the dark theme only. The stylesheet
+       is small and the font binaries are fetched only when a rule actually
+       renders text in the family, so a light-mode visitor pays for neither.
+       fonts.googleapis.com and fonts.gstatic.com are already in the CSP. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&display=swap"
+  />
+
+  <meta name="theme-color" content="#faf9f6" />
+
+  <!-- Resolve the theme before the first paint, or a dark-mode visitor sees a
+       flash of the light page. A stored choice wins; without one the system
+       setting decides. Inline on purpose: a bundled module is deferred and
+       would run too late. With JavaScript off the page stays light. -->
+  <script is:inline>
+    (function () {
+      try {
+        var stored = localStorage.getItem('kc-theme');
+        var theme =
+          stored === 'dark' || stored === 'light'
+            ? stored
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+
+        document.documentElement.setAttribute('data-theme', theme);
+
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b0f0d' : '#faf9f6');
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
   <!-- Consent Mode v2. GTM loads only after the visitor accepts; see ConsentMode.astro -->
   <ConsentMode />
 
@@ -1654,6 +1693,423 @@ const faqs = [
       font-family: var(--kc-sans);
       letter-spacing: -0.01em;
     }
+
+    /* =====================================================================
+       Dark mode — "the study after dark"
+       From the Claude Design project "Dark Mode.dc.html" and its
+       implementation note. Written up in docs/dark-mode.md.
+
+       Additive on purpose: every rule below is scoped to
+       :root[data-theme='dark'], so the light theme above is untouched. The
+       attribute is set before the first paint by the inline script in
+       <head>; with JavaScript off the page stays light.
+       ===================================================================== */
+
+    :root[data-theme='dark'] {
+      --kc-bg: #0b0f0d;
+      --kc-card: #111714;
+      --kc-band: #0e1411;
+      --kc-ink: #f7f0e5;
+      --kc-body: #dcd3c1;
+      --kc-muted: #afa593;
+      --kc-green: #08301f;
+      --kc-brass: #c5a670;
+      --kc-brass-soft: rgba(197, 166, 112, 0.4);
+      --kc-btn-bg: #c5a670;
+      --kc-btn-fg: #0b0f0d;
+
+      /* The light scale is green-alpha and reads as mud on a dark ground, so
+         every step is restated in parchment-alpha. The design works to three
+         steps (10/16/24); the heavier light steps collapse onto 0.24, since
+         a 0.42 parchment rule glares. */
+      --kc-rule-08: rgba(247, 240, 229, 0.08);
+      --kc-rule-10: rgba(247, 240, 229, 0.1);
+      --kc-rule-12: rgba(247, 240, 229, 0.12);
+      --kc-rule-14: rgba(247, 240, 229, 0.14);
+      --kc-rule-16: rgba(247, 240, 229, 0.16);
+      --kc-rule-18: rgba(247, 240, 229, 0.16);
+      --kc-rule-20: rgba(247, 240, 229, 0.16);
+      --kc-rule-24: rgba(247, 240, 229, 0.24);
+      --kc-rule-25: rgba(247, 240, 229, 0.24);
+      --kc-rule-42: rgba(247, 240, 229, 0.24);
+
+      --kc-glow: 0 0 34px -8px rgba(197, 166, 112, 0.45);
+      --kc-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+
+      color-scheme: dark;
+    }
+
+    /* --- ground, links, focus ---
+       --kc-green is the case-study panel in dark mode, not an accent. Every
+       place the light theme used it to mean "the accent colour" has to move
+       to brass by hand, or it turns into near-black on near-black: links,
+       the focus ring, the skip link and ::selection all did. */
+
+    :root[data-theme='dark'] a {
+      color: var(--kc-brass);
+    }
+
+    :root[data-theme='dark'] ::selection {
+      background: var(--kc-brass);
+      color: var(--kc-btn-fg);
+    }
+
+    :root[data-theme='dark'] :focus-visible {
+      outline-color: var(--kc-brass);
+    }
+
+    :root[data-theme='dark'] .kc-skip {
+      background: var(--kc-brass);
+      color: var(--kc-btn-fg);
+    }
+
+    :root[data-theme='dark'] .kc-brand {
+      color: var(--kc-ink);
+    }
+
+    :root[data-theme='dark'] .kc-header {
+      background: rgba(14, 20, 17, 0.88);
+    }
+
+    /* --- serif headings ---
+       Newsreader at 400 carries every heading in dark mode. Body copy,
+       eyebrows and prices stay on the Helvetica and monospace stacks. */
+
+    :root[data-theme='dark'] .kc-hero h1,
+    :root[data-theme='dark'] .kc-h2,
+    :root[data-theme='dark'] .kc-team-h2,
+    :root[data-theme='dark'] .kc-card h3,
+    :root[data-theme='dark'] .kc-case-body h2,
+    :root[data-theme='dark'] .kc-about-body h2,
+    :root[data-theme='dark'] .kc-contact h2,
+    :root[data-theme='dark'] .kc-faq-q,
+    :root[data-theme='dark'] .kc-fact-big,
+    :root[data-theme='dark'] .kc-voice-text,
+    :root[data-theme='dark'] .kc-voice-mark {
+      font-family: var(--kc-serif);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+    }
+
+    /* A serif wants less negative tracking than the sans it replaces. */
+    :root[data-theme='dark'] .kc-hero h1 {
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+    }
+
+    :root[data-theme='dark'] .kc-typed-caret {
+      background: var(--kc-brass);
+    }
+
+    /* --- buttons: brass, and lamplight rather than a lift on hover --- */
+
+    :root[data-theme='dark'] .kc-btn {
+      background: var(--kc-btn-bg);
+      color: var(--kc-btn-fg);
+      transition: box-shadow 220ms ease, background-color 220ms ease;
+    }
+
+    :root[data-theme='dark'] .kc-btn:hover {
+      background: var(--kc-btn-bg);
+      color: var(--kc-btn-fg);
+      box-shadow: var(--kc-glow);
+    }
+
+    /* --- photographs sit back under lamplight, full on hover --- */
+
+    :root[data-theme='dark'] .kc-polaroid {
+      border: 1px solid var(--kc-rule-10);
+      box-shadow: 0 22px 44px -20px rgba(0, 0, 0, 0.8);
+      transition: transform 300ms ease, box-shadow 300ms ease;
+    }
+
+    :root[data-theme='dark'] .kc-polaroid:hover {
+      box-shadow: 0 22px 54px -18px rgba(197, 166, 112, 0.28);
+    }
+
+    :root[data-theme='dark'] .kc-polaroid img,
+    :root[data-theme='dark'] .kc-about-media,
+    :root[data-theme='dark'] .kc-team-photo {
+      background: rgba(247, 240, 229, 0.04);
+    }
+
+    :root[data-theme='dark'] .kc-polaroid img,
+    :root[data-theme='dark'] .kc-about-media img,
+    :root[data-theme='dark'] .kc-team-photo img,
+    :root[data-theme='dark'] .kc-case-media img {
+      filter: brightness(0.84) saturate(0.94);
+      transition: filter 300ms ease;
+    }
+
+    :root[data-theme='dark'] .kc-polaroid:hover img,
+    :root[data-theme='dark'] .kc-about-media:hover img,
+    :root[data-theme='dark'] .kc-team-photo:hover img,
+    :root[data-theme='dark'] .kc-case-media:hover img {
+      filter: none;
+    }
+
+    /* --- bands, stats, steps --- */
+
+    :root[data-theme='dark'] .kc-facts,
+    :root[data-theme='dark'] .kc-footer {
+      background: var(--kc-band);
+    }
+
+    :root[data-theme='dark'] .kc-fact-big,
+    :root[data-theme='dark'] .kc-step-label,
+    :root[data-theme='dark'] .kc-price {
+      color: var(--kc-brass);
+    }
+
+    /* --- offer cards --- */
+
+    :root[data-theme='dark'] .kc-card {
+      transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    :root[data-theme='dark'] .kc-card:hover {
+      border-color: var(--kc-brass-soft);
+      box-shadow: 0 18px 50px -24px rgba(197, 166, 112, 0.5);
+    }
+
+    /* --- case study panel: the one place --kc-green still paints a ground --- */
+
+    :root[data-theme='dark'] .kc-case-panel {
+      background: var(--kc-green);
+      color: var(--kc-ink);
+      border: 1px solid var(--kc-brass-soft);
+    }
+
+    :root[data-theme='dark'] .kc-case-body .kc-eyebrow {
+      color: var(--kc-brass);
+    }
+
+    :root[data-theme='dark'] .kc-case-body p {
+      color: var(--kc-body);
+    }
+
+    :root[data-theme='dark'] .kc-case-media {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    :root[data-theme='dark'] .kc-btn-light {
+      background: var(--kc-brass);
+      color: var(--kc-btn-fg);
+      transition: box-shadow 220ms ease;
+    }
+
+    :root[data-theme='dark'] .kc-btn-light:hover {
+      background: var(--kc-brass);
+      color: var(--kc-btn-fg);
+      box-shadow: var(--kc-glow);
+    }
+
+    :root[data-theme='dark'] .kc-btn-ghost {
+      border-color: var(--kc-rule-24);
+      color: var(--kc-ink);
+      transition: border-color 220ms ease, box-shadow 220ms ease;
+    }
+
+    :root[data-theme='dark'] .kc-btn-ghost:hover {
+      border-color: var(--kc-brass);
+      color: var(--kc-ink);
+      box-shadow: var(--kc-glow);
+    }
+
+    /* --- testimonials and FAQ --- */
+
+    :root[data-theme='dark'] .kc-voices-arrow {
+      color: var(--kc-brass);
+      border-color: var(--kc-rule-24);
+    }
+
+    :root[data-theme='dark'] .kc-voices-arrow:hover:not(:disabled) {
+      background: transparent;
+      border-color: var(--kc-brass);
+      color: var(--kc-brass);
+      box-shadow: var(--kc-glow);
+    }
+
+    :root[data-theme='dark'] .kc-voice-mark {
+      color: var(--kc-brass-soft);
+    }
+
+    :root[data-theme='dark'] .kc-faq-q:hover {
+      color: var(--kc-brass);
+    }
+
+    /* --- cookie banner ---
+       It redeclares the tokens on itself, so the dark values have to be
+       restated here, and its accept button hard-codes #fff, which is
+       unreadable on brass. */
+
+    :root[data-theme='dark'] .cookie-consent {
+      --kc-brand: var(--kc-brass);
+      --kc-brand-press: var(--kc-ink);
+      --kc-link: var(--kc-brass);
+      --kc-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+    }
+
+    :root[data-theme='dark'] .cookie-consent .accept {
+      color: var(--kc-btn-fg);
+    }
+
+    /* --- paper grain ---
+       One fixed, tiled layer. Fixed on purpose: sized to the document it
+       repaints the whole page on every scroll. z-index 50 puts it over the
+       sticky header (20) and under the skip link (100) and the cookie
+       banner (1000), so both of those stay crisp. */
+
+    :root[data-theme='dark'] body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      pointer-events: none;
+      opacity: 0.16;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+    }
+
+    /* --- pointer lamplight --- */
+
+    .kc-lamplight {
+      display: none;
+    }
+
+    :root[data-theme='dark'] .kc-lamplight {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 460px;
+      height: 460px;
+      margin: -230px 0 0 -230px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 5;
+      mix-blend-mode: screen;
+      background: radial-gradient(
+        circle closest-side,
+        rgba(197, 166, 112, 0.22),
+        rgba(197, 166, 112, 0.07) 45%,
+        transparent 72%
+      );
+      opacity: 0;
+      transition: opacity 320ms ease;
+      will-change: transform;
+    }
+
+    /* --- the lamp pull ---
+       A 1px cord and an 11px knob in a 44x44 hit area. On click the knob
+       drops 9px and springs back. */
+
+    .kc-lamp {
+      width: 44px;
+      height: 44px;
+      flex: none;
+      margin-left: -4px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: grid;
+      justify-items: center;
+      align-content: start;
+      border-radius: 999px;
+    }
+
+    .kc-lamp-cord {
+      display: grid;
+      justify-items: center;
+      transition: transform 420ms cubic-bezier(0.2, 1.5, 0.3, 1);
+    }
+
+    .kc-lamp[data-pulled] .kc-lamp-cord {
+      transform: translateY(9px);
+    }
+
+    .kc-lamp-cord::before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 20px;
+      background: var(--kc-rule-42);
+    }
+
+    .kc-lamp-knob {
+      display: block;
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: var(--kc-muted);
+      transition: background-color 220ms ease, box-shadow 220ms ease;
+    }
+
+    .kc-lamp:hover .kc-lamp-knob {
+      background: var(--kc-green);
+    }
+
+    :root[data-theme='dark'] .kc-lamp-cord::before {
+      background: var(--kc-brass-soft);
+    }
+
+    :root[data-theme='dark'] .kc-lamp-knob {
+      background: var(--kc-brass);
+      box-shadow: var(--kc-glow);
+    }
+
+    .kc-lamp-say {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    /* The accessible name is whichever label is not display:none, so the
+       button says what the click will DO — and says it correctly from the
+       first paint, without waiting for script. */
+    :root[data-theme='dark'] .kc-lamp-say-dark,
+    :root:not([data-theme='dark']) .kc-lamp-say-light {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      :root[data-theme='dark'] .kc-header {
+        background: rgba(14, 20, 17, 0.52);
+      }
+
+      :root[data-theme='dark'] .kc-header[data-scrolled='true'] {
+        border-bottom-color: rgba(247, 240, 229, 0.1);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .kc-lamp {
+        width: 34px;
+        margin-left: -2px;
+      }
+    }
+
+    /* Motion is the part that goes, not the lamplight colour: transitions
+       stop and the pointer gradient is dropped entirely. */
+    @media (prefers-reduced-motion: reduce) {
+      .kc-lamp-cord,
+      .kc-lamp-knob,
+      :root[data-theme='dark'] .kc-polaroid,
+      :root[data-theme='dark'] .kc-polaroid img,
+      :root[data-theme='dark'] .kc-about-media img,
+      :root[data-theme='dark'] .kc-team-photo img,
+      :root[data-theme='dark'] .kc-case-media img {
+        transition: none;
+      }
+
+      :root[data-theme='dark'] .kc-lamplight {
+        display: none;
+      }
+    }
   </style>
   <style>
     .gtm-noscript { display: none; visibility: hidden; width: 0; height: 0; }
@@ -1666,6 +2122,7 @@ const faqs = [
        consented. There is no consent-respecting version of it. -->
 
   <a class="kc-skip" href="#top">Skip to content</a>
+  <div class="kc-lamplight" aria-hidden="true"></div>
 
   <header class="kc-header">
     <nav class="kc-nav" aria-label="Main navigation">
@@ -1677,6 +2134,11 @@ const faqs = [
         <a href="#faq">FAQ</a>
         <a href="/" hreflang="pl" lang="pl">PL</a>
       </div>
+      <button type="button" class="kc-lamp" data-theme-toggle>
+        <span class="kc-lamp-cord" aria-hidden="true"><span class="kc-lamp-knob"></span></span>
+        <span class="kc-lamp-say kc-lamp-say-dark">Turn the light off — dark mode</span>
+        <span class="kc-lamp-say kc-lamp-say-light">Turn the light on — light mode</span>
+      </button>
       <a href="mailto:info@kunkeconsulting.pl" class="kc-btn">Email me</a>
     </nav>
   </header>
@@ -2133,6 +2595,70 @@ const faqs = [
       voicesRail.addEventListener('scroll', syncVoices, { passive: true });
       window.addEventListener('resize', syncVoices);
       syncVoices();
+    }
+
+    // The lamp pull. The theme attribute is already set before the first
+    // paint by the inline script in <head>; this only handles the click,
+    // the remembered choice and the knob drop.
+    const lamp = document.querySelector('[data-theme-toggle]');
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+
+    if (lamp) {
+      lamp.addEventListener('click', () => {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', next);
+        if (themeMeta) themeMeta.setAttribute('content', next === 'dark' ? '#0b0f0d' : '#faf9f6');
+
+        try {
+          localStorage.setItem('kc-theme', next);
+        } catch {
+          // Storage blocked (private browsing, or the visitor turned it off).
+          // The theme still flips for this page view, it just is not remembered.
+        }
+
+        lamp.setAttribute('data-pulled', '');
+        window.setTimeout(() => lamp.removeAttribute('data-pulled'), 420);
+      });
+    }
+
+    // Pointer lamplight, dark mode only — the CSS hides it in light. The
+    // position is written straight onto the element's transform inside one
+    // rAF, never into a variable anything else reads, so moving the mouse
+    // costs a composited paint and no layout.
+    const lamplight = document.querySelector<HTMLElement>('.kc-lamplight');
+
+    if (lamplight && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let lampX = 0;
+      let lampY = 0;
+      let lampQueued = false;
+
+      const paintLamplight = () => {
+        lamplight.style.transform = `translate3d(${lampX}px, ${lampY}px, 0)`;
+        lampQueued = false;
+      };
+
+      window.addEventListener(
+        'pointermove',
+        (event) => {
+          // Touch has no hover, and a tap would leave the glow stranded.
+          if (event.pointerType !== 'mouse') return;
+
+          lampX = event.clientX;
+          lampY = event.clientY;
+          lamplight.style.opacity = '1';
+
+          if (!lampQueued) {
+            lampQueued = true;
+            window.requestAnimationFrame(paintLamplight);
+          }
+        },
+        { passive: true }
+      );
+
+      document.addEventListener('pointerleave', () => {
+        lamplight.style.opacity = '0';
+      });
     }
   </script>
 </body>

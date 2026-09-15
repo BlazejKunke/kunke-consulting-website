@@ -146,6 +146,14 @@ Their design tokens are `--kc-*`, declared per page: background `#faf9f6`, ink
 Helvetica/Arial system stack with a monospace face for eyebrows and prices. Any
 component dropped into these pages needs those tokens redeclared locally.
 
+These two pages — and only these two — also carry a **dark theme**, scoped to
+`:root[data-theme='dark']` at the end of each page's style block, with a lamp-pull
+toggle in the header. It is part of the "change one, change the other" rule. A new
+component needs a dark rule wherever it uses `var(--kc-green)` to mean "the accent":
+in dark mode that token is the case-study panel's near-black green, and anything
+leaning on it as an accent turns invisible. [`docs/dark-mode.md`](docs/dark-mode.md)
+has the tokens, the reasoning and what extending it to the blog would take.
+
 **`BaseLayout` pages** — `privacy-policy`, `thank-you`, `availability`. These use
 `BaseLayout.astro`, which supplies `global.css`, Inter from Google Fonts, SEO meta and
 the language switcher. This is the older look; it survives on utility pages where it
