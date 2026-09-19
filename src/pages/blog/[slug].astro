@@ -282,9 +282,14 @@ const articleSchema = {
     padding: 72px var(--kc-gut) 64px;
   }
 
-  .kc-crumbs-invert,
-  .kc-crumbs-invert a {
-    color: rgba(251, 251, 248, 0.72);
+  /* More specific than the shared shell's muted breadcrumb styles. */
+  .kc-article-head .kc-crumbs-invert,
+  .kc-article-head .kc-crumbs-invert a {
+    color: #ffffff;
+  }
+
+  .kc-article-head .kc-crumb-sep {
+    opacity: 1;
   }
 
   .kc-crumbs-invert a:hover {
@@ -305,7 +310,7 @@ const articleSchema = {
     margin: 0 0 30px;
     font-size: 19px;
     line-height: 1.6;
-    opacity: 0.82;
+    color: #ffffff;
     max-width: 60ch;
     text-wrap: pretty;
   }
@@ -315,7 +320,7 @@ const articleSchema = {
     align-items: center;
     gap: 14px;
     font-size: 14px;
-    opacity: 0.88;
+    color: #ffffff;
   }
 
   .kc-byline-avatar {

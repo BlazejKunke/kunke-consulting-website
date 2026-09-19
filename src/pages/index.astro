@@ -2308,15 +2308,15 @@ const faqs = [
                 <button
                   type="button"
                   class="kc-faq-q"
-                  aria-expanded={i === 0 ? 'true' : 'false'}
+                  aria-expanded="false"
                   aria-controls={`kc-faq-a-${i}`}
                   id={`kc-faq-q-${i}`}
                 >
                   <span>{faq.q}</span>
-                  <span class="kc-faq-sign" aria-hidden="true">{i === 0 ? '–' : '+'}</span>
+                  <span class="kc-faq-sign" aria-hidden="true">+</span>
                 </button>
               </h3>
-              <p class="kc-faq-a" id={`kc-faq-a-${i}`} role="region" aria-labelledby={`kc-faq-q-${i}`} hidden={i !== 0}>
+              <p class="kc-faq-a" id={`kc-faq-a-${i}`} role="region" aria-labelledby={`kc-faq-q-${i}`} hidden>
                 {faq.a}
               </p>
             </div>
@@ -2432,7 +2432,7 @@ const faqs = [
       syncHeader();
     }
 
-    // FAQ: single item open at a time, first one open on load.
+    // FAQ: single item open at a time, all items collapsed on load.
     const questions = Array.from(document.querySelectorAll('.kc-faq-q'));
 
     questions.forEach((question) => {
