@@ -3,6 +3,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 const sitemapExcludedPaths = [
+  '/404',
+  '/en/404',
   '/thank-you',
   '/redesigned',
   '/AIDlaFirm',

@@ -7,6 +7,7 @@
 // list, so every post stays in the HTML for crawlers and no-JS visitors. With
 // JS off the chips and the toggle are hidden and all posts show.
 
+import ResponsiveImage from './ResponsiveImage.astro';
 import type { GridPost } from '../utils/blog';
 
 interface Props {
@@ -66,7 +67,7 @@ const {
           </div>
           <div class="kc-post-media">
             {post.image && (
-              <img src={post.image} alt="" loading="lazy" decoding="async" width="400" height="250" />
+              <ResponsiveImage src={post.image} fit={post.imageFit} alt="" loading="lazy" decoding="async" width="400" height="250" />
             )}
           </div>
           <h3>{post.title}</h3>

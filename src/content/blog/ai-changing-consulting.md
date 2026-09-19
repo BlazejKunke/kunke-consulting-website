@@ -21,7 +21,7 @@ Algorytmy AI potrafią analizować sygnały rynkowe i przewidywać zmiany, dają
 
 ## Wyzwania i możliwości
 
-Pomimo oślnieżających możliwości, AI niesie także wyzwania:
+Pomimo olśniewających możliwości, AI niesie także wyzwania:
 - Potrzeba nowych kompetencji i ciągłego uczenia się
 - Kwestie etyczne i bezpieczeństwa danych
 - Konieczność zachowania ludzkiego pierwiastka w doradztwie

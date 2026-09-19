@@ -1,4 +1,6 @@
 ---
+heroImageFit: contain
+translationKey: "amerykanski-rzad-zablokowal-najlepszy-model-ai-i-co-teraz"
 title: "American Government Blocked the Best AI Model. Now What?"
 seoTitle: "US AI Model Block: What Businesses Should Know | ^Kunke"
 description: "Fable 5 and Mythos 5 disappeared overnight after a US export control directive. What the shutdown means for businesses, Europe, and AI strategy."

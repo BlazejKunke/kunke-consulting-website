@@ -20,7 +20,7 @@ test('extractLocations decodes XML entities', () => {
 });
 
 test('collectCanonicalUrls follows sitemap indexes and rejects off-site URLs', async () => {
-  const fetchImpl = async (url: string) => {
+  const fetchImpl = async (url: Parameters<typeof fetch>[0]) => {
     if (url === sitemapUrl) {
       return new Response(`<sitemapindex><sitemap><loc>${childSitemapUrl}</loc></sitemap></sitemapindex>`);
     }
@@ -37,7 +37,7 @@ test('collectCanonicalUrls follows sitemap indexes and rejects off-site URLs', a
 
 test('notifyIndexNow posts canonical URLs with the public verification key', async () => {
   let submittedBody = '';
-  const fetchImpl = async (url: string, init?: RequestInit) => {
+  const fetchImpl = async (url: Parameters<typeof fetch>[0], init?: RequestInit) => {
     if (url === sitemapUrl) {
       return new Response(`<sitemapindex><sitemap><loc>${childSitemapUrl}</loc></sitemap></sitemapindex>`);
     }

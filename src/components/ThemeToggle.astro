@@ -1,0 +1,109 @@
+---
+interface Props { lang?: 'pl' | 'en'; }
+const { lang = 'pl' } = Astro.props;
+---
+<button type="button" class="kc-lamp" data-theme-toggle>
+  <span class="kc-lamp-cord" aria-hidden="true"><span class="kc-lamp-knob"></span></span>
+  <span class="kc-lamp-say kc-lamp-say-dark">{lang === 'en' ? 'Turn the light off — dark mode' : 'Zgaś światło — tryb ciemny'}</span>
+  <span class="kc-lamp-say kc-lamp-say-light">{lang === 'en' ? 'Turn the light on — light mode' : 'Zapal światło — tryb jasny'}</span>
+</button>
+<style is:global>
+    .kc-lamp {
+      width: 44px;
+      height: 44px;
+      flex: none;
+      margin-left: -4px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: grid;
+      justify-items: center;
+      align-content: start;
+      border-radius: 999px;
+    }
+
+    .kc-lamp-cord {
+      display: grid;
+      justify-items: center;
+      transition: transform 420ms cubic-bezier(0.2, 1.5, 0.3, 1);
+    }
+
+    .kc-lamp[data-pulled] .kc-lamp-cord {
+      transform: translateY(9px);
+    }
+
+    .kc-lamp-cord::before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 20px;
+      background: var(--kc-rule-42);
+    }
+
+    .kc-lamp-knob {
+      display: block;
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: var(--kc-muted);
+      transition: background-color 220ms ease, box-shadow 220ms ease;
+    }
+
+    .kc-lamp:hover .kc-lamp-knob {
+      background: var(--kc-green);
+    }
+
+    :root[data-theme='dark'] .kc-lamp-cord::before {
+      background: var(--kc-brass-soft);
+    }
+
+    :root[data-theme='dark'] .kc-lamp-knob {
+      background: var(--kc-brass);
+      box-shadow: var(--kc-glow);
+    }
+
+    .kc-lamp-say {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    /* The accessible name is whichever label is not display:none, so the
+       button says what the click will DO — and says it correctly from the
+       first paint, without waiting for script. */
+    :root[data-theme='dark'] .kc-lamp-say-dark,
+    :root:not([data-theme='dark']) .kc-lamp-say-light {
+      display: none;
+    }
+
+
+@media (prefers-reduced-motion: reduce) { .kc-lamp-cord, .kc-lamp-knob { transition: none; } }
+</style>
+<script>
+    const lamp = document.querySelector('[data-theme-toggle]');
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+
+    if (lamp) {
+      lamp.addEventListener('click', () => {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', next);
+        if (themeMeta) themeMeta.setAttribute('content', next === 'dark' ? '#0b0f0d' : '#faf9f6');
+
+        try {
+          localStorage.setItem('kc-theme', next);
+        } catch {
+          // Storage blocked (private browsing, or the visitor turned it off).
+          // The theme still flips for this page view, it just is not remembered.
+        }
+
+        lamp.setAttribute('data-pulled', '');
+        window.setTimeout(() => lamp.removeAttribute('data-pulled'), 420);
+      });
+    }
+
+</script>

@@ -20,6 +20,9 @@ const blog = defineCollection({
       // without one fall back to a tag lookup in src/utils/blog.ts.
       category: z.enum(['implementation', 'strategy', 'tools', 'practice']).optional(),
       heroImage: z.string().optional(),
+      heroImageFit: z.enum(['cover', 'contain']).default('cover'),
+      translationKey: z.string().optional(),
+      milestone: z.object({ people: z.number(), sessions: z.number() }).optional(),
     }),
 });
 

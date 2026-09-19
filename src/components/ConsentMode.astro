@@ -1,92 +1,85 @@
 ---
-// Google Consent Mode v2 bootstrap, in "basic" mode.
-//
-// Basic mode means Google Tag Manager is NOT loaded until the visitor has
-// actively accepted. Nothing at all reaches Google before that -- no cookies,
-// no cookieless pings. The alternative ("advanced" mode) loads GTM straight
-// away in a restricted state and still sends anonymous pings pre-consent;
-// Blaze chose basic in July 2026 because it is the position he can defend to
-// the SMEs he sells advisory to.
-//
-// What was here before pushed { event: 'default_consent_set', consent: {...} }
-// into dataLayer. That is an ordinary custom event, not the consent command
-// Google listens for, so GTM never received a consent signal and fired
-// everything regardless. Verified on the live site: Analytics and Ads pinged
-// before the banner was touched, and kept pinging with cookie_consent=denied.
-//
-// This block MUST render before anything that could load GTM. The consent
-// defaults have to be in dataLayer before gtm.js reads it.
+// Basic consent mode. Only pages that already had analytics opt in to loading
+// GTM. The blog and 404 expose settings without adding analytics to those pages.
+interface Props { tracking?: boolean; }
+const { tracking = true } = Astro.props;
 ---
-
+<meta name="kc-analytics" content={tracking ? 'enabled' : 'disabled'} />
 <script is:inline>
+(function () {
+  var tracking = document.querySelector('meta[name="kc-analytics"]').content === 'enabled';
   window.dataLayer = window.dataLayer || [];
-
-  // gtag pushes the `arguments` object itself, NOT a plain object. That
-  // distinction is the whole fix -- it is how GTM recognises a consent
-  // command rather than a custom event. Do not "tidy" this into a push of
-  // an object literal.
   function gtag() { window.dataLayer.push(arguments); }
   window.gtag = gtag;
-
-  gtag('consent', 'default', {
-    ad_storage: 'denied',
-    ad_user_data: 'denied',
-    ad_personalization: 'denied',
-    analytics_storage: 'denied',
-    functionality_storage: 'denied',
-    personalization_storage: 'denied',
-    security_storage: 'granted',
-    wait_for_update: 500
-  });
-
-  window.KC_CONSENT_COOKIE = 'cookie_consent';
+  var denied = {
+    ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+    analytics_storage: 'denied', functionality_storage: 'denied',
+    personalization_storage: 'denied', security_storage: 'granted'
+  };
+  gtag('consent', 'default', denied);
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', false);
+  gtag('set', 'allow_google_signals', false);
+  gtag('set', 'allow_ad_personalization_signals', false);
 
   window.kcGetConsent = function () {
-    var m = document.cookie.match(new RegExp('(^| )' + window.KC_CONSENT_COOKIE + '=([^;]+)'));
-    return m ? m[2] : null;
+    var match = document.cookie.match(/(?:^|;\s*)cookie_consent=([^;]+)/);
+    // Legacy "granted" covered different purposes; ask for a fresh, specific
+    // analytics choice. Existing rejections remain valid.
+    return match && ['analytics-v2', 'denied'].includes(match[1]) ? match[1] : null;
   };
-
-  // Injects GTM exactly once. Called on load for returning visitors who have
-  // already accepted, and by the cookie banner the moment someone accepts.
-  window.kcLoadGtm = function () {
-    if (window.kcGtmLoaded) return;
-    window.kcGtmLoaded = true;
-
-    window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-MWRKLP2S';
-    var first = document.getElementsByTagName('script')[0];
-    first.parentNode.insertBefore(s, first);
-  };
-
-  window.kcGrantConsent = function () {
-    gtag('consent', 'update', {
-      ad_storage: 'granted',
-      ad_user_data: 'granted',
-      ad_personalization: 'granted',
-      analytics_storage: 'granted',
-      functionality_storage: 'granted',
-      personalization_storage: 'granted'
+  function clearOptionalCookies(adsOnly) {
+    var names = document.cookie.split(';').map(function (c) { return c.trim().split('=')[0]; });
+    var host = location.hostname.split('.');
+    var domains = [''];
+    for (var i = 0; i < host.length - 1; i++) {
+      domains.push('; Domain=' + host.slice(i).join('.'));
+      domains.push('; Domain=.' + host.slice(i).join('.'));
+    }
+    var paths = ['/'];
+    location.pathname.split('/').filter(Boolean).forEach(function (part) {
+      paths.push(paths[paths.length - 1] + part + '/');
     });
-    window.kcLoadGtm();
-  };
-
-  window.kcDenyConsent = function () {
-    gtag('consent', 'update', {
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied',
-      functionality_storage: 'denied',
-      personalization_storage: 'denied'
+    names.filter(function (name) { return (adsOnly ? /^_(?:gac|gcl)_/ : /^(_ga(?:_|$)|_gid$|_gat(?:_|$)|_(?:gac|gcl)_)/).test(name); }).forEach(function (name) {
+      domains.forEach(function (domain) {
+        paths.forEach(function (path) {
+          document.cookie = name + '=; Max-Age=0; Path=' + path + domain + '; SameSite=Lax';
+        });
+      });
     });
-    // Deliberately does not load GTM.
-  };
-
-  // Returning visitor who already accepted.
-  if (window.kcGetConsent() === 'granted') {
-    window.kcGrantConsent();
   }
+  window.kcLoadGtm = function () {
+    if (!tracking || window.kcGtmLoaded || window.kcGetConsent() !== 'analytics-v2') return;
+    window.kcGtmLoaded = true;
+    window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-MWRKLP2S';
+    document.head.appendChild(script);
+  };
+  function applyChoice() {
+    var accepted = window.kcGetConsent() === 'analytics-v2';
+    gtag('consent', 'update', Object.assign({}, denied, { analytics_storage: accepted ? 'granted' : 'denied' }));
+    // Also clean up first-party advertising cookies left by the former broad
+    // consent choice. Advertising stays denied even when analytics is accepted.
+    clearOptionalCookies(accepted);
+    if (accepted) window.kcLoadGtm();
+    else if (window.kcGtmLoaded) {
+      // Stop an already-running Google tag, including its event listeners.
+      // On reload, basic mode will not inject it. Persist BEFORE reloading.
+      window['ga-disable-G-J1G4R6VQKW'] = true;
+      location.reload();
+    }
+  }
+  window.kcSetConsent = function (accepted) {
+    document.cookie = 'cookie_consent=' + (accepted ? 'analytics-v2' : 'denied') + '; Max-Age=31536000; Path=/; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
+    applyChoice();
+    try { localStorage.setItem('kc-consent-change', String(Date.now())); } catch (_) {}
+    window.dispatchEvent(new Event('kc-consent-changed'));
+  };
+  window.addEventListener('storage', function (event) {
+    if (event.key === 'kc-consent-change') { applyChoice(); window.dispatchEvent(new Event('kc-consent-changed')); }
+  });
+  applyChoice();
+})();
 </script>

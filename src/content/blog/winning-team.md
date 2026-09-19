@@ -7,12 +7,12 @@ tags: ["Zespół", "Przywództwo", "Sukces"]
 ---
 W erze szybkich zmian i rosnącej konkurencji, umiejętność budowania i prowadzenia efektywnego zespołu stała się kluczową kompetencją każdego lidera. Oto jak stworzyć zespół, który nie tylko osiąga cele, ale je przekracza.
 
-## Fundamenty zwyczęskiego zespołu
+## Fundamenty zwycięskiego zespołu
 
 ### 1. Jasna wizja i cele
 
 **Każdy członek zespołu musi wiedzieć:**
-- Dokąd zmierzamy jako zespoł
+- Dokąd zmierzamy jako zespół
 - Jaka jest jego rola w osiągnięciu celu
 - Jak będziemy mierzyć sukces
 
@@ -37,7 +37,7 @@ W erze szybkich zmian i rosnącej konkurencji, umiejętność budowania i prowad
 
 ### Komunikacja i transparentność
 
-**Regularne rytuąy komunikacyjne:**
+**Regularne rytuały komunikacyjne:**
 - Daily standups - krótkie spotkania informacyjne
 - Weekly retrospectives - analiza tego, co działało i co można poprawić
 - Quarterly reviews - przegląd celów i strategii

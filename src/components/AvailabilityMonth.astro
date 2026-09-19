@@ -1,0 +1,26 @@
+---
+import { availability, type AvailabilityStatus } from '../content/availability';
+interface Props { month: number; locale: 'pl' | 'en'; today: string; }
+const { month, locale, today } = Astro.props;
+const monthKey = `${availability.year}-${String(month).padStart(2, '0')}`;
+const format = new Intl.DateTimeFormat(locale === 'en' ? 'en-GB' : 'pl-PL', { month:'long', year:'numeric', timeZone:'UTC' });
+const dateFormat = new Intl.DateTimeFormat(locale === 'en' ? 'en-GB' : 'pl-PL', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' });
+const labels = locale === 'en' ? { available:'Available', 'partially-available':'Partial', unavailable:'Busy', past:'Past' } : { available:'Wolny', 'partially-available':'Częściowo', unavailable:'Zajęty', past:'Miniony' };
+const weekdays = locale === 'en' ? ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] : ['Pon','Wt','Śr','Czw','Pt','Sob','Ndz'];
+const start = (new Date(Date.UTC(availability.year,month-1,1)).getUTCDay()+6)%7;
+const days = Array.from({ length:new Date(Date.UTC(availability.year,month,0)).getUTCDate() }, (_,i) => {
+  const date = `${monthKey}-${String(i+1).padStart(2,'0')}`;
+  const status: AvailabilityStatus = availability.days[date] ?? availability.defaultStatus;
+  return { day:i+1, date, status, past:date < today, label:dateFormat.format(new Date(date+'T12:00:00Z')) };
+});
+---
+<section class="kc-month" data-month={monthKey} aria-labelledby={`month-${monthKey}`}>
+  <h2 id={`month-${monthKey}`}>{format.format(new Date(monthKey+'-01T12:00:00Z'))}</h2>
+  <div class="kc-weekdays" aria-hidden="true">{weekdays.map(day => <span>{day}</span>)}</div>
+  <div class="kc-days">
+    {Array.from({length:start}, () => <span aria-hidden="true" />)}
+    {days.map(day => <div class:list={['kc-day', day.past ? 'past' : day.status]} data-date={day.date} data-status={day.status} data-label={day.label} aria-label={`${day.label}: ${day.past ? labels.past : labels[day.status]}`} title={`${day.label}: ${day.past ? labels.past : labels[day.status]}`}>
+      <span>{day.day}</span><small>{day.past ? labels.past : labels[day.status]}</small>
+    </div>)}
+  </div>
+</section>

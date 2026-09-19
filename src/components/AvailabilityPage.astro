@@ -1,0 +1,28 @@
+---
+import BlogShell from './BlogShell.astro';
+import AvailabilityCalendar from './AvailabilityCalendar.astro';
+import { availability } from '../content/availability';
+import { buildHreflangLinks } from '../utils/locales';
+interface Props { lang: 'pl' | 'en'; }
+const { lang } = Astro.props;
+const en = lang === 'en';
+const path = en ? '/en/availability/' : '/availability/';
+const updated = new Intl.DateTimeFormat(en ? 'en-GB' : 'pl-PL',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(availability.updatedAt+'T12:00:00Z'));
+const title = en ? 'My availability' : 'Moja dostępność';
+const description = en ? 'Indicative availability for workshops, advisory sessions and projects. Email or call about a specific date — I will confirm it personally.' : 'Sprawdź orientacyjną dostępność na warsztaty, konsultacje i projekty. W sprawie konkretnego terminu napisz lub zadzwoń — potwierdzę go bezpośrednio.';
+---
+<BlogShell lang={lang} title={`${title} ${availability.year} | ^Kunke Consulting`} description={description} canonicalUrl={`https://kunkeconsulting.pl${path}`} alternateUrl={en ? '/availability/' : '/en/availability/'} blog={false} tracking={true}>
+  <Fragment slot="head">{buildHreflangLinks(path, Astro.site!).map(link => <link rel="alternate" {...link} />)}</Fragment>
+  <div class="kc-utility">
+    <a href={en ? '/en/' : '/'}>{en ? '← Back to homepage' : '← Strona główna'}</a>
+    <h1>{title}</h1>
+    <p class="kc-intro">{description}</p>
+    <p class="kc-updated">{en ? 'Last updated: ' : 'Ostatnia aktualizacja: '}<time datetime={availability.updatedAt}>{updated}</time></p>
+    <section aria-label={en ? 'Availability calendar' : 'Kalendarz dostępności'}><AvailabilityCalendar locale={lang} /></section>
+    <section class="kc-info-box">
+      <h2>{en ? 'Have a date in mind?' : 'Masz termin na myśli?'}</h2>
+      <p>{en ? 'Let’s confirm it. The calendar is a guide, not a booking confirmation.' : 'Potwierdźmy go. Kalendarz ma charakter orientacyjny i nie jest potwierdzeniem rezerwacji.'}</p>
+      <div class="kc-actions"><a class="kc-btn" href="mailto:info@kunkeconsulting.pl">{en ? 'Email me' : 'Napisz e-mail'}</a><a href="tel:+48722156925">+48 722 156 925</a></div>
+    </section>
+  </div>
+</BlogShell>

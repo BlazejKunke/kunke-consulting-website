@@ -1,0 +1,90 @@
+---
+import BlogShell from './BlogShell.astro';
+import CookieSettingsLink from './CookieSettingsLink.astro';
+import { buildHreflangLinks } from '../utils/locales';
+interface Props { lang: 'pl' | 'en'; }
+const { lang } = Astro.props;
+const en = lang === 'en';
+const path = en ? '/en/privacy-policy/' : '/privacy-policy/';
+const title = en ? 'Privacy, in plain language' : 'Prywatność, prostym językiem';
+const description = en ? 'How ^Kunke Consulting handles contact details, website visits and cookie choices.' : 'Jak ^Kunke Consulting przetwarza dane kontaktowe, informacje o odwiedzinach i ustawienia cookies.';
+---
+<BlogShell lang={lang} title={`${en ? 'Privacy policy' : 'Polityka prywatności'} | ^Kunke Consulting`} description={description} canonicalUrl={`https://kunkeconsulting.pl${path}`} alternateUrl={en ? '/privacy-policy/' : '/en/privacy-policy/'} blog={false} tracking={true}>
+  <Fragment slot="head">{buildHreflangLinks(path, Astro.site!).map(link => <link rel="alternate" {...link} />)}</Fragment>
+  <div class="kc-utility kc-policy">
+    <p class="kc-eyebrow">{en ? 'Privacy policy' : 'Polityka prywatności'}</p>
+    <h1>{title}</h1>
+    <p class="kc-intro">{description}</p>
+    <p class="kc-updated">{en ? 'Updated: September 19, 2026' : 'Aktualizacja: 19 września 2026'}</p>
+    <div class="kc-info-box">
+      <p>{en ? 'Contact is by email or phone. Optional analytics starts only after you agree. You can change your choice here or in the footer.' : 'Kontakt odbywa się przez e-mail lub telefon. Opcjonalna analityka uruchamia się dopiero po Twojej zgodzie. Możesz zmienić swój wybór tutaj lub w stopce.'}</p>
+      <CookieSettingsLink lang={lang} />
+    </div>
+    {en ? <>
+      <section><h2>1. Who is responsible for your data?</h2>
+        <p>The controller is Błażej Kunke, operating as Błażej Kunke Consulting (^Kunke Consulting), ul. Fosowa 13/1, 62-069 Dąbrówka, Poland. Tax ID (NIP): 9721222936; REGON: 525899400.</p>
+        <p>For privacy questions or requests, email <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>.</p>
+      </section>
+      <section><h2>2. Email, phone calls and service inquiries</h2>
+        <p>Email links open your own email application. There is no contact form that submits your details through this website. If you contact us, we receive the details you provide, such as your name, email address, phone number, company and message.</p>
+        <p>We use these details to answer your inquiry, prepare an offer and arrange or deliver services. The legal basis is taking steps at your request before entering a contract or performing a contract (GDPR Article 6(1)(b)); for other business correspondence, our legitimate interest in responding and maintaining business relationships (Article 6(1)(f)). Legal obligations, including accounting requirements, may require us to retain service records (Article 6(1)(c)).</p>
+        <p>Providing information is voluntary; without suitable contact details we may be unable to reply. We retain correspondence for as long as needed to resolve the inquiry and manage the relationship, and relevant service records for applicable legal obligations or the establishment, exercise or defense of claims. You can ask about the retention period applicable to your particular correspondence.</p>
+      </section>
+      <section><h2>3. Visiting this website</h2>
+        <p>Netlify hosts this website. Delivering and securing it involves technical information such as IP addresses, requested URLs, browser information and request times. This supports our legitimate interest in operating a reliable, secure website.</p>
+        <p>Some pages request fonts from Google Fonts or article thumbnails from YouTube’s image service. Your browser sends technical request information, including your IP address, to those providers when fetching these resources. These resources are distinct from optional Google Analytics.</p>
+      </section>
+      <section><h2>4. Cookies and appearance preferences</h2>
+        <ul>
+          <li><strong>Your choice:</strong> the first-party <code>cookie_consent</code> cookie remembers whether you allow analytics for up to 12 months. It is needed to respect your choice.</li>
+          <li><strong>Appearance:</strong> <code>kc-theme</code> in local storage remembers your selected light or dark theme until you change it or clear browser storage. A local <code>kc-consent-change</code> timestamp synchronizes cookie choices between open tabs.</li>
+          <li><strong>Optional analytics:</strong> with your consent (GDPR Article 6(1)(a)), Google Analytics, loaded through Google Tag Manager, measures visits and interactions. It may process online identifiers, device/browser information, referring pages and page usage. Google’s <code>_ga</code> and <code>_ga_*</code> cookies can last up to two years; your browser may shorten this period. The website keeps advertising storage, advertising user data and ad personalization consent denied.</li>
+        </ul>
+        <p>Choosing “Only necessary” prevents the optional analytics tag from loading. Choosing it later withdraws consent, removes accessible first-party analytics cookies and reloads any page already running analytics. Withdrawal does not affect the lawfulness of processing before withdrawal. You can also clear cookies and local storage in your browser.</p>
+        <p>See <a href="https://policies.google.com/technologies/cookies">Google’s cookie information</a> for its cookie purposes and duration.</p>
+      </section>
+      <section><h2>5. Service providers and international processing</h2>
+        <p>Data may be handled by providers supporting hosting, email, analytics and service administration, to the extent needed for those services, and by authorities where required by law. Relevant website providers include Netlify and Google.</p>
+        <p>Providers may process data outside the European Economic Area, including in the United States. Where required, transfers must rely on an applicable adequacy decision or appropriate safeguards, such as standard contractual clauses. Details of the providers’ processing and transfer arrangements are available in the <a href="https://www.netlify.com/privacy/">Netlify privacy policy</a> and <a href="https://policies.google.com/privacy">Google privacy policy</a>. Contact us for information relevant to your data.</p>
+      </section>
+      <section><h2>6. Your rights</h2>
+        <p>Subject to the conditions in the GDPR, you may request access, correction, erasure, restriction or portability of your personal data, and object to processing based on legitimate interests. Where processing relies on consent, you may withdraw it at any time.</p>
+        <p>Contact <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a> to exercise your rights. You can also complain to the Polish supervisory authority, the <a href="https://uodo.gov.pl/">President of the Personal Data Protection Office (UODO)</a>, or your competent supervisory authority. We do not use this website to make automated decisions with legal or similarly significant effects on you.</p>
+      </section>
+      <section><h2>7. Materials and updates</h2><p>Website materials and trademarks belong to their respective owners. Mentioning a brand does not imply its endorsement. This policy may change when the website or its services change; the date above identifies this version.</p></section>
+    </> : <>
+      <section><h2>1. Kto odpowiada za Twoje dane?</h2>
+        <p>Administratorem danych jest Błażej Kunke, prowadzący działalność pod firmą Błażej Kunke Consulting (^Kunke Consulting), ul. Fosowa 13/1, 62-069 Dąbrówka. NIP: 9721222936; REGON: 525899400.</p>
+        <p>Pytania i wnioski dotyczące prywatności kieruj na <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>.</p>
+      </section>
+      <section><h2>2. E-mail, telefon i zapytania o usługi</h2>
+        <p>Linki e-mail otwierają Twój program pocztowy. Na stronie nie ma formularza przesyłającego dane kontaktowe. Gdy się z nami kontaktujesz, otrzymujemy przekazane przez Ciebie informacje, np. imię i nazwisko, adres e-mail, numer telefonu, nazwę firmy i treść wiadomości.</p>
+        <p>Wykorzystujemy te dane, aby odpowiedzieć na zapytanie, przygotować ofertę oraz uzgodnić lub zrealizować usługę. Podstawą jest podjęcie działań na Twoje żądanie przed zawarciem umowy lub wykonanie umowy (art. 6 ust. 1 lit. b RODO), a w pozostałej korespondencji biznesowej — nasz prawnie uzasadniony interes polegający na udzielaniu odpowiedzi i utrzymywaniu relacji biznesowych (art. 6 ust. 1 lit. f). Obowiązki prawne, w tym księgowe, mogą wymagać przechowywania dokumentacji usług (art. 6 ust. 1 lit. c).</p>
+        <p>Podanie danych jest dobrowolne, ale bez odpowiednich danych kontaktowych możemy nie móc odpowiedzieć. Korespondencję przechowujemy przez czas potrzebny do obsługi zapytania i relacji, a odpowiednią dokumentację usług przez okres wynikający z obowiązków prawnych lub potrzebny do ustalenia, dochodzenia lub obrony roszczeń. Możesz zapytać o okres dotyczący konkretnej korespondencji.</p>
+      </section>
+      <section><h2>3. Odwiedziny na stronie</h2>
+        <p>Stronę utrzymuje Netlify. Jej dostarczanie i zabezpieczanie wiąże się z przetwarzaniem informacji technicznych, takich jak adres IP, żądany adres URL, informacje o przeglądarce i czas żądania. Służy to naszemu prawnie uzasadnionemu interesowi polegającemu na zapewnieniu sprawnej i bezpiecznej strony.</p>
+        <p>Niektóre strony pobierają fonty z Google Fonts lub miniatury artykułów z serwisu obrazów YouTube. Przy pobieraniu tych zasobów przeglądarka przekazuje dostawcom informacje techniczne, w tym adres IP. Są to zasoby odrębne od opcjonalnej analityki Google Analytics.</p>
+      </section>
+      <section><h2>4. Cookies i preferencje wyglądu</h2>
+        <ul>
+          <li><strong>Twój wybór:</strong> własny plik <code>cookie_consent</code> zapamiętuje zgodę lub odmowę analityki przez maksymalnie 12 miesięcy. Jest potrzebny do respektowania Twojej decyzji.</li>
+          <li><strong>Wygląd:</strong> <code>kc-theme</code> w pamięci lokalnej przeglądarki zapamiętuje wybrany jasny lub ciemny motyw do zmiany ustawienia albo wyczyszczenia pamięci. Lokalny znacznik czasu <code>kc-consent-change</code> synchronizuje wybór cookies między otwartymi kartami.</li>
+          <li><strong>Opcjonalna analityka:</strong> za Twoją zgodą (art. 6 ust. 1 lit. a RODO) Google Analytics, uruchamiany przez Google Tag Manager, mierzy odwiedziny i interakcje. Może przetwarzać identyfikatory internetowe, informacje o urządzeniu i przeglądarce, stronach odsyłających oraz korzystaniu ze strony. Pliki Google <code>_ga</code> i <code>_ga_*</code> mogą być przechowywane do dwóch lat; przeglądarka może skrócić ten czas. Zgody na przechowywanie danych reklamowych, dane użytkownika do celów reklamowych i personalizację reklam pozostają wyłączone.</li>
+        </ul>
+        <p>Wybór „Tylko niezbędne” zapobiega ładowaniu opcjonalnego tagu analitycznego. Wybrany później wycofuje zgodę, usuwa dostępne własne cookies analityczne i odświeża stronę, na której analityka już działała. Wycofanie zgody nie wpływa na zgodność z prawem wcześniejszego przetwarzania. Cookies i pamięć lokalną możesz też wyczyścić w przeglądarce.</p>
+        <p>Cele i czas przechowywania plików Google opisują <a href="https://policies.google.com/technologies/cookies?hl=pl">informacje Google o cookies</a>.</p>
+      </section>
+      <section><h2>5. Dostawcy usług i przetwarzanie za granicą</h2>
+        <p>Dane mogą przetwarzać dostawcy obsługujący hosting, pocztę, analitykę i administrację usług — w zakresie potrzebnym do realizacji tych usług — oraz organy uprawnione na podstawie prawa. Dostawcy związani ze stroną obejmują Netlify i Google.</p>
+        <p>Dostawcy mogą przetwarzać dane poza Europejskim Obszarem Gospodarczym, w tym w USA. Gdy jest to wymagane, transfer musi opierać się na odpowiedniej decyzji stwierdzającej odpowiedni stopień ochrony lub właściwych zabezpieczeniach, np. standardowych klauzulach umownych. Zasady dostawców opisują <a href="https://www.netlify.com/privacy/">polityka prywatności Netlify</a> i <a href="https://policies.google.com/privacy?hl=pl">polityka prywatności Google</a>. Skontaktuj się z nami, aby uzyskać informacje dotyczące Twoich danych.</p>
+      </section>
+      <section><h2>6. Twoje prawa</h2>
+        <p>Na zasadach określonych w RODO możesz żądać dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania lub przeniesienia, a także wnieść sprzeciw wobec przetwarzania opartego na prawnie uzasadnionym interesie. Zgodę możesz wycofać w dowolnym momencie.</p>
+        <p>Aby skorzystać z praw, napisz na <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a>. Możesz też złożyć skargę do <a href="https://uodo.gov.pl/">Prezesa Urzędu Ochrony Danych Osobowych</a> lub właściwego organu nadzorczego. Nie wykorzystujemy tej strony do podejmowania zautomatyzowanych decyzji wywołujących wobec Ciebie skutki prawne lub podobnie istotne skutki.</p>
+      </section>
+      <section><h2>7. Materiały i aktualizacje</h2><p>Materiały i znaki towarowe należą do ich właścicieli. Wzmianka o marce nie oznacza jej poparcia ani rekomendacji. Polityka może zmieniać się wraz ze stroną lub usługami; datę tej wersji podajemy powyżej.</p></section>
+    </>}
+    <div class="kc-actions"><a href={en ? '/en/' : '/'}>{en ? '← Back to homepage' : '← Strona główna'}</a><CookieSettingsLink lang={lang} /></div>
+  </div>
+</BlogShell>

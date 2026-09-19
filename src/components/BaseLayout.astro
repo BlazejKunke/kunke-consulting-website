@@ -1,5 +1,6 @@
 ---
 // src/components/BaseLayout.astro
+import CookieSettingsLink from './CookieSettingsLink.astro';
 import CookieConsent from './CookieConsent.astro';
 import ConsentMode from './ConsentMode.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
@@ -239,6 +240,7 @@ const ogLocale = localeOgMap[currentLocale] ?? 'pl_PL';
   <LanguageSwitcher currentLocale={currentLocale} alternateUrls={languageSwitcherUrls} />
 
   <slot />
-  <CookieConsent />
+  <div style="text-align:center;padding:16px"><CookieSettingsLink lang={currentLocale} /></div>
+  <CookieConsent lang={currentLocale} />
 </body>
 </html>

@@ -98,3 +98,7 @@ https://kunkeconsulting.netlify.app/*  https://kunkeconsulting.pl/:splat  301!
 /zespol/  /#zespol  301!
 /team  /en/#team  301!
 /team/  /en/#team  301!
+
+# Localized missing-page response. Existing files shadow this non-forced rule.
+# Other missing paths use Astro's root /404.html automatically.
+/en/*  /en/404/index.html  404

@@ -1,0 +1,8 @@
+---
+interface Props { lang?: 'pl' | 'en'; }
+const { lang = 'pl' } = Astro.props;
+---
+<button class="kc-cookie-settings" type="button" data-cookie-settings>{lang === 'en' ? 'Cookie settings' : 'Ustawienia cookies'}</button>
+<style is:global>
+.kc-cookie-settings { font:inherit; color:inherit; border:0; padding:8px 0; background:none; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+</style>

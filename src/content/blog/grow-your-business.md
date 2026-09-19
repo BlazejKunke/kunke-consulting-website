@@ -19,11 +19,11 @@ W dzisiejszym dynamicznym świecie biznesu, sukces firmy zależy od umiejętnoś
 
 ## 2. Budowanie silnej kultury organizacyjnej
 
-**Ludzie to fundament** każdego biznesu. Inwestycja w zespoł to inwestycja w przyszłość firmy.
+**Ludzie to fundament** każdego biznesu. Inwestycja w zespół to inwestycja w przyszłość firmy.
 
 **Jak budować kulturę:**
 - Jasne wartości i misja firmy
-- Regularne szkolenia i rozwoj pracowników
+- Regularne szkolenia i rozwój pracowników
 - System motywacji i uznania
 
 ## 3. Dywersyfikacja źródeł przychodów
@@ -44,7 +44,7 @@ W dzisiejszym dynamicznym świecie biznesu, sukces firmy zależy od umiejętnoś
 - Postaw hipotezę
 - Przeprowadź test A/B
 - Zmierz rezultaty
-- Wdroż najlepsze rozwiązania
+- Wdróż najlepsze rozwiązania
 
 ---
 

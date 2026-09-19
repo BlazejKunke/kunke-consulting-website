@@ -1,4 +1,5 @@
 ---
+heroImageFit: contain
 title: "Ponowne wdrożenie Fable 5: co oznacza dla polskich przedsiębiorców?"
 seoTitle: "Fable 5 wraca: co to oznacza dla polskich firm? | ^Kunke"
 description: "Anthropic przywraca płacącym użytkownikom Claude dostęp do Fable 5, ale z limitami, przekierowaniami i krótkim oknem testowym do 7 lipca."

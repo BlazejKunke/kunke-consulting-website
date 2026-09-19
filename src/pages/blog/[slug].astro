@@ -5,6 +5,8 @@
 // author card and a "read next" row, all on the homepage's design tokens.
 
 import { getCollection, getEntry, render } from 'astro:content';
+import ResponsiveImage from '../../components/ResponsiveImage.astro';
+import { articleTranslation } from '../../utils/locales';
 import BlogShell from '../../components/BlogShell.astro';
 import { categoryLabel, formatDate, readingTimeLabel, resolveCategory } from '../../utils/blog';
 
@@ -23,6 +25,10 @@ const { Content } = await render(post);
 const isEnglish = post.data.language === 'en';
 const lang: 'pl' | 'en' = isEnglish ? 'en' : 'pl';
 const category = resolveCategory(post.data);
+
+const translation = articleTranslation(post, await getCollection('blog'));
+const alternateLabel = translation.alternate ? (isEnglish ? 'Polski' : 'English') : (isEnglish ? 'Artykuły po polsku' : 'English articles');
+const alternateUrl = translation.alternate ?? (isEnglish ? '/blog/' : '/en/blog/');
 
 const heroImage = post.data.heroImage;
 const absoluteHeroImage = heroImage
@@ -122,16 +128,11 @@ const articleSchema = {
   canonicalUrl={canonicalUrl}
   ogImage={absoluteHeroImage}
   ogType="article"
+  alternateUrl={alternateUrl}
+  alternateLabel={alternateLabel}
 >
   <Fragment slot="head">
-    {/*
-      No hreflang. A post exists in one language only — nothing in the content
-      files records that, say, the Polish and English "American government
-      blocked the best AI model" posts are the same article. Until a post can
-      declare its translation, a self-referencing tag claims a language group of
-      one, which is noise. Linking a pair means registering it in
-      src/utils/locales.ts, not hand-writing tags here.
-    */}
+    {translation.links.map(({ hreflang, href }) => <link rel="alternate" hreflang={hreflang} href={href} />)}
     <meta property="article:published_time" content={post.data.date.toISOString()} />
     <meta property="article:author" content="Błażej Kunke" />
     <meta property="article:section" content={categoryLabel(category, lang)} />
@@ -148,10 +149,11 @@ const articleSchema = {
         <span>{categoryLabel(category, lang)}</span>
       </p>
       <h1>{post.data.title}</h1>
+      <a class="kc-article-translation" href={alternateUrl} lang={isEnglish ? "pl" : "en"}>{alternateLabel} →</a>
       <p class="kc-article-standfirst">{post.data.description}</p>
       <div class="kc-byline">
-        <img
-          class="kc-byline-avatar"
+        <ResponsiveImage
+          class="kc-byline-avatar" sizes="44px"
           src="/images/blazej-kunke-hero.jpg"
           alt=""
           loading="lazy"
@@ -173,8 +175,10 @@ const articleSchema = {
     heroImage && (
       <div class="kc-article-hero">
         <div class="kc-article-hero-frame">
-          <img
+          <ResponsiveImage
             src={heroImage}
+            fit={post.data.heroImageFit}
+            sizes="(max-width: 940px) calc(100vw - 40px), 900px"
             alt={post.data.title}
             loading="eager"
             fetchpriority="high"
@@ -193,8 +197,8 @@ const articleSchema = {
 
   <section class="kc-author" aria-label="Błażej Kunke">
     <div class="kc-author-card">
-      <img
-        class="kc-author-avatar"
+      <ResponsiveImage
+        class="kc-author-avatar" sizes="84px"
         src="/images/blazej-kunke-hero.jpg"
         alt=""
         loading="lazy"
@@ -218,8 +222,9 @@ const articleSchema = {
             <a class="kc-related-item" href={`/blog/${entry.id}/`}>
               <div class="kc-related-media">
                 {entry.data.heroImage && (
-                  <img
+                  <ResponsiveImage
                     src={entry.data.heroImage}
+                    fit={entry.data.heroImageFit}
                     alt=""
                     loading="lazy"
                     decoding="async"
@@ -249,7 +254,7 @@ const articleSchema = {
         </div>
       </div>
       <div class="kc-cta-media">
-        <img
+        <ResponsiveImage
           src="/images/Workshop2025.JPG"
           alt={labels.ctaAlt}
           loading="lazy"
@@ -263,6 +268,7 @@ const articleSchema = {
 </BlogShell>
 
 <style is:global>
+  .kc-article-translation { color:#fbfbf8; text-decoration:underline; font-size:14px; display:inline-block; margin-top:16px; }
   /* ---------- article title band ---------- */
 
   .kc-article-head {

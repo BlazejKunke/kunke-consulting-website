@@ -1,348 +1,95 @@
 ---
-import { availability, type AvailabilityStatus } from '../content/availability';
-import { getDateKeyInTimeZone, isPastDate } from '../utils/availabilityDates';
-
+import { availability } from '../content/availability';
+import { getDateKeyInTimeZone } from '../utils/availabilityDates';
+import { nextAvailableDays, isPastMonth } from '../utils/availabilityWindow';
+import AvailabilityMonth from './AvailabilityMonth.astro';
 interface Props { locale?: 'pl' | 'en'; }
 const { locale = 'pl' } = Astro.props;
-
-const monthNames = locale === 'en' ? [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-] : [
-  'styczeń',
-  'luty',
-  'marzec',
-  'kwiecień',
-  'maj',
-  'czerwiec',
-  'lipiec',
-  'sierpień',
-  'wrzesień',
-  'październik',
-  'listopad',
-  'grudzień',
-];
-
-const weekdayNames = locale === 'en'
-  ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  : ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Niedz'];
-
-const statusDetails: Record<AvailabilityStatus, { label: string; shortLabel: string }> = locale === 'en' ? {
-  available: { label: 'Available', shortLabel: 'Available' },
-  'partially-available': { label: 'Partially available', shortLabel: 'Partial' },
-  unavailable: { label: 'Unavailable', shortLabel: 'Busy' },
-} : {
-  available: { label: 'Dostępny', shortLabel: 'Dostępny' },
-  'partially-available': { label: 'Częściowo dostępny', shortLabel: 'Częściowo' },
-  unavailable: { label: 'Niedostępny', shortLabel: 'Zajęty' },
-};
-
-const buildTodayKey = getDateKeyInTimeZone(new Date());
-
-const pad = (value: number) => String(value).padStart(2, '0');
-
-const calendars = availability.months.map((month) => {
-  const monthIndex = month - 1;
-  const numberOfDays = new Date(Date.UTC(availability.year, month, 0)).getUTCDate();
-  const mondayBasedStartDay = (new Date(Date.UTC(availability.year, monthIndex, 1)).getUTCDay() + 6) % 7;
-  const days = Array.from({ length: numberOfDays }, (_, index) => {
-    const day = index + 1;
-    const dateKey = `${availability.year}-${pad(month)}-${pad(day)}`;
-    const configuredStatus = availability.days[dateKey] ?? availability.defaultStatus;
-    const dayUtc = Date.UTC(availability.year, monthIndex, day);
-    const isPast = isPastDate(dateKey, buildTodayKey);
-    const status: AvailabilityStatus = isPast ? 'unavailable' : configuredStatus;
-
-    return {
-      day,
-      dateKey,
-      status,
-      statusLabel: statusDetails[status].label,
-      shortStatusLabel: statusDetails[status].shortLabel,
-      isPast,
-      accessibleDate: new Intl.DateTimeFormat(locale === 'en' ? 'en-GB' : 'pl-PL', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-        timeZone: 'UTC',
-      }).format(new Date(dayUtc)),
-    };
-  });
-
-  return {
-    month,
-    name: monthNames[monthIndex],
-    leadingEmptyDays: Array.from({ length: mondayBasedStartDay }),
-    days,
-  };
-});
+const en = locale === 'en';
+const today = getDateKeyInTimeZone(new Date());
+const key = (month: number) => `${availability.year}-${String(month).padStart(2,'0')}`;
+const future = availability.months.filter(month => !isPastMonth(key(month), today));
+const past = availability.months.filter(month => isPastMonth(key(month), today));
+// Derive from every displayed day, including the default, so summary and grids
+// cannot diverge if the availability data format is edited later.
+const availableDays = availability.months.flatMap(month => Array.from({length:new Date(Date.UTC(availability.year,month,0)).getUTCDate()},(_,i) => `${key(month)}-${String(i+1).padStart(2,'0')}`)).filter(day => (availability.days[day] ?? availability.defaultStatus) === 'available');
+const upcoming = nextAvailableDays(availableDays, today);
+const format = (day: string) => new Intl.DateTimeFormat(en ? 'en-GB' : 'pl-PL', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' }).format(new Date(day+'T12:00:00Z'));
+const none = en ? 'No upcoming full days are listed. Email me to discuss a date.' : 'Brak kolejnych pełnych dni w kalendarzu. Napisz, aby ustalić termin.';
 ---
-
-<div class="availability-calendar">
-  <div class="legend" aria-label={locale === "en" ? "Availability status legend" : "Legenda statusów dostępności"}>
-    {(Object.entries(statusDetails) as [AvailabilityStatus, { label: string; shortLabel: string }][]).map(
-      ([status, details]) => (
-        <div class="legend-item">
-          <span class={`status-dot status-${status}`} aria-hidden="true"></span>
-          <span>{details.label}</span>
-        </div>
-      ),
-    )}
+<div class="kc-calendar" data-locale={locale} data-available-days={JSON.stringify(availableDays)}>
+  <div class="kc-info-box kc-calendar-summary">
+    <p class="kc-eyebrow">{en ? 'Next full days' : 'Najbliższe pełne dni'}</p>
+    <p data-next-dates>{upcoming.length ? upcoming.map(format).join(' · ') : none}</p>
+    <small>{en ? 'Indicative availability. Every date requires personal confirmation.' : 'Dostępność orientacyjna. Każdy termin wymaga osobistego potwierdzenia.'}</small>
   </div>
-
-  <div class="months-grid">
-    {calendars.map((calendar) => (
-      <section class="month-card" aria-labelledby={`month-${calendar.month}`}>
-        <h2 id={`month-${calendar.month}`}>{calendar.name} {availability.year}</h2>
-
-        <div class="calendar-grid weekday-row" aria-hidden="true">
-          {weekdayNames.map((weekday) => <span>{weekday}</span>)}
-        </div>
-
-        <div class="calendar-grid days-grid">
-          {calendar.leadingEmptyDays.map(() => <span class="empty-day" aria-hidden="true"></span>)}
-          {calendar.days.map(({ day, dateKey, status, statusLabel, shortStatusLabel, isPast, accessibleDate }) => (
-            <div
-              class:list={['day', `status-${status}`, { 'is-past': isPast }]}
-              data-date={dateKey}
-              data-date-label={accessibleDate}
-              aria-label={`${accessibleDate}: ${statusLabel}`}
-              title={`${accessibleDate}: ${statusLabel}`}
-            >
-              <span class="day-number">{day}</span>
-              <span class="day-status" aria-hidden="true">{shortStatusLabel}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-    ))}
+  <div class="kc-calendar-legend" aria-label={en ? 'Legend' : 'Legenda'}>
+    <span><i class="available" />{en ? 'Available' : 'Wolny'}</span>
+    <span><i class="partially-available" />{en ? 'Partially available' : 'Częściowo dostępny'}</span>
+    <span><i class="unavailable" />{en ? 'Busy' : 'Zajęty'}</span>
   </div>
+  <div class="kc-months" data-current-months>{future.map(month => <AvailabilityMonth month={month} locale={locale} today={today} />)}</div>
+  <details class="kc-past-months" hidden={!past.length}>
+    <summary>{en ? 'Earlier months' : 'Wcześniejsze miesiące'}</summary>
+    <div class="kc-months" data-past-months>{past.map(month => <AvailabilityMonth month={month} locale={locale} today={today} />)}</div>
+  </details>
 </div>
-
-<script is:inline>
-  const availabilityTimeZone = 'Europe/Warsaw';
-
-  const getWarsawDateKey = (date) => {
-    const parts = new Intl.DateTimeFormat('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      timeZone: availabilityTimeZone,
-    }).formatToParts(date);
-
-    const getPart = (type) => parts.find((part) => part.type === type)?.value;
-    return `${getPart('year')}-${getPart('month')}-${getPart('day')}`;
-  };
-
-  const markPastDatesUnavailable = () => {
-    const todayKey = getWarsawDateKey(new Date());
-
-    document.querySelectorAll('.availability-calendar .day[data-date]').forEach((day) => {
-      const dateKey = day.dataset.date;
-      const dateLabel = day.dataset.dateLabel;
-
-      if (!dateKey || !dateLabel || dateKey >= todayKey) {
-        return;
-      }
-
-      day.classList.remove('status-available', 'status-partially-available');
-      day.classList.add('status-unavailable', 'is-past');
-
-      const unavailableLabel = `${dateLabel}: ${locale === 'en' ? 'Unavailable' : 'Niedostępny'}`;
-      day.setAttribute('aria-label', unavailableLabel);
-      day.setAttribute('title', unavailableLabel);
-
-      const statusLabel = day.querySelector('.day-status');
-      if (statusLabel) {
-        statusLabel.textContent = locale === 'en' ? 'Busy' : 'Zajęty';
-      }
-    });
-  };
-
-  markPastDatesUnavailable();
-  window.setInterval(markPastDatesUnavailable, 60_000);
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-      markPastDatesUnavailable();
-    }
-  });
-</script>
-
-<style>
-  .availability-calendar {
-    width: 100%;
-  }
-
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem 1.5rem;
-    margin: 0 auto 2rem;
-    padding: 1rem 1.25rem;
-    max-width: 48rem;
-    background: #ffffff;
-    border: 1px solid #dfe8e3;
-    border-radius: 999px;
-    box-shadow: 0 8px 24px rgba(10, 71, 49, 0.07);
-  }
-
-  .legend-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #24332d;
-    font-size: 0.95rem;
-    font-weight: 700;
-  }
-
-  .status-dot {
-    width: 0.85rem;
-    height: 0.85rem;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.14);
-  }
-
-  .months-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
-    gap: 1.5rem;
-  }
-
-  .month-card {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 1.35rem;
-    background: #ffffff;
-    border: 1px solid #e1e8e4;
-    border-radius: 18px;
-    box-shadow: 0 12px 35px rgba(10, 71, 49, 0.08);
-  }
-
-  .month-card h2 {
-    margin: 0 0 1.1rem;
-    color: #0a4731;
-    font-size: 1.35rem;
-    text-align: left;
-    text-transform: capitalize;
-  }
-
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 0.38rem;
-  }
-
-  .weekday-row {
-    margin-bottom: 0.5rem;
-    color: #5c6b65;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  .day,
-  .empty-day {
-    min-width: 0;
-    aspect-ratio: 1 / 1;
-  }
-
-  .day {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0.22rem;
-    overflow: hidden;
-    border: 1px solid transparent;
-    border-radius: 10px;
-    color: #173027;
-    text-align: center;
-  }
-
-  .day-number {
-    font-size: 0.92rem;
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  .day-status {
-    width: 100%;
-    margin-top: 0.25rem;
-    overflow: hidden;
-    font-size: 0.52rem;
-    font-weight: 700;
-    line-height: 1;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .status-available {
-    background: #ccefdc;
-    border-color: #74c899;
-  }
-
-  .status-partially-available {
-    background: #fff0b8;
-    border-color: #e1bd42;
-  }
-
-  .status-unavailable {
-    background: #ffd1cf;
-    border-color: #de7772;
-  }
-
-  .day.is-past {
-    opacity: 0.48;
-    filter: saturate(0.65);
-  }
-
-  @media (max-width: 520px) {
-    .legend {
-      justify-content: flex-start;
-      border-radius: 16px;
-    }
-
-    .month-card {
-      padding: 1rem 0.75rem;
-    }
-
-    .calendar-grid {
-      gap: 0.25rem;
-    }
-
-    .day {
-      border-radius: 8px;
-    }
-
-    .day-number {
-      font-size: 0.82rem;
-    }
-
-    .day-status {
-      display: none;
-    }
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .month-card {
-      transition: transform 180ms ease, box-shadow 180ms ease;
-    }
-
-    .month-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 40px rgba(10, 71, 49, 0.11);
-    }
-  }
+<style is:global>
+.kc-calendar-summary p[data-next-dates] { font-size:clamp(21px,3vw,28px); line-height:1.5; margin:10px 0; }
+.kc-calendar-summary small { color:var(--kc-muted); }
+.kc-calendar-legend { display:flex; gap:16px; flex-wrap:wrap; margin:28px 0; font-size:13px; }
+.kc-calendar-legend span { display:flex; gap:7px; align-items:center; }
+.kc-calendar-legend i { width:12px; height:12px; border-radius:50%; border:1px solid #627165; }
+.kc-months { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.kc-utility .kc-month { margin:0; padding:24px; background:var(--kc-card); border:1px solid var(--kc-rule-14); border-radius:18px; }
+.kc-month h2 { margin:0 0 20px; text-transform:capitalize; }
+.kc-weekdays,.kc-days { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:5px; }
+.kc-weekdays { margin-bottom:8px; font:11px var(--kc-mono); color:var(--kc-muted); text-align:center; }
+.kc-day { border-radius:8px; min-width:0; min-height:50px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-size:15px; color:#173027; }
+.kc-day small { font-size:8px; }
+.kc-calendar .available { background:#ccefdc; }
+.kc-calendar .partially-available { background:#fff0b8; }
+.kc-calendar .unavailable { background:#f1ddd9; }
+.kc-calendar .past { background:var(--kc-tint); color:var(--kc-muted); }
+.kc-past-months { margin-top:32px; }
+.kc-past-months summary { cursor:pointer; padding:16px 0; color:var(--kc-muted); }
+.kc-day[aria-current='date'] { outline:2px solid var(--kc-green); outline-offset:2px; }
+@media(max-width:800px) { .kc-months { grid-template-columns:1fr; } }
+@media(max-width:420px) { .kc-utility .kc-month { padding:16px 12px; } .kc-day small { display:none; } .kc-days { gap:4px; } .kc-day { min-height:36px; } }
 </style>
+<script>
+import { getDateKeyInTimeZone } from '../utils/availabilityDates';
+import { isPastMonth, nextAvailableDays } from '../utils/availabilityWindow';
+const calendar = document.querySelector<HTMLElement>('.kc-calendar');
+if(calendar) {
+  const en = calendar.dataset.locale === 'en';
+  const availableDays: string[] = JSON.parse(calendar.dataset.availableDays ?? '[]');
+  const labels: Record<string,string> = en ? {available:'Available','partially-available':'Partial',unavailable:'Busy',past:'Past'} : {available:'Wolny','partially-available':'Częściowo',unavailable:'Zajęty',past:'Miniony'};
+  const current = calendar.querySelector('[data-current-months]')!;
+  const previous = calendar.querySelector('[data-past-months]')!;
+  const format = new Intl.DateTimeFormat(en ? 'en-GB' : 'pl-PL',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
+  let lastDate = '';
+  function update() {
+    const today = getDateKeyInTimeZone(new Date());
+    if(today === lastDate) return;
+    lastDate = today;
+    [...calendar!.querySelectorAll<HTMLElement>('[data-month]')].sort((a,b) => a.dataset.month!.localeCompare(b.dataset.month!)).forEach(month => {
+      (isPastMonth(month.dataset.month!,today) ? previous : current).append(month);
+    });
+    calendar!.querySelector<HTMLDetailsElement>('.kc-past-months')!.hidden = !previous.children.length;
+    calendar!.querySelectorAll<HTMLElement>('[data-date]').forEach(day => {
+      const status = day.dataset.date! < today ? 'past' : day.dataset.status!;
+      day.className = 'kc-day ' + status;
+      day.setAttribute('aria-label', `${day.dataset.label}: ${labels[status]}`);
+      day.title = `${day.dataset.label}: ${labels[status]}`;
+      day.querySelector('small')!.textContent = labels[status];
+      if(day.dataset.date === today) day.setAttribute('aria-current','date'); else day.removeAttribute('aria-current');
+    });
+    const dates = nextAvailableDays(availableDays,today);
+    calendar!.querySelector('[data-next-dates]')!.textContent = dates.length ? dates.map(day => format.format(new Date(day+'T12:00:00Z'))).join(' · ') : en ? 'No upcoming full days are listed. Email me to discuss a date.' : 'Brak kolejnych pełnych dni w kalendarzu. Napisz, aby ustalić termin.';
+  }
+  update();
+  window.setInterval(update,60_000);
+  document.addEventListener('visibilitychange',() => { if(document.visibilityState === 'visible') update(); });
+}
+</script>

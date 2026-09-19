@@ -40,13 +40,16 @@ export const defaultLocale: LocaleCode = 'pl';
 type LocalizedRouteMap = Partial<Record<LocaleCode, string>>;
 
 // The registry of pages that genuinely exist in more than one language. This is
-// the only thing that grants a page hreflang tags — see buildHreflangLinks.
+// the source for static-page hreflang tags — see buildHreflangLinks.
+// Article groups use explicit translationKey fields, validated below by articleTranslation.
 // Translating a page means adding it here; nothing else needs to change.
 const localizedRoutes: Record<string, LocalizedRouteMap> = {
   '/': {
     pl: '/',
     en: '/en/',
   },
+  '/privacy-policy': { pl: '/privacy-policy/', en: '/en/privacy-policy/' },
+  '/availability': { pl: '/availability/', en: '/en/availability/' },
   '/blog': {
     pl: '/blog/',
     en: '/en/blog/',
@@ -162,8 +165,7 @@ export interface HreflangLink {
  *    to emit a self-reference plus an x-default aimed at the homepage, which
  *    quietly enrolled the homepage in a group it did not belong to. Google saw
  *    a one-way claim and discarded the group — the "no return-tag" error that
- *    was patched and lost four times (PRs #57, #74, #118, #121). The absence of
- *    tags on /privacy-policy/ and friends is deliberate. Do not add them back.
+ *    was patched and lost four times (PRs #57, #74, #118, #121). Untranslated pages must not acquire tags through a fallback to the homepage.
  *
  * scripts/check-hreflang.mjs enforces both against the built output.
  */
@@ -193,3 +195,17 @@ export const buildHreflangLinks = (pathname: string, siteUrl: URL): HreflangLink
 
   return links;
 };
+
+// Explicit content translation groups share the same locale metadata contract.
+interface Translatable { id: string; data: { language?: string; translationKey?: string } }
+export function articleTranslation(post: Translatable, posts: Translatable[]) {
+  if (!post.data.translationKey) return { alternate: undefined, links: [] as HreflangLink[] };
+  const pair = posts.filter(p => p.data.translationKey === post.data.translationKey);
+  if (pair.length !== 2 || new Set(pair.map(p => p.data.language ?? 'pl')).size !== 2) {
+    throw new Error(`Translation key ${post.data.translationKey} must pair exactly one Polish and one English article.`);
+  }
+  const path = (p: Translatable) => `/blog/${p.id}/`;
+  const links: HreflangLink[] = ['pl', 'en'].map(lang => ({ hreflang: lang, href: `https://kunkeconsulting.pl${path(pair.find(p => (p.data.language ?? 'pl') === lang)!)}` }));
+  links.push({ hreflang: 'x-default', href: links[0].href });
+  return { alternate: path(pair.find(p => p.id !== post.id)!), links };
+}

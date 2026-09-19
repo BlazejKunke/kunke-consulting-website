@@ -80,6 +80,7 @@ export interface GridPost {
   category: string;
   categoryLabel: string;
   image?: string;
+  imageFit?: 'cover' | 'contain';
 }
 
 export const formatDate = (date: Date, language: 'pl' | 'en'): string =>

@@ -22,7 +22,7 @@ That system no longer works. The new generation of image models, including Googl
 
 To test this firsthand, I used Nano Banana 2 to reimagine myself as someone of Japanese origin. The result is below. I would challenge anyone to identify it as AI-generated without prior knowledge that it is.
 
-![Blazej Kunke 2026](/images/Blazej%20Kunke%202026.jpg)
+<img src="/images/Blazej%20Kunke%202026.jpg" alt="Błażej Kunke, 2026" width="844" height="956" loading="lazy" decoding="async" />
 
 ## Why This Matters for Business
 

@@ -1,0 +1,19 @@
+---
+interface Props { lang: 'pl' | 'en'; people: number; sessions: number; }
+const { lang, people, sessions } = Astro.props;
+---
+<div class="kc-milestone">
+  <span class="kc-milestone-mark" aria-hidden="true">^</span>
+  <div><strong>{people}</strong><span>{lang === 'en' ? 'people trained' : 'przeszkolonych osób'}</span></div>
+  <div><strong>{sessions}</strong><span>{lang === 'en' ? 'sessions' : 'sesji'}</span></div>
+</div>
+<style>
+.kc-milestone { box-sizing:border-box; position:relative; display:flex; flex-direction:column; justify-content:center; gap:28px; min-height:100%; padding:40px; background:#efede5; color:#0a4731; }
+.kc-milestone div { display:flex; flex-direction:column; gap:4px; }
+.kc-milestone strong { font-size:clamp(64px,7vw,108px); line-height:.9; font-weight:500; letter-spacing:-.06em; }
+.kc-milestone span { font-size:16px; }
+.kc-milestone .kc-milestone-mark { position:absolute; right:28px; top:22px; font-size:50px; }
+@media(max-width:900px) { .kc-milestone { flex-direction:row; align-items:center; justify-content:flex-start; gap:48px; padding:30px; } }
+@media(max-width:420px) { .kc-milestone { gap:24px; padding:24px; } .kc-milestone strong { font-size:60px; } .kc-milestone span { font-size:13px; } .kc-milestone .kc-milestone-mark { display:none; } }
+:global([data-theme='dark']) .kc-milestone { background:#15281e; color:#ddc392; }
+</style>

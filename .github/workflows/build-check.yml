@@ -25,6 +25,8 @@ jobs:
 
       - run: npm ci
 
+      - run: npm test
+
       - run: npm run build
 
       # Guards the two things this repo has got wrong before. Both are cheap to

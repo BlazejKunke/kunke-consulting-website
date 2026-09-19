@@ -1,4 +1,5 @@
 ---
+translationKey: "zanim-wyleczymy-wszystkie-choroby-czy-ai-moze-odebrac-telefon"
 title: "Zanim wyleczymy wszystkie choroby, czy AI może odebrać telefon?"
 seoTitle: "Czy AI może odebrać telefon w szpitalu?"
 description: "Prawdziwa historia ze szpitalnego korytarza: kiedy wszyscy mówią o AGI i leczeniu raka, najbardziej użyteczna AI w ochronie zdrowia może być spokojnym, wielojęzycznym asystentem głosowym, który odbiera telefon o trzeciej w nocy."

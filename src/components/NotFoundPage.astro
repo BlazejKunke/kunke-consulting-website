@@ -1,0 +1,27 @@
+---
+import BlogShell from './BlogShell.astro';
+interface Props { lang: 'pl' | 'en'; }
+const { lang } = Astro.props;
+const en = lang === 'en';
+---
+<BlogShell lang={lang} title={`404 — ${en ? 'This page went for coffee' : 'Ta strona poszła po kawę'} | ^Kunke Consulting`} description={en ? 'Page not found. Find your way back to the homepage or blog.' : 'Nie znaleziono strony. Wróć na stronę główną lub zajrzyj na blog.'} canonicalUrl={`https://kunkeconsulting.pl${en ? '/en/404/' : '/404.html'}`} alternateUrl={en ? '/404.html' : '/en/404/'} blog={false} noindex={true}>
+  <div class="kc-utility kc-lost">
+    <div class="kc-lost-number" aria-hidden="true">4<span>0<span class="kc-coffee-handle"></span></span>4</div>
+    <p class="kc-eyebrow">404 · {en ? 'Page not found' : 'Nie znaleziono strony'}</p>
+    <h1>{en ? 'This page went for coffee.' : 'Ta strona poszła po kawę.'}</h1>
+    <p class="kc-intro">{en ? 'And forgot to leave an address. This link leads nowhere, but there’s plenty to explore nearby.' : 'I nie zostawiła adresu. Pod tym linkiem nic nie ma, ale całkiem niedaleko znajdziesz coś ciekawego.'}</p>
+    <div class="kc-actions">
+      <a class="kc-btn" href={en ? '/en/' : '/'}>{en ? 'Back to homepage' : 'Wracam na główną'} →</a>
+      <a class="kc-btn-ghost" href={en ? '/en/blog/' : '/blog/'}>{en ? 'Read the blog' : 'Zajrzyj na blog'}</a>
+    </div>
+    <p class="kc-lost-note">{en ? 'A link on our website brought you here?' : 'Trafiasz tu z linku na naszej stronie?'} <a href="mailto:info@kunkeconsulting.pl">{en ? 'Let me know.' : 'Daj znać.'}</a> {en ? 'I’ll put down my coffee and fix it.' : 'Odstawię kawę i to poprawię.'}</p>
+  </div>
+</BlogShell>
+<style>
+.kc-lost { padding-top:48px; min-height:70vh; }
+.kc-lost-number { font:500 clamp(96px,16vw,180px)/1 Georgia,serif; letter-spacing:-.08em; color:var(--kc-green); margin-bottom:28px; }
+.kc-lost-number > span { position:relative; display:inline-block; margin-right:.08em; }
+.kc-coffee-handle { position:absolute; width:.14em; height:.22em; border:.025em solid currentColor; border-left:0; border-radius:0 .1em .1em 0; right:-.08em; top:.42em; }
+.kc-lost h1 { max-width:17ch; }
+.kc-lost-note { margin-top:36px; color:var(--kc-muted); font-size:14px; max-width:58ch; }
+</style>

@@ -1,4 +1,7 @@
 ---
+heroImageFit: contain
+milestone: { people: 500, sessions: 50 }
+translationKey: "500-przeszkolonych-osob-50-sesji"
 title: "500 przeszkolonych osób. 50 sesji."
 seoTitle: "500 przeszkolonych osób z AI w ponad 50 sesjach"
 description: "^Kunke Consulting przekroczyło 500 przeszkolonych osób w ponad 50 sesjach szkoleniowych z zastosowań sztucznej inteligencji. Krótkie podsumowanie: gdzie, w jakich formatach i czego mnie to nauczyło."

@@ -10,6 +10,12 @@
 // The design's dark green PL/EN utility strip and four-column footer were
 // dropped in favour of the homepage chrome (Blaze's call, July 2026).
 
+import ThemeInit from './ThemeInit.astro';
+import SiteNav from './SiteNav.astro';
+import CookieConsent from './CookieConsent.astro';
+import CookieSettingsLink from './CookieSettingsLink.astro';
+import ConsentMode from './ConsentMode.astro';
+
 export type BlogLang = 'pl' | 'en';
 
 interface Props {
@@ -17,29 +23,20 @@ interface Props {
   title: string;
   description: string;
   canonicalUrl: string;
-  ogImage: string;
+  ogImage?: string;
+  alternateUrl?: string;
+  alternateLabel?: string;
+  blog?: boolean;
+  tracking?: boolean;
+  noindex?: boolean;
   ogType?: 'website' | 'article';
 }
 
-const { lang, title, description, canonicalUrl, ogImage, ogType = 'website' } = Astro.props;
+const { lang, title, description, canonicalUrl, ogImage = 'https://kunkeconsulting.pl/images/blazej-kunke-hero.jpg', ogType = 'website', alternateUrl, alternateLabel, blog = true, tracking = false, noindex = false } = Astro.props;
 
 const isEnglish = lang === 'en';
 const blogIndexUrl = isEnglish ? '/en/blog/' : '/blog/';
-const otherBlogUrl = isEnglish ? '/blog/' : '/en/blog/';
-
-const nav = isEnglish
-  ? [
-      { href: '/en/#offer', label: 'Offer' },
-      { href: '/en/#implementation', label: 'Implementation' },
-      { href: '/en/#team', label: 'Team' },
-      { href: '/en/blog/', label: 'Blog', current: true }
-    ]
-  : [
-      { href: '/#oferta', label: 'Oferta' },
-      { href: '/#wdrozenie', label: 'Wdrożenie' },
-      { href: '/#zespol', label: 'Zespół' },
-      { href: '/blog/', label: 'Blog', current: true }
-    ];
+const otherBlogUrl = alternateUrl ?? (isEnglish ? '/blog/' : '/en/blog/');
 
 const copy = isEnglish
   ? {
@@ -64,6 +61,10 @@ const copy = isEnglish
 <html lang={isEnglish ? 'en' : 'pl'}>
 <head>
   <meta charset="utf-8" />
+  <meta name="theme-color" content="#faf9f6" />
+  <ThemeInit />
+  <ConsentMode tracking={tracking} />
+  {noindex && <meta name="robots" content="noindex, follow" />}
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>{title}</title>
@@ -657,33 +658,48 @@ const copy = isEnglish
         font-size: 26px;
       }
     }
+
+    :root[data-theme='dark'] {
+      --kc-bg:#0b0f0d; --kc-card:#111714; --kc-tint:#18211c;
+      --kc-ink:#f7f0e5; --kc-body:#dcd3c1; --kc-muted:#afa593;
+      --kc-green:#c5a670; --kc-green-deep:#ddc392; --kc-brass:#c5a670;
+      --kc-brass-soft:#c5a67066; --kc-glow:0 0 34px -8px #c5a67073;
+      --kc-rule-08:#f7f0e514; --kc-rule-10:#f7f0e51a;
+      --kc-rule-12:#f7f0e51f; --kc-rule-14:#f7f0e524;
+      --kc-rule-16:#f7f0e529; --kc-rule-18:#f7f0e52e;
+      --kc-rule-24:#f7f0e53d; --kc-rule-42:#f7f0e53d;
+      color-scheme:dark;
+    }
+    :root[data-theme='dark'] .kc-header { background:#0b0f0de8; }
+    :root[data-theme='dark'] .kc-footer { background:#0e1411; }
+    :root[data-theme='dark'] .kc-featured,
+    :root[data-theme='dark'] .kc-article-head { background:#08301f; }
+    :root[data-theme='dark'] .kc-featured:hover { background:#0b3c28; }
+    :root[data-theme='dark'] .kc-prose { color:var(--kc-body); }
+    :root[data-theme='dark'] .kc-prose blockquote { background:var(--kc-tint); }
+    :root[data-theme='dark'] .kc-prose pre { background:#08301f; }
+    :root[data-theme='dark'] :is(.kc-blog-hero,.kc-article-head,.kc-utility) h1 { font-family:Georgia,serif; }
+    img[data-fit='contain'] { object-fit:contain !important; background:#faf9f6; }
+    .kc-utility { max-width:var(--kc-wrap); margin:auto; padding:64px var(--kc-gut) 80px; }
+    .kc-utility h1 { font-size:clamp(36px,6vw,64px); line-height:1.08; letter-spacing:-.035em; font-weight:500; margin:16px 0 24px; }
+    .kc-utility .kc-intro { font-size:20px; line-height:1.65; color:var(--kc-body); max-width:65ch; }
+    .kc-utility p, .kc-utility li { line-height:1.75; }
+    .kc-utility section { margin-top:36px; }
+    .kc-utility h2 { font-size:26px; font-weight:500; color:var(--kc-ink); }
+    .kc-utility a:not(.kc-btn) { text-decoration:underline; text-underline-offset:3px; }
+    .kc-utility time, .kc-updated { color:var(--kc-muted); font-size:14px; }
+    .kc-utility .kc-actions :is(.kc-btn,.kc-btn-ghost) { display:inline-flex; align-items:center; justify-content:center; padding:12px 22px; min-height:44px; border-radius:999px; font-weight:600; text-decoration:none; }
+    .kc-policy { max-width:840px; }
+    .kc-policy li + li { margin-top:8px; }
+    .kc-utility .kc-info-box { border:1px solid var(--kc-rule-14); border-radius:18px; padding:24px; background:var(--kc-tint); }
+    .kc-utility .kc-actions { display:flex; gap:16px; flex-wrap:wrap; align-items:center; margin-top:24px; }
+    @media(max-width:600px) { .kc-utility { padding-top:36px; } }
   </style>
 </head>
 <body>
   <a class="kc-skip" href="#top">{copy.skip}</a>
 
-  <header class="kc-header">
-    <nav class="kc-nav" aria-label={copy.navLabel}>
-      <a href={isEnglish ? '/en/' : '/'} class="kc-brand">^Kunke Consulting</a>
-      <div class="kc-nav-links">
-        {
-          nav.map((item) => (
-            <a href={item.href} aria-current={item.current ? 'page' : undefined}>
-              {item.label}
-            </a>
-          ))
-        }
-        <a
-          href={otherBlogUrl}
-          hreflang={isEnglish ? 'pl' : 'en'}
-          lang={isEnglish ? 'pl' : 'en'}
-        >
-          {copy.switchLabel}
-        </a>
-      </div>
-      <a href="mailto:info@kunkeconsulting.pl" class="kc-btn">{copy.cta}</a>
-    </nav>
-  </header>
+  <SiteNav lang={lang} alternateUrl={otherBlogUrl} alternateLabel={alternateLabel} blog={blog} />
 
   <main id="top">
     <slot />
@@ -694,13 +710,15 @@ const copy = isEnglish
       <p>© 2026 ^Kunke Consulting</p>
       <div class="kc-footer-links">
         <a href={blogIndexUrl}>Blog</a>
-        <a href="/privacy-policy/">{copy.privacy}</a>
+        <a href={isEnglish ? "/en/privacy-policy/" : "/privacy-policy/"}>{copy.privacy}</a>
+        <CookieSettingsLink lang={lang} />
         <a href="/ai-info/">{copy.robots}</a>
         <a href={otherBlogUrl} hreflang={isEnglish ? 'pl' : 'en'} lang={isEnglish ? 'pl' : 'en'}>
-          {copy.switchLabel}
+          {alternateLabel ?? copy.switchLabel}
         </a>
       </div>
     </div>
   </footer>
+  <CookieConsent lang={lang} />
 </body>
 </html>

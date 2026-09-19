@@ -1,4 +1,5 @@
 ---
+translationKey: "zanim-wyleczymy-wszystkie-choroby-czy-ai-moze-odebrac-telefon"
 title: "Before we cure cancer, can AI answer the phone?"
 seoTitle: "Before we cure cancer, can AI answer the hospital phone?"
 description: "A true story from a hospital corridor: while everyone argues about AGI and curing cancer, the most useful AI in healthcare might be a calm, multilingual voice assistant that answers the switchboard at three in the morning."

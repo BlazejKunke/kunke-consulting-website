@@ -4,6 +4,8 @@
 // and chrome via BlogShell.
 
 import { getCollection } from 'astro:content';
+import ResponsiveImage from '../../components/ResponsiveImage.astro';
+import MilestoneGraphic from '../../components/MilestoneGraphic.astro';
 import BlogShell from '../../components/BlogShell.astro';
 import BlogPostGrid from '../../components/BlogPostGrid.astro';
 import type { GridPost } from '../../utils/blog';
@@ -27,7 +29,8 @@ const toGridPost = (post: (typeof posts)[number]): GridPost => {
     isoDate: post.data.date.toISOString(),
     category,
     categoryLabel: categoryLabel(category, 'pl'),
-    image: post.data.heroImage
+    image: post.data.heroImage,
+    imageFit: post.data.heroImageFit
   };
 };
 
@@ -128,9 +131,11 @@ const blogSchema = {
             </span>
           </div>
           <div class="kc-featured-media">
-            {featured.data.heroImage && (
-              <img
+            {featured.data.milestone ? <MilestoneGraphic lang="pl" {...featured.data.milestone} /> : featured.data.heroImage && (
+              <ResponsiveImage
                 src={featured.data.heroImage}
+                fit={featured.data.heroImageFit}
+                sizes="(max-width: 900px) calc(100vw - 40px), 500px"
                 alt=""
                 loading="eager"
                 fetchpriority="high"
@@ -170,7 +175,7 @@ const blogSchema = {
         </div>
       </div>
       <div class="kc-cta-media">
-        <img
+        <ResponsiveImage
           src="/images/Workshop2025.JPG"
           alt="Warsztat AI prowadzony przez ^Kunke Consulting"
           loading="lazy"

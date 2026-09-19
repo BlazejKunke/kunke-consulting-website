@@ -9,6 +9,7 @@
 // It is deliberately not registered in locales.ts, so it emits no hreflang —
 // there is no Polish counterpart.
 
+import CookieSettingsLink from '../components/CookieSettingsLink.astro';
 import CookieConsent from '../components/CookieConsentEn.astro';
 import ConsentMode from '../components/ConsentMode.astro';
 
@@ -527,7 +528,8 @@ const traits = [
       <p>^Kunke Consulting · ul. Fosowa 13/1, Dąbrówka, pow. poznański</p>
       <div class="kc-footer-links">
         <a href="/en/">Home</a>
-        <a href="/privacy-policy/">Privacy policy</a>
+        <a href="/en/privacy-policy/">Privacy policy</a>
+        <CookieSettingsLink lang="en" />
       </div>
     </div>
   </footer>

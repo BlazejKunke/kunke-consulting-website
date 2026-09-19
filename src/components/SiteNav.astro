@@ -1,0 +1,56 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+interface Props { lang: 'pl' | 'en'; alternateUrl: string; alternateLabel?: string; blog?: boolean; }
+const { lang, alternateUrl, alternateLabel, blog = false } = Astro.props;
+const en = lang === 'en';
+const home = en ? '/en/' : '/';
+const links = en ? [['Offer', '/en/#offer'], ['Implementation', '/en/#implementation'], ['Team', '/en/#team'], ['Questions', '/en/#faq'], ['Blog', '/en/blog/']] : [['Oferta', '/#oferta'], ['Wdrożenie', '/#wdrozenie'], ['Zespół', '/#zespol'], ['Pytania', '/#pytania'], ['Blog', '/blog/']];
+---
+<header class="kc-header">
+  <nav class="kc-nav" aria-label={en ? 'Main navigation' : 'Główna nawigacja'}>
+    <a href={home} class="kc-brand">^Kunke Consulting</a>
+    <div class="kc-nav-links">
+      {links.map(([label, href]) => <a href={href} aria-current={blog && label === 'Blog' ? 'page' : undefined}>{label}</a>)}
+    </div>
+    <a class="kc-language" href={alternateUrl} lang={en ? 'pl' : 'en'} hreflang={en ? 'pl' : 'en'} aria-label={alternateLabel ?? (en ? 'Polski' : 'English')} title={alternateLabel ?? (en ? 'Polski' : 'English')}>{en ? 'PL' : 'EN'}</a>
+    <ThemeToggle lang={lang} />
+    <a href="mailto:info@kunkeconsulting.pl" class="kc-btn kc-nav-contact">{en ? 'Email me' : 'Napisz'}</a>
+    <details class="kc-mobile-nav">
+      <summary aria-label={en ? 'Navigation menu' : 'Menu nawigacji'}><span aria-hidden="true">☰</span></summary>
+      <div class="kc-mobile-links">
+        {links.map(([label, href]) => <a href={href}>{label}</a>)}
+        <a href={alternateUrl} lang={en ? 'pl' : 'en'}>{alternateLabel ?? (en ? 'Polski' : 'English')}</a>
+        <a href={en ? '/en/availability/' : '/availability/'}>{en ? 'Availability' : 'Dostępność'}</a>
+        <a href="mailto:info@kunkeconsulting.pl">{en ? 'Email me' : 'Napisz do mnie'}</a>
+      </div>
+    </details>
+  </nav>
+</header>
+<style is:global>
+.kc-header .kc-nav { display:flex; align-items:center; gap:20px; }
+.kc-header .kc-brand { white-space:nowrap; }
+:root[data-theme='dark'] .kc-header .kc-brand { color:#f7f0e5; }
+.kc-header .kc-language { display:grid; place-items:center; flex:none; min-width:36px; min-height:44px; font:600 13px var(--kc-sans, sans-serif); }
+.kc-mobile-nav { display:none; position:relative; }
+.kc-mobile-nav summary { cursor:pointer; list-style:none; width:40px; height:44px; display:grid; place-items:center; font-size:22px; }
+.kc-mobile-nav summary::-webkit-details-marker { display:none; }
+.kc-mobile-links { position:absolute; right:0; top:calc(100% + 12px); width:240px; padding:12px; border:1px solid var(--kc-rule-14); border-radius:16px; background:var(--kc-card, #fff); box-shadow:0 12px 40px #0002; }
+.kc-mobile-links a { display:block; padding:12px; font-size:16px; color:var(--kc-ink); }
+@media(max-width:1100px) {
+  .kc-header .kc-nav-links, .kc-header .kc-nav .kc-nav-contact { display:none; }
+  .kc-header .kc-language { margin-left:auto; }
+  .kc-mobile-nav { display:block; }
+}
+@media(max-width:600px) {
+  .kc-header .kc-nav { gap:4px; padding-inline:16px; }
+  .kc-header .kc-brand { font-size:14px; }
+  .kc-header .kc-lamp { width:36px; margin:0; }
+}
+</style>
+<script>
+  document.querySelectorAll<HTMLDetailsElement>('.kc-mobile-nav').forEach(menu => {
+    menu.addEventListener('click', event => { if ((event.target as HTMLElement).closest('a')) menu.open = false; });
+    document.addEventListener('keydown', event => { if(event.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary')?.focus(); } });
+    document.addEventListener('click', event => { if(!menu.contains(event.target as Node)) menu.open = false; });
+  });
+</script>
