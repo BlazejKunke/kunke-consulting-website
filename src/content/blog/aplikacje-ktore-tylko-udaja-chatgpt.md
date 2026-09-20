@@ -1,6 +1,6 @@
 ---
 title: "Aplikacje, które tylko udają ChatGPT. Jak się nie dać nabrać?"
-seoTitle: "Aplikacje, które tylko udają ChatGPT — jak rozpoznać oficjalne narzędzia AI"
+seoTitle: "Aplikacje, które tylko udają ChatGPT. Jak rozpoznać oficjalne narzędzia AI"
 description: "Na warsztatach regularnie widzę, jak uczestnicy trafiają na aplikacje i strony, które tylko wyglądają jak ChatGPT, Claude czy Gemini. Proste wskazówki, jak sprawdzić, komu powierzasz swoje dane."
 date: 2026-09-20
 category: "tools"
