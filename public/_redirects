@@ -99,6 +99,12 @@ https://kunkeconsulting.netlify.app/*  https://kunkeconsulting.pl/:splat  301!
 /team  /en/#team  301!
 /team/  /en/#team  301!
 
+# The fake-ChatGPT-apps post was published on 2026-09-20 under a slug starting
+# "podejrzane-"; both the title and the URL were reworded the same day to avoid
+# labelling any named app. Live for minutes, but the old URL was in the sitemap.
+/blog/podejrzane-aplikacje-ktore-udaja-chatgpt  /blog/aplikacje-ktore-tylko-udaja-chatgpt/  301!
+/blog/podejrzane-aplikacje-ktore-udaja-chatgpt/  /blog/aplikacje-ktore-tylko-udaja-chatgpt/  301!
+
 # Localized missing-page response. Existing files shadow this non-forced rule.
 # Other missing paths use Astro's root /404.html automatically.
 /en/*  /en/404/index.html  404
