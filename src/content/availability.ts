@@ -4,7 +4,7 @@ export const availability = {
   year: 2026,
   months: [6, 7, 8, 9, 10, 11, 12],
   defaultStatus: 'unavailable' as AvailabilityStatus,
-  updatedAt: '2026-09-20',
+  updatedAt: '2026-09-21',
   days: {
     '2026-06-01': 'unavailable',
     '2026-06-02': 'unavailable',
@@ -117,7 +117,7 @@ export const availability = {
     '2026-09-17': 'unavailable',
     '2026-09-18': 'unavailable',
     '2026-09-19': 'unavailable',
-    '2026-09-20': 'partially-available',
+    '2026-09-20': 'unavailable',
     '2026-09-21': 'unavailable',
     '2026-09-22': 'unavailable',
     '2026-09-23': 'unavailable',
