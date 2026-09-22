@@ -68,7 +68,23 @@ h1 { margin: 0; font-size: inherit; line-height: 1.5; }
 .total-progress { text-align: right; }
 .field { position: relative; margin: clamp(32px, 4vw, 74px) var(--inset) clamp(28px, 3vw, 54px); }
 .letter-grid { display: grid; gap: 0; user-select: none; -webkit-user-select: none; touch-action: none; }
-.letter-row { display: grid; grid-template-columns: repeat(var(--columns, 17), minmax(0, 1fr)); }
+.letter-row {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 17), minmax(0, 1fr));
+}
+/* Each band follows the actual row height, including compact and mobile
+   layouts. Extend it to the paper edges without widening the letter grid. */
+.letter-row::before {
+  content: '';
+  position: absolute;
+  inset: 0 calc(-1 * var(--inset));
+  z-index: -1;
+  pointer-events: none;
+  background: var(--paper);
+}
+.letter-row:nth-child(even)::before { background: var(--stripe); }
 .letter-cell { min-width: 0; position: relative; }
 .letter {
   display: grid;
