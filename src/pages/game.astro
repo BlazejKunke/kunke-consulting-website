@@ -1,0 +1,92 @@
+---
+import '../styles/refinement.css';
+import { CATEGORIES } from '../lib/refinement/engine';
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f9f8f4" />
+    <title>^ Refinement — Kunke Consulting</title>
+    <meta name="description" content="Znajdź sens w szumie. A quiet bilingual word game by ^Kunke Consulting. Find Polish and English words in a mysterious refinement report." />
+    <link rel="canonical" href="https://kunkeconsulting.pl/game/" />
+    <link rel="icon" href="/favicon.png" />
+    <meta property="og:title" content="^ Refinement — Kunke Consulting" />
+    <meta property="og:description" content="Znajdź sens w szumie. Find meaning in the noise." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kunkeconsulting.pl/game/" />
+    <meta name="color-scheme" content="light" />
+  </head>
+  <body>
+    <main class="paper" id="refinement">
+      <header class="report-header">
+        <h1><a href="/" aria-label="Kunke Consulting — strona główna / home">^KUNKE CONSULTING</a><span class="heading-dash"> — </span><span class="report-title">RAPORT RAFINACJI <span lang="en">/ REFINEMENT REPORT</span></span></h1>
+        <span class="page-number">STR. <span id="page-number">001</span></span>
+      </header>
+
+      <div class="file-header">
+        <span>PLIK <span lang="en">/ FILE</span>: <strong id="file-name">POZNAN.KC</strong></span>
+        <span class="total-progress">UKOŃCZONO <span lang="en">/ COMPLETE</span>: <strong id="total-progress">000%</strong></span>
+      </div>
+
+      <section class="field" aria-label="Pole liter / Letter field" aria-describedby="quick-instructions">
+        <div id="letter-grid" class="letter-grid" role="grid" aria-label="Znajdź słowa / Find words"></div>
+        <noscript><p class="no-script">Ta gra potrzebuje JavaScript. / Please enable JavaScript to play.</p></noscript>
+        <div class="completion" id="completion" hidden>
+          <span class="completion-caret" aria-hidden="true">^</span>
+          <h2>SZUM STAŁ SIĘ SENSEM.</h2>
+          <p lang="en">You found meaning in the noise.</p>
+          <button class="text-button" id="next-sheet" type="button">NASTĘPNY PLIK / NEXT FILE →</button>
+        </div>
+      </section>
+
+      <section class="categories" aria-label="Kategorie rafinacji / Refinement categories">
+        {CATEGORIES.map((category, index) => (
+          <div class="category" data-category={index}>
+            <button class="category-button" type="button" aria-expanded="false" aria-controls={`words-${index}`}>
+              <span class="category-rule" aria-hidden="true">+---------------+</span>
+              <span class="category-label">{String(index + 1).padStart(2, '0')} {category.label}</span>
+              <span class="category-meter"><span class="meter-dots" aria-hidden="true">········</span><span class="category-percent">000%</span></span>
+              <span class="sr-only"> — pokaż słowa / show words</span>
+            </button>
+            <div class="word-list" id={`words-${index}`} hidden></div>
+          </div>
+        ))}
+      </section>
+
+      <div class="instructions-strip">
+        <p id="status" role="status" aria-live="polite">ZNAJDŹ SENS W SZUMIE. <span lang="en">/ FIND MEANING IN THE NOISE.</span></p>
+        <p id="quick-instructions">Przeciągnij po słowie lub wybierz pierwszą i ostatnią literę.<br /><span lang="en">Drag across a word, or select its first and last letters.</span></p>
+      </div>
+
+      <footer class="report-footer">
+        <span class="coordinates" id="coordinates" aria-hidden="true">0x000000:0x000000</span>
+        <nav class="report-actions" aria-label="Sterowanie / Controls">
+          <button class="text-button" id="help-button" type="button">[ ? ] <span>POMOC / HELP</span></button>
+          <button class="text-button" id="reset-button" type="button">[ ↻ ] <span>NOWY PLIK / NEW FILE</span></button>
+        </nav>
+        <button class="caret-button" id="hint-button" type="button" aria-label="Podpowiedź / Hint" title="Podpowiedź / Hint">--- ^ ---</button>
+      </footer>
+    </main>
+
+    <dialog id="help-dialog" class="help-dialog" aria-labelledby="help-title">
+      <form method="dialog"><button class="text-button close-dialog" aria-label="Zamknij / Close">[ × ]</button></form>
+      <p class="dialog-kicker">^KUNKE CONSULTING · INSTRUKCJA / MANUAL</p>
+      <h2 id="help-title">Znajdź sens w szumie.</h2>
+      <p lang="en" class="dialog-subtitle">Find meaning in the noise.</p>
+      <ol>
+        <li>Znajdź polskie i angielskie słowa — poziomo lub pionowo.<span lang="en">Find Polish and English words, horizontally or vertically.</span></li>
+        <li>Przeciągnij po słowie albo wybierz jego pierwszą i ostatnią literę.<span lang="en">Drag across a word, or select its first and last letters.</span></li>
+        <li>Słowa same trafiają do kategorii. Kliknij nazwę kategorii, aby zobaczyć listę.<span lang="en">Words sort themselves. Select a category to see its word list.</span></li>
+        <li>Znak ^ pomoże, gdy utkniesz.<span lang="en">The ^ will help if you get stuck.</span></li>
+      </ol>
+      <p class="keyboard-help">Klawiatura / Keyboard: <kbd>↑ ↓ ← →</kbd> poruszanie / move · <kbd>Enter</kbd> wybór / select · <kbd>Esc</kbd> anuluj / cancel.</p>
+      <p class="quiet-note">Bez pośpiechu. Bez zapisu. Po prostu graj.<br /><span lang="en">No rush. No saved progress. Just play.</span></p>
+      <form method="dialog"><button class="text-button start-playing">WRACAM DO PRACY / BACK TO WORK →</button></form>
+    </dialog>
+    <script>
+      import '../scripts/refinement';
+    </script>
+  </body>
+</html>
