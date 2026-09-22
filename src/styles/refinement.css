@@ -29,7 +29,8 @@ button:focus-visible, a:focus-visible { outline: 2px dashed var(--ink); outline-
   min-height: 100svh;
   margin: 0 var(--gutter);
   border-inline: 1px dashed var(--rule);
-  background: repeating-linear-gradient(to bottom, var(--paper) 0 var(--band), var(--stripe) var(--band) calc(var(--band) * 2));
+  /* Bands belong to the content rows, never to a page-wide repeating pattern. */
+  background: var(--paper);
   isolation: isolate;
 }
 .paper::before, .paper::after {
@@ -60,7 +61,8 @@ h1 { margin: 0; font-size: inherit; line-height: 1.5; }
   justify-content: space-between;
   align-items: baseline;
   gap: 20px;
-  padding: 0 var(--inset);
+  padding: .55em var(--inset);
+  background: var(--stripe);
   font-size: clamp(12px, 1.4vw, 25px);
   line-height: 1.6;
 }
@@ -112,15 +114,27 @@ h1 { margin: 0; font-size: inherit; line-height: 1.5; }
 .letter.is-refining span { animation: refine 480ms ease both; }
 @keyframes refine { 0% { transform: scale(1); opacity: 1; } 40% { transform: scale(1.4); opacity: 1; } 100% { transform: scale(.4); opacity: 0; } }
 .categories {
+  isolation: isolate;
+  overflow: hidden;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: clamp(12px, 2.5vw, 48px);
-  padding: 0 var(--inset);
+  padding: 8px var(--inset);
 }
 .category { min-width: 0; position: relative; }
 .category-button { width: 100%; border: 0; background: transparent; padding: 0; text-align: left; line-height: 1.85; font-size: clamp(11px, 1.35vw, 24px); }
 .category-rule { display: block; overflow: hidden; white-space: nowrap; font-size: clamp(12px, 1.45vw, 27px); letter-spacing: -.06em; }
-.category-label { display: block; white-space: nowrap; }
+.category-label { position: relative; display: block; padding-block: .25em; white-space: nowrap; }
+/* The shared stacking context keeps every full-width band behind all five
+   labels. Clipping at the section preserves the paper's perforated margins. */
+.category-label::after {
+  content: '';
+  position: absolute;
+  inset: 0 -100vw;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--stripe);
+}
 .category-label::before, .category-meter::before { content: '|'; margin-right: .65em; }
 .category-meter { display: flex; align-items: baseline; white-space: nowrap; }
 .category-meter::after { content: '|'; margin-left: auto; }
@@ -133,7 +147,7 @@ h1 { margin: 0; font-size: inherit; line-height: 1.5; }
 .word-list { padding: 8px 0 4px 1em; font-size: clamp(11px, 1vw, 16px); line-height: 1.8; }
 .word-list span { display: block; }
 .word-list .is-found { text-decoration: line-through; color: var(--muted); }
-.instructions-strip { padding: clamp(24px, 3.5vw, 65px) var(--inset) 26px; }
+.instructions-strip { margin-top: clamp(16px, 2vw, 28px); padding: clamp(16px, 2vw, 28px) var(--inset); background: var(--stripe); }
 #status { min-height: 1.7em; margin: 0 0 9px; font-size: clamp(11px, 1vw, 18px); letter-spacing: .045em; line-height: 1.7; }
 #quick-instructions { margin: 0; font-size: clamp(11px, .9vw, 15px); line-height: 1.8; color: var(--muted); }
 .report-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-top: auto; padding: 22px var(--inset) 24px; font-size: clamp(11px, 1vw, 18px); }
@@ -171,7 +185,7 @@ kbd { font: inherit; font-weight: bold; }
   .letter { height: clamp(36px, calc((100svh - 470px) / 7), 74px); font-size: clamp(22px, calc((100svh - 470px) / 12.6), 40px); }
   .category-button { font-size: min(1.35vw, 17px); line-height: 1.65; }
   .category-rule { font-size: min(1.45vw, 19px); }
-  .instructions-strip { padding-top: 14px; padding-bottom: 10px; }
+  .instructions-strip { padding-block: 14px; }
   #status { font-size: 11px; }
   #quick-instructions { font-size: 11px; line-height: 1.6; }
   .report-footer { padding-block: 10px; }
@@ -203,7 +217,7 @@ kbd { font: inherit; font-weight: bold; }
   .category-rule { font-size: 14px; }
   .category-label::before, .category-meter::before { margin-right: .65em; }
   .meter-dots { letter-spacing: .03em; }
-  .instructions-strip { padding-top: 25px; padding-bottom: 15px; }
+  .instructions-strip { padding-block: 18px; }
   #status { min-height: 3.4em; font-size: 10px; }
   #quick-instructions { font-size: 10px; }
   .report-footer { gap: 7px 12px; padding-top: 0; padding-bottom: 16px; }
