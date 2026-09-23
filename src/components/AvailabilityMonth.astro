@@ -1,5 +1,5 @@
 ---
-import { availability, type AvailabilityStatus } from '../content/availability';
+import { availability, isAvailabilityWorkingDay, type AvailabilityStatus } from '../content/availability';
 interface Props { month: number; locale: 'pl' | 'en'; today: string; }
 const { month, locale, today } = Astro.props;
 const monthKey = `${availability.year}-${String(month).padStart(2, '0')}`;
@@ -10,7 +10,7 @@ const weekdays = locale === 'en' ? ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] :
 const start = (new Date(Date.UTC(availability.year,month-1,1)).getUTCDay()+6)%7;
 const days = Array.from({ length:new Date(Date.UTC(availability.year,month,0)).getUTCDate() }, (_,i) => {
   const date = `${monthKey}-${String(i+1).padStart(2,'0')}`;
-  const status: AvailabilityStatus = availability.days[date] ?? availability.defaultStatus;
+  const status: AvailabilityStatus = isAvailabilityWorkingDay(date) ? (availability.days[date] ?? availability.defaultStatus) : 'unavailable';
   return { day:i+1, date, status, past:date < today, label:dateFormat.format(new Date(date+'T12:00:00Z')) };
 });
 ---

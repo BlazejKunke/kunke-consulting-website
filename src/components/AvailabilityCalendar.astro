@@ -1,5 +1,5 @@
 ---
-import { availability } from '../content/availability';
+import { availability, isAvailabilityWorkingDay } from '../content/availability';
 import { getDateKeyInTimeZone } from '../utils/availabilityDates';
 import { nextAvailableDays, isPastMonth } from '../utils/availabilityWindow';
 import AvailabilityMonth from './AvailabilityMonth.astro';
@@ -12,7 +12,7 @@ const future = availability.months.filter(month => !isPastMonth(key(month), toda
 const past = availability.months.filter(month => isPastMonth(key(month), today));
 // Derive from every displayed day, including the default, so summary and grids
 // cannot diverge if the availability data format is edited later.
-const availableDays = availability.months.flatMap(month => Array.from({length:new Date(Date.UTC(availability.year,month,0)).getUTCDate()},(_,i) => `${key(month)}-${String(i+1).padStart(2,'0')}`)).filter(day => (availability.days[day] ?? availability.defaultStatus) === 'available');
+const availableDays = availability.months.flatMap(month => Array.from({length:new Date(Date.UTC(availability.year,month,0)).getUTCDate()},(_,i) => `${key(month)}-${String(i+1).padStart(2,'0')}`)).filter(day => isAvailabilityWorkingDay(day) && (availability.days[day] ?? availability.defaultStatus) === 'available');
 const upcoming = nextAvailableDays(availableDays, today);
 const format = (day: string) => new Intl.DateTimeFormat(en ? 'en-GB' : 'pl-PL', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' }).format(new Date(day+'T12:00:00Z'));
 const none = en ? 'No upcoming full days are listed. Email me to discuss a date.' : 'Brak kolejnych pełnych dni w kalendarzu. Napisz, aby ustalić termin.';
