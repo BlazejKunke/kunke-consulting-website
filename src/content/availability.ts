@@ -1,7 +1,7 @@
 export type AvailabilityStatus = 'available' | 'partially-available' | 'unavailable';
 
-/** Sunday is a protected non-working day, regardless of individual date entries. */
-export const isAvailabilityWorkingDay = (date: string) => new Date(`${date}T12:00:00Z`).getUTCDay() !== 0;
+/** Weekend statuses come from the shared date entries and the updater's weekend rules. */
+export const isAvailabilityWorkingDay = (_date: string) => true;
 
 export const availability = {
   year: 2026,
