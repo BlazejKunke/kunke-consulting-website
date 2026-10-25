@@ -26,7 +26,7 @@ const none = en ? 'No upcoming full days are listed. Email me to discuss a date.
   <div class="kc-calendar-legend" aria-label={en ? 'Legend' : 'Legenda'}>
     <span><i class="available" />{en ? 'Available' : 'Wolny'}</span>
     <span><i class="partially-available" />{en ? 'Partially available' : 'Częściowo dostępny'}</span>
-    <span><i class="unavailable" />{en ? 'Busy' : 'Zajęty'}</span>
+    <span><i class="unavailable" />{en ? 'Unavailable' : 'Niedostępny'}</span>
   </div>
   <div class="kc-months" data-current-months>{future.map(month => <AvailabilityMonth month={month} locale={locale} today={today} />)}</div>
   <details class="kc-past-months" hidden={!past.length}>
@@ -64,7 +64,7 @@ const calendar = document.querySelector<HTMLElement>('.kc-calendar');
 if(calendar) {
   const en = calendar.dataset.locale === 'en';
   const availableDays: string[] = JSON.parse(calendar.dataset.availableDays ?? '[]');
-  const labels: Record<string,string> = en ? {available:'Available','partially-available':'Partial',unavailable:'Busy',past:'Past'} : {available:'Wolny','partially-available':'Częściowo',unavailable:'Zajęty',past:'Miniony'};
+  const labels: Record<string,string> = en ? {available:'Available','partially-available':'Partial',unavailable:'Unavailable',past:'Past'} : {available:'Wolny','partially-available':'Częściowo',unavailable:'Niedostępny',past:'Miniony'};
   const current = calendar.querySelector('[data-current-months]')!;
   const previous = calendar.querySelector('[data-past-months]')!;
   const format = new Intl.DateTimeFormat(en ? 'en-GB' : 'pl-PL',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});

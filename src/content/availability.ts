@@ -1,7 +1,8 @@
 export type AvailabilityStatus = 'available' | 'partially-available' | 'unavailable';
 
-/** Weekend statuses come from the shared date entries and the updater's weekend rules. */
-export const isAvailabilityWorkingDay = (_date: string) => true;
+/** Sundays are always unavailable, regardless of calendar entries or updater output. */
+export const isAvailabilityWorkingDay = (date: string) =>
+  new Date(`${date}T12:00:00Z`).getUTCDay() !== 0;
 
 export const availability = {
   year: 2026,
@@ -155,7 +156,7 @@ export const availability = {
     '2026-10-22': 'unavailable',
     '2026-10-23': 'unavailable',
     '2026-10-24': 'unavailable',
-    '2026-10-25': 'partially-available',
+    '2026-10-25': 'unavailable',
     '2026-10-26': 'unavailable',
     '2026-10-27': 'partially-available',
     '2026-10-28': 'unavailable',
@@ -169,14 +170,14 @@ export const availability = {
     '2026-11-05': 'unavailable',
     '2026-11-06': 'unavailable',
     '2026-11-07': 'partially-available',
-    '2026-11-08': 'partially-available',
+    '2026-11-08': 'unavailable',
     '2026-11-09': 'partially-available',
     '2026-11-10': 'unavailable',
     '2026-11-11': 'partially-available',
     '2026-11-12': 'unavailable',
     '2026-11-13': 'unavailable',
     '2026-11-14': 'partially-available',
-    '2026-11-15': 'partially-available',
+    '2026-11-15': 'unavailable',
     '2026-11-16': 'unavailable',
     '2026-11-17': 'unavailable',
     '2026-11-18': 'unavailable',
@@ -190,7 +191,7 @@ export const availability = {
     '2026-11-26': 'unavailable',
     '2026-11-27': 'unavailable',
     '2026-11-28': 'partially-available',
-    '2026-11-29': 'partially-available',
+    '2026-11-29': 'unavailable',
     '2026-11-30': 'partially-available',
     '2026-12-01': 'partially-available',
     '2026-12-02': 'unavailable',
@@ -204,7 +205,7 @@ export const availability = {
     '2026-12-10': 'available',
     '2026-12-11': 'partially-available',
     '2026-12-12': 'partially-available',
-    '2026-12-13': 'partially-available',
+    '2026-12-13': 'unavailable',
     '2026-12-14': 'available',
     '2026-12-15': 'available',
     '2026-12-16': 'unavailable',

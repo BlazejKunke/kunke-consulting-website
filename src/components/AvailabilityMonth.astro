@@ -5,7 +5,7 @@ const { month, locale, today } = Astro.props;
 const monthKey = `${availability.year}-${String(month).padStart(2, '0')}`;
 const format = new Intl.DateTimeFormat(locale === 'en' ? 'en-GB' : 'pl-PL', { month:'long', year:'numeric', timeZone:'UTC' });
 const dateFormat = new Intl.DateTimeFormat(locale === 'en' ? 'en-GB' : 'pl-PL', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' });
-const labels = locale === 'en' ? { available:'Available', 'partially-available':'Partial', unavailable:'Busy', past:'Past' } : { available:'Wolny', 'partially-available':'Częściowo', unavailable:'Zajęty', past:'Miniony' };
+const labels = locale === 'en' ? { available:'Available', 'partially-available':'Partial', unavailable:'Unavailable', past:'Past' } : { available:'Wolny', 'partially-available':'Częściowo', unavailable:'Niedostępny', past:'Miniony' };
 const weekdays = locale === 'en' ? ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] : ['Pon','Wt','Śr','Czw','Pt','Sob','Ndz'];
 const start = (new Date(Date.UTC(availability.year,month-1,1)).getUTCDay()+6)%7;
 const days = Array.from({ length:new Date(Date.UTC(availability.year,month,0)).getUTCDate() }, (_,i) => {

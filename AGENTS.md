@@ -48,6 +48,13 @@ history as the safety net: a bad change gets reverted, not prevented.
 - After pushing, wait for the Netlify deploy and verify the affected public URLs yourself, then report what you checked. This replaces his review — it does not get skipped.
 - Ask first only where reverting does not actually undo the damage: deleting things not recoverable from Git, anything touching the domain or DNS, or anything sending mail to real people. Ordinary page and content changes are never in this category.
 
+## Availability calendar
+
+- Sundays are always unavailable, regardless of calendar entries. Blaze does not offer Sunday work. This rule replaces the earlier rule that allowed partially available Sundays.
+- Preserve the Sunday guard in `isAvailabilityWorkingDay` in `src/content/availability.ts`. Both language versions must show Sundays as unavailable even if a date entry is accidentally marked available or partially available.
+- Saturdays retain the existing rule: unavailable if blocked, otherwise partially available; never fully available.
+- The daily updater must keep every Sunday entry unavailable and preserve the shared Polish and English routes.
+
 ## English website
 
 - Maintain one English version at `/en/`; `/uk/` and `/us/` redirect to it.
