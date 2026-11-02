@@ -25,7 +25,6 @@ const none = en ? 'No upcoming full days are listed. Email me to discuss a date.
     <span><i class="available" />{en ? 'Available' : 'Wolny'}</span>
     <span><i class="partially-available" />{en ? 'Partially available' : 'Częściowo dostępny'}</span>
     <span><i class="unavailable" />{en ? 'Unavailable' : 'Niedostępny'}</span>
-    <span><i class="unconfirmed" />{en ? 'Contact me to confirm' : 'Zapytaj o dostępność'}</span>
   </div>
   <div class="kc-months" data-current-months>{future.map(month => <AvailabilityMonth month={month} locale={locale} today={today} />)}</div>
   <details class="kc-past-months" hidden={!past.length}>
@@ -49,7 +48,6 @@ const none = en ? 'No upcoming full days are listed. Email me to discuss a date.
 .kc-calendar .available { background:#ccefdc; }
 .kc-calendar .partially-available { background:#fff0b8; }
 .kc-calendar .unavailable { background:#f1ddd9; }
-.kc-calendar .unconfirmed { background:var(--kc-tint); color:var(--kc-muted); border:1px dashed var(--kc-rule-14); }
 .kc-calendar .past { background:var(--kc-tint); color:var(--kc-muted); }
 .kc-past-months { margin-top:32px; }
 .kc-past-months summary { cursor:pointer; padding:16px 0; color:var(--kc-muted); }

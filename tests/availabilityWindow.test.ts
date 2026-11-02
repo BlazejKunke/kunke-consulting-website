@@ -18,7 +18,7 @@ test('month grids have the correct dates across year boundaries and leap years',
 });
 
 test('unknown future dates do not invent availability and Sundays remain closed', () => {
-  assert.equal(getAvailabilityStatus('2099-01-01'), 'unconfirmed');
+  assert.equal(getAvailabilityStatus('2099-01-01'), null);
   assert.equal(getAvailabilityStatus('2027-01-03'), 'unavailable');
   assert.deepEqual(getAvailableDays(['2099-01']), []);
 });
