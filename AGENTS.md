@@ -50,6 +50,7 @@ history as the safety net: a bad change gets reverted, not prevented.
 
 ## Availability calendar
 
+- Do not display earlier months or a public archive. Remove expired months from the page when the three-month window rolls forward.
 - Display a rolling three-month window: the current month in Europe/Warsaw and the following two, including across year boundaries. The daily updater must populate date keys through the end of that window, including the next year when needed.
 - Use exactly three public availability statuses: available, partially available and unavailable. Do not add a fourth "ask about availability" status or legend item. If a month lacks future date entries, show a short month-level notice that its availability has not been published yet; never infer that an unknown date is free or busy. Keep only day statuses in the public availability data.
 

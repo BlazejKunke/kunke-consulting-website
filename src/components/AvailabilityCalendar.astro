@@ -1,7 +1,6 @@
 ---
-import { availability } from '../content/availability';
 import { getDateKeyInTimeZone } from '../utils/availabilityDates';
-import { nextAvailableDays, isPastMonth, getAvailabilityMonths } from '../utils/availabilityWindow';
+import { nextAvailableDays, getAvailabilityMonths } from '../utils/availabilityWindow';
 import { getAvailableDays } from '../utils/availabilityMonth';
 import AvailabilityMonth from './AvailabilityMonth.astro';
 interface Props { locale?: 'pl' | 'en'; }
@@ -9,7 +8,6 @@ const { locale = 'pl' } = Astro.props;
 const en = locale === 'en';
 const today = getDateKeyInTimeZone(new Date());
 const future = getAvailabilityMonths(today);
-const past = [...new Set(Object.keys(availability.days).map(day => day.slice(0, 7)))].filter(month => isPastMonth(month, today)).sort();
 const availableDays = getAvailableDays(future);
 const upcoming = nextAvailableDays(availableDays, today);
 const format = (day: string) => new Intl.DateTimeFormat(en ? 'en-GB' : 'pl-PL', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' }).format(new Date(day+'T12:00:00Z'));
@@ -27,10 +25,6 @@ const none = en ? 'No upcoming full days are listed. Email me to discuss a date.
     <span><i class="unavailable" />{en ? 'Unavailable' : 'Niedostępny'}</span>
   </div>
   <div class="kc-months" data-current-months>{future.map(month => <AvailabilityMonth month={month} locale={locale} today={today} />)}</div>
-  <details class="kc-past-months" hidden={!past.length}>
-    <summary>{en ? 'Earlier months' : 'Wcześniejsze miesiące'}</summary>
-    <div class="kc-months" data-past-months>{past.map(month => <AvailabilityMonth month={month} locale={locale} today={today} />)}</div>
-  </details>
 </div>
 <style is:global>
 .kc-calendar-summary p[data-next-dates] { font-size:clamp(21px,3vw,28px); line-height:1.5; margin:10px 0; }
@@ -49,22 +43,19 @@ const none = en ? 'No upcoming full days are listed. Email me to discuss a date.
 .kc-calendar .partially-available { background:#fff0b8; }
 .kc-calendar .unavailable { background:#f1ddd9; }
 .kc-calendar .past { background:var(--kc-tint); color:var(--kc-muted); }
-.kc-past-months { margin-top:32px; }
-.kc-past-months summary { cursor:pointer; padding:16px 0; color:var(--kc-muted); }
 .kc-day[aria-current='date'] { outline:2px solid var(--kc-green); outline-offset:2px; }
 @media(max-width:800px) { .kc-months { grid-template-columns:1fr; } }
 @media(max-width:420px) { .kc-utility .kc-month { padding:16px 12px; } .kc-day small { display:none; } .kc-days { gap:4px; } .kc-day { min-height:36px; } }
 </style>
 <script>
 import { getDateKeyInTimeZone } from '../utils/availabilityDates';
-import { getAvailabilityMonths, isPastMonth, nextAvailableDays } from '../utils/availabilityWindow';
+import { getAvailabilityMonths, nextAvailableDays } from '../utils/availabilityWindow';
 import { getAvailableDays, renderMonthContents } from '../utils/availabilityMonth';
 const calendar = document.querySelector<HTMLElement>('.kc-calendar');
 if (calendar) {
   const locale = calendar.dataset.locale === 'en' ? 'en' : 'pl';
   const en = locale === 'en';
   const current = calendar.querySelector('[data-current-months]')!;
-  const previous = calendar.querySelector('[data-past-months]')!;
   const format = new Intl.DateTimeFormat(en ? 'en-GB' : 'pl-PL', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' });
   let lastDate = '';
   function update() {
@@ -84,14 +75,13 @@ if (calendar) {
       .sort((a, b) => a.dataset.month!.localeCompare(b.dataset.month!))
       .forEach(section => {
         const month = section.dataset.month!;
-        if (!isPastMonth(month, today) && !months.includes(month)) {
+        if (!months.includes(month)) {
           section.remove();
           return;
         }
         section.innerHTML = renderMonthContents(month, locale, today);
-        (isPastMonth(month, today) ? previous : current).append(section);
+        current.append(section);
       });
-    calendar!.querySelector<HTMLDetailsElement>('.kc-past-months')!.hidden = !previous.children.length;
     const dates = nextAvailableDays(getAvailableDays(months), today);
     calendar!.querySelector('[data-next-dates]')!.textContent = dates.length
       ? dates.map(day => format.format(new Date(day + 'T12:00:00Z'))).join(' · ')
