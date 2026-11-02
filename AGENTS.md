@@ -50,6 +50,9 @@ history as the safety net: a bad change gets reverted, not prevented.
 
 ## Availability calendar
 
+- Display a rolling three-month window: the current month in Europe/Warsaw and the following two, including across year boundaries. The daily updater must populate date keys through the end of that window, including the next year when needed.
+- Keep only day statuses in the public availability data. Dates without published data must ask visitors to confirm availability; never infer that an unknown date is free or busy.
+
 - Sundays are always unavailable, regardless of calendar entries. Blaze does not offer Sunday work. This rule replaces the earlier rule that allowed partially available Sundays.
 - Preserve the Sunday guard in `isAvailabilityWorkingDay` in `src/content/availability.ts`. Both language versions must show Sundays as unavailable even if a date entry is accidentally marked available or partially available.
 - Saturdays retain the existing rule: unavailable if blocked, otherwise partially available; never fully available.

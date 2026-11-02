@@ -9,9 +9,9 @@ const en = lang === 'en';
 const path = en ? '/en/availability/' : '/availability/';
 const updated = new Intl.DateTimeFormat(en ? 'en-GB' : 'pl-PL',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(availability.updatedAt+'T12:00:00Z'));
 const title = en ? 'My availability' : 'Moja dostępność';
-const description = en ? 'Indicative availability for workshops, advisory sessions and projects. Email or call about a specific date — I will confirm it personally.' : 'Sprawdź orientacyjną dostępność na warsztaty, konsultacje i projekty. W sprawie konkretnego terminu napisz lub zadzwoń — potwierdzę go bezpośrednio.';
+const description = en ? 'Indicative availability for workshops, advisory sessions and projects. Email or call about a specific date. I will confirm it personally.' : 'Sprawdź orientacyjną dostępność na warsztaty, konsultacje i projekty. W sprawie konkretnego terminu napisz lub zadzwoń. Potwierdzę go bezpośrednio.';
 ---
-<BlogShell lang={lang} title={`${title} ${availability.year} | ^Kunke Consulting`} description={description} canonicalUrl={`https://kunkeconsulting.pl${path}`} alternateUrl={en ? '/availability/' : '/en/availability/'} blog={false} tracking={true}>
+<BlogShell lang={lang} title={`${title} | ^Kunke Consulting`} description={description} canonicalUrl={`https://kunkeconsulting.pl${path}`} alternateUrl={en ? '/availability/' : '/en/availability/'} blog={false} tracking={true}>
   <Fragment slot="head">{buildHreflangLinks(path, Astro.site!).map(link => <link rel="alternate" {...link} />)}</Fragment>
   <div class="kc-utility">
     <a href={en ? '/en/' : '/'}>{en ? '← Back to homepage' : '← Strona główna'}</a>

@@ -1,23 +1,21 @@
 ---
-import { availability, isAvailabilityWorkingDay } from '../content/availability';
+import { availability } from '../content/availability';
 import { getDateKeyInTimeZone } from '../utils/availabilityDates';
-import { nextAvailableDays, isPastMonth } from '../utils/availabilityWindow';
+import { nextAvailableDays, isPastMonth, getAvailabilityMonths } from '../utils/availabilityWindow';
+import { getAvailableDays } from '../utils/availabilityMonth';
 import AvailabilityMonth from './AvailabilityMonth.astro';
 interface Props { locale?: 'pl' | 'en'; }
 const { locale = 'pl' } = Astro.props;
 const en = locale === 'en';
 const today = getDateKeyInTimeZone(new Date());
-const key = (month: number) => `${availability.year}-${String(month).padStart(2,'0')}`;
-const future = availability.months.filter(month => !isPastMonth(key(month), today));
-const past = availability.months.filter(month => isPastMonth(key(month), today));
-// Derive from every displayed day, including the default, so summary and grids
-// cannot diverge if the availability data format is edited later.
-const availableDays = availability.months.flatMap(month => Array.from({length:new Date(Date.UTC(availability.year,month,0)).getUTCDate()},(_,i) => `${key(month)}-${String(i+1).padStart(2,'0')}`)).filter(day => isAvailabilityWorkingDay(day) && (availability.days[day] ?? availability.defaultStatus) === 'available');
+const future = getAvailabilityMonths(today);
+const past = [...new Set(Object.keys(availability.days).map(day => day.slice(0, 7)))].filter(month => isPastMonth(month, today)).sort();
+const availableDays = getAvailableDays(future);
 const upcoming = nextAvailableDays(availableDays, today);
 const format = (day: string) => new Intl.DateTimeFormat(en ? 'en-GB' : 'pl-PL', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' }).format(new Date(day+'T12:00:00Z'));
 const none = en ? 'No upcoming full days are listed. Email me to discuss a date.' : 'Brak kolejnych pełnych dni w kalendarzu. Napisz, aby ustalić termin.';
 ---
-<div class="kc-calendar" data-locale={locale} data-available-days={JSON.stringify(availableDays)}>
+<div class="kc-calendar" data-locale={locale}>
   <div class="kc-info-box kc-calendar-summary">
     <p class="kc-eyebrow">{en ? 'Next full days' : 'Najbliższe pełne dni'}</p>
     <p data-next-dates>{upcoming.length ? upcoming.map(format).join(' · ') : none}</p>
@@ -27,6 +25,7 @@ const none = en ? 'No upcoming full days are listed. Email me to discuss a date.
     <span><i class="available" />{en ? 'Available' : 'Wolny'}</span>
     <span><i class="partially-available" />{en ? 'Partially available' : 'Częściowo dostępny'}</span>
     <span><i class="unavailable" />{en ? 'Unavailable' : 'Niedostępny'}</span>
+    <span><i class="unconfirmed" />{en ? 'Contact me to confirm' : 'Zapytaj o dostępność'}</span>
   </div>
   <div class="kc-months" data-current-months>{future.map(month => <AvailabilityMonth month={month} locale={locale} today={today} />)}</div>
   <details class="kc-past-months" hidden={!past.length}>
@@ -50,6 +49,7 @@ const none = en ? 'No upcoming full days are listed. Email me to discuss a date.
 .kc-calendar .available { background:#ccefdc; }
 .kc-calendar .partially-available { background:#fff0b8; }
 .kc-calendar .unavailable { background:#f1ddd9; }
+.kc-calendar .unconfirmed { background:var(--kc-tint); color:var(--kc-muted); border:1px dashed var(--kc-rule-14); }
 .kc-calendar .past { background:var(--kc-tint); color:var(--kc-muted); }
 .kc-past-months { margin-top:32px; }
 .kc-past-months summary { cursor:pointer; padding:16px 0; color:var(--kc-muted); }
@@ -59,37 +59,48 @@ const none = en ? 'No upcoming full days are listed. Email me to discuss a date.
 </style>
 <script>
 import { getDateKeyInTimeZone } from '../utils/availabilityDates';
-import { isPastMonth, nextAvailableDays } from '../utils/availabilityWindow';
+import { getAvailabilityMonths, isPastMonth, nextAvailableDays } from '../utils/availabilityWindow';
+import { getAvailableDays, renderMonthContents } from '../utils/availabilityMonth';
 const calendar = document.querySelector<HTMLElement>('.kc-calendar');
-if(calendar) {
-  const en = calendar.dataset.locale === 'en';
-  const availableDays: string[] = JSON.parse(calendar.dataset.availableDays ?? '[]');
-  const labels: Record<string,string> = en ? {available:'Available','partially-available':'Partial',unavailable:'Unavailable',past:'Past'} : {available:'Wolny','partially-available':'Częściowo',unavailable:'Niedostępny',past:'Miniony'};
+if (calendar) {
+  const locale = calendar.dataset.locale === 'en' ? 'en' : 'pl';
+  const en = locale === 'en';
   const current = calendar.querySelector('[data-current-months]')!;
   const previous = calendar.querySelector('[data-past-months]')!;
-  const format = new Intl.DateTimeFormat(en ? 'en-GB' : 'pl-PL',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
+  const format = new Intl.DateTimeFormat(en ? 'en-GB' : 'pl-PL', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' });
   let lastDate = '';
   function update() {
     const today = getDateKeyInTimeZone(new Date());
-    if(today === lastDate) return;
+    if (today === lastDate) return;
     lastDate = today;
-    [...calendar!.querySelectorAll<HTMLElement>('[data-month]')].sort((a,b) => a.dataset.month!.localeCompare(b.dataset.month!)).forEach(month => {
-      (isPastMonth(month.dataset.month!,today) ? previous : current).append(month);
-    });
+    const months = getAvailabilityMonths(today);
+    for (const month of months) {
+      if (calendar!.querySelector(`[data-month="${month}"]`)) continue;
+      const section = document.createElement('section');
+      section.className = 'kc-month';
+      section.dataset.month = month;
+      section.setAttribute('aria-labelledby', `month-${month}`);
+      current.append(section);
+    }
+    [...calendar!.querySelectorAll<HTMLElement>('[data-month]')]
+      .sort((a, b) => a.dataset.month!.localeCompare(b.dataset.month!))
+      .forEach(section => {
+        const month = section.dataset.month!;
+        if (!isPastMonth(month, today) && !months.includes(month)) {
+          section.remove();
+          return;
+        }
+        section.innerHTML = renderMonthContents(month, locale, today);
+        (isPastMonth(month, today) ? previous : current).append(section);
+      });
     calendar!.querySelector<HTMLDetailsElement>('.kc-past-months')!.hidden = !previous.children.length;
-    calendar!.querySelectorAll<HTMLElement>('[data-date]').forEach(day => {
-      const status = day.dataset.date! < today ? 'past' : day.dataset.status!;
-      day.className = 'kc-day ' + status;
-      day.setAttribute('aria-label', `${day.dataset.label}: ${labels[status]}`);
-      day.title = `${day.dataset.label}: ${labels[status]}`;
-      day.querySelector('small')!.textContent = labels[status];
-      if(day.dataset.date === today) day.setAttribute('aria-current','date'); else day.removeAttribute('aria-current');
-    });
-    const dates = nextAvailableDays(availableDays,today);
-    calendar!.querySelector('[data-next-dates]')!.textContent = dates.length ? dates.map(day => format.format(new Date(day+'T12:00:00Z'))).join(' · ') : en ? 'No upcoming full days are listed. Email me to discuss a date.' : 'Brak kolejnych pełnych dni w kalendarzu. Napisz, aby ustalić termin.';
+    const dates = nextAvailableDays(getAvailableDays(months), today);
+    calendar!.querySelector('[data-next-dates]')!.textContent = dates.length
+      ? dates.map(day => format.format(new Date(day + 'T12:00:00Z'))).join(' · ')
+      : en ? 'No upcoming full days are listed. Email me to discuss a date.' : 'Brak kolejnych pełnych dni w kalendarzu. Napisz, aby ustalić termin.';
   }
   update();
-  window.setInterval(update,60_000);
-  document.addEventListener('visibilitychange',() => { if(document.visibilityState === 'visible') update(); });
+  window.setInterval(update, 60_000);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') update(); });
 }
 </script>
