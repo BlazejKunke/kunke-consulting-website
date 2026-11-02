@@ -1,10 +1,10 @@
-import { availability, isAvailabilityWorkingDay, type AvailabilityStatus } from '../content/availability.ts';
+import { availability, isAvailabilityWorkingDay, isAvailabilityProtectedDate, type AvailabilityStatus } from '../content/availability.ts';
 import { getMonthDays } from './availabilityWindow.ts';
 
 type Locale = 'pl' | 'en';
 
 export const getAvailabilityStatus = (date: string): AvailabilityStatus | null => {
-  if (!isAvailabilityWorkingDay(date)) return 'unavailable';
+  if (!isAvailabilityWorkingDay(date) || isAvailabilityProtectedDate(date)) return 'unavailable';
   const status = availability.days[date];
   if (!status) return null;
   // Saturdays can be partially available, but never a full working day.

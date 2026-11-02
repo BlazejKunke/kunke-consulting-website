@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { getAvailabilityMonths, getMonthDays } from '../src/utils/availabilityWindow.ts';
+import { getAvailabilityMonths, getPreparedAvailabilityMonths, getMonthDays } from '../src/utils/availabilityWindow.ts';
 import { getAvailableDays, getAvailabilityStatus, renderMonthContents } from '../src/utils/availabilityMonth.ts';
 
-test('always shows the current month and the following two, including next year', () => {
-  assert.deepEqual(getAvailabilityMonths('2026-11-02'), ['2026-11', '2026-12', '2027-01']);
-  assert.deepEqual(getAvailabilityMonths('2026-12-31'), ['2026-12', '2027-01', '2027-02']);
-  assert.deepEqual(getAvailabilityMonths('2027-01-01'), ['2027-01', '2027-02', '2027-03']);
-  assert.deepEqual(getAvailabilityMonths('2028-01-31'), ['2028-01', '2028-02', '2028-03']);
+test('always shows the current month and the following three, including next year', () => {
+  assert.deepEqual(getAvailabilityMonths('2026-11-02'), ['2026-11', '2026-12', '2027-01', '2027-02']);
+  assert.deepEqual(getAvailabilityMonths('2026-12-31'), ['2026-12', '2027-01', '2027-02', '2027-03']);
+  assert.deepEqual(getAvailabilityMonths('2027-01-01'), ['2027-01', '2027-02', '2027-03', '2027-04']);
+  assert.deepEqual(getAvailabilityMonths('2028-01-31'), ['2028-01', '2028-02', '2028-03', '2028-04']);
 });
 
 test('month grids have the correct dates across year boundaries and leap years', () => {
@@ -18,7 +18,7 @@ test('month grids have the correct dates across year boundaries and leap years',
 });
 
 test('unknown future dates do not invent availability and Sundays remain closed', () => {
-  assert.equal(getAvailabilityStatus('2099-01-01'), null);
+  assert.equal(getAvailabilityStatus('2099-01-05'), null);
   assert.equal(getAvailabilityStatus('2027-01-03'), 'unavailable');
   assert.deepEqual(getAvailableDays(['2099-01']), []);
 });
@@ -32,4 +32,11 @@ test('both languages render January with correct dates and Sunday policy', () =>
     assert.match(html, /data-date="2027-01-03" data-status="unavailable"/);
     assert.equal((html.match(/aria-current="date"/g) ?? []).length, 1);
   }
+});
+
+test('the prepared buffer supplies the next displayed month across New Year', () => {
+  const prepared = getPreparedAvailabilityMonths('2026-11-30');
+  assert.deepEqual(prepared, ['2026-11', '2026-12', '2027-01', '2027-02', '2027-03']);
+  assert.deepEqual(prepared.slice(1), getAvailabilityMonths('2026-12-01'));
+  assert.ok(!getAvailabilityMonths('2026-11-30').includes('2027-03'));
 });

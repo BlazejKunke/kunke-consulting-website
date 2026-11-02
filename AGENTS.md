@@ -50,8 +50,10 @@ history as the safety net: a bad change gets reverted, not prevented.
 
 ## Availability calendar
 
-- Do not display earlier months or a public archive. Remove expired months from the page when the three-month window rolls forward.
-- Display a rolling three-month window: the current month in Europe/Warsaw and the following two, including across year boundaries. The daily updater must populate date keys through the end of that window, including the next year when needed.
+- Do not display earlier months or a public archive. Remove expired months from the page when the four-month window rolls forward.
+- Display four months: the current month in Europe/Warsaw and the following three, including across year boundaries. Maintain a fifth prepared month for rollover, without displaying it early. Refresh every date in all five months from both calendars once daily at 06:00 Europe/Warsaw. Use getPreparedAvailabilityMonths from src/utils/availabilityWindow.ts for the maintained range.
+- Keep the existing cloud updater as the only scheduled writer. Blaze explicitly declined twice-daily updates, extra publication gates and a separate failure monitor on 2 November 2026. See docs/availability-maintenance.md for the approved process.
+- Every December 20 through January 3, inclusive, is unavailable. Preserve isAvailabilityProtectedDate and availabilityProtectedRanges in src/content/availability.ts. Add or change additional protected ranges only when Blaze explicitly requests them; retain them during calendar refreshes. Never publish private reasons for a protection.
 - Use exactly three public availability statuses: available, partially available and unavailable. Do not add a fourth "ask about availability" status or legend item. If a month lacks future date entries, show a short month-level notice that its availability has not been published yet; never infer that an unknown date is free or busy. Keep only day statuses in the public availability data.
 
 - Sundays are always unavailable, regardless of calendar entries. Blaze does not offer Sunday work. This rule replaces the earlier rule that allowed partially available Sundays.

@@ -59,7 +59,7 @@ portrait in the AI-image article now reserves its actual 844 × 956 dimensions.
 
 The availability summary and month grids use the same date source. Warsaw time
 controls past dates and month rollover, both at build time and in the browser.
-Past months are not displayed; the calendar shows only the current month and the following two. When the published range has expired, the summary
+Past months are not displayed; the calendar shows only the current month and the following three, with a fifth month prepared for rollover. When the published range has expired, the summary
 asks visitors to get in touch rather than inventing new availability.
 
 ## Validation
