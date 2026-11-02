@@ -1369,7 +1369,9 @@ const faqs = [
       .kc-contact-inner {
         grid-template-columns: 1fr;
         gap: 40px;
-        padding-top: 40px;
+        /* The FAQ's last rule already separates these stacked sections. */
+        border-top: 0;
+        padding-top: 0;
       }
 
       .kc-contact h2 {

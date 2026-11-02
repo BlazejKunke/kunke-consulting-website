@@ -1,14 +1,25 @@
 ---
+import { Picture } from 'astro:assets';
+import workshopPhoto from '../assets/blazej-kunke-workshop.jpg';
+
 interface Props { lang?: 'pl' | 'en'; }
 const { lang = 'pl' } = Astro.props;
 const showJapan = lang === 'en' ? 'Show Błażej Kunke in Japan' : 'Pokaż zdjęcie Błażeja Kunke z Japonii';
 const showWorkshop = lang === 'en' ? 'Show Błażej Kunke at a workshop' : 'Pokaż zdjęcie Błażeja Kunke z warsztatu';
 ---
 <button class="kc-about-media kc-about-photo" type="button" aria-label={showJapan} data-about-photo data-show-japan={showJapan} data-show-workshop={showWorkshop}>
-  <picture>
-    <source srcset="/images/Omnie.webp" type="image/webp" />
-    <img src="/images/Omnie.jpg" alt="" width="702" height="1024" loading="lazy" decoding="async" />
-  </picture>
+  <Picture
+    src={workshopPhoto}
+    formats={['webp']}
+    fallbackFormat="jpg"
+    width={1680}
+    widths={[480, 768, 1080, 1440, 1680]}
+    sizes="(max-width: 600px) calc(100vw - 40px), (max-width: 900px) calc(100vw - 64px), (max-width: 1120px) calc(50vw - 68px), 492px"
+    quality={85}
+    alt=""
+    loading="lazy"
+    decoding="async"
+  />
   <img class="kc-about-japan" src="/images/blazej-kunke-japan-2026.webp" alt="" width="1447" height="1087" loading="lazy" decoding="async" />
 </button>
 <style is:global>
@@ -22,6 +33,8 @@ const showWorkshop = lang === 'en' ? 'Show Błażej Kunke at a workshop' : 'Poka
     appearance: none;
   }
   .kc-about-photo picture { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+  /* Keep Blaze's face inside the wider phone crop. */
+  .kc-about-photo picture img { object-position: center 30%; }
   .kc-about-photo .kc-about-japan {
     position: absolute;
     inset: 0;
