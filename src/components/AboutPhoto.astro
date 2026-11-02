@@ -1,0 +1,54 @@
+---
+interface Props { lang?: 'pl' | 'en'; }
+const { lang = 'pl' } = Astro.props;
+const showJapan = lang === 'en' ? 'Show Błażej Kunke in Japan' : 'Pokaż zdjęcie Błażeja Kunke z Japonii';
+const showWorkshop = lang === 'en' ? 'Show Błażej Kunke at a workshop' : 'Pokaż zdjęcie Błażeja Kunke z warsztatu';
+---
+<button class="kc-about-media kc-about-photo" type="button" aria-label={showJapan} data-about-photo data-show-japan={showJapan} data-show-workshop={showWorkshop}>
+  <picture>
+    <source srcset="/images/Omnie.webp" type="image/webp" />
+    <img src="/images/Omnie.jpg" alt="" width="702" height="1024" loading="lazy" decoding="async" />
+  </picture>
+  <img class="kc-about-japan" src="/images/blazej-kunke-japan-2026.webp" alt="" width="1447" height="1087" loading="lazy" decoding="async" />
+</button>
+<style is:global>
+  .kc-about-photo {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    appearance: none;
+  }
+  .kc-about-photo picture { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+  .kc-about-photo .kc-about-japan {
+    position: absolute;
+    inset: 0;
+    /* Keep Blaze in the portrait crop; the wider mobile frame fits the group. */
+    object-position: left center;
+    opacity: 0;
+  }
+  :root .kc-about-media.kc-about-photo .kc-about-japan { transition: opacity 420ms ease, filter 300ms ease; }
+  .kc-about-photo[data-japan-visible='true'] .kc-about-japan { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    :root .kc-about-media.kc-about-photo .kc-about-japan { transition: none; }
+  }
+</style>
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-about-photo]').forEach(photo => {
+    const japan = photo.querySelector<HTMLImageElement>('.kc-about-japan');
+    let requested = false;
+    const update = () => {
+      const visible = requested && !!japan?.complete && japan.naturalWidth > 0;
+      photo.dataset.japanVisible = String(visible);
+      photo.setAttribute('aria-label', (visible ? photo.dataset.showWorkshop : photo.dataset.showJapan) ?? '');
+    };
+    const show = (visible: boolean) => { requested = visible; update(); };
+    japan?.addEventListener('load', update);
+    photo.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') show(true); });
+    photo.addEventListener('pointerleave', event => { if (event.pointerType !== 'touch') show(false); });
+    photo.addEventListener('click', () => show(!requested));
+    photo.addEventListener('blur', () => show(false));
+  });
+</script>

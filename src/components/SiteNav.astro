@@ -30,7 +30,10 @@ const links = en ? [['Offer', '/en/#offer'], ['Implementation', '/en/#implementa
 .kc-header .kc-nav { display:flex; align-items:center; gap:20px; }
 .kc-header .kc-brand { white-space:nowrap; }
 :root[data-theme='dark'] .kc-header .kc-brand { color:#f7f0e5; }
-.kc-header .kc-language { display:grid; place-items:center; flex:none; min-width:36px; min-height:44px; font:600 13px var(--kc-sans, sans-serif); }
+.kc-header .kc-nav-links { align-items:center; }
+.kc-header .kc-nav-links a,
+.kc-header .kc-language { display:inline-flex; align-items:center; justify-content:center; min-height:44px; font:400 16px/1.5 var(--kc-sans, sans-serif); letter-spacing:inherit; }
+.kc-header .kc-language { flex:none; min-width:36px; color:var(--kc-body); }
 .kc-mobile-nav { display:none; position:relative; }
 .kc-mobile-nav summary { cursor:pointer; list-style:none; width:40px; height:44px; display:grid; place-items:center; font-size:22px; }
 .kc-mobile-nav summary::-webkit-details-marker { display:none; }
@@ -44,7 +47,6 @@ const links = en ? [['Offer', '/en/#offer'], ['Implementation', '/en/#implementa
 @media(max-width:600px) {
   .kc-header .kc-nav { gap:4px; padding-inline:16px; }
   .kc-header .kc-brand { font-size:14px; }
-  .kc-header .kc-lamp { width:36px; margin:0; }
 }
 </style>
 <script>

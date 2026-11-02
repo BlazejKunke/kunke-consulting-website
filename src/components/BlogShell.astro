@@ -171,6 +171,12 @@ const copy = isEnglish
       max-width: 100%;
     }
 
+    /* Keep selected text legible on the green feature and article title panels. */
+    :root :is(.kc-featured, .kc-featured *, .kc-article-head, .kc-article-head *)::selection {
+      background: #ffffff;
+      color: #0a4731;
+    }
+
     /* ---------- primitives (shared with the homepage) ---------- */
 
     .kc-eyebrow {

@@ -11,6 +11,7 @@ import CookieConsent from '../../components/CookieConsentEn.astro';
 import WebMcpTools from '../../components/WebMcpTools.astro';
 import ThemeInit from '../../components/ThemeInit.astro';
 import SiteNav from '../../components/SiteNav.astro';
+import AboutPhoto from '../../components/AboutPhoto.astro';
 import CookieSettingsLink from '../../components/CookieSettingsLink.astro';
 import ConsentMode from '../../components/ConsentMode.astro';
 import { buildHreflangLinks } from '../../utils/locales';
@@ -145,7 +146,7 @@ const faqs = [
     a: 'With understanding your processes, not with buying tools. We diagnose where AI gives the biggest return and lay out a plan for the first steps, fitted to the company.'
   },
   {
-    q: 'How long is a workshop?',
+    q: 'How long is an AI workshop?',
     a: 'Two days of five hours each as standard — ten hours of work on your team’s real tasks. I adjust the scope to the organization.'
   },
   {
@@ -823,13 +824,18 @@ const faqs = [
       border-radius: 999px;
       background: var(--kc-bg);
       color: var(--kc-green);
-      transition: background-color 200ms ease;
+      transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
     }
 
     .kc-btn-light:hover {
-      background: #ffffff;
-      color: var(--kc-green);
+      background: #dce8df;
+      color: #0a4731;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
       text-decoration: none;
+    }
+
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      .kc-btn-light:hover { transform: translateY(-3px); }
     }
 
     .kc-btn-ghost {
@@ -839,12 +845,13 @@ const faqs = [
       border-radius: 999px;
       border: 1px solid rgba(250, 249, 246, 0.35);
       color: var(--kc-bg);
-      transition: border-color 200ms ease;
+      transition: background-color 200ms ease, border-color 200ms ease;
     }
 
     .kc-btn-ghost:hover {
-      border-color: var(--kc-bg);
-      color: var(--kc-bg);
+      background: #12201b;
+      border-color: #12201b;
+      color: #faf9f6;
       text-decoration: none;
     }
 
@@ -1087,6 +1094,21 @@ const faqs = [
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+
+    /* A small lift and alternating tilt echo the hero photo on pointer devices. */
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      .kc-team-photo {
+        transition: transform 300ms ease;
+      }
+
+      .kc-team-member:hover .kc-team-photo {
+        transform: translateY(-4px) rotate(-1.5deg);
+      }
+
+      .kc-team-member:nth-child(even):hover .kc-team-photo {
+        transform: translateY(-4px) rotate(1.5deg);
+      }
     }
 
     .kc-team-name {
@@ -1875,11 +1897,11 @@ const faqs = [
     :root[data-theme='dark'] .kc-btn-light {
       background: var(--kc-brass);
       color: var(--kc-btn-fg);
-      transition: box-shadow 220ms ease;
+      transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
     }
 
     :root[data-theme='dark'] .kc-btn-light:hover {
-      background: var(--kc-brass);
+      background: #ddc392;
       color: var(--kc-btn-fg);
       box-shadow: var(--kc-glow);
     }
@@ -1887,13 +1909,12 @@ const faqs = [
     :root[data-theme='dark'] .kc-btn-ghost {
       border-color: var(--kc-rule-24);
       color: var(--kc-ink);
-      transition: border-color 220ms ease, box-shadow 220ms ease;
     }
 
     :root[data-theme='dark'] .kc-btn-ghost:hover {
-      border-color: var(--kc-brass);
+      background: #12201b;
+      border-color: #12201b;
       color: var(--kc-ink);
-      box-shadow: var(--kc-glow);
     }
 
     /* --- testimonials and FAQ --- */
@@ -1980,10 +2001,6 @@ const faqs = [
       will-change: transform;
     }
 
-    /* --- the lamp pull ---
-       A 1px cord and an 11px knob in a 44x44 hit area. On click the knob
-       drops 9px and springs back. */
-
     @media (max-width: 768px) {
       :root[data-theme='dark'] .kc-header {
         background: rgba(14, 20, 17, 0.52);
@@ -1994,18 +2011,10 @@ const faqs = [
       }
     }
 
-    @media (max-width: 600px) {
-      .kc-lamp {
-        width: 34px;
-        margin-left: -2px;
-      }
-    }
-
     /* Motion is the part that goes, not the lamplight colour: transitions
        stop and the pointer gradient is dropped entirely. */
     @media (prefers-reduced-motion: reduce) {
-      .kc-lamp-cord,
-      .kc-lamp-knob,
+      :root[data-theme='dark'] .kc-btn-light,
       :root[data-theme='dark'] .kc-polaroid,
       :root[data-theme='dark'] .kc-polaroid img,
       :root[data-theme='dark'] .kc-about-media img,
@@ -2017,6 +2026,16 @@ const faqs = [
       :root[data-theme='dark'] .kc-lamplight {
         display: none;
       }
+    }
+
+    /* White selection stays visible against the green panel in either theme. */
+    :root :is(.kc-case-panel, .kc-case-panel *)::selection {
+      background: #ffffff;
+      color: #0a4731;
+    }
+
+    :root .kc-case-panel :focus-visible {
+      outline-color: #ffffff;
     }
   </style>
   <style>
@@ -2237,19 +2256,7 @@ const faqs = [
     </section>
 
     <section class="kc-section kc-about" aria-labelledby="kc-about-title">
-      <div class="kc-about-media">
-        <picture>
-          <source srcset="/images/Omnie.webp" type="image/webp" />
-          <img
-            src="/images/Omnie.jpg"
-            alt="Błażej Kunke, founder of ^Kunke Consulting"
-            width="702"
-            height="1024"
-            loading="lazy"
-            decoding="async"
-          />
-        </picture>
-      </div>
+      <AboutPhoto lang="en" />
       <div class="kc-about-body">
         <p class="kc-eyebrow">About me</p>
         <h2 id="kc-about-title">The change is already happening. For your company, it is an opportunity.</h2>
