@@ -15,7 +15,10 @@ interface Props {
 }
 const { lang, text = 'info@kunkeconsulting.pl', label } = Astro.props;
 const en = lang === 'en';
-const idle = label ?? (en ? 'Copy address' : 'Kopiuj adres');
+// Polish: "adres" alone reads as a street address, and the contact block
+// prints one right beside this key, so the label says which address it is.
+// "Skopiuj" rather than "Kopiuj": the visitor wants the result, not the act.
+const idle = label ?? (en ? 'Copy address' : 'Skopiuj adres email');
 const done = en ? 'Copied' : 'Skopiowano';
 ---
 <button type="button" class="kc-key kc-copy" data-copy={text} data-copy-done={done} hidden>
