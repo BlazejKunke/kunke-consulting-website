@@ -7,7 +7,7 @@ date: 2026-11-11
 category: "tools"
 language: en
 author: "Błażej Kunke"
-heroImage: "/images/businesses-in-chatgpt.webp"
+heroImage: "/images/businesses-in-chatgpt-hero.png"
 tags: ["ChatGPT", "OpenAI", "Business Hub", "marketing", "AI tools"]
 ---
 
