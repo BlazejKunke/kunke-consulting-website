@@ -1,0 +1,42 @@
+---
+// "Next free date", printed the way a digital watch prints the day: WT 01.12.
+// Links to the availability calendar.
+//
+// The value is worked out at build time and again in the browser (see
+// HomeKit.astro), so it rolls forward at midnight in Warsaw without a deploy.
+// It hides itself when there is no free day, or when the calendar has not
+// been updated for three weeks: see src/utils/nextFreeDate.ts.
+import { availability } from '../content/availability';
+import { getDateKeyInTimeZone } from '../utils/availabilityDates';
+import { getPreparedAvailabilityMonths } from '../utils/availabilityWindow';
+import { getAvailableDays } from '../utils/availabilityMonth';
+import { formatReadout, formatSpoken, pickNextFreeDate } from '../utils/nextFreeDate';
+
+interface Props { lang: 'pl' | 'en'; }
+const { lang } = Astro.props;
+const en = lang === 'en';
+
+const today = getDateKeyInTimeZone(new Date());
+const freeDays = getAvailableDays(getPreparedAvailabilityMonths(today)).filter((day) => day > today);
+const next = pickNextFreeDate(freeDays, today, availability.updatedAt);
+
+const label = en ? 'Next free date' : 'Najbliższy wolny termin';
+const more = en ? 'calendar' : 'kalendarz';
+---
+<a
+  class="kc-lcd"
+  href={en ? '/en/availability/' : '/availability/'}
+  data-next-date
+  data-lang={lang}
+  data-days={freeDays.join(',')}
+  data-updated={availability.updatedAt}
+  data-label={label}
+  aria-label={next ? `${label}: ${formatSpoken(next, lang)}` : label}
+  hidden={!next}
+>
+  <span class="kc-lcd-label" aria-hidden="true">{label}</span>
+  <span class="kc-lcd-window" aria-hidden="true">
+    <time data-lcd datetime={next ?? undefined}>{next ? formatReadout(next, lang) : ''}</time>
+  </span>
+  <span class="kc-lcd-more" aria-hidden="true"><span class="kc-lcd-more-word">{more} </span>→</span>
+</a>

@@ -1,0 +1,64 @@
+---
+// The rating plate in the homepage footer: who makes this, where, and when
+// the site was last put together. Every value is one the page already states
+// elsewhere, except the date, which is the day of the build. Netlify builds
+// on every push, so that date is the last time the site changed.
+//
+// The human / robot switch sits on the plate as its one physical control.
+// What it does is in RobotView.astro.
+interface Props { lang: 'pl' | 'en'; }
+const { lang } = Astro.props;
+const en = lang === 'en';
+
+const built = new Date();
+const builtKey = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Warsaw' }).format(built);
+const builtLabel = `${builtKey.slice(8, 10)}.${builtKey.slice(5, 7)}.${builtKey.slice(0, 4)}`;
+
+const cells = en
+  ? [
+      ['Company', 'Błażej Kunke Consulting'],
+      ['NIP (tax ID)', '9721222936'],
+      ['Base', 'Poznań, PL'],
+      ['Languages', 'PL / EN'],
+      ['Trainings', '50+'],
+    ]
+  : [
+      ['Firma', 'Błażej Kunke Consulting'],
+      ['NIP', '9721222936'],
+      ['Baza', 'Poznań, PL'],
+      ['Języki', 'PL / EN'],
+      ['Szkolenia', '50+'],
+    ];
+---
+<div class="kc-plate-wrap">
+  <div class="kc-plate">
+    <p class="kc-plate-mark" aria-hidden="true">^KC</p>
+    <dl class="kc-plate-grid">
+      {cells.map(([term, value]) => (
+        <div>
+          <dt>{term}</dt>
+          <dd>{value}</dd>
+        </div>
+      ))}
+      <div>
+        <dt>{en ? 'Updated' : 'Aktualizacja'}</dt>
+        <dd><time datetime={builtKey}>{builtLabel}</time></dd>
+      </div>
+    </dl>
+    <div class="kc-plate-control" data-view-control hidden>
+      <p class="kc-plate-control-label" id="kc-view-label">{en ? 'View' : 'Widok'}</p>
+      <button
+        type="button"
+        class="kc-view-switch"
+        role="switch"
+        aria-checked="false"
+        aria-labelledby="kc-view-label kc-view-robot"
+        data-view-switch
+      >
+        <span class="kc-view-option" aria-hidden="true">{en ? 'Human' : 'Człowiek'}</span>
+        <span class="kc-view-track" aria-hidden="true"><span class="kc-view-knob"></span></span>
+        <span class="kc-view-option" id="kc-view-robot">Robot</span>
+      </button>
+    </div>
+  </div>
+</div>

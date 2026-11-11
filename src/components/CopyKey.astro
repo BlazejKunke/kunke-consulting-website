@@ -1,0 +1,25 @@
+---
+// A small key that copies text to the clipboard and confirms with a lamp.
+//
+// The site is mailto only, and a mailto link does nothing for a visitor who
+// reads mail in a browser tab. This is the way out for them. It is rendered
+// hidden and only shown once the script knows it can actually copy, so a
+// visitor without JavaScript never sees a key that does nothing.
+//
+// Styling and behaviour live in HomeKit.astro, which every page using this
+// component must also render.
+interface Props {
+  lang: 'pl' | 'en';
+  text?: string;
+  label?: string;
+}
+const { lang, text = 'info@kunkeconsulting.pl', label } = Astro.props;
+const en = lang === 'en';
+const idle = label ?? (en ? 'Copy address' : 'Kopiuj adres');
+const done = en ? 'Copied' : 'Skopiowano';
+---
+<button type="button" class="kc-key kc-copy" data-copy={text} data-copy-done={done} hidden>
+  <span class="kc-key-led" aria-hidden="true"></span>
+  <span data-copy-label>{idle}</span>
+</button>
+<span class="kc-sr" role="status" aria-live="polite" data-copy-status></span>

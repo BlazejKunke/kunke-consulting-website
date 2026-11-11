@@ -14,6 +14,12 @@ import SiteNav from '../../components/SiteNav.astro';
 import AboutPhoto from '../../components/AboutPhoto.astro';
 import CookieSettingsLink from '../../components/CookieSettingsLink.astro';
 import ConsentMode from '../../components/ConsentMode.astro';
+import HomeKit from '../../components/HomeKit.astro';
+import CopyKey from '../../components/CopyKey.astro';
+import NextDate from '../../components/NextDate.astro';
+import AskAssistant from '../../components/AskAssistant.astro';
+import Nameplate from '../../components/Nameplate.astro';
+import RobotView from '../../components/RobotView.astro';
 import { buildHreflangLinks } from '../../utils/locales';
 
 
@@ -60,6 +66,8 @@ const steps = [
   }
 ];
 
+// `specs` are the three legends printed on each card. Every value restates
+// something the page already says in the blurb, the steps or the FAQ.
 const packages = [
   {
     tag: 'First step',
@@ -72,7 +80,12 @@ const packages = [
       'Ethics, law, environment',
       'PDF materials and a certificate'
     ],
-    price: 'from PLN 6,000 + VAT'
+    price: 'from PLN 6,000 + VAT',
+    specs: [
+      ['Time', '2 days'],
+      ['Hours', '10'],
+      ['Format', 'in person']
+    ]
   },
   {
     tag: 'Tailored program',
@@ -85,7 +98,12 @@ const packages = [
       'Legal review (GDPR, AI Act)',
       'Pilot and measurement of results'
     ],
-    price: 'from PLN 24,000 + VAT'
+    price: 'from PLN 24,000 + VAT',
+    specs: [
+      ['Stages', '3'],
+      ['Start', 'assessment'],
+      ['Finish', 'pilot']
+    ]
   },
   {
     tag: 'Ongoing partnership',
@@ -98,7 +116,12 @@ const packages = [
       'Legal support',
       'Day-to-day advisory'
     ],
-    price: 'individual quote'
+    price: 'individual quote',
+    specs: [
+      ['Time', 'a quarter+'],
+      ['Rhythm', 'recurring'],
+      ['Scope', 'tailored']
+    ]
   }
 ];
 
@@ -2056,6 +2079,7 @@ const faqs = [
   <SiteNav lang="en" alternateUrl="/" />
 
   <main id="top">
+    <RobotView lang="en" />
     <section class="kc-hero">
       <div>
         <p class="kc-eyebrow">AI for your company · Poznań · Poland</p>
@@ -2076,7 +2100,11 @@ const faqs = [
         </p>
         <div class="kc-hero-cta">
           <a href={mailto} class="kc-btn">info@kunkeconsulting.pl</a>
+          <CopyKey lang="en" />
           <a href="#implementation" class="kc-link-quiet">See how I work</a>
+        </div>
+        <div class="kc-hero-status">
+          <NextDate lang="en" />
         </div>
       </div>
       <div class="kc-hero-side">
@@ -2145,6 +2173,14 @@ const faqs = [
                 <p class="kc-card-tag">{pkg.tag}</p>
                 <h3>{pkg.name}</h3>
                 <p class="kc-card-blurb">{pkg.blurb}</p>
+                <dl class="kc-card-specs">
+                  {pkg.specs.map(([term, value]) => (
+                    <div>
+                      <dt>{term}</dt>
+                      <dd>{value}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
               <ul class="kc-card-items">
                 {pkg.items.map((item) => <li>{item}</li>)}
@@ -2308,28 +2344,31 @@ const faqs = [
 
     <section id="faq" class="kc-section kc-split">
       <p class="kc-eyebrow">Questions</p>
-      <div class="kc-faq">
-        {
-          faqs.map((faq, i) => (
-            <div class="kc-faq-item">
-              <h3 class="kc-faq-heading">
-                <button
-                  type="button"
-                  class="kc-faq-q"
-                  aria-expanded="false"
-                  aria-controls={`kc-faq-a-${i}`}
-                  id={`kc-faq-q-${i}`}
-                >
-                  <span>{faq.q}</span>
-                  <span class="kc-faq-sign" aria-hidden="true">+</span>
-                </button>
-              </h3>
-              <p class="kc-faq-a" id={`kc-faq-a-${i}`} role="region" aria-labelledby={`kc-faq-q-${i}`} hidden>
-                {faq.a}
-              </p>
-            </div>
-          ))
-        }
+      <div>
+        <div class="kc-faq">
+          {
+            faqs.map((faq, i) => (
+              <div class="kc-faq-item">
+                <h3 class="kc-faq-heading">
+                  <button
+                    type="button"
+                    class="kc-faq-q"
+                    aria-expanded="false"
+                    aria-controls={`kc-faq-a-${i}`}
+                    id={`kc-faq-q-${i}`}
+                  >
+                    <span>{faq.q}</span>
+                    <span class="kc-faq-sign" aria-hidden="true">+</span>
+                  </button>
+                </h3>
+                <p class="kc-faq-a" id={`kc-faq-a-${i}`} role="region" aria-labelledby={`kc-faq-q-${i}`} hidden>
+                  {faq.a}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+        <AskAssistant lang="en" />
       </div>
     </section>
 
@@ -2339,7 +2378,13 @@ const faqs = [
           <h2 id="kc-contact-title">
             Write one sentence about what you want to improve. My brother or I will answer personally.
           </h2>
-          <a href={mailto} class="kc-btn">info@kunkeconsulting.pl</a>
+          <div class="kc-contact-cta">
+            <a href={mailto} class="kc-btn">info@kunkeconsulting.pl</a>
+            <CopyKey lang="en" />
+          </div>
+          <div class="kc-contact-status">
+            <NextDate lang="en" />
+          </div>
         </div>
         <div class="kc-contact-details">
           <p class="kc-eyebrow">Contact</p>
@@ -2359,6 +2404,7 @@ const faqs = [
   </main>
 
   <footer class="kc-footer">
+    <Nameplate lang="en" />
     <div class="kc-footer-inner">
       <p>© 2026 ^Kunke Consulting</p>
       <div class="kc-footer-links">
@@ -2372,6 +2418,7 @@ const faqs = [
 
   <CookieConsent />
   <WebMcpTools />
+  <HomeKit />
 
   <script>
     // Hero headline: the ending after "…and advisory" is typed out, held,

@@ -1,0 +1,46 @@
+---
+// "Ask your own assistant": opens ChatGPT or Claude with a question about
+// ^Kunke Consulting already written, or copies it for any other assistant.
+//
+// The question points at /ai-info/, the plain datasheet, so the answer is
+// built on current facts and prices. The site does not see the conversation
+// and has no say in the answer, and the note under the keys says so.
+//
+// Both links are ordinary navigations to another site in a new tab, so the
+// CSP in public/_headers needs no new host for them.
+import CopyKey from './CopyKey.astro';
+
+interface Props { lang: 'pl' | 'en'; }
+const { lang } = Astro.props;
+const en = lang === 'en';
+
+// Ends by asking the assistant to interview the visitor, because the link
+// sends the question at once and a "[describe your company]" blank would be
+// sent unfilled.
+const prompt = en
+  ? 'Read https://kunkeconsulting.pl/ai-info/ and tell me briefly: what ^Kunke Consulting does, what its AI training costs, and what I should ask before a first conversation. Then ask me about my company so you can judge whether it is a good fit.'
+  : 'Przeczytaj https://kunkeconsulting.pl/ai-info/ i powiedz mi krótko po polsku: czym zajmuje się ^Kunke Consulting, ile kosztują szkolenia AI i o co warto zapytać przed pierwszą rozmową. Potem zapytaj mnie o moją firmę, żeby ocenić, czy to dobry wybór.';
+
+const query = encodeURIComponent(prompt);
+const assistants = [
+  { name: 'ChatGPT', href: `https://chatgpt.com/?q=${query}` },
+  { name: 'Claude', href: `https://claude.ai/new?q=${query}` },
+];
+---
+<div class="kc-ask">
+  <p class="kc-ask-label">{en ? 'Another question? Ask your own AI assistant.' : 'Inne pytanie? Zapytaj swojego asystenta AI.'}</p>
+  <div class="kc-ask-keys">
+    {assistants.map((assistant) => (
+      <a class="kc-key" href={assistant.href} target="_blank" rel="noopener">
+        {assistant.name}<span aria-hidden="true"> ↗</span>
+        <span class="kc-sr">{en ? ' (opens in a new tab)' : ' (otwiera się w nowej karcie)'}</span>
+      </a>
+    ))}
+    <CopyKey lang={lang} text={prompt} label={en ? 'Copy the question' : 'Kopiuj pytanie'} />
+  </div>
+  <p class="kc-ask-note">
+    {en
+      ? 'The assistant gets a ready question and a link to our datasheet. The answer is its own, not ours.'
+      : 'Asystent dostanie gotowe pytanie i link do naszej karty danych. Odpowiedź należy do niego, nie do nas.'}
+  </p>
+</div>

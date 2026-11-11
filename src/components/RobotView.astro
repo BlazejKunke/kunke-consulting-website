@@ -1,0 +1,35 @@
+---
+// Robot view: the homepage as an AI assistant roughly reads it. Text only, one
+// typeface, headings marked the way Markdown marks them, no photographs.
+//
+// It is switched on from the plate in the footer (Nameplate.astro), lasts for
+// this page view only and is never stored, so nobody can get stuck in it. The
+// notice below is hidden in the normal view; in robot view it explains what
+// the visitor is looking at, lists the three agent tools the page really
+// registers (src/utils/webmcpTools.ts), and offers the way back. Escape also
+// returns to the normal view.
+//
+// The view is CSS on top of the existing page: no content is duplicated, so
+// what it shows cannot drift from what people read. Styles are in
+// HomeKit.astro.
+interface Props { lang: 'pl' | 'en'; }
+const { lang } = Astro.props;
+const en = lang === 'en';
+---
+<aside class="kc-robot-note" aria-label={en ? 'Robot view' : 'Widok dla robotów'}>
+  <p class="kc-robot-title">{en ? 'Robot view' : 'Widok dla robotów'}</p>
+  <p>
+    {en
+      ? 'This is roughly how an AI assistant reads this page: the text alone, no photographs, no decoration.'
+      : 'Mniej więcej tak tę stronę czyta asystent AI: sam tekst, bez zdjęć i bez ozdobników.'}
+  </p>
+  <p>
+    {en ? 'Tools the page offers to AI agents: ' : 'Narzędzia, które strona udostępnia agentom AI: '}
+    <code>get_services</code>, <code>recommend_service</code>, <code>prepare_inquiry</code>.
+    {' '}
+    <a href="/ai-info/">{en ? 'Datasheet for assistants' : 'Karta danych dla asystentów'}</a>
+  </p>
+  <button type="button" class="kc-key" data-view-exit>
+    {en ? 'Back to the human view' : 'Wróć do widoku dla ludzi'}
+  </button>
+</aside>

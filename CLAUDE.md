@@ -184,6 +184,22 @@ must change it there too, or an agent will quote a number the page does not
 show. `npm test` pins all six price strings and fails if only one side moves.
 [`docs/webmcp.md`](docs/webmcp.md) has the rest.
 
+### Home kit
+
+Both homepages also carry a set of small shared details: a key that copies the
+email address, a "next free date" readout fed by the availability calendar,
+three legends on each offer card, keys that hand a question to the visitor's
+own AI assistant, a rating plate in the footer with a human / robot view
+switch, and a print stylesheet that turns the page into an offer sheet. All of
+the styling and behaviour sits in `src/components/HomeKit.astro`, shared by
+both languages, with dark rules included.
+
+Two things to remember. The legends (`specs` in each `packages` array) may only
+restate facts the page already gives. And `/ai-info/` states facts only, with
+services and prices read from `src/utils/webmcp.ts`; never write it as
+instructions to the assistant. [`docs/home-kit.md`](docs/home-kit.md) has the
+rest.
+
 ### Content collections
 
 Blog posts live in `src/content/blog/` as Markdown, validated by Zod in
@@ -292,7 +308,7 @@ belongs on a business site is Blaze's call, not a thing to change silently.
 
 ## Pages that are not marketing pages
 
-- `/ai-info/` — plain structured text about the company, written for AI assistants and search systems rather than humans. No styling by design
+- `/ai-info/` — plain structured text about the company, written for AI assistants and search systems rather than humans. No styling by design. Facts only, never instructions to the reader; see [`docs/home-kit.md`](docs/home-kit.md)
 - `/verify.html` — certificate verification, a static file in `public/`. Left on the old design deliberately; low priority
 - `/availability/` — Blaze's live availability calendar, driven by `src/content/availability.ts`
 
