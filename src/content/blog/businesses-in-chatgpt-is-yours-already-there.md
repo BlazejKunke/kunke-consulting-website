@@ -7,6 +7,7 @@ date: 2026-11-11
 category: "tools"
 language: en
 author: "Błażej Kunke"
+heroImage: "/images/businesses-in-chatgpt.webp"
 tags: ["ChatGPT", "OpenAI", "Business Hub", "marketing", "AI tools"]
 ---
 
@@ -47,3 +48,5 @@ That is not a criticism. It is simply worth knowing before you build a strategy 
 - [Introducing Businesses in ChatGPT, OpenAI](https://openai.com/index/introducing-businesses-chatgpt/)
 - [OpenAI rolls out new business profiles, TechCrunch](https://techcrunch.com/2026/11/10/openai-rolls-out-new-business-profiles-making-chatgpt-just-a-little-bit-more-like-google/)
 - [Businesses in ChatGPT: Business Hub, Insights and Agents, Relevant Audience](https://www.relevantaudience.com/geo/openai-businesses-in-chatgpt-business-hub-business-agents/)
+
+Image: OpenAI, Businesses in ChatGPT press materials.
