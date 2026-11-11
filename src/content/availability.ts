@@ -16,6 +16,7 @@ export const isAvailabilityProtectedDate = (date: string) => {
 
 export const availability = {
   updatedAt: '2026-11-11',
+  checkedAt: '2026-11-11T11:40:39Z',
   days: {
     '2026-11-01': 'unavailable',
     '2026-11-02': 'unavailable',

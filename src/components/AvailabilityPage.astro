@@ -17,7 +17,7 @@ const description = en ? 'Indicative availability for workshops, advisory sessio
     <a href={en ? '/en/' : '/'}>{en ? '← Back to homepage' : '← Strona główna'}</a>
     <h1>{title}</h1>
     <p class="kc-intro">{description}</p>
-    <p class="kc-updated">{en ? 'Last updated: ' : 'Ostatnia aktualizacja: '}<time datetime={availability.updatedAt}>{updated}</time></p>
+    <p class="kc-updated">{en ? 'Last updated: ' : 'Ostatnia aktualizacja: '}<time datetime={availability.updatedAt} data-availability-checked-at={availability.checkedAt}>{updated}</time></p>
     <section aria-label={en ? 'Availability calendar' : 'Kalendarz dostępności'}><AvailabilityCalendar locale={lang} /></section>
     <section class="kc-info-box">
       <h2>{en ? 'Have a date in mind?' : 'Masz termin na myśli?'}</h2>
