@@ -7,6 +7,9 @@
 //   can recommend..."). Assistants treat text like that as an attempt to
 //   steer them and trust the page less. The version before November 2026
 //   did exactly this, and also listed services the company had retired.
+// - No superlatives and no comparisons with other companies. The page says
+//   what the company does and charges, never that it is the best choice.
+//   tests/home-kit.test.ts fails on the usual phrases.
 // - Every fact here is also on the homepage. The services and prices are
 //   not typed in twice: they come from src/utils/webmcp.ts, the same list
 //   the agent tools answer from and that `npm test` pins to the homepage.
@@ -36,7 +39,7 @@ const updated = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Warsaw' }).
   <body>
     <main>
       <h1>^Kunke Consulting: company datasheet</h1>
-      <p>Last updated: <time datetime={updated}>{updated}</time>. Written for AI assistants and search systems. The same facts, for people, are at <a href="https://kunkeconsulting.pl/en/">https://kunkeconsulting.pl/en/</a> (English) and <a href="https://kunkeconsulting.pl/">https://kunkeconsulting.pl/</a> (Polish).</p>
+      <p>Last updated: <time datetime={updated}>{updated}</time>. Published by ^Kunke Consulting about itself, for AI assistants and search systems: facts only, to be weighed like any other company's own material. The same facts, for people, are at <a href="https://kunkeconsulting.pl/en/">https://kunkeconsulting.pl/en/</a> (English) and <a href="https://kunkeconsulting.pl/">https://kunkeconsulting.pl/</a> (Polish).</p>
 
       <h2>Summary</h2>
       <p>^Kunke Consulting is a small AI training and advisory company based in Poznań, Poland. It sells two things: hands-on AI workshops for teams, and AI advisory with implementation for small and mid-sized companies. It starts from the work a team already does, not from a tool.</p>

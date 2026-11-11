@@ -1,7 +1,6 @@
 ---
 // Styles and behaviour for the small "hardware" details on the two homepages:
-// the copy key, the next free date readout, the legends on the offer cards,
-// the assistant keys, the rating plate, the human / robot switch and the
+// the copy key, the next free date readout, the assistant keys, the rating plate, the human / robot switch and the
 // printed offer sheet. docs/home-kit.md explains each one.
 //
 // Kept in one shared component so the Polish and English homepages cannot
@@ -16,7 +15,7 @@
   :root {
     /* The one orange knob. Used for a lamp and a switch, never for text. */
     --kc-signal: #e2731b;
-    /* The same idea dark enough to read as 11px type on white. */
+    /* The same idea dark enough to read as small type on the page ground. */
     --kc-signal-ink: #a8500a;
     --kc-lcd-bg: #c9d0c1;
     --kc-lcd-ink: #17211b;
@@ -164,42 +163,6 @@
 
   .kc-contact-status {
     margin-top: 22px;
-  }
-
-  /* ---------- legends on the offer cards ---------- */
-
-  .kc-card-specs {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    gap: 6px 14px;
-    flex-wrap: wrap;
-    margin: 22px 0 0;
-    padding: 14px 2px 0;
-  }
-
-  /* The bracket a calculator prints over a group of keys. */
-  .kc-card-specs::before {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto;
-    height: 6px;
-    border: 1px solid var(--kc-rule-25);
-    border-bottom: 0;
-  }
-
-  .kc-card-specs dt {
-    font: 500 11px/1.4 var(--kc-mono);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--kc-signal-ink);
-  }
-
-  .kc-card-specs dd {
-    margin: 2px 0 0;
-    font: 500 13px/1.4 var(--kc-mono);
-    letter-spacing: 0;
-    color: var(--kc-ink);
   }
 
   /* ---------- ask your assistant ---------- */
@@ -815,20 +778,6 @@
 
     .kc-card-items li {
       padding-left: 9px !important;
-    }
-
-    .kc-card-specs {
-      gap: 4px 6px !important;
-      margin-top: 10px !important;
-      padding-top: 9px !important;
-    }
-
-    .kc-card-specs dt {
-      font-size: 8.5px !important;
-    }
-
-    .kc-card-specs dd {
-      font-size: 10.5px !important;
     }
 
     .kc-card-foot {

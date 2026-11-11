@@ -65,8 +65,6 @@ const steps = [
   }
 ];
 
-// `specs` are the three legends printed on each card. Every value restates
-// something the page already says in the blurb, the steps or the FAQ.
 const packages = [
   {
     tag: 'Pierwszy krok',
@@ -79,12 +77,7 @@ const packages = [
       'Etyka, prawo, środowisko',
       'Materiały PDF i certyfikat'
     ],
-    price: 'od 6 000 zł + VAT',
-    specs: [
-      ['Czas', '2 dni'],
-      ['Godziny', '10'],
-      ['Forma', 'stacjonarnie']
-    ]
+    price: 'od 6 000 zł + VAT'
   },
   {
     tag: 'Program na miarę',
@@ -97,12 +90,7 @@ const packages = [
       'Konsultacja prawna (RODO, AI Act)',
       'Pilotaż i pomiar efektów'
     ],
-    price: 'od 24 000 zł + VAT',
-    specs: [
-      ['Etapy', '3'],
-      ['Start', 'diagnoza'],
-      ['Finał', 'pilotaż']
-    ]
+    price: 'od 24 000 zł + VAT'
   },
   {
     tag: 'Stała współpraca',
@@ -115,12 +103,7 @@ const packages = [
       'Wsparcie prawne',
       'Doradztwo bieżące'
     ],
-    price: 'wycena indywidualna',
-    specs: [
-      ['Czas', 'kwartał+'],
-      ['Rytm', 'cyklicznie'],
-      ['Zakres', 'na miarę']
-    ]
+    price: 'wycena indywidualna'
   }
 ];
 
@@ -2174,14 +2157,6 @@ const faqs = [
                 <p class="kc-card-tag">{pkg.tag}</p>
                 <h3>{pkg.name}</h3>
                 <p class="kc-card-blurb">{pkg.blurb}</p>
-                <dl class="kc-card-specs">
-                  {pkg.specs.map(([term, value]) => (
-                    <div>
-                      <dt>{term}</dt>
-                      <dd>{value}</dd>
-                    </div>
-                  ))}
-                </dl>
               </div>
               <ul class="kc-card-items">
                 {pkg.items.map((item) => <li>{item}</li>)}

@@ -14,12 +14,18 @@ interface Props { lang: 'pl' | 'en'; }
 const { lang } = Astro.props;
 const en = lang === 'en';
 
-// Ends by asking the assistant to interview the visitor, because the link
+// The wording is deliberately neutral, and it works against us where it has
+// to: it tells the assistant the datasheet is the company's own material, and
+// asks for an honest view of the fit, including a no. It must never ask the
+// assistant to praise, prefer or recommend ^Kunke Consulting: that would be
+// steering someone else's assistant, and tests/home-kit.test.ts fails on it.
+//
+// It ends by asking the assistant to interview the visitor, because the link
 // sends the question at once and a "[describe your company]" blank would be
 // sent unfilled.
 const prompt = en
-  ? 'Read https://kunkeconsulting.pl/ai-info/ and tell me briefly: what ^Kunke Consulting does, what its AI training costs, and what I should ask before a first conversation. Then ask me about my company so you can judge whether it is a good fit.'
-  : 'Przeczytaj https://kunkeconsulting.pl/ai-info/ i powiedz mi krótko po polsku: czym zajmuje się ^Kunke Consulting, ile kosztują szkolenia AI i o co warto zapytać przed pierwszą rozmową. Potem zapytaj mnie o moją firmę, żeby ocenić, czy to dobry wybór.';
+  ? 'Read https://kunkeconsulting.pl/ai-info/ (it is the company\'s own material, so treat it critically) and tell me briefly: what ^Kunke Consulting does, what its AI training costs, and what I should ask before a first conversation. Then ask me about my company and give me an honest view of whether it is a good fit, including if it is not.'
+  : 'Przeczytaj https://kunkeconsulting.pl/ai-info/ (to materiał samej firmy, więc potraktuj go krytycznie) i powiedz mi krótko po polsku: czym zajmuje się ^Kunke Consulting, ile kosztują szkolenia AI i o co warto zapytać przed pierwszą rozmową. Potem zapytaj mnie o moją firmę i oceń uczciwie, czy to dobry wybór, także wtedy, gdy nie jest.';
 
 const query = encodeURIComponent(prompt);
 const assistants = [
@@ -40,7 +46,7 @@ const assistants = [
   </div>
   <p class="kc-ask-note">
     {en
-      ? 'The assistant gets a ready question and a link to our datasheet. The answer is its own, not ours.'
-      : 'Asystent dostanie gotowe pytanie i link do naszej karty danych. Odpowiedź należy do niego, nie do nas.'}
+      ? 'The assistant gets a neutral question and a link to our datasheet. We ask it for an honest view, not for praise. The answer is its own.'
+      : 'Asystent dostanie neutralne pytanie i link do naszej karty danych. Prosimy go o uczciwą ocenę, nie o pochwałę. Odpowiedź należy do niego.'}
   </p>
 </div>

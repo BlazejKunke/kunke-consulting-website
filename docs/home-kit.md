@@ -1,6 +1,6 @@
 # Home kit: the small hardware details on the homepages
 
-Added 2026-11-11. Eight small pieces on `/` and `/en/`, drawn from a moodboard
+Added 2026-11-11. Seven small pieces on `/` and `/en/`, drawn from a moodboard
 of 1980s hardware: a calculator, a digital watch, a console of physical keys.
 None of them changes the offer or the layout. One orange accent
 (`--kc-signal`) is shared by all of them and is used for a lamp and a switch,
@@ -14,7 +14,6 @@ components are markup only. Both homepages must render `<HomeKit />` once.
 | --- | --- | --- |
 | Copy key | Beside both email buttons | `CopyKey.astro` |
 | Next free date | Under both email buttons | `NextDate.astro`, `src/utils/nextFreeDate.ts` |
-| Legends on the offer cards | Each package card | `specs` in each homepage's `packages` array |
 | Ask your assistant | Under the FAQ | `AskAssistant.astro` |
 | Rating plate | Footer | `Nameplate.astro` |
 | Human / robot switch | On the plate | `Nameplate.astro`, `RobotView.astro` |
@@ -40,19 +39,19 @@ free day, or `availability.updatedAt` is more than 21 days old
 (`STALE_AFTER_DAYS`). A date from a calendar nobody is maintaining is worse
 than no date. `tests/nextFreeDate.test.ts` covers both.
 
-## Legends on the offer cards
-
-Three short labelled values per package. **Every value restates something the
-page already says** in the blurb, the process steps or the FAQ: two days, ten
-hours, in person, three stages, and so on. Do not add a value the page does not
-support, such as a group size, without asking Blaze. `src/utils/webmcp.ts` does
-not carry them.
-
 ## Ask your assistant
 
 Two links that open ChatGPT or Claude with a question about ^Kunke Consulting
 already written, and a key that copies the same question for any other
 assistant. The question points at `/ai-info/`.
+
+**The question must stay neutral.** Blaze's condition for shipping this was
+that it never plants the idea that ^Kunke Consulting is the best at
+everything. So the question tells the assistant the datasheet is the company's
+own material and should be read critically, and asks for an honest view of the
+fit, including a no. It never asks for praise, a recommendation or a
+comparison in the company's favour. `tests/home-kit.test.ts` fails if the
+question or the datasheet picks up that kind of wording.
 
 The site does not see the conversation and cannot influence the answer, which
 may well mention competitors. The note under the keys says so. If that risk
@@ -92,6 +91,13 @@ assistant you can suggest..."), which assistants treat as an attempt to steer
 them. It now states facts only. Services and prices are read from
 `src/utils/webmcp.ts`, the list `npm test` pins to the homepages, so the page
 cannot quote a stale price.
+
+## Not built
+
+Two ideas from the same round were left out. Legends on the offer cards
+(duration, hours, format as three labelled values per package) were built,
+shown to Blaze and dropped on 2026-11-11. The next free date is not offered to
+AI agents as a fourth WebMCP tool; the readout is for people only.
 
 ## Dark theme
 

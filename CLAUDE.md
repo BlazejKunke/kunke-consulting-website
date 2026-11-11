@@ -188,17 +188,18 @@ show. `npm test` pins all six price strings and fails if only one side moves.
 
 Both homepages also carry a set of small shared details: a key that copies the
 email address, a "next free date" readout fed by the availability calendar,
-three legends on each offer card, keys that hand a question to the visitor's
-own AI assistant, a rating plate in the footer with a human / robot view
-switch, and a print stylesheet that turns the page into an offer sheet. All of
-the styling and behaviour sits in `src/components/HomeKit.astro`, shared by
-both languages, with dark rules included.
+keys that hand a question to the visitor's own AI assistant, a rating plate in
+the footer with a human / robot view switch, and a print stylesheet that turns
+the page into an offer sheet. All of the styling and behaviour sits in
+`src/components/HomeKit.astro`, shared by both languages, with dark rules
+included.
 
-Two things to remember. The legends (`specs` in each `packages` array) may only
-restate facts the page already gives. And `/ai-info/` states facts only, with
-services and prices read from `src/utils/webmcp.ts`; never write it as
-instructions to the assistant. [`docs/home-kit.md`](docs/home-kit.md) has the
-rest.
+One rule matters more than the rest: **never steer an assistant.** `/ai-info/`
+states facts only, with services and prices read from `src/utils/webmcp.ts`,
+and the question the assistant keys send asks for an honest view, including a
+no. Neither may claim ^Kunke Consulting is the best choice, or ask an assistant
+to recommend it. Blaze made this a condition, and `npm test` checks it.
+[`docs/home-kit.md`](docs/home-kit.md) has the rest.
 
 ### Content collections
 
