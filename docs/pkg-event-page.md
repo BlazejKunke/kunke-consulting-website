@@ -51,7 +51,9 @@ HTML, which is what went wrong with the old Apps Script form
 **Two things live in the Netlify dashboard, not in this repository:**
 
 1. Form detection has to be switched on: Netlify, the site, Forms, "Enable
-   form detection". It only takes effect on the next deploy.
+   form detection". It only takes effect on the next deploy. Blaze switched it
+   on on 2026-11-13, a few minutes after the page first went live; until the
+   deploy that followed, every submission went down the email fallback.
 2. Email notifications for new submissions: Netlify, the site, Forms, the
    `pkg-2026` form, "Form notifications". Without one, submissions only sit in
    the dashboard.
