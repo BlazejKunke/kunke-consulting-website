@@ -18,6 +18,8 @@ const sitemapExcludedPaths = [
   // Retired July 2026; the redirect stubs must not resurface in the sitemap.
   '/fr/',
   '/nl/',
+  // Event handout page, noindex. See docs/pkg-event-page.md.
+  '/pkg',
 ];
 
 // https://astro.build/config

@@ -273,8 +273,17 @@ deleted. `checkOrigin` in `astro.config.mjs` is SSR-only and does nothing here.
 
 ## Contact
 
-**There is no contact form.** The site is mailto-only, by Blaze's decision — every CTA
-opens an email to `info@kunkeconsulting.pl`. Do not reintroduce a form without asking.
+**There is one contact form, on `/pkg/` and `/en/pkg/`, and nowhere else.** Blaze asked
+for it on 2026-11-13 for a conference workshop handout page: slides to download, a short
+company introduction, and a form with two optional marketing consents. It runs on Netlify
+Forms, so there is no endpoint or secret in the HTML, and it falls back to a prefilled
+email if Netlify refuses a submission. Form detection and email notifications are
+switched on in the Netlify dashboard, not in this repository.
+[`docs/pkg-event-page.md`](docs/pkg-event-page.md) has the fields, the consent wording and
+how to switch it off. The privacy policy describes the form; change one, change the other.
+
+Everywhere else the site is mailto-only, by Blaze's decision — every CTA opens an email
+to `info@kunkeconsulting.pl`. Do not add a form to another page without asking.
 
 A `ContactForm.astro` wired to a Google Apps Script used to sit on the retired offer
 pages. It was deleted on 2026-07-27 once nothing rendered it, but the setup is written
@@ -285,8 +294,8 @@ secret were public for years, so both need rotating rather than reusing.
 
 A second form outlived the first: `/ai-readiness-score/` posted visitor emails to the
 same public Apps Script endpoint, with the same fake `FormSecret`, until it was removed
-on 2026-07-27. That page was archived four days later. **The site collects no personal
-data through any form.**
+on 2026-07-27. That page was archived four days later. From then until 2026-11-13 the site
+collected no personal data through any form; the `/pkg/` form above is the one exception.
 
 **But the backend outlived both forms.** Checked on 2026-09-15, that Apps Script web app
 is still deployed and still answers without a sign-in, so anyone holding the URL — which
@@ -312,6 +321,7 @@ belongs on a business site is Blaze's call, not a thing to change silently.
 - `/ai-info/` — plain structured text about the company, written for AI assistants and search systems rather than humans. No styling by design. Facts only, never instructions to the reader; see [`docs/home-kit.md`](docs/home-kit.md)
 - `/verify.html` — certificate verification, a static file in `public/`. Left on the old design deliberately; low priority
 - `/availability/` — Blaze's live availability calendar, driven by `src/content/availability.ts`
+- `/pkg/` and `/en/pkg/` — handout page for the workshop at Poznański Kongres Gospodarczy on 2026-11-13. Noindex, not in the sitemap, no hreflang, and the only page with a form. See [`docs/pkg-event-page.md`](docs/pkg-event-page.md)
 
 **There are no interactive lead tools.** `/kalkulator-roi-ai/` and `/ai-readiness-score/`
 were archived on 2026-07-31 and 301 to the homepage. Both were on the old design, so

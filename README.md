@@ -19,7 +19,7 @@ the brand, in the site and in the documentation.
 - **Availability calendar** — Blaze's current open dates
 - Privacy policy, certificate verification, and a plain-text company summary at `/ai-info/` written for AI assistants
 
-Contact is by email throughout. There is no contact form.
+Contact is by email throughout. The one contact form is on the workshop handout page, `/pkg/` (see `docs/pkg-event-page.md`).
 
 ## Tech stack
 

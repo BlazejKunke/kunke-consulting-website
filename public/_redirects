@@ -42,6 +42,17 @@ https://kunkeconsulting.netlify.app/*  https://kunkeconsulting.pl/:splat  301!
 /aidlafirm/  /  301!
 /aidlafirm/*  /  301!
 
+# Workshop handout page, Poznanski Kongres Gospodarczy, 2026-11-13. The slide
+# shows kunkeconsulting.pl/pkg and a phone keyboard will happily capitalise
+# it, so the upper-case spellings land on the real page. See
+# docs/pkg-event-page.md.
+/PKG  /pkg/  301!
+/PKG/  /pkg/  301!
+/Pkg  /pkg/  301!
+/Pkg/  /pkg/  301!
+/en/PKG  /en/pkg/  301!
+/en/PKG/  /en/pkg/  301!
+
 # Retired July 2026: eight thin, largely placeholder offer pages built on the old
 # design. Everything they claimed to sell is on the homepage, so they all land
 # there rather than at a nearest-match page that would repeat the same content.

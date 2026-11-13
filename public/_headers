@@ -64,6 +64,14 @@
 /Kunke%20Consulting%20Use%20Case%20AI%20in%20a%20Law%20Firm%20English%20Translation%202025.pdf
   Link: <https://kunkeconsulting.pl/Kunke%20Consulting%20Use%20Case%20AI%20in%20a%20Law%20Firm%20English%20Translation%202025.pdf>; rel="canonical"
 
+# /pkg/ is the handout page for the workshop at Poznanski Kongres Gospodarczy
+# on 2026-11-13: the slide deck as a PDF plus a contact form. It is for people
+# who were in the room, not for search, so the page carries a noindex meta tag
+# and this header keeps the PDF out of the index too. A PDF has nowhere to put
+# a meta tag, so the header is the only way to say it.
+/pkg/*
+  X-Robots-Tag: noindex
+
 # Special rules for HTML files
 /*.html
   Cache-Control: public, max-age=0, must-revalidate

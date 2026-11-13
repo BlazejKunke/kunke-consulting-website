@@ -73,7 +73,7 @@ history as the safety net: a bad change gets reverted, not prevented.
 
 ## Contact
 
-- The site is mailto-only. Every call to action opens an email to `info@kunkeconsulting.pl`. Blaze decided in July 2026 that email is enough; do not add a contact form without asking.
+- The site is mailto-only, with one exception: the workshop handout page at `/pkg/` and `/en/pkg/` carries a Netlify Forms contact form, added at Blaze's request on 2026-11-13 (see `docs/pkg-event-page.md`). Everywhere else every call to action opens an email to `info@kunkeconsulting.pl`; do not add a form to another page without asking.
 - The old `ContactForm.astro` and its Google Apps Script wiring are documented in `docs/contact-form-archive.md`, including how to recover the file from Git. Its endpoint and shared secret were public, so rotate both if the form is ever revived.
 
 ## Retired languages

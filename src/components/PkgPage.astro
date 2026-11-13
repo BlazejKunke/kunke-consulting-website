@@ -1,0 +1,831 @@
+---
+// /pkg/ and /en/pkg/ : the handout page for the workshop "Od ChatGPT do
+// agentów" at Poznański Kongres Gospodarczy, 13 November 2026. Participants
+// reach it by scanning a QR code on the last slides, so it is built for a
+// phone first.
+//
+// Three jobs, in this order: download the slides, read what the company does,
+// leave contact details with optional marketing consents.
+//
+// Standalone family, like the homepages and /talent: no BaseLayout, no
+// global.css, --kc-* tokens redeclared below. Not registered in locales.ts and
+// marked noindex, so it emits no hreflang and stays out of the sitemap. The
+// language link in the header is a plain link.
+//
+// THE FORM IS THE ONLY ONE ON THE SITE. It is handled by Netlify Forms, which
+// reads the <form data-netlify> below at deploy time. If Netlify does not
+// accept a submission the script falls back to a prefilled email, so nobody is
+// left with a dead button. Field names, the consent wording and how to switch
+// it off are in docs/pkg-event-page.md. Services and prices come from
+// src/utils/webmcp.ts, the list `npm test` pins to the homepages.
+import { getServices } from '../utils/webmcp';
+
+interface Props { lang: 'pl' | 'en'; }
+const { lang } = Astro.props;
+const en = lang === 'en';
+
+const siteUrl = Astro.site ?? new URL('https://kunkeconsulting.pl');
+const path = en ? '/en/pkg/' : '/pkg/';
+const canonicalUrl = new URL(path, siteUrl).href;
+const otherLangHref = en ? '/pkg/' : '/en/pkg/';
+const homeHref = en ? '/en/' : '/';
+const privacyHref = en ? '/en/privacy-policy/' : '/privacy-policy/';
+const ogImage = new URL('/images/Workshop2025.JPG', siteUrl).href;
+
+const pdfHref = '/pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf';
+const services = getServices(lang).services;
+
+const t = en
+  ? {
+      title: 'Workshop materials: From ChatGPT to agents | ^Kunke Consulting',
+      description:
+        'Slides from the workshop at Poznański Kongres Gospodarczy 2026, a short introduction to ^Kunke Consulting and a contact form.',
+      skip: 'Skip to content',
+      otherLang: 'PL',
+      otherLangLabel: 'Polska wersja',
+      eyebrow: 'Poznański Kongres Gospodarczy · 13 Nov 2026',
+      h1: 'From ChatGPT to agents',
+      sub: 'How to build an AI strategy in your company',
+      thanks: 'Thank you for joining the workshop. The slides are below, along with a few words about the company and a way to stay in touch.',
+      download: 'Download the slides',
+      downloadMeta: 'PDF · 31 slides · 3 MB · in Polish',
+      toForm: 'Leave your contact details',
+      aboutEyebrow: 'About the company',
+      aboutTitle: '^Kunke Consulting teaches teams to work with AI and helps put it to use.',
+      aboutText:
+        'We sell two things: hands-on AI workshops for teams, and AI advisory with implementation for small and mid-sized companies. We start with the work your team already does, not with a tool.',
+      facts: [
+        { big: '60+', small: 'practical AI workshops delivered' },
+        { big: '500+', small: 'people trained' },
+        { big: '94%+', small: 'average rating in post-workshop surveys' },
+        { big: 'Poznań', small: 'and all of Poland, in person by preference' }
+      ],
+      servicesTitle: 'What we offer',
+      founderName: 'Błażej Kunke',
+      founderRole: 'Founder, ^Kunke Consulting',
+      founderText:
+        'I spent 10 years in corporations such as McKinsey & Company and Franklin Templeton. Today I run practical AI workshops and advisory for small and mid-sized companies. I work in English and in Polish.',
+      photoAlt: 'Błażej Kunke, founder of ^Kunke Consulting',
+      fullOffer: 'See the full offer',
+      formEyebrow: 'Contact',
+      formTitle: 'Let’s talk about AI in your company',
+      formLead: 'Leave your details and I will get back to you personally.',
+      name: 'Full name',
+      email: 'Email address',
+      company: 'Company',
+      phone: 'Phone',
+      message: 'What would you like to talk about?',
+      optional: 'optional',
+      consentLegend: 'Marketing consents (optional)',
+      consentEmail:
+        'I would like to receive commercial and marketing information from ^Kunke Consulting (for example about workshops, training and materials on AI) at the email address I provided.',
+      consentPhone:
+        'I agree to be contacted by phone by ^Kunke Consulting for marketing purposes, at the phone number I provided.',
+      consentNote:
+        'Both consents are voluntary and you can withdraw them at any time by writing to info@kunkeconsulting.pl. Without them I will only reply to your message.',
+      submit: 'Send',
+      sending: 'Sending…',
+      clause:
+        'The controller of your data is Błażej Kunke, operating as Błażej Kunke Consulting, ul. Fosowa 13/1, 62-069 Dąbrówka, Poland. I will use the details from this form to reply to you and, if you tick the consents, for marketing contact. Details:',
+      privacy: 'privacy policy',
+      successTitle: 'Thank you, your message has arrived.',
+      successText: 'I will get back to you personally. In the meantime, the slides are yours to keep.',
+      errorTitle: 'The form could not be sent.',
+      errorText: 'Nothing is lost. Send the same details by email with one tap:',
+      errorButton: 'Send by email',
+      phoneNeeded: 'Please add a phone number, or untick the phone consent.',
+      yes: 'YES',
+      no: 'NO',
+      mailSubject: 'PKG 2026: contact after the workshop',
+      mailConsentEmail: 'Consent to commercial information by email',
+      mailConsentPhone: 'Consent to marketing contact by phone',
+      directEyebrow: 'Or directly',
+      directTitle: 'Prefer email or a call?',
+      footerHome: 'Home',
+      footerPrivacy: 'Privacy policy'
+    }
+  : {
+      title: 'Materiały z warsztatu: Od ChatGPT do agentów | ^Kunke Consulting',
+      description:
+        'Prezentacja z warsztatu na Poznańskim Kongresie Gospodarczym 2026, kilka słów o ^Kunke Consulting i formularz kontaktowy.',
+      skip: 'Przejdź do treści',
+      otherLang: 'EN',
+      otherLangLabel: 'English version',
+      eyebrow: 'Poznański Kongres Gospodarczy · 13.11.2026',
+      h1: 'Od ChatGPT do agentów',
+      sub: 'Jak budować strategię AI w firmie',
+      thanks: 'Dziękuję za udział w warsztacie. Poniżej prezentacja, kilka słów o firmie i sposób, żeby zostać w kontakcie.',
+      download: 'Pobierz prezentację',
+      downloadMeta: 'PDF · 31 slajdów · 3 MB',
+      toForm: 'Zostaw kontakt',
+      aboutEyebrow: 'O firmie',
+      aboutTitle: '^Kunke Consulting uczy zespoły pracy z AI i pomaga ją wdrożyć.',
+      aboutText:
+        'Robimy dwie rzeczy: praktyczne warsztaty AI dla zespołów oraz doradztwo i wdrożenia AI w małych i średnich firmach. Zaczynamy od pracy, którą Twój zespół wykonuje dzisiaj, a nie od narzędzia.',
+      facts: [
+        { big: '60+', small: 'przeprowadzonych szkoleń z praktycznej AI' },
+        { big: '500+', small: 'przeszkolonych osób' },
+        { big: '94%+', small: 'średnia ocena z ankiet poszkoleniowych' },
+        { big: 'Poznań', small: 'i cała Polska, najchętniej stacjonarnie' }
+      ],
+      servicesTitle: 'Co oferujemy',
+      founderName: 'Błażej Kunke',
+      founderRole: 'Założyciel ^Kunke Consulting',
+      founderText:
+        'Przez 10 lat pracowałem w korporacjach takich jak McKinsey & Company i Franklin Templeton. Dziś prowadzę praktyczne szkolenia i doradztwo AI dla małych i średnich firm. Pracuję po polsku i po angielsku.',
+      photoAlt: 'Błażej Kunke, założyciel ^Kunke Consulting',
+      fullOffer: 'Zobacz całą ofertę',
+      formEyebrow: 'Kontakt',
+      formTitle: 'Porozmawiajmy o AI w Twojej firmie',
+      formLead: 'Zostaw kontakt, odezwę się osobiście.',
+      name: 'Imię i nazwisko',
+      email: 'Adres e-mail',
+      company: 'Firma',
+      phone: 'Telefon',
+      message: 'O czym chcesz porozmawiać?',
+      optional: 'opcjonalnie',
+      consentLegend: 'Zgody marketingowe (dobrowolne)',
+      consentEmail:
+        'Chcę otrzymywać od ^Kunke Consulting informacje handlowe i marketingowe (np. o warsztatach, szkoleniach i materiałach o AI) na podany adres e-mail.',
+      consentPhone:
+        'Zgadzam się na kontakt telefoniczny ze strony ^Kunke Consulting w celach marketingowych, na podany numer telefonu.',
+      consentNote:
+        'Obie zgody są dobrowolne i możesz je wycofać w każdej chwili, pisząc na info@kunkeconsulting.pl. Bez nich odpowiem tylko na Twoją wiadomość.',
+      submit: 'Wyślij',
+      sending: 'Wysyłanie…',
+      clause:
+        'Administratorem danych jest Błażej Kunke, prowadzący działalność pod firmą Błażej Kunke Consulting, ul. Fosowa 13/1, 62-069 Dąbrówka. Dane z formularza wykorzystam, aby Ci odpowiedzieć, a jeśli zaznaczysz zgody, także do kontaktu marketingowego. Szczegóły:',
+      privacy: 'polityka prywatności',
+      successTitle: 'Dziękuję, wiadomość dotarła.',
+      successText: 'Odezwę się osobiście. Prezentacja zostaje u Ciebie.',
+      errorTitle: 'Nie udało się wysłać formularza.',
+      errorText: 'Nic nie przepadło. Wyślij te same dane e-mailem jednym kliknięciem:',
+      errorButton: 'Wyślij e-mailem',
+      phoneNeeded: 'Dodaj numer telefonu albo odznacz zgodę na kontakt telefoniczny.',
+      yes: 'TAK',
+      no: 'NIE',
+      mailSubject: 'PKG 2026: kontakt po warsztacie',
+      mailConsentEmail: 'Zgoda na informacje handlowe e-mailem',
+      mailConsentPhone: 'Zgoda na kontakt telefoniczny w celach marketingowych',
+      directEyebrow: 'Albo bezpośrednio',
+      directTitle: 'Wolisz napisać albo zadzwonić?',
+      footerHome: 'Strona główna',
+      footerPrivacy: 'Polityka prywatności'
+    };
+
+// Handed to the inline script as data attributes, so the script itself holds
+// no copy and stays identical in both languages.
+const formStrings = {
+  sending: t.sending,
+  submit: t.submit,
+  phoneNeeded: t.phoneNeeded,
+  yes: t.yes,
+  no: t.no,
+  mailSubject: t.mailSubject,
+  mailConsentEmail: t.mailConsentEmail,
+  mailConsentPhone: t.mailConsentPhone,
+  labels: { name: t.name, email: t.email, company: t.company, phone: t.phone, message: t.message },
+  wording: { email: t.consentEmail, phone: t.consentPhone }
+};
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>{t.title}</title>
+  <meta name="description" content={t.description} />
+  <link rel="canonical" href={canonicalUrl} />
+  {/* An event handout, not a marketing page: kept out of search results. */}
+  <meta name="robots" content="noindex, follow" />
+  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#0a4731" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content={en ? 'en_US' : 'pl_PL'} />
+  <meta property="og:site_name" content="Kunke Consulting" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={t.title} />
+  <meta property="og:description" content={t.description} />
+  <meta property="og:image" content={ogImage} />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Kunke_Favicon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <style is:global>
+    :root {
+      --kc-bg: #faf9f6;
+      --kc-ink: #12201b;
+      --kc-green: #0a4731;
+      --kc-body: #3a4a43;
+      --kc-muted: #52625a;
+      --kc-card: #ffffff;
+      --kc-rule-10: rgba(10, 71, 49, 0.1);
+      --kc-rule-18: rgba(10, 71, 49, 0.18);
+      --kc-rule-32: rgba(10, 71, 49, 0.32);
+      --kc-error: #9b2c1f;
+      --kc-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --kc-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+      --kc-wrap: 1040px;
+      --kc-gut: 20px;
+    }
+
+    *,
+    *::before,
+    *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    body {
+      margin: 0;
+      background: var(--kc-bg);
+      color: var(--kc-ink);
+      font-family: var(--kc-sans);
+      letter-spacing: -0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--kc-green); }
+    ::selection { background: var(--kc-green); color: var(--kc-bg); }
+    :focus-visible { outline: 2px solid var(--kc-green); outline-offset: 3px; border-radius: 4px; }
+
+    .kc-skip {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 100;
+      background: var(--kc-bg);
+      color: var(--kc-green);
+      padding: 12px 18px;
+      border-radius: 0 0 8px 0;
+    }
+    .kc-skip:focus { left: 0; }
+
+    .kc-wrap { max-width: var(--kc-wrap); margin: 0 auto; padding-inline: var(--kc-gut); }
+
+    .kc-eyebrow {
+      margin: 0;
+      font-family: var(--kc-mono);
+      font-size: 12.5px;
+      line-height: 1.5;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--kc-green);
+    }
+
+    /* ---------- hero: the deck's own title slide ---------- */
+
+    .kc-hero { background: var(--kc-green); color: var(--kc-bg); }
+    .kc-hero :focus-visible { outline-color: var(--kc-bg); }
+
+    .kc-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-block: 18px;
+    }
+    .kc-brand { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: var(--kc-bg); text-decoration: none; }
+    .kc-lang {
+      font-family: var(--kc-mono);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      color: var(--kc-bg);
+      text-decoration: none;
+      border: 1px solid rgba(250, 249, 246, 0.4);
+      border-radius: 999px;
+      padding: 9px 15px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .kc-lang:hover { background: rgba(250, 249, 246, 0.12); }
+
+    .kc-hero-body { padding-block: 40px 52px; }
+    .kc-hero .kc-eyebrow { color: #a9d8b9; }
+    .kc-hero h1 {
+      margin: 18px 0 0;
+      font-size: clamp(38px, 10.5vw, 68px);
+      line-height: 1.04;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      text-wrap: balance;
+    }
+    .kc-hero-sub {
+      margin: 14px 0 0;
+      font-size: clamp(20px, 5.2vw, 28px);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+    .kc-hero-thanks {
+      margin: 22px 0 0;
+      max-width: 34em;
+      font-size: 17px;
+      line-height: 1.6;
+      color: #dfe9e2;
+      text-wrap: pretty;
+    }
+
+    .kc-hero-cta { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+
+    .kc-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--kc-bg);
+      color: var(--kc-green);
+      text-decoration: none;
+      border-radius: 14px;
+      padding: 15px 22px 15px 18px;
+      min-height: 64px;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+    .kc-download:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22); }
+    .kc-download svg { flex: none; }
+    .kc-download-label { display: block; font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+    .kc-download-meta {
+      display: block;
+      margin-top: 3px;
+      font-family: var(--kc-mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--kc-muted);
+    }
+    .kc-hero-link { color: var(--kc-bg); font-size: 17px; text-underline-offset: 4px; padding-block: 12px; }
+
+    @media (prefers-reduced-motion: reduce) { .kc-download { transition: none; } }
+
+    /* ---------- about ---------- */
+
+    .kc-about { padding-block: 52px 8px; }
+    .kc-about h2,
+    .kc-form-head h2,
+    .kc-direct h2 {
+      margin: 12px 0 0;
+      font-size: clamp(26px, 6.6vw, 36px);
+      line-height: 1.16;
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      text-wrap: balance;
+    }
+    .kc-about-text {
+      margin: 18px 0 0;
+      max-width: 38em;
+      font-size: 17.5px;
+      line-height: 1.65;
+      color: var(--kc-body);
+      text-wrap: pretty;
+    }
+
+    .kc-facts {
+      margin: 32px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid var(--kc-rule-18);
+      border-left: 1px solid var(--kc-rule-18);
+    }
+    .kc-facts li {
+      padding: 18px 16px 20px;
+      border-right: 1px solid var(--kc-rule-18);
+      border-bottom: 1px solid var(--kc-rule-18);
+    }
+    .kc-fact-big { display: block; font-size: 30px; font-weight: 700; letter-spacing: -0.04em; color: var(--kc-green); }
+    .kc-fact-small { display: block; margin-top: 4px; font-size: 14.5px; line-height: 1.45; color: var(--kc-muted); }
+
+    .kc-services-title { margin: 40px 0 0; }
+    .kc-services { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+    .kc-service {
+      background: var(--kc-card);
+      border: 1px solid var(--kc-rule-10);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .kc-service-tag { font-family: var(--kc-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--kc-muted); }
+    .kc-service h3 { margin: 8px 0 0; font-size: 21px; font-weight: 600; letter-spacing: -0.03em; }
+    .kc-service p { margin: 8px 0 0; font-size: 16px; line-height: 1.55; color: var(--kc-body); }
+    .kc-service-price { margin-top: 14px; font-family: var(--kc-mono); font-size: 14px; color: var(--kc-green); }
+
+    .kc-founder {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .kc-founder img { width: 96px; height: 120px; object-fit: cover; border-radius: 12px; display: block; }
+    .kc-founder-name { margin: 0; font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+    .kc-founder-role { margin: 2px 0 0; font-size: 14.5px; color: var(--kc-muted); }
+    .kc-founder-text { margin: 10px 0 0; font-size: 16px; line-height: 1.6; color: var(--kc-body); text-wrap: pretty; }
+    .kc-founder-links { margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 16px; }
+    .kc-founder-links a { padding-block: 8px; text-underline-offset: 4px; }
+
+    /* ---------- form ---------- */
+
+    .kc-form-section { padding-block: 52px; }
+    .kc-form-card {
+      background: var(--kc-card);
+      border: 1px solid var(--kc-rule-18);
+      border-radius: 20px;
+      padding: 26px 20px 28px;
+    }
+    .kc-form-lead { margin: 12px 0 0; font-size: 17px; line-height: 1.55; color: var(--kc-body); }
+
+    .kc-form { margin-top: 24px; display: grid; gap: 18px; }
+    .kc-form-grid { display: grid; gap: 18px; }
+    .kc-field { display: grid; gap: 7px; }
+    .kc-field label { font-size: 15px; font-weight: 600; }
+    .kc-optional { font-weight: 400; color: var(--kc-muted); }
+
+    /* 16px keeps iOS Safari from zooming the page when a field is focused. */
+    .kc-field input,
+    .kc-field textarea {
+      width: 100%;
+      font: 16px/1.4 var(--kc-sans);
+      color: var(--kc-ink);
+      background: var(--kc-bg);
+      border: 1px solid var(--kc-rule-32);
+      border-radius: 10px;
+      padding: 13px 14px;
+      min-height: 50px;
+      appearance: none;
+    }
+    .kc-field textarea { min-height: 104px; resize: vertical; }
+    .kc-field input:focus,
+    .kc-field textarea:focus { outline: 2px solid var(--kc-green); outline-offset: 1px; border-color: var(--kc-green); }
+
+    .kc-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+    .kc-consents { margin: 4px 0 0; padding: 0; border: 0; display: grid; gap: 14px; min-width: 0; }
+    .kc-consents legend { padding: 0; margin-bottom: 12px; font-size: 15px; font-weight: 600; }
+    .kc-check { display: grid; grid-template-columns: 26px 1fr; gap: 12px; align-items: start; cursor: pointer; }
+    .kc-check input { width: 24px; height: 24px; margin: 1px 0 0; accent-color: var(--kc-green); cursor: pointer; }
+    .kc-check span { font-size: 15px; line-height: 1.5; color: var(--kc-body); }
+    .kc-consent-note { margin: 0; font-size: 14px; line-height: 1.5; color: var(--kc-muted); }
+
+    .kc-submit {
+      justify-self: start;
+      background: var(--kc-green);
+      color: var(--kc-bg);
+      border: 1px solid var(--kc-green);
+      border-radius: 999px;
+      padding: 14px 34px;
+      min-height: 52px;
+      min-width: 148px;
+      font: 600 17px/1.2 var(--kc-sans);
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      transition: background-color 160ms ease;
+    }
+    .kc-submit:hover { background: var(--kc-ink); border-color: var(--kc-ink); }
+    .kc-submit[disabled] { opacity: 0.6; cursor: progress; }
+
+    .kc-form-msg { margin: 0; font-size: 15px; line-height: 1.5; color: var(--kc-error); }
+    .kc-form-msg:empty { display: none; }
+
+    .kc-clause { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--kc-muted); }
+
+    .kc-result { margin-top: 24px; border-radius: 14px; padding: 22px 20px; }
+    .kc-result h3 { margin: 0; font-size: 21px; font-weight: 600; letter-spacing: -0.03em; }
+    .kc-result p { margin: 8px 0 0; font-size: 16px; line-height: 1.55; }
+    .kc-result-ok { background: var(--kc-green); color: var(--kc-bg); }
+    .kc-result-ok p { color: #dfe9e2; }
+    .kc-result-fail { background: #fbeeea; color: var(--kc-ink); border: 1px solid rgba(155, 44, 31, 0.3); }
+    .kc-result-fail a {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 14px;
+      background: var(--kc-green);
+      color: var(--kc-bg);
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 13px 26px;
+      min-height: 48px;
+      font-weight: 600;
+    }
+    [hidden] { display: none !important; }
+
+    /* ---------- direct contact ---------- */
+
+    .kc-direct { padding-block: 0 56px; }
+    .kc-direct-links { margin: 20px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 19px; }
+    .kc-direct-links a { display: inline-block; padding-block: 9px; text-underline-offset: 4px; }
+
+    /* ---------- footer ---------- */
+
+    .kc-footer { border-top: 1px solid var(--kc-rule-10); background: rgba(10, 71, 49, 0.02); }
+    .kc-footer-inner {
+      max-width: var(--kc-wrap);
+      margin: 0 auto;
+      padding: 24px var(--kc-gut) 32px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 10px 24px;
+      font-family: var(--kc-mono);
+      font-size: 13px;
+      color: var(--kc-muted);
+    }
+    .kc-footer-inner p { margin: 0; }
+    .kc-footer-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+    .kc-footer-links a { color: var(--kc-muted); padding-block: 8px; }
+
+    /* ---------- wider screens ---------- */
+
+    @media (min-width: 720px) {
+      :root { --kc-gut: 32px; }
+      .kc-hero-body { padding-block: 64px 80px; }
+      .kc-about { padding-block: 80px 8px; }
+      .kc-facts { grid-template-columns: repeat(4, 1fr); }
+      .kc-facts li { padding: 24px 22px 26px; }
+      .kc-services { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .kc-founder { grid-template-columns: 132px 1fr; gap: 26px; max-width: 46em; }
+      .kc-founder img { width: 132px; height: 165px; }
+      .kc-form-section { padding-block: 80px; }
+      .kc-form-card { padding: 44px 48px 48px; max-width: 720px; }
+      .kc-form-grid { grid-template-columns: 1fr 1fr; }
+      .kc-direct { padding-block: 0 88px; }
+      .kc-footer-links { margin-left: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a class="kc-skip" href="#top">{t.skip}</a>
+
+  <header class="kc-hero">
+    <div class="kc-wrap">
+      <div class="kc-top">
+        <a href={homeHref} class="kc-brand">^Kunke Consulting</a>
+        <a href={otherLangHref} class="kc-lang" hreflang={en ? 'pl' : 'en'} lang={en ? 'pl' : 'en'} aria-label={t.otherLangLabel}>{t.otherLang}</a>
+      </div>
+      <div class="kc-hero-body" id="top">
+        <p class="kc-eyebrow">{t.eyebrow}</p>
+        <h1>{t.h1}</h1>
+        <p class="kc-hero-sub">{t.sub}</p>
+        <p class="kc-hero-thanks">{t.thanks}</p>
+        <div class="kc-hero-cta">
+          <a class="kc-download" href={pdfHref} type="application/pdf">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3v12" /><path d="m7 11 5 5 5-5" /><path d="M5 20h14" />
+            </svg>
+            <span>
+              <span class="kc-download-label">{t.download}</span>
+              <span class="kc-download-meta">{t.downloadMeta}</span>
+            </span>
+          </a>
+          <a class="kc-hero-link" href="#kontakt">{t.toForm} ↓</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="kc-wrap kc-about" aria-labelledby="kc-about-title">
+      <p class="kc-eyebrow">{t.aboutEyebrow}</p>
+      <h2 id="kc-about-title">{t.aboutTitle}</h2>
+      <p class="kc-about-text">{t.aboutText}</p>
+
+      <ul class="kc-facts">
+        {t.facts.map((fact) => (
+          <li>
+            <span class="kc-fact-big">{fact.big}</span>
+            <span class="kc-fact-small">{fact.small}</span>
+          </li>
+        ))}
+      </ul>
+
+      <p class="kc-eyebrow kc-services-title">{t.servicesTitle}</p>
+      <ul class="kc-services">
+        {services.map((service) => (
+          <li class="kc-service">
+            <span class="kc-service-tag">{service.tag}</span>
+            <h3>{service.name}</h3>
+            <p>{service.summary}</p>
+            <div class="kc-service-price">{service.price}</div>
+          </li>
+        ))}
+      </ul>
+
+      <div class="kc-founder">
+        <picture>
+          <source srcset="/images/blazej-kunke-hero.webp" type="image/webp" />
+          <img src="/images/blazej-kunke-hero.jpg" alt={t.photoAlt} width="560" height="747" loading="lazy" decoding="async" />
+        </picture>
+        <div>
+          <p class="kc-founder-name">{t.founderName}</p>
+          <p class="kc-founder-role">{t.founderRole}</p>
+          <p class="kc-founder-text">{t.founderText}</p>
+          <p class="kc-founder-links">
+            <a href={homeHref}>{t.fullOffer} →</a>
+            <a href="https://www.linkedin.com/in/blazejkunke/" rel="noopener">LinkedIn →</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="kc-wrap kc-form-section" id="kontakt" aria-labelledby="kc-form-title">
+      <div class="kc-form-card">
+        <div class="kc-form-head">
+          <p class="kc-eyebrow">{t.formEyebrow}</p>
+          <h2 id="kc-form-title">{t.formTitle}</h2>
+          <p class="kc-form-lead">{t.formLead}</p>
+        </div>
+
+        {/* Netlify Forms reads this markup at deploy time. Every field that
+            should reach the inbox must exist here as a real input, hidden
+            ones included. The Polish and English pages share one form name
+            and one set of field names on purpose. */}
+        <form
+          class="kc-form"
+          id="kc-pkg-form"
+          name="pkg-2026"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          data-strings={JSON.stringify(formStrings)}
+        >
+          <input type="hidden" name="form-name" value="pkg-2026" />
+          <input type="hidden" name="language" value={lang} />
+          <input type="hidden" name="source" value="Poznański Kongres Gospodarczy, 13.11.2026" />
+          <input type="hidden" name="consent_wording" value="" />
+          <p class="kc-hp" aria-hidden="true">
+            <label>Leave this field empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div class="kc-form-grid">
+            <div class="kc-field">
+              <label for="kc-name">{t.name}</label>
+              <input id="kc-name" name="name" type="text" autocomplete="name" required maxlength="120" />
+            </div>
+            <div class="kc-field">
+              <label for="kc-email">{t.email}</label>
+              <input id="kc-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="160" />
+            </div>
+          </div>
+          <div class="kc-form-grid">
+            <div class="kc-field">
+              <label for="kc-company">{t.company} <span class="kc-optional">({t.optional})</span></label>
+              <input id="kc-company" name="company" type="text" autocomplete="organization" maxlength="160" />
+            </div>
+            <div class="kc-field">
+              <label for="kc-phone">{t.phone} <span class="kc-optional">({t.optional})</span></label>
+              <input id="kc-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="40" />
+            </div>
+          </div>
+          <div class="kc-field">
+            <label for="kc-message">{t.message} <span class="kc-optional">({t.optional})</span></label>
+            <textarea id="kc-message" name="message" rows="3" maxlength="2000"></textarea>
+          </div>
+
+          <fieldset class="kc-consents">
+            <legend>{t.consentLegend}</legend>
+            <label class="kc-check">
+              <input type="checkbox" name="consent_email" value={t.yes} />
+              <span>{t.consentEmail}</span>
+            </label>
+            <label class="kc-check">
+              <input type="checkbox" name="consent_phone" value={t.yes} />
+              <span>{t.consentPhone}</span>
+            </label>
+            <p class="kc-consent-note">{t.consentNote}</p>
+          </fieldset>
+
+          <p class="kc-form-msg" id="kc-form-msg" role="alert"></p>
+          <button class="kc-submit" type="submit">{t.submit}</button>
+          <p class="kc-clause">{t.clause} <a href={privacyHref}>{t.privacy}</a>.</p>
+        </form>
+
+        <div class="kc-result kc-result-ok" id="kc-form-ok" role="status" tabindex="-1" hidden>
+          <h3>{t.successTitle}</h3>
+          <p>{t.successText}</p>
+        </div>
+        <div class="kc-result kc-result-fail" id="kc-form-fail" role="alert" tabindex="-1" hidden>
+          <h3>{t.errorTitle}</h3>
+          <p>{t.errorText}</p>
+          <a id="kc-form-mailto" href="mailto:info@kunkeconsulting.pl">{t.errorButton}</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="kc-wrap kc-direct" aria-labelledby="kc-direct-title">
+      <p class="kc-eyebrow">{t.directEyebrow}</p>
+      <h2 id="kc-direct-title">{t.directTitle}</h2>
+      <ul class="kc-direct-links">
+        <li><a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a></li>
+        <li><a href="tel:+48722156925">+48 722 156 925</a></li>
+        <li><a href="https://www.linkedin.com/in/blazejkunke/" rel="noopener">LinkedIn: Błażej Kunke</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="kc-footer">
+    <div class="kc-footer-inner">
+      <p>© 2026 ^Kunke Consulting · Błażej Kunke Consulting</p>
+      <div class="kc-footer-links">
+        <a href={homeHref}>{t.footerHome}</a>
+        <a href={privacyHref}>{t.footerPrivacy}</a>
+      </div>
+    </div>
+  </footer>
+
+  <script is:inline>
+    // Sends the form to Netlify Forms without leaving the page. If Netlify
+    // does not accept it for any reason (form handling switched off, no
+    // signal in the hall, a quota), the visitor gets a prefilled email
+    // instead of a dead end. Without JavaScript the form still posts natively.
+    (function () {
+      var form = document.getElementById('kc-pkg-form');
+      if (!form || !window.fetch || !window.URLSearchParams) return;
+
+      var s = JSON.parse(form.getAttribute('data-strings'));
+      var ok = document.getElementById('kc-form-ok');
+      var fail = document.getElementById('kc-form-fail');
+      var msg = document.getElementById('kc-form-msg');
+      var button = form.querySelector('button[type="submit"]');
+      var phone = form.elements.phone;
+      var consentEmail = form.elements.consent_email;
+      var consentPhone = form.elements.consent_phone;
+
+      function value(name) { return (form.elements[name].value || '').trim(); }
+
+      function collect() {
+        var wording = [];
+        if (consentEmail.checked) wording.push(s.wording.email);
+        if (consentPhone.checked) wording.push(s.wording.phone);
+        return {
+          'form-name': form.getAttribute('name'),
+          'bot-field': form.elements['bot-field'].value,
+          language: value('language'),
+          source: value('source'),
+          name: value('name'),
+          email: value('email'),
+          company: value('company'),
+          phone: value('phone'),
+          message: value('message'),
+          consent_email: consentEmail.checked ? s.yes : s.no,
+          consent_phone: consentPhone.checked ? s.yes : s.no,
+          consent_wording: wording.join(' | ')
+        };
+      }
+
+      function mailtoHref(data) {
+        var lines = [
+          s.labels.name + ': ' + data.name,
+          s.labels.email + ': ' + data.email,
+          s.labels.company + ': ' + data.company,
+          s.labels.phone + ': ' + data.phone,
+          s.labels.message + ': ' + data.message,
+          '',
+          s.mailConsentEmail + ': ' + data.consent_email,
+          s.mailConsentPhone + ': ' + data.consent_phone
+        ];
+        return 'mailto:info@kunkeconsulting.pl?subject=' + encodeURIComponent(s.mailSubject) +
+          '&body=' + encodeURIComponent(lines.join('\n'));
+      }
+
+      function show(panel) {
+        form.hidden = true;
+        panel.hidden = false;
+        panel.focus();
+        panel.scrollIntoView({ block: 'center' });
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        msg.textContent = '';
+
+        // A phone consent with no number is a consent to nothing.
+        if (consentPhone.checked && !value('phone')) {
+          msg.textContent = s.phoneNeeded;
+          phone.focus();
+          return;
+        }
+
+        var data = collect();
+        button.disabled = true;
+        button.textContent = s.sending;
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(data).toString()
+        })
+          .then(function (response) {
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            show(ok);
+          })
+          .catch(function () {
+            document.getElementById('kc-form-mailto').href = mailtoHref(data);
+            show(fail);
+          });
+      });
+    })();
+  </script>
+</body>
+</html>
