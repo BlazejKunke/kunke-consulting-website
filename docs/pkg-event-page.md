@@ -1,18 +1,76 @@
-# /pkg/ : the workshop handout page, and the only form on the site
+# /pkg/ : the retired workshop handout page (archive)
 
-Built on 2026-11-13 for the workshop "Od ChatGPT do agentów. Jak budować
-strategię AI w firmie" at Poznański Kongres Gospodarczy (Scena D2, Poznań
-Congress Center, 13:00 to 14:30). Participants scan a QR code on the closing
-slides and land here. PKG is the congress, not a product.
+**Retired on 2026-11-16.** This page existed for one event and was live for four
+days, 2026-11-13 to 2026-11-16. This file is the archive: what it was, what the
+form collected, the consent wording people agreed to, and how to bring it back
+for another event.
 
-## What is there
+It was built for the workshop "Od ChatGPT do agentów. Jak budować strategię AI
+w firmie" at Poznański Kongres Gospodarczy (Scena D2, Poznań Congress Center,
+13:00 to 14:30). Participants scanned a QR code on the closing slides and
+landed on it. PKG is the congress, not a product.
+
+## What is live now
+
+| Address | What happens |
+| :--- | :--- |
+| `/pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf` | the slides, 31 pages, Polish only. Still served, still noindex |
+| `/pkg/`, `/en/pkg/`, `/PKG`, `/Pkg`, `/en/PKG` | 301 straight to the slides, in `public/_redirects` |
+
+The redirect goes to the slides and not to the homepage on purpose. The only
+way anyone reaches `/pkg/` is the QR code on the closing slide or a photo of
+it, so they want the slides. The homepage would read as a dead end.
+
+**The PDF must never move or be renamed.** The QR code is printed in the deck
+itself and in every photo taken in the room.
+
+There is no form any more. Nothing on the site collects personal data.
+
+## What is left to do outside this repository
+
+- The submissions sit in Netlify under Forms, `pkg-2026`. Blaze exported them
+  as CSV on 2026-11-16, before the form came down. The CSV is the consent
+  record, so it needs keeping somewhere safe for as long as anyone on it is
+  being contacted.
+- Once the CSV is safely stored, delete the submissions in Netlify so the
+  personal data is not held in two places. Only Blaze can do this.
+- Netlify may go on listing the `pkg-2026` form after the markup is gone. It
+  cannot receive anything; it can be deleted in the dashboard.
+- The privacy policy (section 2, both languages) still describes the form, in
+  the past tense, and still explains how to withdraw a marketing consent.
+  Leave those paragraphs while the details and consents are kept. Remove them
+  only when the data has been deleted everywhere.
+
+## Bringing it back
+
+The page was `src/components/PkgPage.astro`, rendered by `src/pages/pkg.astro`
+and `src/pages/en/pkg.astro`. All three were deleted in the retirement commit.
+The last commit that has them is `5fd8df9`:
+
+```bash
+git show 5fd8df9:src/components/PkgPage.astro > src/components/PkgPage.astro
+git show 5fd8df9:src/pages/pkg.astro > src/pages/pkg.astro
+git show 5fd8df9:src/pages/en/pkg.astro > src/pages/en/pkg.astro
+```
+
+For another event, do not reuse `/pkg/`: give the new page its own address,
+form `name`, `source` value, PDF and copy. A new form name keeps the leads from
+two events apart. Then put the address back in the sitemap exclusion list in
+`astro.config.mjs`, describe the form in the privacy policy, and switch form
+detection on in Netlify if it has been turned off. Ask Blaze first: the site
+is mailto-only by his decision.
+
+Everything below describes the page as it was while live.
+
+## What was there
+
 
 | Address | What it is |
 | :--- | :--- |
 | `/pkg/` | Polish page |
 | `/en/pkg/` | English page |
 | `/pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf` | the slides, 31 pages, Polish only |
-| `/PKG`, `/Pkg`, `/en/PKG` | 301 to the lower-case pages, in `public/_redirects` |
+| `/PKG`, `/Pkg`, `/en/PKG` | 301 to the lower-case pages |
 
 Both pages render through `src/components/PkgPage.astro`. It belongs to the
 standalone family (own `--kc-*` tokens, no `BaseLayout`, no `global.css`) and
@@ -111,14 +169,3 @@ Netlify as the processor and gives the legal basis: GDPR Article 6(1)(a) and
 Article 398 of the Polish Electronic Communications Law. **This wording was
 drafted without a lawyer.** If it changes, keep the old version in this file
 with its dates: a consent is only as good as the record of what was agreed to.
-
-## Switching it off
-
-- Stop collecting: remove the `<form>` and its script from `PkgPage.astro`, and
-  change the privacy policy back. The submissions already collected stay in
-  Netlify until deleted there.
-- Retire the page: replace both pages with a 301 in `public/_redirects`. Keep
-  the PDF address alive, people will have saved the link.
-- Reuse for another event: copy the component, change the form `name`, the
-  `source` value, the PDF and the copy. A new form name keeps the leads from
-  two events apart.

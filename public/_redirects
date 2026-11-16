@@ -42,16 +42,22 @@ https://kunkeconsulting.netlify.app/*  https://kunkeconsulting.pl/:splat  301!
 /aidlafirm/  /  301!
 /aidlafirm/*  /  301!
 
-# Workshop handout page, Poznanski Kongres Gospodarczy, 2026-11-13. The slide
-# shows kunkeconsulting.pl/pkg and a phone keyboard will happily capitalise
-# it, so the upper-case spellings land on the real page. See
-# docs/pkg-event-page.md.
-/PKG  /pkg/  301!
-/PKG/  /pkg/  301!
-/Pkg  /pkg/  301!
-/Pkg/  /pkg/  301!
-/en/PKG  /en/pkg/  301!
-/en/PKG/  /en/pkg/  301!
+# Workshop handout page, Poznanski Kongres Gospodarczy, 2026-11-13. Retired on
+# 2026-11-16. The closing slide and its QR code show kunkeconsulting.pl/pkg, so
+# anyone arriving here wants the slides: every spelling goes straight to the
+# PDF, in one hop, rather than to the homepage. The PDF itself is a real file
+# under /pkg/ and must stay at this address. No splat rule on /pkg/*, or the
+# PDF would redirect to itself. See docs/pkg-event-page.md.
+/pkg  /pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf  301!
+/pkg/  /pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf  301!
+/en/pkg  /pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf  301!
+/en/pkg/  /pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf  301!
+/PKG  /pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf  301!
+/PKG/  /pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf  301!
+/Pkg  /pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf  301!
+/Pkg/  /pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf  301!
+/en/PKG  /pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf  301!
+/en/PKG/  /pkg/Od-ChatGPT-do-agentow-Kunke-Consulting-PKG-2026.pdf  301!
 
 # Retired July 2026: eight thin, largely placeholder offer pages built on the old
 # design. Everything they claimed to sell is on the homepage, so they all land
