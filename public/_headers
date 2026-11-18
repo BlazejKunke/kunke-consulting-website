@@ -64,6 +64,12 @@
 /Kunke%20Consulting%20Use%20Case%20AI%20in%20a%20Law%20Firm%20English%20Translation%202025.pdf
   Link: <https://kunkeconsulting.pl/Kunke%20Consulting%20Use%20Case%20AI%20in%20a%20Law%20Firm%20English%20Translation%202025.pdf>; rel="canonical"
 
+# The Ethical Conduct Guide, linked from /jak-pracujemy/ and /en/how-we-work/.
+# Kept at one stable address across versions: the version is printed inside
+# the PDF and on both pages, not in the file name. See docs/how-we-work.md.
+/Kunke-Consulting-Ethical-Conduct-Guide.pdf
+  Link: <https://kunkeconsulting.pl/Kunke-Consulting-Ethical-Conduct-Guide.pdf>; rel="canonical"
+
 # /pkg/ held the handout page for the workshop at Poznanski Kongres Gospodarczy
 # on 2026-11-13. The page was retired on 2026-11-16 and now redirects to the
 # slide deck, which still lives under /pkg/. The deck is for people who were in

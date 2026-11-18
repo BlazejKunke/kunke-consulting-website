@@ -1,0 +1,546 @@
+---
+// "Jak pracujemy" / "How we work": the public summary of the ^Kunke Consulting
+// Ethical Conduct Guide. Both languages live in this one file, so a change to
+// one is next to the other. See docs/how-we-work.md before editing.
+//
+// Where the words come from matters here:
+// - English is taken word for word from the guide (version 2.6), cut to the
+//   same sections and sentences Blaze chose for the Polish page.
+// - Polish is Blaze's own wording. Do not machine-translate new English text
+//   into it: he asked to approve every Polish sentence himself.
+// - The full guide is published in English only, as a PDF. There is
+//   deliberately no Polish PDF.
+import BlogShell from './BlogShell.astro';
+import { buildHreflangLinks } from '../utils/locales';
+
+interface Props { lang: 'pl' | 'en'; }
+const { lang } = Astro.props;
+const en = lang === 'en';
+
+const GUIDE_VERSION = '2.6';
+const GUIDE_UPDATED = '2026-11-18';
+const PDF = '/Kunke-Consulting-Ethical-Conduct-Guide.pdf';
+
+const path = en ? '/en/how-we-work/' : '/jak-pracujemy/';
+const otherPath = en ? '/jak-pracujemy/' : '/en/how-we-work/';
+
+// Polish typesetting: a one-letter word (i, w, z, o, a, u) must not end a line,
+// so it is bound to the next word with a non-breaking space.
+const tidy = (text: string) => (en ? text : text.replace(/(?<=^|[\s(])([aiouwzAIOUWZ]) /g, '$1\u00a0'));
+
+type Section =
+  | { id: string; title: string; kind: 'statement'; text: string }
+  | { id: string; title: string; kind: 'values' | 'terms'; items: { term: string; text: string }[] }
+  | { id: string; title: string; kind: 'prose'; paragraphs: string[]; list?: string[] };
+
+const copy = en
+  ? {
+      title: 'How we work',
+      metaTitle: 'How we work: our principles | ^Kunke Consulting',
+      description:
+        'The principles ^Kunke Consulting follows with clients, partners and collaborators: mission, values, independent recommendations, the work we decline and how we use AI.',
+      eyebrow: 'Principles',
+      intro:
+        'The principles that guide our work with clients, partners and collaborators. We have written them down so that it is clear what you can expect from us.',
+      version: `Version ${GUIDE_VERSION}, 18 November 2026`,
+      pdfShort: 'Full document (PDF)',
+      tocLabel: 'On this page',
+      disclaimer:
+        'This page is a statement of our values, not a contract. The specific rights and obligations between ^Kunke Consulting and its clients or collaborators are governed by individual agreements and by applicable law.',
+      contact: 'Questions about our principles:',
+      pdf: 'Download the full document (PDF)',
+      back: '← Back to homepage',
+      home: '/en/',
+      sections: [
+        { id: 'mission', title: 'Mission', kind: 'statement', text: '^Kunke Consulting exists to help organizations achieve ambitious goals through the responsible use of AI technology.' },
+        { id: 'vision', title: 'Vision', kind: 'statement', text: 'We work towards a future in which organizations of every size use new technology wisely, ethically, and effectively. We choose our clients and projects with care, guided by the positive impact they create.' },
+        {
+          id: 'values', title: 'Values', kind: 'values', items: [
+            { term: 'Responsibility', text: 'We propose only solutions we genuinely believe are practical, responsible, and sustainable.' },
+            { term: 'Professionalism', text: 'We deliver high-quality services and products, and we take full responsibility for our work.' },
+            { term: 'Selectiveness', text: 'Without elitism, we reserve the right to decline or end a collaboration in order to shape our impact consciously.' },
+            { term: 'Respect', text: 'We treat clients, collaborators, and competitors fairly and with dignity, regardless of circumstances.' },
+            { term: 'Long-term value creation', text: 'We prioritize durable, sustainable value over short-term gains, for our clients and for the wider community.' },
+            { term: 'Independence', text: 'We recommend tools and services on their merit alone and accept no payment from vendors for doing so.' },
+          ],
+        },
+        {
+          id: 'independence', title: 'Independence in recommendations', kind: 'prose', paragraphs: [
+            'Clients come to us for an honest view of which AI tools and services fit their needs. To protect that independence, ^Kunke Consulting does not take part in affiliate, referral or reseller programmes, and does not accept commissions, referral fees, credits, points or any other benefit from vendors in exchange for recommending their products or services.',
+            'If we have any relationship with a vendor that a client could reasonably consider relevant, we disclose it before making a recommendation.',
+            'Recommending the specialists we work with on a continuing basis is a different matter. Although they are not our employees, they are a stable part of how we deliver our work. We know their expertise, standards and way of working first hand, and connecting clients with the right people is part of the value we offer. We recommend them because we trust their work, and where a commercial arrangement exists between us, we are open about it with the client.',
+          ],
+        },
+        {
+          id: 'how-we-sell', title: 'How we sell', kind: 'terms', items: [
+            { term: 'Fit before volume.', text: 'We do not push services toward organizations unlikely to benefit. Declining or not pursuing a poor-fit prospect is a sound outcome, not a lost sale.' },
+            { term: 'Who we serve.', text: 'Currently our focus is Polish small and medium-sized enterprises, both production and service businesses, primarily in Wielkopolska. We hold an ambition to offer our services internationally when the time is right.' },
+            { term: 'Honesty about scope.', text: 'Our core is practical AI training and advisory work. We also take on custom solutions and, with partner specialists, the legal side of AI adoption, and in those cases we say clearly who is doing what. What we never do is imply a capability we do not have in order to win an engagement. If a prospect needs something we cannot do well, we say so and refer them onward where we can.' },
+          ],
+        },
+        {
+          id: 'work-we-decline', title: 'Work we decline', kind: 'prose', paragraphs: [
+            'We do not take on work that, in our judgment, is intended to mislead, exploit, or harm people. This includes deceptive marketing or sales systems, manipulative design, disinformation and propaganda, and any use of AI meant to conceal, impersonate, or coerce. This applies to every client, in any sector, and it is not negotiable.',
+            'Beyond that, some categories call for a closer look before we agree: alcohol, tobacco and nicotine, gambling and betting, high-cost consumer credit, partisan political campaigning, defence, and organizations facing credible allegations of serious labour or environmental misconduct. We do not rule these out as a class. We ask what the specific work is, who it affects, and whether we would be comfortable describing it publicly. General AI literacy for a company’s own employees is a different question from building a system that makes a product more persuasive to vulnerable customers, and we treat it differently.',
+            'We make these calls case by case, and we are willing to explain our reasoning to anyone who asks.',
+          ],
+        },
+        {
+          id: 'fair-compensation', title: 'Fair compensation', kind: 'prose', paragraphs: [
+            'Professional work deserves payment. We do not ask anyone to work for us without it, whether they are a subcontractor, an experienced collaborator, or someone early in their career.',
+            'We do take on reduced-fee and pro-bono work for NGOs, schools, and local community initiatives, usually around digital literacy and public education on technology. The condition is always the same: it is agreed openly in advance, it is genuinely voluntary, and it never takes the place of work someone should have been paid for.',
+          ],
+        },
+        {
+          id: 'ai-in-our-work', title: 'AI in our work', kind: 'prose', paragraphs: [
+            'AI tools are part of how we deliver value. We use them openly and professionally, and we are honest about how:',
+          ],
+          list: [
+            'We do not misrepresent what AI can and cannot do, and we are clear about its limitations, including the risk of errors that require human review.',
+            'We do not present AI-generated work as something it is not, and we apply meaningful human judgment and quality control to what we deliver.',
+            'We are glad to explain our methods and the role of AI in a given piece of work when a client asks.',
+          ],
+        },
+        {
+          id: 'confidentiality', title: 'Confidentiality and conflicts of interest', kind: 'prose', paragraphs: [
+            '^Kunke Consulting may work with organizations operating in the same industry. We always maintain strict confidentiality, and client information is never shared across engagements. Where working in a client’s competitive space could reasonably create the appearance of a conflict, we disclose this to the client so they can make an informed decision.',
+          ],
+        },
+      ] as Section[],
+    }
+  : {
+      title: 'Jak pracujemy',
+      metaTitle: 'Jak pracujemy: nasze zasady | ^Kunke Consulting',
+      description:
+        'Zasady, którymi ^Kunke Consulting kieruje się w pracy z klientami, partnerami i współpracownikami: misja, wartości, niezależne rekomendacje, zlecenia, których się nie podejmujemy, i AI w naszej pracy.',
+      eyebrow: 'Zasady',
+      intro:
+        'Zasady, którymi kierujemy się w pracy z klientami, partnerami i współpracownikami. Spisaliśmy je, żeby było jasne, czego można się po nas spodziewać.',
+      version: `Wersja ${GUIDE_VERSION}, 18 listopada 2026`,
+      pdfShort: 'Pełny dokument (PDF, po angielsku)',
+      tocLabel: 'Na tej stronie',
+      disclaimer:
+        'Ta strona jest deklaracją naszych wartości, a nie umową. Prawa i obowiązki stron określają indywidualne umowy i obowiązujące przepisy.',
+      contact: 'Pytania dotyczące naszych zasad:',
+      pdf: 'Pobierz pełny dokument (PDF, w języku angielskim)',
+      back: '← Strona główna',
+      home: '/',
+      sections: [
+        { id: 'misja', title: 'Misja', kind: 'statement', text: '^Kunke Consulting pomaga organizacjom osiągać ambitne cele dzięki odpowiedzialnemu wykorzystaniu technologii AI.' },
+        { id: 'wizja', title: 'Wizja', kind: 'statement', text: 'Dążymy do przyszłości, w której organizacje każdej wielkości korzystają z nowych technologii mądrze, etycznie i skutecznie. Klientów i projekty wybieramy starannie, kierując się tym, jaki pozytywny wpływ mogą przynieść.' },
+        {
+          id: 'wartosci', title: 'Wartości', kind: 'values', items: [
+            { term: 'Odpowiedzialność', text: 'Proponujemy tylko rozwiązania, w które naprawdę wierzymy: praktyczne, odpowiedzialne i trwałe.' },
+            { term: 'Profesjonalizm', text: 'Dostarczamy usługi i produkty wysokiej jakości i bierzemy pełną odpowiedzialność za swoją pracę.' },
+            { term: 'Selektywność', text: 'Bez elitaryzmu zastrzegamy sobie prawo do odmowy lub zakończenia współpracy, żeby świadomie kształtować nasz wpływ.' },
+            { term: 'Szacunek', text: 'Traktujemy klientów, współpracowników i konkurencję uczciwie i z godnością, niezależnie od okoliczności.' },
+            { term: 'Długoterminowa wartość', text: 'Stawiamy trwałą wartość ponad krótkoterminowe zyski, dla naszych klientów i dla szerszej społeczności.' },
+            { term: 'Niezależność', text: 'Polecamy narzędzia i usługi wyłącznie ze względu na ich wartość dla klienta i nie przyjmujemy za to wynagrodzenia od dostawców.' },
+          ],
+        },
+        {
+          id: 'niezaleznosc', title: 'Niezależność rekomendacji', kind: 'prose', paragraphs: [
+            'Klienci przychodzą do nas po uczciwą ocenę, które narzędzia i usługi AI pasują do ich potrzeb. Żeby ta ocena pozostała niezależna, ^Kunke Consulting nie uczestniczy w programach partnerskich, afiliacyjnych ani odsprzedażowych. Nie przyjmujemy też od dostawców prowizji, opłat za polecenie, kredytów, punktów ani innych korzyści w zamian za polecanie ich produktów lub usług.',
+            'Jeśli łączy nas z dostawcą relacja, którą klient mógłby uznać za istotną, informujemy o niej, zanim cokolwiek polecimy.',
+            'Inaczej jest ze specjalistami, z którymi stale współpracujemy. Nie są naszymi pracownikami, ale są stałą częścią naszej pracy. Znamy z pierwszej ręki ich kompetencje, standardy i sposób działania, a połączenie klienta z właściwymi ludźmi to część wartości, którą dostarczamy. Polecamy ich, bo ufamy ich pracy. Jeśli łączy nas z nimi umowa handlowa, mówimy o tym klientowi otwarcie.',
+          ],
+        },
+        {
+          id: 'jak-sprzedajemy', title: 'Jak sprzedajemy', kind: 'terms', items: [
+            { term: 'Dopasowanie przed skalą.', text: 'Nie namawiamy na nasze usługi organizacji, którym raczej nie pomogą. Rezygnacja z klienta, do którego nie pasujemy, to dobry wynik, a nie stracona sprzedaż.' },
+            { term: 'Komu pomagamy.', text: 'Obecnie skupiamy się na polskich małych i średnich firmach, produkcyjnych i usługowych, głównie z Wielkopolski. W przyszłości chcemy oferować nasze usługi także za granicą.' },
+            { term: 'Uczciwie o zakresie.', text: 'Naszą specjalnością są praktyczne szkolenia z AI i doradztwo. Realizujemy też rozwiązania szyte na miarę, a razem z partnerami specjalistami zajmujemy się prawną stroną wdrażania AI. W takich przypadkach jasno mówimy, kto za co odpowiada. Nigdy nie sugerujemy kompetencji, których nie mamy. Jeśli czegoś nie potrafimy zrobić dobrze, mówimy o tym i w miarę możliwości wskazujemy, kto może pomóc.' },
+          ],
+        },
+        {
+          id: 'czego-sie-nie-podejmujemy', title: 'Czego się nie podejmujemy', kind: 'prose', paragraphs: [
+            'Nie przyjmujemy zleceń, które naszym zdaniem mają na celu wprowadzanie ludzi w błąd, wykorzystywanie ich lub szkodzenie im. Dotyczy to zwodniczych systemów marketingowych i sprzedażowych, manipulacyjnego projektowania, dezinformacji i propagandy oraz każdego użycia AI, które służy ukrywaniu, podszywaniu się lub wywieraniu presji. Ta zasada obowiązuje wobec każdego klienta, w każdej branży, i nie podlega negocjacjom.',
+            'Niektóre obszary wymagają od nas uważniejszego przyjrzenia się zleceniu. Są to: alkohol, tytoń i nikotyna, hazard i zakłady, wysokooprocentowane kredyty konsumenckie, partyjne kampanie polityczne, obronność oraz organizacje, wobec których pojawiają się wiarygodne zarzuty poważnych naruszeń praw pracowniczych lub norm środowiskowych. Nie wykluczamy ich z góry. Pytamy, na czym konkretnie polega praca, kogo dotyczy i czy czulibyśmy się komfortowo, opisując ją publicznie. Szkolenie z AI dla pracowników firmy to coś innego niż budowa systemu, który ma skuteczniej przekonywać do produktu szczególnie wrażliwych klientów.',
+            'Takie decyzje podejmujemy indywidualnie i chętnie wyjaśnimy nasze uzasadnienie każdemu, kto o nie zapyta.',
+          ],
+        },
+        {
+          id: 'uczciwe-wynagrodzenie', title: 'Uczciwe wynagrodzenie', kind: 'prose', paragraphs: [
+            'Profesjonalna praca zasługuje na zapłatę. Nie oczekujemy od nikogo pracy za darmo, ani od podwykonawców, ani od osób na początku kariery.',
+            'Podejmujemy się pracy pro bono lub za obniżoną stawkę dla organizacji pozarządowych, szkół i lokalnych inicjatyw, najczęściej w zakresie edukacji cyfrowej. Zawsze na tych samych warunkach: ustalamy to otwarcie z góry, jest to w pełni dobrowolne i nigdy nie zastępuje pracy, za którą ktoś powinien otrzymać wynagrodzenie.',
+          ],
+        },
+        {
+          id: 'ai-w-naszej-pracy', title: 'AI w naszej pracy', kind: 'prose', paragraphs: [
+            'Narzędzia AI są częścią tego, jak dostarczamy wartość. Używamy ich otwarcie i profesjonalnie i uczciwie mówimy, jak to robimy:',
+          ],
+          list: [
+            'Nie przedstawiamy fałszywie możliwości AI i jasno mówimy o jej ograniczeniach, w tym o ryzyku błędów, które wymagają weryfikacji przez człowieka.',
+            'Nie przedstawiamy pracy wygenerowanej przez AI jako czegoś, czym nie jest. Wszystko, co dostarczamy, przechodzi przez ludzką ocenę i kontrolę jakości.',
+            'Chętnie wyjaśniamy, jak pracujemy i jaką rolę odegrała AI w danym zleceniu, gdy klient o to zapyta.',
+          ],
+        },
+        {
+          id: 'poufnosc', title: 'Poufność i konflikty interesów', kind: 'prose', paragraphs: [
+            'Możemy pracować z firmami z tej samej branży. Zawsze zachowujemy ścisłą poufność, a informacje o klientach nigdy nie przechodzą między projektami. Jeśli praca w otoczeniu konkurencyjnym klienta mogłaby sprawiać wrażenie konfliktu interesów, informujemy o tym klienta, żeby mógł podjąć świadomą decyzję.',
+          ],
+        },
+      ] as Section[],
+    };
+
+const number = (index: number) => String(index + 1).padStart(2, '0');
+---
+<BlogShell
+  lang={lang}
+  title={copy.metaTitle}
+  description={copy.description}
+  canonicalUrl={`https://kunkeconsulting.pl${path}`}
+  alternateUrl={otherPath}
+  alternateLabel={en ? 'Polski' : 'English'}
+  blog={false}
+  current={path}
+  tracking={true}
+>
+  <Fragment slot="head">
+    {buildHreflangLinks(path, Astro.site!).map(link => <link rel="alternate" {...link} />)}
+  </Fragment>
+
+  <div class="kc-hww">
+    <header class="kc-hww-hero">
+      <p class="kc-eyebrow">{copy.eyebrow} · <span class="kc-hww-nowrap">{en ? 'Version' : 'Wersja'} {GUIDE_VERSION}</span></p>
+      <h1>{copy.title}</h1>
+      <p class="kc-hww-intro">{tidy(copy.intro)}</p>
+      <p class="kc-hww-meta">
+        <time datetime={GUIDE_UPDATED}>{copy.version}</time>
+        <span class="kc-hww-dot" aria-hidden="true">·</span>
+        <a href={PDF} type="application/pdf" hreflang="en">{copy.pdfShort}</a>
+      </p>
+    </header>
+
+    <div class="kc-hww-body">
+      <nav class="kc-hww-toc" aria-label={copy.tocLabel}>
+        <p class="kc-eyebrow">{copy.tocLabel}</p>
+        <ol>
+          {copy.sections.map((section, index) => (
+            <li><a href={`#${section.id}`}><span class="kc-hww-num">{number(index)}</span><span>{section.title}</span></a></li>
+          ))}
+        </ol>
+      </nav>
+
+      <div class="kc-hww-content">
+        {copy.sections.map((section, index) => (
+          <section id={section.id} class={`kc-hww-section kc-hww-is-${section.kind}`} aria-labelledby={`${section.id}-title`}>
+            <p class="kc-hww-num" aria-hidden="true">{number(index)}</p>
+            <h2 id={`${section.id}-title`}>{section.title}</h2>
+            {section.kind === 'statement' && <p class="kc-hww-statement">{tidy(section.text)}</p>}
+            {section.kind === 'values' && (
+              <dl class="kc-hww-values">
+                {section.items.map(item => (
+                  <div><dt>{item.term}</dt><dd>{tidy(item.text)}</dd></div>
+                ))}
+              </dl>
+            )}
+            {section.kind === 'terms' && section.items.map(item => (
+              <p><strong>{item.term}</strong> {tidy(item.text)}</p>
+            ))}
+            {section.kind === 'prose' && section.paragraphs.map(paragraph => <p>{tidy(paragraph)}</p>)}
+            {section.kind === 'prose' && section.list && (
+              <ul>{section.list.map(item => <li>{tidy(item)}</li>)}</ul>
+            )}
+          </section>
+        ))}
+
+        <aside class="kc-hww-doc" aria-label={en ? 'About this page' : 'O tej stronie'}>
+          <p class="kc-hww-disclaimer">{tidy(copy.disclaimer)}</p>
+          <p>{tidy(copy.contact)} <a href="mailto:info@kunkeconsulting.pl">info@kunkeconsulting.pl</a></p>
+          <div class="kc-hww-download">
+            <a class="kc-btn" href={PDF} type="application/pdf" hreflang="en">{tidy(copy.pdf)}</a>
+            <span class="kc-hww-version">{copy.version}</span>
+          </div>
+        </aside>
+
+        <p class="kc-hww-back"><a href={copy.home}>{copy.back}</a></p>
+      </div>
+    </div>
+  </div>
+</BlogShell>
+
+<style is:global>
+  .kc-hww {
+    max-width: var(--kc-wrap);
+    margin: 0 auto;
+    padding: 72px var(--kc-gut) 96px;
+  }
+
+  .kc-hww-nowrap { white-space: nowrap; }
+
+  /* ---------- hero ---------- */
+
+  .kc-hww-hero {
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--kc-rule-14);
+  }
+
+  .kc-hww-hero h1 {
+    margin: 22px 0 26px;
+    font-size: clamp(42px, 7vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    color: var(--kc-ink);
+  }
+
+  .kc-hww-intro {
+    margin: 0;
+    max-width: 40em;
+    font-size: 21px;
+    line-height: 1.6;
+    color: var(--kc-body);
+    text-wrap: pretty;
+  }
+
+  .kc-hww-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin: 28px 0 0;
+    font-family: var(--kc-mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--kc-muted);
+  }
+
+  .kc-hww-meta a {
+    color: var(--kc-green);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--kc-rule-42);
+  }
+
+  /* ---------- document body: contents rail + one measured column ---------- */
+
+  .kc-hww-body {
+    display: grid;
+    grid-template-columns: 232px minmax(0, 1fr);
+    gap: 72px;
+    padding-top: 56px;
+  }
+
+  .kc-hww-toc {
+    position: sticky;
+    top: 104px;
+    align-self: start;
+  }
+
+  .kc-hww-toc ol {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    border-left: 1px solid var(--kc-rule-14);
+  }
+
+  .kc-hww-toc a {
+    display: flex;
+    gap: 12px;
+    padding: 7px 0 7px 16px;
+    margin-left: -1px;
+    border-left: 1px solid transparent;
+    font-size: 15px;
+    line-height: 1.35;
+    color: var(--kc-body);
+  }
+
+  .kc-hww-toc a:hover {
+    color: var(--kc-green);
+    border-left-color: var(--kc-green);
+    text-decoration: none;
+  }
+
+  .kc-hww-num {
+    font-family: var(--kc-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--kc-muted);
+    padding-top: 2px;
+  }
+
+  .kc-hww-content {
+    max-width: 700px;
+  }
+
+  .kc-hww-section {
+    padding: 0 0 48px;
+    margin: 0 0 48px;
+    border-bottom: 1px solid var(--kc-rule-10);
+  }
+
+  .kc-hww-section > .kc-hww-num {
+    margin: 0 0 10px;
+  }
+
+  .kc-hww-section h2 {
+    margin: 0 0 22px;
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: -0.022em;
+    font-weight: 500;
+    color: var(--kc-green);
+  }
+
+  .kc-hww-section p,
+  .kc-hww-section li {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--kc-body);
+    text-wrap: pretty;
+  }
+
+  .kc-hww-section p {
+    margin: 0 0 20px;
+  }
+
+  .kc-hww-section > :last-child {
+    margin-bottom: 0;
+  }
+
+  .kc-hww-section strong {
+    color: var(--kc-ink);
+    font-weight: 600;
+  }
+
+  .kc-hww-section ul {
+    margin: 0;
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .kc-hww-section li::marker {
+    color: var(--kc-muted);
+  }
+
+  /* Mission and vision read as statements, not body copy. */
+  .kc-hww-section .kc-hww-statement {
+    font-size: 25px;
+    line-height: 1.5;
+    letter-spacing: -0.015em;
+    color: var(--kc-ink);
+  }
+
+  .kc-hww-values {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 40px;
+    margin: 0;
+  }
+
+  .kc-hww-values > div {
+    padding: 20px 0 22px;
+    border-top: 1px solid var(--kc-rule-14);
+  }
+
+  .kc-hww-values dt {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--kc-ink);
+  }
+
+  .kc-hww-values dd {
+    margin: 0;
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: var(--kc-body);
+  }
+
+  /* ---------- closing note ---------- */
+
+  .kc-hww-doc {
+    padding: 32px;
+    border: 1px solid var(--kc-rule-14);
+    border-radius: 18px;
+    background: var(--kc-tint);
+  }
+
+  .kc-hww-doc p {
+    margin: 0 0 14px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--kc-body);
+  }
+
+  .kc-hww-doc a:not(.kc-btn) {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .kc-hww-doc .kc-hww-disclaimer {
+    color: var(--kc-muted);
+  }
+
+  .kc-hww-download {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 20px;
+    margin-top: 24px;
+  }
+
+  .kc-hww-download .kc-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 12px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .kc-hww-version {
+    font-family: var(--kc-mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--kc-muted);
+  }
+
+  .kc-hww-back {
+    margin: 40px 0 0;
+    font-size: 16px;
+  }
+
+  /* ---------- dark ---------- */
+
+  :root[data-theme='dark'] .kc-hww h1,
+  :root[data-theme='dark'] .kc-hww-section h2,
+  :root[data-theme='dark'] .kc-hww-statement {
+    font-family: Georgia, serif;
+    font-weight: 400;
+  }
+
+  :root[data-theme='dark'] .kc-hww-section h2 { color: var(--kc-brass); }
+
+  /* ---------- narrow screens ---------- */
+
+  @media (max-width: 900px) {
+    .kc-hww { padding-top: 48px; padding-bottom: 72px; }
+    .kc-hww-body { grid-template-columns: 1fr; gap: 0; padding-top: 40px; }
+    .kc-hww-toc { display: none; }
+    .kc-hww-content { max-width: none; }
+  }
+
+  @media (max-width: 600px) {
+    .kc-hww { padding-top: 32px; }
+    .kc-hww-hero { padding-bottom: 36px; }
+    .kc-hww-intro { font-size: 18px; }
+    .kc-hww-meta { flex-direction: column; }
+    .kc-hww-dot { display: none; }
+    .kc-hww-section { padding-bottom: 36px; margin-bottom: 36px; }
+    .kc-hww-section h2 { font-size: 25px; }
+    .kc-hww-section p, .kc-hww-section li { font-size: 17px; }
+    .kc-hww-section .kc-hww-statement { font-size: 21px; }
+    .kc-hww-values { grid-template-columns: 1fr; }
+    .kc-hww-doc { padding: 24px 20px; }
+    .kc-hww-download .kc-btn { width: 100%; justify-content: center; text-align: center; }
+  }
+
+  @media print {
+    .kc-header, .kc-footer, .kc-hww-toc, .kc-hww-back, .kc-consent-panel { display: none !important; }
+    .kc-hww-body { display: block; }
+  }
+</style>

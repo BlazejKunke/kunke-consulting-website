@@ -1,16 +1,16 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
-interface Props { lang: 'pl' | 'en'; alternateUrl: string; alternateLabel?: string; blog?: boolean; }
-const { lang, alternateUrl, alternateLabel, blog = false } = Astro.props;
+interface Props { lang: 'pl' | 'en'; alternateUrl: string; alternateLabel?: string; blog?: boolean; current?: string; }
+const { lang, alternateUrl, alternateLabel, blog = false, current } = Astro.props;
 const en = lang === 'en';
 const home = en ? '/en/' : '/';
-const links = en ? [['Offer', '/en/#offer'], ['Implementation', '/en/#implementation'], ['Team', '/en/#team'], ['Questions', '/en/#faq'], ['Blog', '/en/blog/']] : [['Oferta', '/#oferta'], ['Wdrożenie', '/#wdrozenie'], ['Zespół', '/#zespol'], ['Pytania', '/#pytania'], ['Blog', '/blog/']];
+const links = en ? [['Offer', '/en/#offer'], ['Implementation', '/en/#implementation'], ['Team', '/en/#team'], ['Questions', '/en/#faq'], ['How we work', '/en/how-we-work/'], ['Blog', '/en/blog/']] : [['Oferta', '/#oferta'], ['Wdrożenie', '/#wdrozenie'], ['Zespół', '/#zespol'], ['Pytania', '/#pytania'], ['Jak pracujemy', '/jak-pracujemy/'], ['Blog', '/blog/']];
 ---
 <header class="kc-header">
   <nav class="kc-nav" aria-label={en ? 'Main navigation' : 'Główna nawigacja'}>
     <a href={home} class="kc-brand">^Kunke Consulting</a>
     <div class="kc-nav-links">
-      {links.map(([label, href]) => <a href={href} aria-current={blog && label === 'Blog' ? 'page' : undefined}>{label}</a>)}
+      {links.map(([label, href]) => <a href={href} aria-current={(blog && label === 'Blog') || href === current ? 'page' : undefined}>{label}</a>)}
     </div>
     <a class="kc-language" href={alternateUrl} lang={en ? 'pl' : 'en'} hreflang={en ? 'pl' : 'en'} aria-label={alternateLabel ?? (en ? 'Polski' : 'English')} title={alternateLabel ?? (en ? 'Polski' : 'English')}>{en ? 'PL' : 'EN'}</a>
     <ThemeToggle lang={lang} />
@@ -18,7 +18,7 @@ const links = en ? [['Offer', '/en/#offer'], ['Implementation', '/en/#implementa
     <details class="kc-mobile-nav">
       <summary aria-label={en ? 'Navigation menu' : 'Menu nawigacji'}><span aria-hidden="true">☰</span></summary>
       <div class="kc-mobile-links">
-        {links.map(([label, href]) => <a href={href}>{label}</a>)}
+        {links.map(([label, href]) => <a href={href} aria-current={href === current ? 'page' : undefined}>{label}</a>)}
         <a href={alternateUrl} lang={en ? 'pl' : 'en'}>{alternateLabel ?? (en ? 'Polski' : 'English')}</a>
         <a href={en ? '/en/availability/' : '/availability/'}>{en ? 'Availability' : 'Dostępność'}</a>
         <a href="mailto:info@kunkeconsulting.pl">{en ? 'Email me' : 'Napisz do mnie'}</a>

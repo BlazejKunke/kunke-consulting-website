@@ -54,6 +54,9 @@ const localizedRoutes: Record<string, LocalizedRouteMap> = {
     pl: '/blog/',
     en: '/en/blog/',
   },
+  // The two addresses differ beyond the /en prefix, so the English page is
+  // found by its own URL rather than by this key -- see findRouteMap.
+  '/jak-pracujemy': { pl: '/jak-pracujemy/', en: '/en/how-we-work/' },
 };
 
 export const localePrefixes: Record<LocaleCode, string> = locales.reduce(
@@ -128,17 +131,25 @@ const normalizeHreflangPath = (path: string): string => {
   return `${localeRootNormalizedPath}${query}${hash}`;
 };
 
-const findExistingLocalizedPath = (basePath: string, locale: LocaleCode): string | undefined => {
-  const routeMap = localizedRoutes[normalizePath(basePath)];
-  if (!routeMap) return undefined;
-  return routeMap[locale];
+// The group a page belongs to. Most pairs share a path apart from the /en
+// prefix (/privacy-policy/ and /en/privacy-policy/), so the key lookup finds
+// them. A pair with translated slugs (/jak-pracujemy/ and /en/how-we-work/) is
+// found by matching the page's own URL against the registered addresses. Either
+// way the answer comes from localizedRoutes alone, never from the page.
+const findRouteMap = (pathname: string): LocalizedRouteMap | undefined => {
+  const byKey = localizedRoutes[normalizePath(basePathFromLocale(pathname))];
+  if (byKey) return byKey;
+  const target = normalizePath(pathname);
+  return Object.values(localizedRoutes).find((routeMap) =>
+    Object.values(routeMap).some((path) => path && normalizePath(path) === target)
+  );
 };
 
 export const buildLanguageSwitcherUrls = (pathname: string, siteUrl: URL) => {
-  const basePath = basePathFromLocale(pathname);
+  const routeMap = findRouteMap(pathname);
   return locales.map(({ code }) => {
     const localeCode = code as LocaleCode;
-    const existingLocalized = findExistingLocalizedPath(basePath, localeCode);
+    const existingLocalized = routeMap?.[localeCode];
     const fallbackPath = localizedPath('/', localeCode);
     const localized = existingLocalized ?? fallbackPath;
     return { locale: localeCode, href: new URL(localized, siteUrl).href };
@@ -170,8 +181,7 @@ export interface HreflangLink {
  * scripts/check-hreflang.mjs enforces both against the built output.
  */
 export const buildHreflangLinks = (pathname: string, siteUrl: URL): HreflangLink[] => {
-  const basePath = basePathFromLocale(pathname);
-  const routeMap = localizedRoutes[normalizePath(basePath)];
+  const routeMap = findRouteMap(pathname);
   if (!routeMap) return [];
 
   const translated = locales.filter(({ code }) => routeMap[code as LocaleCode]);

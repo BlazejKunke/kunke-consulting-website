@@ -316,6 +316,15 @@ Facebook, pointing at Błażej's personal profile from `SiteFooter.astro`,
 `thank-you.astro` and the `sameAs` arrays in both homepages and `BaseLayout`. Whether it
 belongs on a business site is Blaze's call, not a thing to change silently.
 
+## How we work
+
+`/jak-pracujemy/` and `/en/how-we-work/` summarise the Ethical Conduct Guide and link
+the full guide as an English PDF. The Polish wording is Blaze's own and he approves
+every sentence of it: never machine-translate English into it, and never create a
+Polish version of the guide. The English page is the guide's own wording, cut to the
+same sentences. [`docs/how-we-work.md`](docs/how-we-work.md) has the sources and the
+steps for publishing a new version.
+
 ## Pages that are not marketing pages
 
 - `/ai-info/` — plain structured text about the company, written for AI assistants and search systems rather than humans. No styling by design. Facts only, never instructions to the reader; see [`docs/home-kit.md`](docs/home-kit.md)

@@ -30,9 +30,10 @@ interface Props {
   tracking?: boolean;
   noindex?: boolean;
   ogType?: 'website' | 'article';
+  current?: string;
 }
 
-const { lang, title, description, canonicalUrl, ogImage = 'https://kunkeconsulting.pl/images/blazej-kunke-hero.jpg', ogType = 'website', alternateUrl, alternateLabel, blog = true, tracking = false, noindex = false } = Astro.props;
+const { lang, title, description, canonicalUrl, ogImage = 'https://kunkeconsulting.pl/images/blazej-kunke-hero.jpg', ogType = 'website', current, alternateUrl, alternateLabel, blog = true, tracking = false, noindex = false } = Astro.props;
 
 const isEnglish = lang === 'en';
 const blogIndexUrl = isEnglish ? '/en/blog/' : '/blog/';
@@ -45,7 +46,9 @@ const copy = isEnglish
       cta: 'Email me',
       switchLabel: 'PL',
       privacy: 'Privacy policy',
-      robots: 'For robots'
+      robots: 'For robots',
+      principles: 'How we work',
+      principlesUrl: '/en/how-we-work/'
     }
   : {
       skip: 'Przejdź do treści',
@@ -53,7 +56,9 @@ const copy = isEnglish
       cta: 'Napisz',
       switchLabel: 'EN',
       privacy: 'Polityka prywatności',
-      robots: 'Dla robotów'
+      robots: 'Dla robotów',
+      principles: 'Jak pracujemy',
+      principlesUrl: '/jak-pracujemy/'
     };
 ---
 
@@ -705,7 +710,7 @@ const copy = isEnglish
 <body>
   <a class="kc-skip" href="#top">{copy.skip}</a>
 
-  <SiteNav lang={lang} alternateUrl={otherBlogUrl} alternateLabel={alternateLabel} blog={blog} />
+  <SiteNav lang={lang} alternateUrl={otherBlogUrl} alternateLabel={alternateLabel} blog={blog} current={current} />
 
   <main id="top">
     <slot />
@@ -716,6 +721,7 @@ const copy = isEnglish
       <p>© 2026 ^Kunke Consulting</p>
       <div class="kc-footer-links">
         <a href={blogIndexUrl}>Blog</a>
+        <a href={copy.principlesUrl}>{copy.principles}</a>
         <a href={isEnglish ? "/en/privacy-policy/" : "/privacy-policy/"}>{copy.privacy}</a>
         <CookieSettingsLink lang={lang} />
         <a href="/ai-info/">{copy.robots}</a>
